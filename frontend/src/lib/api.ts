@@ -1,11 +1,19 @@
-import { createJanaClient, type components } from '@janamen/api-client';
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRef } from 'react';
-import { z } from 'zod';
+import { createJanaClient, type components } from "@janamen/api-client";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useRef } from "react";
+import { z } from "zod";
 
-export type Model<K extends keyof components['schemas']> = components['schemas'][K];
+export type Model<K extends keyof components["schemas"]> =
+  components["schemas"][K];
 let csrfToken: string | undefined;
-export const api = createJanaClient({ baseUrl: '', getCsrfToken: () => csrfToken });
+export const api = createJanaClient({
+  baseUrl: "",
+  getCsrfToken: () => csrfToken,
+});
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: { staleTime: 15_000, retry: false, refetchOnWindowFocus: true },
@@ -27,21 +35,33 @@ export class ApiError extends Error {
   readonly requestId: string | null;
   constructor(response: Response, error: unknown) {
     const parsed = errorSchema.safeParse(error);
-    super(parsed.success ? parsed.data.message : 'Не удалось выполнить запрос.');
+    super(
+      parsed.success ? parsed.data.message : "Не удалось выполнить запрос.",
+    );
     this.status = response.status;
-    this.code = parsed.success ? parsed.data.code ?? 'request_failed' : 'request_failed';
-    this.fields = parsed.success ? parsed.data.field_errors ?? {} : {};
-    this.requestId = parsed.success ? parsed.data.request_id ?? null : null;
+    this.code = parsed.success
+      ? (parsed.data.code ?? "request_failed")
+      : "request_failed";
+    this.fields = parsed.success ? (parsed.data.field_errors ?? {}) : {};
+    this.requestId = parsed.success ? (parsed.data.request_id ?? null) : null;
   }
 }
 
-export function unwrap<T>(result: { data?: T; error?: unknown; response: Response }): T {
-  if (!result.response.ok || result.error) throw new ApiError(result.response, result.error);
-  if (result.data === undefined) throw new Error('Сервер не вернул данные. Обновите страницу.');
+export function unwrap<T>(result: {
+  data?: T;
+  error?: unknown;
+  response: Response;
+}): T {
+  if (!result.response.ok || result.error)
+    throw new ApiError(result.response, result.error);
+  if (result.data === undefined)
+    throw new Error("Сервер не вернул данные. Обновите страницу.");
   return result.data;
 }
 
-export function useCommand<V, T>(execute: (values: V, key: string) => Promise<T>) {
+export function useCommand<V, T>(
+  execute: (values: V, key: string) => Promise<T>,
+) {
   const client = useQueryClient();
   const intent = useRef<{ fingerprint: string; key: string } | null>(null);
   return useMutation({
@@ -60,7 +80,7 @@ export function useCommand<V, T>(execute: (values: V, key: string) => Promise<T>
 }
 
 export async function readSession(signal?: AbortSignal) {
-  const result = await api.GET('/api/v1/auth/me/', { signal });
+  const result = await api.GET("/api/v1/auth/me/", { signal });
   if ([401, 403].includes(result.response.status)) return null;
   const session = unwrap(result);
   csrfToken = session.csrf_token;
@@ -69,19 +89,27 @@ export async function readSession(signal?: AbortSignal) {
 
 export async function signIn(username: string, password: string) {
   await queryClient.cancelQueries();
-  queryClient.clear();
-  csrfToken = unwrap(await api.GET('/api/v1/auth/csrf/')).csrf_token;
-  const session = unwrap(await api.POST('/api/v1/auth/login/', { body: { username, password } }));
+  queryClient.removeQueries({
+    predicate: (query) => query.queryKey[0] !== "session",
+  });
+  queryClient.getMutationCache().clear();
+  csrfToken = unwrap(await api.GET("/api/v1/auth/csrf/")).csrf_token;
+  const session = unwrap(
+    await api.POST("/api/v1/auth/login/", { body: { username, password } }),
+  );
   csrfToken = session.csrf_token;
-  queryClient.setQueryData(['session'], session);
+  queryClient.setQueryData(["session"], session);
   return session;
 }
 
 export async function signOut() {
-  const result = await api.POST('/api/v1/auth/logout/');
+  const result = await api.POST("/api/v1/auth/logout/");
   if (!result.response.ok) throw new ApiError(result.response, result.error);
   await queryClient.cancelQueries();
-  queryClient.clear();
+  queryClient.removeQueries({
+    predicate: (query) => query.queryKey[0] !== "session",
+  });
+  queryClient.getMutationCache().clear();
   csrfToken = undefined;
-  queryClient.setQueryData(['session'], null);
+  queryClient.setQueryData(["session"], null);
 }
