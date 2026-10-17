@@ -50,7 +50,7 @@
     {
       "name": "jana-shadcn-action",
       "type": "registry:ui",
-      "title": "ActionButton",
+      "title": "ActionButton and ActionLink",
       "files": [
         {
           "path": "src/components/upstream/button.tsx",
@@ -72,7 +72,7 @@
           {
             "source": "JanaMen",
             "path": "src/components/actions.tsx",
-            "role": "stable pending label and icon slots"
+            "role": "stable pending command label; native navigation Link with upstream button variants"
           }
         ],
         "useWhen": "Product actions. Pace Button is excluded because its full helper file retains Oxygen source."
