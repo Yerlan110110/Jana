@@ -74,6 +74,9 @@ jobs:
 
   container:
     runs-on: ubuntu-latest
+    env:
+      COMPOSE_PROJECT_NAME: janamen-ci
+      LOGIN_THROTTLE_RATE: 120/min
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Prepare synthetic local configuration
@@ -83,7 +86,22 @@ jobs:
       - name: Start release, API and worker
         run: python3 scripts/dev.py up
       - name: Check service readiness
-        run: curl --fail --retry 20 --retry-all-errors --retry-delay 3 http://127.0.0.1:8000/api/v1/ready/
+        run: curl --fail --retry 20 --retry-all-errors --retry-delay 3 http://127.0.0.1:8080/api/v1/ready/
+      - name: Check API replacement without restarting nginx
+        run: python3 scripts/verification/nginx_replacement.py --project janamen-ci --output .artifacts/nginx-api-replacement.json
+      - name: Run real browser role journeys
+        run: docker compose --profile test run --build --rm browser-test
+      - name: Retain browser trace summaries
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: browser-trace-summaries
+          path: |
+            .artifacts/nginx-api-replacement.json
+            .artifacts/browser/ci/**/trace.md
+            .artifacts/browser/ci/summary.md
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Show status on failure
         if: failure()
         run: docker compose ps -a

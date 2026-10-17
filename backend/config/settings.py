@@ -113,7 +113,10 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "EXCEPTION_HANDLER": "apps.core.errors.exception_handler",
-    "DEFAULT_THROTTLE_RATES": {"login": "10/min", "assistant": "30/min"},
+    "DEFAULT_THROTTLE_RATES": {
+        "login": os.getenv("LOGIN_THROTTLE_RATE", "10/min"),
+        "assistant": "30/min",
+    },
     "COERCE_DECIMAL_TO_STRING": True,
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }

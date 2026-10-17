@@ -22,6 +22,17 @@ EXPOSE 8000
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["api"]
 
+FROM node:24.14.0-bookworm-slim AS browser-test
+ENV E2E_TELEMETRY_DISABLED=1
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY packages/api-client/ ./packages/api-client/
+RUN npm ci --ignore-scripts --no-audit --no-fund
+RUN npx e2e-web install chromium --with-deps
+COPY e2e.config.ts ./
+COPY tests/ ./tests/
+CMD ["npx", "e2e", "run", "--trace", "on", "--output", ".artifacts/browser/ci"]
+
 FROM node:24.14.0-bookworm-slim AS frontend-build
 WORKDIR /app
 COPY package.json package-lock.json ./

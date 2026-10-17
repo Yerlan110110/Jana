@@ -45,7 +45,7 @@ import {
   ErrorNotice,
   LoadingState,
 } from "@/components/ui";
-import { readSession, signIn, signOut } from "@/lib/api";
+import { ApiError, readSession, signIn, signOut } from "@/lib/api";
 import { SessionProvider, useSession } from "@/lib/session";
 import { roleText } from "@/lib/format";
 import { NotificationsPage } from "@/features/notifications";
@@ -298,8 +298,9 @@ function LoginPage() {
             </div>
             {login.isError && (
               <p className="login-error" role="alert">
-                Не удалось войти. Проверьте имя и пароль. При сбое сети
-                повторите вход.
+                {login.error instanceof ApiError && login.error.status === 429
+                  ? "Слишком много попыток входа. Подождите немного и повторите вход."
+                  : "Не удалось войти. Проверьте имя и пароль. При сбое сети повторите вход."}
               </p>
             )}
             <Button
