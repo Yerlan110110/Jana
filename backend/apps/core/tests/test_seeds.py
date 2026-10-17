@@ -6,6 +6,7 @@ from io import StringIO
 import pytest
 from django.core.management import call_command
 from django.core.management.base import CommandError
+from django.db import connection
 
 from apps.core.models import DomainEvent, OutboxMessage
 from apps.hr_requests import services
@@ -159,6 +160,9 @@ def test_complete_seed_serializes_module_manifests_and_preserves_combined_record
     monkeypatch.setenv("DEMO_PASSWORD", PASSWORD)
     path = tmp_path / "complete-demo.json"
     output = StringIO()
+    if connection.vendor == "postgresql":
+        with connection.cursor() as cursor:
+            cursor.execute("SET LOCAL statement_timeout = '10s'")
     call_command("seed_demo", credentials_file=str(path), stdout=output)
     first = json.loads(path.read_text())
     academy = first["modules"]["academy"]

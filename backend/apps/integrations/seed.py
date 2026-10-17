@@ -3,6 +3,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from apps.core.models import OutboxMessage
+from apps.hr_requests.models import HRRequest, RequestHistory
 from apps.identity.models import User
 
 from .contracts import EmployeeSnapshot, ImportSnapshot
@@ -75,12 +76,26 @@ def seed_integrations(employees):
                 employee.user.user_permissions.add(permission)
     for state in created:
         _seed_source_history(state, employees)
-    messages = OutboxMessage.objects.filter(
-        topic=EXPORT_TOPIC,
-        event__requesthistory__request__employee__user__username="employee.demo",
-    ).select_related("event__requesthistory__request")
+    demo_employee = next(
+        (employee for employee in employees if employee.user.username == "employee.demo"), None
+    )
+    request_kinds = (
+        dict(
+            HRRequest.objects.filter(
+                employee=demo_employee, status=HRRequest.Status.APPROVED
+            ).values_list("id", "kind")
+        )
+        if demo_employee is not None
+        else {}
+    )
+    event_requests = dict(
+        RequestHistory.objects.filter(
+            request_id__in=request_kinds, to_status=HRRequest.Status.APPROVED
+        ).values_list("event_id", "request_id")
+    )
+    messages = OutboxMessage.objects.filter(topic=EXPORT_TOPIC, event_id__in=event_requests)
     for message in messages:
-        leave = message.event.requesthistory.request.kind == "leave"
+        leave = request_kinds[event_requests[message.event_id]] == HRRequest.Kind.LEAVE
         MockDeliveryFault.objects.get_or_create(
             outbox=message,
             defaults={
