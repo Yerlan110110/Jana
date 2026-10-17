@@ -38,5 +38,9 @@ export default {
       username: "hr.demo",
       password: () => process.env.DEMO_PASSWORD ?? "",
     },
+    foreign: {
+      username: "foreign.demo",
+      password: () => process.env.DEMO_PASSWORD ?? "",
+    },
   },
 } satisfies E2EConfig;

@@ -1,5 +1,6 @@
 import { test } from "@e2e-dev/web";
 import { credentials, expect } from "e2e";
+import { signIn } from "./support.js";
 
 test("sign in explains a throttled response without blaming the password", async ({
   app,
@@ -34,8 +35,8 @@ test("sign in explains a throttled response without blaming the password", async
 
 test(
   "logout removes the previous account and returns to sign in",
-  { session: "employee" },
   async ({ app, screen }) => {
+    await signIn(app, screen, "employee");
     await app.open("/profile");
     await expect(screen.getByRole("heading", "Мой профиль")).toBeVisible();
     await screen.getByRole("button", "Выйти из кабинета").tap();

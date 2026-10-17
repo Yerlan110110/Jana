@@ -1,7 +1,7 @@
 import createClient, { type ClientOptions } from "openapi-fetch";
-import type { paths } from "./schema";
+import type { paths } from "./schema.js";
 
-export type { paths, components, operations } from "./schema";
+export type { paths, components, operations } from "./schema.js";
 
 type JanaClientOptions = {
   baseUrl: string;
