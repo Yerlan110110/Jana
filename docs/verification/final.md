@@ -16,7 +16,7 @@
 | OpenAPI и TypeScript | Генерация без ошибок/предупреждений, TypeScript компилируется; SQLite/PostgreSQL дают одинаковые сохранённые артефакты | [Независимый follow-up](reviews/janamen-final-foundation-review-followup.md) |
 | Безопасное сохранение HTTP-отчёта | Два тестовых метода; восемь alias-подслучаев и отдельная запись ошибки прошли; cleanup проверен независимым внедрением сбоев | [Код тестов](../../scripts/verification/tests/test_report_safety.py), [ревью](reviews/janamen-http-runner-review.md) |
 | Skills | Проверены 297 закреплённых файлов, 4 upstream-группы, 94 уникальных skill | `node scripts/tooling/verify-skills.mjs`, [инвентарь](../tooling/skill-inventory.md) |
-| REA | CLI 6.5.0 и standalone MCP проверены; ограниченный capture публичной статьи выполнен | [Tooling verification](../tooling/verification.json), [REA evidence](../design/evidence/README.md) |
+| REA | CLI 6.5.0 и standalone MCP проверены; ограниченные replay статьи и публичного Pace `/design` выполнены | [Tooling verification](../tooling/verification.json), [REA evidence](../design/evidence/README.md), [Pace receipt](../design/evidence/pace-jana/rea-replay-summary.json) |
 | Compose config | Файл проверен настоящим Compose 5.6.0 | [Независимое ревью](reviews/janamen-integration-workbench-review.md) |
 
 Полный PostgreSQL suite выполнен на локальном checkpoint `f779305`. Изменения после этого прогона относятся к документации и инструменту HTTP-проверки; его два найденных error-path дефекта проверены отдельно. Исторические checkpoint SHA и финальная GitHub-публикация имеют отдельную запись происхождения.

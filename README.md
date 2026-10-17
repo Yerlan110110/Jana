@@ -17,6 +17,8 @@
 | Выбрать готовые компоненты | [Сравнение архитектур](docs/architecture/reuse-decision.md), [frontend architecture](docs/architecture/frontend.md) |
 | Спроектировать интерфейс | [Дизайн-brief](docs/design/README.md), [31 представление](docs/design/screen-inventory.md), [состояния](docs/design/state-and-data-contracts.md) |
 | Изучить аналоги и компанию | [Продуктовое исследование](docs/research/product-rea.md), [backend research](docs/research/backend-rea.md), [Jana Post](docs/research/janapost-context.md) |
+| Подготовить сильное отличие | [Стратегия](docs/product/differentiation-strategy.md), [7:30 демо](docs/product/jury-demo-script.md), [карта API gaps](docs/architecture/differentiation-gap-map.md) |
+| Выбрать дизайн-систему | [REA Pace/Jana, версии, tokens и reuse](docs/research/pace-jana-design-system.md) |
 | Проверить готовность | [Фактические результаты](docs/verification/final.md), [матрица проверок](docs/verification/acceptance-plan.md) |
 | Подключить Codex skills | [Codex setup](docs/tooling/codex-setup.md), [инвентарь](docs/tooling/skill-inventory.md) |
 
