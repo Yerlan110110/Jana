@@ -12,6 +12,7 @@ from .filters import CatalogFilter, EnrollmentFilter
 from .models import Course
 from .selectors import enrollment_summary, visible_courses, visible_enrollments
 from .serializers import (
+    AcademyVersionCommandSerializer,
     AssignmentSerializer,
     AttemptCommandSerializer,
     AttemptDetailSerializer,
@@ -27,7 +28,6 @@ from .serializers import (
     EnrollmentSummarySerializer,
     LearningContentSerializer,
     LessonCommandSerializer,
-    VersionCommandSerializer,
 )
 
 IDEMPOTENCY_HEADER = OpenApiParameter(
@@ -130,13 +130,13 @@ class CourseAdminViewSet(
         )
 
     @extend_schema(
-        request=VersionCommandSerializer,
+        request=AcademyVersionCommandSerializer,
         responses=CourseAdminSerializer,
         parameters=[IDEMPOTENCY_HEADER],
     )
     @action(detail=True, methods=["post"])
     def publish(self, request, pk=None):
-        serializer = VersionCommandSerializer(data=request.data)
+        serializer = AcademyVersionCommandSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return self._command(
             request,
@@ -146,7 +146,7 @@ class CourseAdminViewSet(
         )
 
     def _availability(self, request, pk, availability):
-        serializer = VersionCommandSerializer(data=request.data)
+        serializer = AcademyVersionCommandSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return self._command(
             request,
@@ -158,7 +158,7 @@ class CourseAdminViewSet(
         )
 
     @extend_schema(
-        request=VersionCommandSerializer,
+        request=AcademyVersionCommandSerializer,
         responses=CourseAdminSerializer,
         parameters=[IDEMPOTENCY_HEADER],
     )
@@ -167,7 +167,7 @@ class CourseAdminViewSet(
         return self._availability(request, pk, Course.Availability.ARCHIVED)
 
     @extend_schema(
-        request=VersionCommandSerializer,
+        request=AcademyVersionCommandSerializer,
         responses=CourseAdminSerializer,
         parameters=[IDEMPOTENCY_HEADER],
     )
@@ -231,13 +231,13 @@ class EnrollmentViewSet(
         return command_response(request, "academy.enrollment.assign", values, run)
 
     @extend_schema(
-        request=VersionCommandSerializer,
+        request=AcademyVersionCommandSerializer,
         responses=EnrollmentDetailSerializer,
         parameters=[IDEMPOTENCY_HEADER],
     )
     @action(detail=True, methods=["post"])
     def start(self, request, pk=None):
-        serializer = VersionCommandSerializer(data=request.data)
+        serializer = AcademyVersionCommandSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return self._progress_command(
             request,

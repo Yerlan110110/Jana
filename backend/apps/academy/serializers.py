@@ -14,7 +14,7 @@ from .models import Course, CourseVersion, Enrollment, LessonCompletion, QuizAtt
 from .selectors import enrollment_actions, enrollment_state, material_progress
 
 
-class VersionCommandSerializer(StrictSerializer):
+class AcademyVersionCommandSerializer(StrictSerializer):
     expected_version = serializers.IntegerField(min_value=1)
 
 
@@ -24,7 +24,7 @@ class CourseCreateSerializer(StrictSerializer):
     draft = CourseDraftSerializer()
 
 
-class CourseEditSerializer(VersionCommandSerializer):
+class CourseEditSerializer(AcademyVersionCommandSerializer):
     draft = CourseDraftSerializer()
 
 
@@ -123,17 +123,17 @@ class AssignmentSerializer(StrictSerializer):
     due_at = serializers.DateTimeField(allow_null=True, default=None)
 
 
-class LessonCommandSerializer(VersionCommandSerializer):
+class LessonCommandSerializer(AcademyVersionCommandSerializer):
     lesson_id = serializers.SlugField(max_length=80)
 
 
-class AnswerSerializer(StrictSerializer):
+class QuizAnswerSerializer(StrictSerializer):
     question_id = serializers.SlugField(max_length=80)
     selected_option_id = serializers.SlugField(max_length=40)
 
 
-class AttemptCommandSerializer(VersionCommandSerializer):
-    answers = AnswerSerializer(many=True, min_length=1, max_length=100)
+class AttemptCommandSerializer(AcademyVersionCommandSerializer):
+    answers = QuizAnswerSerializer(many=True, min_length=1, max_length=100)
 
 
 class MaterialProgressSerializer(serializers.Serializer):
@@ -161,7 +161,7 @@ class AttemptSummarySerializer(serializers.ModelSerializer):
 
 
 class AttemptDetailSerializer(AttemptSummarySerializer):
-    answers = AnswerSerializer(many=True, read_only=True)
+    answers = QuizAnswerSerializer(many=True, read_only=True)
 
     class Meta(AttemptSummarySerializer.Meta):
         fields = [*AttemptSummarySerializer.Meta.fields, "answers"]

@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from corsheaders.defaults import default_headers
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.getenv("DJANGO_DEBUG", "true").lower() == "true"
@@ -26,10 +27,12 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.identity",
     "apps.notifications",
+    "apps.hr_requests",
+    "apps.academy",
+    "apps.knowledge",
+    "apps.integrations",
+    "apps.workbench",
 ]
-for module in ("hr_requests", "academy", "knowledge", "integrations"):
-    if (BASE_DIR / "apps" / module / "models.py").exists():
-        INSTALLED_APPS.append(f"apps.{module}")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -91,6 +94,8 @@ CSRF_FAILURE_VIEW = "apps.core.errors.csrf_failure"
 X_FRAME_OPTIONS = "DENY"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [*default_headers, "idempotency-key"]
+CORS_EXPOSE_HEADERS = ["Idempotency-Replayed", "X-Request-ID"]
 CORS_ALLOWED_ORIGINS = [x for x in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if x]
 CSRF_TRUSTED_ORIGINS = [x for x in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if x]
 REST_FRAMEWORK = {
@@ -119,5 +124,10 @@ SPECTACULAR_SETTINGS = {
         "LanguageEnum": [("ru", "Русский"), ("kk", "Қазақша")],
         "KnowledgeGapStatusEnum": "apps.knowledge.models.KnowledgeGapCase.Status",
         "HRRequestStatusEnum": "apps.hr_requests.models.HRRequest.Status",
+        "PublicationStateEnum": [
+            ("draft", "Draft"),
+            ("published", "Published"),
+            ("archived", "Archived"),
+        ],
     },
 }

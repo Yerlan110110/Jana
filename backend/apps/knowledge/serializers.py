@@ -78,7 +78,7 @@ class DocumentUpdateSerializer(DocumentCreateSerializer):
         return fields
 
 
-class VersionCommandSerializer(StrictSerializer):
+class KnowledgeVersionCommandSerializer(StrictSerializer):
     expected_version = serializers.IntegerField(min_value=1)
 
 
@@ -245,7 +245,7 @@ class EscalationSerializer(StrictSerializer):
     details = serializers.CharField(max_length=4000, required=False, default="", allow_blank=True)
 
 
-class GapResolutionSerializer(VersionCommandSerializer):
+class GapResolutionSerializer(KnowledgeVersionCommandSerializer):
     response = serializers.CharField(min_length=10, max_length=8000)
 
 

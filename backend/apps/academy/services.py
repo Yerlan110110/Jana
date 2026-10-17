@@ -7,7 +7,7 @@ from rest_framework.exceptions import NotFound, PermissionDenied, ValidationErro
 
 from apps.core.errors import Conflict
 from apps.core.events import emit
-from apps.identity.models import Employee, LegalEntity
+from apps.identity.models import LegalEntity
 from apps.identity.permissions import require_hr
 from apps.identity.selectors import employee_for, visible_employees
 from apps.notifications.services import notify
@@ -150,7 +150,17 @@ def assign(user, course_version, employee, required=True, due_at=None):
         raise Conflict(
             "A newer course revision is available. Refresh the course before assigning it."
         )
-    target = Employee.objects.select_for_update().get(pk=target.pk)
+    target = (
+        visible_employees(user)
+        .select_for_update(of=("self",))
+        .filter(pk=target.pk, is_active=True, user__is_active=True)
+        .first()
+    )
+    if target is None:
+        raise NotFound()
+    require_hr(user, course.legal_entity_id)
+    if target.legal_entity_id != course.legal_entity_id:
+        raise PermissionDenied("Course and employee must belong to the same legal entity.")
     if Enrollment.objects.filter(employee=target, course_version=revision).exists():
         raise Conflict("This employee already has an enrollment for this course revision.")
     enrollment = Enrollment.objects.create(

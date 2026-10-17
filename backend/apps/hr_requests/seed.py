@@ -118,6 +118,23 @@ def seed_requests(employees):
                         "return_for_changes",
                         "Демо: укажите основание и уточните желаемый период или дату выплаты.",
                     )
+                    if primary and kind == HRRequest.Kind.LEAVE:
+                        item = services.update_draft(
+                            owner.user,
+                            item.pk,
+                            item.version,
+                            {
+                                "reason": "Демо: уточнила семейное основание и согласовала передачу задач."
+                            },
+                        )
+                        item = services.submit(owner.user, item.pk, item.version)
+                        item = services.decide(
+                            initial_reviewer,
+                            item.pk,
+                            item.version,
+                            "return_for_changes",
+                            "Демо: уточнение принято. Допишите, кто принимает задачи на период отсутствия.",
+                        )
                 elif target == "cancelled":
                     item = services.cancel(owner.user, item.pk, item.version)
             if state_index % 2 == 0:

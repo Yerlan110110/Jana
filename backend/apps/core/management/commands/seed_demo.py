@@ -76,7 +76,13 @@ class Command(BaseCommand):
                     continue
                 seed_module = import_module(f"apps.{module}.seed")
                 result = getattr(seed_module, method)(*arguments)
-                results[module] = len(result) if isinstance(result, list | tuple) else "complete"
+                results[module] = (
+                    len(result)
+                    if isinstance(result, list | tuple)
+                    else result
+                    if isinstance(result, dict)
+                    else "complete"
+                )
         accounts = []
         for employee in employees:
             user = employee.user

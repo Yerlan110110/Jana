@@ -19,6 +19,7 @@ class CatalogFilter(filters.FilterSet):
 
 
 class EnrollmentFilter(filters.FilterSet):
+    employee = filters.UUIDFilter(field_name="employee_id")
     completion_state = filters.ChoiceFilter(
         method="filter_state",
         choices=[

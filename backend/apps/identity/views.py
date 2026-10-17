@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
+from .filters import EmployeeFilter
 from .models import Department, LegalEntity
 from .selectors import employee_for, visible_employees
 from .serializers import (
@@ -77,7 +78,7 @@ class MeView(APIView):
 class EmployeeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = EmployeeSerializer
     search_fields = ["full_name", "position", "external_id"]
-    filterset_fields = ["department", "is_active"]
+    filterset_class = EmployeeFilter
     ordering_fields = ["full_name", "hired_on"]
 
     def get_queryset(self):

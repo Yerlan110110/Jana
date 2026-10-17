@@ -1,6 +1,3 @@
-from importlib import import_module
-
-from django.apps import apps
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
@@ -15,13 +12,9 @@ urlpatterns = [
     path("api/v1/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="api-docs"),
     path("api/v1/", include("apps.identity.urls")),
     path("api/v1/", include("apps.notifications.urls")),
+    path("api/v1/", include("apps.hr_requests.urls")),
+    path("api/v1/", include("apps.academy.urls")),
+    path("api/v1/", include("apps.knowledge.urls")),
+    path("api/v1/", include("apps.integrations.urls")),
+    path("api/v1/", include("apps.workbench.urls")),
 ]
-for module in ("hr_requests", "academy", "knowledge", "integrations"):
-    if apps.is_installed(f"apps.{module}"):
-        try:
-            url_module = import_module(f"apps.{module}.urls")
-        except ModuleNotFoundError as exc:
-            if exc.name != f"apps.{module}.urls":
-                raise
-        else:
-            urlpatterns.append(path("api/v1/", include(url_module)))

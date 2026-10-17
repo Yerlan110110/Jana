@@ -22,10 +22,10 @@ from .serializers import (
     EscalationSerializer,
     GapCaseSerializer,
     GapResolutionSerializer,
+    KnowledgeVersionCommandSerializer,
     ProviderErrorSerializer,
     QuestionSerializer,
     RevisionSerializer,
-    VersionCommandSerializer,
 )
 
 
@@ -175,12 +175,12 @@ class PublishDocumentView(APIView):
 
     @extend_schema(
         tags=["Knowledge administration"],
-        request=VersionCommandSerializer,
+        request=KnowledgeVersionCommandSerializer,
         responses=DocumentAdminSerializer,
         parameters=COMMAND_PARAMETERS,
     )
     def post(self, request, pk):
-        serializer = VersionCommandSerializer(data=request.data)
+        serializer = KnowledgeVersionCommandSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         get_object_or_404(selectors.manageable_documents(request.user), pk=pk)
         return _idempotent(
@@ -202,12 +202,12 @@ class ArchiveDocumentView(APIView):
 
     @extend_schema(
         tags=["Knowledge administration"],
-        request=VersionCommandSerializer,
+        request=KnowledgeVersionCommandSerializer,
         responses=DocumentAdminSerializer,
         parameters=COMMAND_PARAMETERS,
     )
     def post(self, request, pk):
-        serializer = VersionCommandSerializer(data=request.data)
+        serializer = KnowledgeVersionCommandSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         get_object_or_404(selectors.manageable_documents(request.user), pk=pk)
         return _idempotent(

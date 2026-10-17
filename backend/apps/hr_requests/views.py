@@ -8,6 +8,7 @@ from apps.core.idempotency import execute
 from apps.identity.selectors import employee_for
 
 from . import services
+from .filters import RequestFilter
 from .selectors import leave_projection, visible_requests
 from .serializers import (
     DecisionSerializer,
@@ -37,7 +38,7 @@ class RequestViewSet(
     serializer_class = RequestSerializer
     http_method_names = ["get", "post", "patch", "head", "options"]
     search_fields = ["reason", "employee__full_name"]
-    filterset_fields = ["kind", "status", "employee"]
+    filterset_class = RequestFilter
     ordering_fields = ["created_at", "submitted_at", "start_date", "amount"]
 
     def get_queryset(self):

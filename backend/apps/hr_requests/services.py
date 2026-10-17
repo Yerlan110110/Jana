@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.core.exceptions import ValidationError as ModelValidationError
 from django.db import transaction
 from django.utils import timezone
 from rest_framework.exceptions import NotFound, PermissionDenied, ValidationError
@@ -81,7 +82,12 @@ def validate_details(kind, values):
             raise ValidationError({"start_date": "Start and end dates are required."})
         if end < start:
             raise ValidationError({"end_date": "End date cannot precede start date."})
-        values["leave_days"] = Decimal((end - start).days + 1)
+        days = Decimal((end - start).days + 1)
+        try:
+            HRRequest._meta.get_field("leave_days").run_validators(days)
+        except ModelValidationError as error:
+            raise ValidationError({"end_date": "The date range is too large."}) from error
+        values["leave_days"] = days
         values["amount"] = None
         values["currency"] = ""
         values["requested_payment_date"] = None

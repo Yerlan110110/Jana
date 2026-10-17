@@ -47,6 +47,11 @@ def test_request_seed_covers_all_states_and_preserves_user_changes():
     assert OutboxMessage.objects.count() == HRRequest.objects.filter(status="approved").count()
     assert Notification.objects.filter(read_at__isnull=False).exists()
     assert Notification.objects.filter(read_at__isnull=True).exists()
+    returned = HRRequest.objects.get(employee=dana, kind="leave", status="returned")
+    assert returned.submission_number == 2
+    submitted = list(returned.revisions.order_by("number"))
+    assert [revision.number for revision in submitted] == [1, 2]
+    assert submitted[0].payload["reason"] != submitted[1].payload["reason"]
     draft = HRRequest.objects.get(employee=dana, kind="leave", status="draft")
     changed = services.update_draft(
         dana.user, draft.pk, draft.version, {"reason": "Изменено после первого наполнения"}
