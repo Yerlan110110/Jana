@@ -4,7 +4,7 @@
 
 Read docs/product/project-rules.md and docs/architecture/backend-contract.md before changing code.
 The owner explicitly prioritizes quality and complete populated scenarios over assumed time pressure for this hackathon only.
-Frontend, visual design and interaction implementation belong to the next design agent. This delivery owns backend, research, specifications, fixtures and integration contracts.
+The initial delivery implements backend, research, specifications, fixtures and integration contracts. The owner's latest instruction gives the continuing Codex agent full ownership of architecture, backend, frontend, visual design, interaction, verification and the jury demo. Read CODEX_START.md and HANDOFF.md; do not treat the earlier division of authors as a permanent scope restriction.
 Use synthetic people, policies and learning content. Mark demonstration policy content as such.
 Never copy private MIS Pro code or documents into this public repository.
 
@@ -37,5 +37,6 @@ No real credentials, personal data, model keys or environment files in Git.
 Read HANDOFF.md before continuing a delivered project. Update it after meaningful changes.
 Document accepted deviations in the existing architecture contract and decision log.
 Check the actual diff, run the relevant tests, then publish to the authorized repository.
+Commit meaningful completed changes frequently and push through an authorized connection. The current connector's documented 403 is an access limitation, not missing user authorization; preserve recoverable local history if publication remains blocked. Inspect any new remote history before reconciling it.
 Do not claim that a passed unit test proves an untested Docker, browser, provider or production deployment.
 
