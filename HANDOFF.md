@@ -38,6 +38,8 @@ The [submitted-version checkpoint](docs/verification/request-snapshots.md) repla
 
 The [button-feedback checkpoint](docs/verification/button-motion.md) repairs actual keyboard and reduced-motion movement and fading old focus rings in the shared action adapter. Its three-test browser run and selected video frames verify that scope. Whole-product keyboard and motion acceptance remain open.
 
+The [editor-recovery checkpoint](docs/verification/request-editor-recovery.md) repairs submission remaining blocked after a successful normalized save. Its real lost-update-response sequence also proves that replay preserves newer typing. Probe requests retain history and the successful probe is cancelled by its owner.
+
 Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. The first source checkpoint `3709c00` is published. Both GitHub Actions jobs passed at https://github.com/Yerlan110110/Jana/actions/runs/39060785959. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
 
 ## Environment and retained work

@@ -281,10 +281,16 @@ export function RequestEditor({
   const dirty =
     JSON.stringify(values) !== JSON.stringify(initialFields(record));
   function persist(body: EditIntent) {
+    const submittedValues = initialFields({ ...record, ...body });
     save.mutate(body, {
       onSuccess: (result) => {
         setVersion(result.version);
         setSaved(true);
+        setValues((current) =>
+          JSON.stringify(current) === JSON.stringify(submittedValues)
+            ? initialFields(result)
+            : current,
+        );
         client.setQueryData(["request", record.id], result);
       },
     });

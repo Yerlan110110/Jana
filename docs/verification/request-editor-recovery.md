@@ -1,0 +1,19 @@
+# Reconcile accepted request values safely
+
+18 October 2026. Scope is the existing request editor after save and uncertain retry.
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+| HIGH | `RequestEditor.persist` in `frontend/src/features/requests/forms.tsx` | Saving an advance amount entered as `6500` succeeds, but the API returns `6500.00`. Whitespace in a reason is also trimmed. The local values remain different, so the editor still reports unsaved changes and hides submission. | Reuse `initialFields` to reconcile the accepted response when the current values still match that command's sent values. Retain newer local edits otherwise. | The employee can submit a successfully saved correction. Repeating an older uncertain command cannot overwrite later typing. No duplicate money parser, forced rerender or relaxed dirty guard is needed. |
+
+The existing guard against submitting unsaved values is correct and remains in place. The fault is that a successful save did not reconcile the values actually accepted by the API. The six-line repair belongs to that success boundary. It applies to both request kinds through their existing field model and does not change backend validation, versions or idempotency.
+
+The real RED is `.artifacts/request-canonicalization-red-20261018-1.log`, with request `be402d2e-0539-4bfd-a3b3-b227a8b2e43e`. The PATCH returns 200 and a fresh API read confirms `6500.00` and the trimmed reason. The browser then fails to find saved-state feedback because its local form remains dirty. This is a behavioral failure after a successful write, not a setup failure.
+
+The focused GREEN is `.artifacts/request-canonicalization-green-20261018-1.log`, with two passed tests including sign-in setup. The behavior test saves the correction, checks accepted fields and proceeds to submission. It also forwards another real PATCH to the API and aborts only its browser response. The employee enters a newer amount and reason, then explicitly retries the earlier command. The newer fields remain in the form, submission remains unavailable until they are saved, and the API retains exactly two edit events at that point. The retry does not duplicate the committed edit. A final save and submission preserve the newer amount `7200.00` and reason in the immutable revision. Owner cancellation then removes this probe from the review queue while retaining its history.
+
+The test uses the same real transport-interruption mechanism as the existing recovery test. No React state injection, fake approval endpoint or database reset is used. Secret-filled functional sessions do not supply visual screenshots; the evidence is the real browser assertions, API reads and retained trace.
+
+The current full Docker run passes fifteen tests at `.artifacts/request-canonicalization-browser-full-20261018.log`. The fresh PostgreSQL run passes 232 tests with 193 retained warnings at `.artifacts/request-canonicalization-postgresql-20261018.log`. All 30 compiled files match the served build at `.artifacts/request-canonicalization-build-identity-final.json`. Contract, frontend and browser types, build, migration, style, pinned-skill and report-safety checks pass in the `request-canonicalization-*` logs. The shared-button motion repair is included in this running frontend. Static normal-state inventory evidence from the preceding checkpoint remains applicable to unchanged layout; it is not a fresh full-state inspection.
+
+Fix Root Causes changed the save boundary rather than weakening the unsaved-change check. Model the Domain reuses the existing request-kind fields. Laziness Protocol reuses `initialFields` instead of adding another normalization model. The material risk is overwriting edits made after an uncertain write; the lost-response and newer-input sequence checks that exact risk. Whole-product keyboard, state and independent release acceptance remain separate.
