@@ -4,7 +4,7 @@ import { expect, type App, type Screen } from "e2e";
 import { sessionClient } from "../web/api.js";
 import { auditPage } from "./audit.js";
 import { viewsFor, type View } from "./views.js";
-import { captureNativeViewport } from "../zoom/capture.js";
+import { captureOwnedViewport } from "../zoom/capture.js";
 
 type RenderCase = { kind: "viewport"; width: number } | { kind: "native-zoom"; factor: 2 };
 
@@ -48,6 +48,11 @@ async function capture({ app, browser, screen, views, cases }: {
         expect(geometry.width * environment.factor).toBe(geometry.outerWidth);
         expect(geometry.cssZoom).toBe("1");
         expect(geometry.visualScale).toBe(1);
+      } else {
+        expect(geometry.width).toBe(environment.width);
+        expect(geometry.dpr).toBe(1);
+        expect(geometry.cssZoom).toBe("1");
+        expect(geometry.visualScale).toBe(1);
       }
       const segments = [];
       for (let top = 0; top < geometry.height; top += Math.max(1, geometry.viewportHeight - 100)) {
@@ -57,7 +62,7 @@ async function capture({ app, browser, screen, views, cases }: {
         }, top);
         const offset = await browser.evaluate(() => scrollY);
         const image = environment.kind === "native-zoom"
-          ? await captureNativeViewport(browser, `${directory}/${view.id}-${name}-${offset}.png`)
+          ? await captureOwnedViewport(browser, `${directory}/${view.id}-${name}-${offset}.png`)
           : { screenshot: await app.screenshot(`${view.id}-${name}-${offset}`) };
         segments.push({ offset, ...image });
         if (offset + geometry.viewportHeight >= geometry.height) break;

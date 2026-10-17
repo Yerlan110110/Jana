@@ -1,13 +1,13 @@
 import { writeFile } from "node:fs/promises";
 import type { Browser } from "@e2e-dev/web";
 
-export async function captureNativeViewport(browser: Browser, path: string) {
+export async function captureOwnedViewport(browser: Browser, path: string) {
   const endpoint = new URL(process.env.JANAMEN_ZOOM_CDP ?? "");
   if (endpoint.protocol !== "http:" || endpoint.hostname !== "127.0.0.1") {
-    throw new Error("Native screenshots require the owned loopback Chrome");
+    throw new Error("Viewport screenshots require the owned loopback Chrome");
   }
   const hasPassword = await browser.evaluate(() => Array.from(document.querySelectorAll<HTMLInputElement>('input[type="password"]')).some(input => input.value.length > 0));
-  if (hasPassword) throw new Error("Native screenshots refuse populated password fields");
+  if (hasPassword) throw new Error("Viewport screenshots refuse populated password fields");
   const url = await browser.url();
   const pages: unknown = await fetch(new URL("/json/list", endpoint), { redirect: "error" }).then(response => response.json());
   if (!Array.isArray(pages)) throw new Error("Chrome target list is invalid");
@@ -21,14 +21,14 @@ export async function captureNativeViewport(browser: Browser, path: string) {
   if (debuggerUrl.protocol !== "ws:" || debuggerUrl.host !== endpoint.host) throw new Error("Chrome debugger changed origin");
   const socket = new WebSocket(debuggerUrl);
   const data = await new Promise<string>((resolve, reject) => {
-    const timeout = setTimeout(() => { socket.close(); reject(new Error("Native screenshot timed out")); }, 10_000);
+    const timeout = setTimeout(() => { socket.close(); reject(new Error("Viewport screenshot timed out")); }, 10_000);
     const finish = (error: Error | null, value = "") => {
       clearTimeout(timeout);
       socket.close();
       if (error) reject(error);
       else resolve(value);
     };
-    socket.onerror = () => finish(new Error("Native screenshot connection failed"));
+    socket.onerror = () => finish(new Error("Viewport screenshot connection failed"));
     socket.onopen = () => socket.send(JSON.stringify({
       id: 1, method: "Page.captureScreenshot",
       params: { format: "png", fromSurface: true, captureBeyondViewport: false },
@@ -50,9 +50,9 @@ export async function captureNativeViewport(browser: Browser, path: string) {
   const bytes = Buffer.from(data, "base64");
   if (!bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) throw new Error("Chrome returned no PNG");
   const pixels = { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
-  const viewport = await browser.evaluate(() => ({ width: outerWidth, height: innerHeight, dpr: devicePixelRatio }));
-  if (pixels.width !== viewport.width || pixels.height < viewport.height * viewport.dpr || pixels.height >= (viewport.height + 1) * viewport.dpr) {
-    throw new Error("Native screenshot dimensions do not cover the actual viewport");
+  const viewport = await browser.evaluate(() => ({ width: innerWidth, height: visualViewport?.height ?? innerHeight, dpr: devicePixelRatio }));
+  if (pixels.width !== Math.round(viewport.width * viewport.dpr) || Math.abs(pixels.height - viewport.height * viewport.dpr) > 1) {
+    throw new Error("Viewport screenshot dimensions do not cover the actual viewport");
   }
   await writeFile(path, bytes, { flag: "wx" });
   return { screenshot: path, pixels };

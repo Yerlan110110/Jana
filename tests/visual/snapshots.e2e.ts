@@ -3,7 +3,7 @@ import { test } from "@e2e-dev/web";
 import { expect } from "e2e";
 import { sessionClient } from "../web/api.js";
 import { data } from "./views.js";
-import { captureNativeViewport } from "../zoom/capture.js";
+import { captureOwnedViewport } from "../zoom/capture.js";
 
 test("submitted leave and advance versions retain readable historical facts", { session: "visual-employee" }, async ({ app, browser, screen }) => {
   if (!app.baseUrl) throw new Error("Synthetic app URL is missing");
@@ -32,7 +32,7 @@ test("submitted leave and advance versions retain readable historical facts", { 
         await expect(reason).toBeVisible();
         await expect(disclosure.getByText(revision.payload.employee_name, { exact: true })).toBeVisible();
         await reason.scrollIntoView();
-        if (native) await captureNativeViewport(browser, `${directory}/${kind}-submission-${revision.number}.png`);
+        if (native) await captureOwnedViewport(browser, `${directory}/${kind}-submission-${revision.number}.png`);
         else await app.screenshot(`${kind}-submission-${revision.number}-${width}`);
       }
       const dimensions = await browser.evaluate(() => ({ viewport: innerWidth, content: document.documentElement.scrollWidth }));

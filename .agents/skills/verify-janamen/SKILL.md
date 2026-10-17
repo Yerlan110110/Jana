@@ -54,6 +54,10 @@ The Chrome path is this host's installed Chrome for Testing 156.0.8078.4. Confir
 
 Read `docs/verification/native-zoom.md` before interpreting screenshots. At native zoom the ordinary engine screenshot has a reproduced clipping defect. The dedicated visible-viewport capture refuses populated password fields and only attaches to the launcher-owned loopback browser. Do not use it for Secret-filled functional sessions. Open the actual native images before claiming visual coverage. The launcher stops Chrome; retain its private disposable profile until evidence review, then remove only that owned profile.
 
+## Capture calibration
+
+Read `docs/verification/capture-calibration.md` when a screenshot looks empty or clipped. Check actual PNG pixels, dimensions and hashes before changing the capture path. Repeated image display is not proof of a blank file. The ordinary license test uses instant end-scroll and actual paragraph bounds. Native 200% keeps its separate clip-free capture. The optional `e2e.capture.config.ts` runs through the owned-profile launcher with factor 1 and refuses populated password fields. Do not use it for Secret-filled functional sessions.
+
 ## Bug bash
 
 Use the charters in `features/`. An exploratory model is not configured. Agent-driven `e2e explore` remains unproven until an authorized model actually runs the mapped charter. Do not invent a passing bug bash. A future local bug-bash config stays ignored under `.e2e/bugbash/`. Keep one signed-in charter per session and one writer to the database. A reported defect becomes a verified bug only after its specific assertion fails with `ASSERTION_FAILED` in `tests/web/bugbash/<slug>.e2e.ts`.
