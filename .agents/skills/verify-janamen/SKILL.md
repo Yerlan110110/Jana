@@ -37,7 +37,7 @@ On Linux, `docker compose --profile test run --build --rm --no-deps browser-test
 
 Flows that sign out or change identity call `signIn` from `tests/web/support.ts` inside the test. They own that login. A logout invalidates the server session, including any copy restored from a saved setup. Keep shared setup sessions for tests that do not sign out.
 
-The API-replacement check reserves the API's old address. Start its isolated stack with `COMPOSE_FILE=compose.yaml:compose.ci.yaml` so Docker permits that reservation. `JANAMEN_TEST_SUBNET` selects an unused private CIDR when the default conflicts with another local network. Set these variables for every command that operates on that stack. The application launch without this override keeps Docker's normal address allocation.
+The API-replacement check derives API and frontend loopback origins from the selected Compose project's published ports. Optional URL arguments assert those exact origins and reject another stack before mutation. Inspect the origins recorded in its JSON report. Older local reports without origins are not project-bound readiness evidence. The check reserves the API's old address. Start its isolated stack with `COMPOSE_FILE=compose.yaml:compose.ci.yaml` so Docker permits that reservation. `JANAMEN_TEST_SUBNET` selects an unused private CIDR when the default conflicts with another local network. Set these variables for every command that operates on that stack. The application launch without this override keeps Docker's normal address allocation.
 
 ## Native zoom
 

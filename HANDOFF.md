@@ -46,6 +46,8 @@ The [keyboard checkpoint](docs/verification/keyboard.md) records the repaired na
 
 The [operator-recovery checkpoint](docs/verification/operator-recovery.md) proves a fresh three-role advance, real failed and accepted delivery attempts, separate operator restore/retry commands and the employee receipt. The human decision version and history remain unchanged. The same owned worker is restored. Public deployment and independent review remain open.
 
+The [nginx verification correction](docs/verification/nginx-project-origin.md) binds readiness to the selected Compose project. Older local reports without recorded origins do not establish project-bound readiness. The corrected real replacement and subsequent sixteen-test browser run pass.
+
 ## Environment and retained work
 
 The coordinating checkout is `/home/yqecea/coding-projects/jana`. Compose project `janamen-demo` owns API port 8000 and web port 8080. The coordinator stopped the owned Vite process on port 5173 after switching acceptance to immutable Docker builds. `janamen-ci` owns API port 8010 and web port 8090 for clean browser acceptance, plus its separate PostgreSQL test database. Do not stop another task's services by process name.

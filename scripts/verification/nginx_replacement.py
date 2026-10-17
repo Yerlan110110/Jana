@@ -36,15 +36,23 @@ def wait_ready(url, seconds=30):
     raise RuntimeError(f"Readiness did not recover at {url}")
 
 
+def published_origin(compose, service, port):
+    addresses = command([*compose, "port", service, str(port)]).splitlines()
+    if len(addresses) != 1:
+        raise RuntimeError(f"Expected one published port for {service}")
+    origin = f"http://{addresses[0]}"
+    if urlparse(origin).hostname not in {"localhost", "127.0.0.1", "::1"}:
+        raise RuntimeError(f"The selected {service} must publish only on loopback")
+    return origin
+
+
 def main():
     parser = argparse.ArgumentParser(description="Replace the API in an owned synthetic Compose stack and verify nginx DNS recovery without restarting nginx.")
     parser.add_argument("--project", required=True, choices=["janamen-demo", "janamen-ci", "janamen-browser", "janamen-dns-test"])
-    parser.add_argument("--web-url", default="http://127.0.0.1:8080")
-    parser.add_argument("--api-url", default="http://127.0.0.1:8000")
+    parser.add_argument("--web-url", help="Optional assertion of the selected frontend's published origin")
+    parser.add_argument("--api-url", help="Optional assertion of the selected API's published origin")
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
-    if any(urlparse(url).hostname not in {"localhost", "127.0.0.1", "::1"} for url in [args.web_url, args.api_url]):
-        parser.error("Use loopback URLs for the owned synthetic stack")
     if args.output.exists():
         parser.error("Choose a new evidence output path")
     compose = ["docker", "compose", "-p", args.project]
@@ -52,6 +60,11 @@ def main():
     frontend_id = command([*compose, "ps", "-q", "frontend"])
     if not api_id or not frontend_id:
         raise RuntimeError("API and frontend must already be running")
+    api_origin = published_origin(compose, "api", 8000)
+    web_origin = published_origin(compose, "frontend", 80)
+    for supplied, actual in [(args.api_url, api_origin), (args.web_url, web_origin)]:
+        if supplied and supplied.rstrip("/") != actual:
+            parser.error(f"Origin does not match the selected Compose project; expected {actual}")
     networks = json.loads(command(["docker", "inspect", "-f", "{{json .NetworkSettings.Networks}}", api_id]))
     if len(networks) != 1:
         raise RuntimeError("Expected the dedicated single Compose network")
@@ -59,11 +72,11 @@ def main():
     old_ip = state["IPAddress"]
     front_image = command(["docker", "inspect", "-f", "{{.Image}}", frontend_id])
     frontend_started = command(["docker", "inspect", "-f", "{{.State.StartedAt}}", frontend_id])
-    api_ready = args.api_url.rstrip("/") + "/api/v1/ready/"
-    web_ready = args.web_url.rstrip("/") + "/api/v1/ready/"
+    api_ready = api_origin + "/api/v1/ready/"
+    web_ready = web_origin + "/api/v1/ready/"
     wait_ready(api_ready)
     wait_ready(web_ready)
-    report = {"project": args.project, "old_api_ip": old_ip, "frontend_id": frontend_id, "frontend_started_at": frontend_started, "passed": False, "stage": "replace_api"}
+    report = {"project": args.project, "api_origin": api_origin, "web_origin": web_origin, "old_api_ip": old_ip, "frontend_id": frontend_id, "frontend_started_at": frontend_started, "passed": False, "stage": "replace_api"}
     probe_id = None
     replaced = False
     try:
