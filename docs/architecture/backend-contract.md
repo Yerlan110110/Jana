@@ -141,6 +141,7 @@ Use DRF SessionAuthentication. Protect login and every unsafe request from CSRF,
 Return structured errors with code, message, field_errors where relevant, and request_id.
 Validation failures use 400, unauthenticated requests 401 where supported, denied actions 403, hidden objects 404, stale/idempotency conflicts 409, rate limits 429, dependencies 503.
 Reject mass assignment of role, employee ownership, scores, official balances and workflow status.
+`LOGIN_THROTTLE_RATE` configures the existing DRF login throttle, default `10/min`. Isolated browser suites use `120/min` because they authenticate multiple roles rapidly. Backend behavior tests explicitly keep the default and prove the eleventh failed attempt is throttled. Public demonstrations keep the default unless their own documented traffic needs justify another rate.
 The frontend sends credentials and X-CSRFToken, reads new CSRF after login, and handles stale version conflicts explicitly.
 Server links use resource types and ids. The frontend owns route presentation.
 

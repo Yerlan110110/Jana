@@ -146,16 +146,12 @@ export function CasePage() {
   });
   const resolve = useCommand(
     async (
-      values: {
-        expected_version: number;
-        response: string;
-        published_revision_id?: string;
-      },
+      { id: caseId, ...values }: Model<"GapResolutionRequest"> & { id: string },
       key,
     ) =>
       unwrap(
         await api.POST("/api/v1/knowledge/gaps/{id}/resolve/", {
-          params: { path: { id }, header: { "Idempotency-Key": key } },
+          params: { path: { id: caseId }, header: { "Idempotency-Key": key } },
           body: values,
         }),
       ),
@@ -238,6 +234,7 @@ export function CasePage() {
               event.preventDefault();
               void resolve
                 .mutateAsync({
+                  id: record.id,
                   expected_version: record.version,
                   response,
                   ...(revisionId ? { published_revision_id: revisionId } : {}),
