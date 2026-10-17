@@ -21,7 +21,7 @@ import {
 import { api, unwrap, useCommand, type Model } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { date } from "@/lib/format";
-import { Facts, WriteRecovery } from "../requests/support";
+import { Facts, WriteRecovery, isAccessDenied } from "../requests/support";
 import {
   categories,
   categoryValue,
@@ -349,7 +349,7 @@ function CourseFields({
                 Код материала
                 <Input
                   required
-                  pattern="[-a-zA-Z0-9_]+"
+                  pattern={"[a-zA-Z0-9_\\-]+"}
                   maxLength={80}
                   value={lesson.id}
                   onChange={(e) =>
@@ -461,7 +461,7 @@ function CourseFields({
               Код вопроса
               <Input
                 required
-                pattern="[-a-zA-Z0-9_]+"
+                pattern={"[a-zA-Z0-9_\\-]+"}
                 maxLength={80}
                 value={question.id}
                 onChange={(e) =>
@@ -487,7 +487,7 @@ function CourseFields({
                   Код варианта {optionIndex + 1}
                   <Input
                     required
-                    pattern="[-a-zA-Z0-9_]+"
+                    pattern={"[a-zA-Z0-9_\\-]+"}
                     maxLength={40}
                     value={option.id}
                     onChange={(e) =>
@@ -763,14 +763,19 @@ function CourseEditor({
     !!record && JSON.stringify(draft) !== JSON.stringify(record.draft);
   const save = useCommand(
     async (
-      intent: { slug: string; draft: Draft; expected_version: number },
+      intent: {
+        id?: string;
+        slug: string;
+        draft: Draft;
+        expected_version: number;
+      },
       key,
     ) =>
-      record
+      intent.id
         ? unwrap(
             await api.POST("/api/v1/academy/manage/courses/{id}/save-draft/", {
               params: {
-                path: { id: record.id },
+                path: { id: intent.id },
                 header: { "Idempotency-Key": key },
               },
               body: {
@@ -789,13 +794,14 @@ function CourseEditor({
   const transition = useCommand(
     async (
       intent: {
+        id: string;
         action: "publish" | "archive" | "restore";
         expected_version: number;
       },
       key,
     ) => {
       const params = {
-        path: { id: record?.id ?? "" },
+        path: { id: intent.id },
         header: { "Idempotency-Key": key },
       };
       const body = { expected_version: intent.expected_version };
@@ -860,7 +866,7 @@ function CourseEditor({
           onSubmit={(e) => {
             e.preventDefault();
             save.mutate(
-              { slug, draft, expected_version: version },
+              { id: record?.id, slug, draft, expected_version: version },
               { onSuccess: saved },
             );
           }}
@@ -869,7 +875,7 @@ function CourseEditor({
             Код курса
             <Input
               required
-              pattern="[-a-zA-Z0-9_]+"
+              pattern={"[a-zA-Z0-9_\\-]+"}
               maxLength={80}
               disabled={!!record || pending}
               value={slug}
@@ -883,9 +889,13 @@ function CourseEditor({
           <CourseFields draft={draft} update={setDraft} disabled={pending} />
           <WriteRecovery
             error={save.error}
-            refresh={() => {
-              void refresh();
-            }}
+            refresh={
+              record
+                ? () => {
+                    void refresh();
+                  }
+                : undefined
+            }
             retry={
               save.variables
                 ? () => {
@@ -966,7 +976,11 @@ function CourseEditor({
                       disabled={save.isPending}
                       onClick={() =>
                         transition.mutate(
-                          { action: confirm, expected_version: version },
+                          {
+                            id: record.id,
+                            action: confirm,
+                            expected_version: version,
+                          },
                           {
                             onSuccess: (result) => {
                               saved(result);
@@ -1045,18 +1059,24 @@ export function CourseEditorPage() {
       {id ? (
         course.isPending ? (
           <LoadingState />
-        ) : course.error ? (
+        ) : course.error && (!course.data || isAccessDenied(course.error)) ? (
           <ErrorNotice
             error={course.error}
             retry={() => void course.refetch()}
           />
         ) : (
           course.data && (
-            <CourseEditor
-              key={course.data.id}
-              record={course.data}
-              refreshRecord={async () => (await course.refetch()).data}
-            />
+            <>
+              <ErrorNotice
+                error={course.error}
+                retry={() => void course.refetch()}
+              />
+              <CourseEditor
+                key={course.data.id}
+                record={course.data}
+                refreshRecord={async () => (await course.refetch()).data}
+              />
+            </>
           )
         )
       ) : (

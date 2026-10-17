@@ -227,8 +227,8 @@ export function EnrollmentRow({
 export function Rules({ version }: { version: Model<"CourseVersionSummary"> }) {
   return (
     <div className="ac-meta">
-      <span>{version.lesson_count} материалов</span>
-      <span>{version.question_count} вопросов</span>
+      <span>Материалы {version.lesson_count}</span>
+      <span>Вопросы {version.question_count}</span>
       <span>Порог {version.passing_percent}%</span>
       <span>
         {version.max_attempts === null

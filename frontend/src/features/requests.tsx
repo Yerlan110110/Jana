@@ -20,10 +20,16 @@ import {
 import { api, unwrap, useCommand, type Model } from "@/lib/api";
 import { date, money } from "@/lib/format";
 import { useSession } from "@/lib/session";
-import { Facts, WriteRecovery } from "./requests/support";
+import {
+  Facts,
+  WriteRecovery,
+  isAccessDenied,
+  timestamp,
+} from "./requests/support";
 import "./journeys.css";
 
 type RequestRecord = Model<"RequestDetail">;
+type EditIntent = Model<"PatchedRequestEditRequest"> & { id: string };
 type RequestFields =
   | { kind: "leave"; start_date: string; end_date: string; reason: string }
   | {
@@ -520,7 +526,6 @@ export function RequestCreatePage() {
             />
             <WriteRecovery
               error={create.error}
-              refresh={() => create.reset()}
               retry={
                 create.variables
                   ? () => {
@@ -561,21 +566,20 @@ function RequestEditor({
   const [values, setValues] = useState(() => initialFields(record));
   const [version, setVersion] = useState(record.version);
   const [saved, setSaved] = useState(false);
-  const save = useCommand(
-    async (body: Model<"PatchedRequestEditRequest">, key) =>
-      unwrap(
-        await api.PATCH("/api/v1/requests/{id}/", {
-          body,
-          params: {
-            path: { id: record.id },
-            header: { "Idempotency-Key": key },
-          },
-        }),
-      ),
+  const save = useCommand(async ({ id, ...body }: EditIntent, key) =>
+    unwrap(
+      await api.PATCH("/api/v1/requests/{id}/", {
+        body,
+        params: {
+          path: { id },
+          header: { "Idempotency-Key": key },
+        },
+      }),
+    ),
   );
   const dirty =
     JSON.stringify(values) !== JSON.stringify(initialFields(record));
-  function persist(body: Model<"PatchedRequestEditRequest">) {
+  function persist(body: EditIntent) {
     save.mutate(body, {
       onSuccess: (result) => {
         setVersion(result.version);
@@ -599,7 +603,7 @@ function RequestEditor({
           onSubmit={(e) => {
             e.preventDefault();
             const { kind, ...fields } = values;
-            persist({ ...fields, expected_version: version });
+            persist({ id: record.id, ...fields, expected_version: version });
           }}
         >
           <RequestFieldsForm
@@ -632,7 +636,7 @@ function RequestEditor({
             {saved && !dirty
               ? "Изменения сохранены."
               : dirty
-                ? "Есть несохранённые изменения. Отправка ниже использует последнюю сохранённую версию."
+                ? "Есть несохранённые изменения. Сохраните их, чтобы перейти к отправке."
                 : ""}
           </p>
           <ActionButton type="submit" loading={save.isPending}>
@@ -656,10 +660,14 @@ function RequestActions({
 }) {
   const client = useQueryClient();
   const [comment, setComment] = useState("");
-  const [selected, setSelected] = useState<RequestAction | null>(null);
+  const [selected, setSelected] = useState<{
+    action: RequestAction;
+    expected_version: number;
+  } | null>(null);
   const command = useCommand(
     async (
       intent: {
+        id: string;
         action: RequestAction;
         expected_version: number;
         comment: string;
@@ -676,7 +684,7 @@ function RequestActions({
       return unwrap(
         await api.POST(actionPaths[intent.action], {
           params: {
-            path: { id: record.id },
+            path: { id: intent.id },
             header: { "Idempotency-Key": key },
           },
           body,
@@ -685,6 +693,7 @@ function RequestActions({
     },
   );
   function run(intent: {
+    id: string;
     action: RequestAction;
     expected_version: number;
     comment: string;
@@ -731,7 +740,7 @@ function RequestActions({
               }
               disabled={command.isPending}
               onClick={() => {
-                setSelected(action);
+                setSelected({ action, expected_version: record.version });
                 command.reset();
               }}
             >
@@ -745,27 +754,30 @@ function RequestActions({
             onSubmit={(e) => {
               e.preventDefault();
               run({
-                action: selected,
+                id: record.id,
+                action: selected.action,
                 comment,
-                expected_version: record.version,
+                expected_version: selected.expected_version,
               });
             }}
           >
-            <h3>{actionLabels[selected]}</h3>
+            <h3>{actionLabels[selected.action]}</h3>
             <p>
-              {selected === "cancel"
+              {selected.action === "cancel"
                 ? "Заявление будет отменено. Его история сохранится."
-                : selected === "submit"
+                : selected.action === "submit"
                   ? "На рассмотрение уйдут последние сохранённые данные. Проверьте их выше."
                   : "Решение будет записано в историю вместе с вашим именем и комментарием."}
             </p>
-            {selected !== "cancel" && selected !== "submit" && (
+            {selected.action !== "cancel" && selected.action !== "submit" && (
               <label className="field">
                 Комментарий
-                {selected !== "approve" ? " · обязательно" : " · необязательно"}
+                {selected.action !== "approve"
+                  ? " · обязательно"
+                  : " · необязательно"}
                 <Textarea
                   rows={3}
-                  required={selected !== "approve"}
+                  required={selected.action !== "approve"}
                   maxLength={2000}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
@@ -775,7 +787,7 @@ function RequestActions({
             )}
             <div className="button-row">
               <ActionButton type="submit" loading={command.isPending}>
-                {actionLabels[selected]}
+                {actionLabels[selected.action]}
               </ActionButton>
               <ActionButton
                 variant="secondary"
@@ -790,7 +802,10 @@ function RequestActions({
         <WriteRecovery
           error={command.error}
           refresh={() => {
-            void refresh().then(() => command.reset());
+            void refresh().then(() => {
+              command.reset();
+              setSelected(null);
+            });
           }}
           retry={
             command.variables
@@ -864,11 +879,12 @@ export function RequestDetailPage() {
       />
       {request.isPending ? (
         <LoadingState />
-      ) : request.error ? (
+      ) : request.error && (!record || isAccessDenied(request.error)) ? (
         <ErrorNotice error={request.error} retry={() => void refresh()} />
       ) : (
         record && (
           <div className="stack">
+            <ErrorNotice error={request.error} retry={() => void refresh()} />
             <DataSection
               title="Сохранённые данные"
               action={<StatusLabel status={record.status} />}
@@ -990,7 +1006,7 @@ export function RequestDetailPage() {
                 {record.history.map((event) => (
                   <li key={event.id}>
                     <div className="rq-meta">
-                      <span>{date(event.created_at)}</span>
+                      <span>{timestamp(event.created_at)}</span>
                       <span>
                         Версия {event.version} · Подача{" "}
                         {event.submission_number}
@@ -1016,7 +1032,8 @@ export function RequestDetailPage() {
                 record.revisions.map((revision) => (
                   <details key={revision.id}>
                     <summary>
-                      Подача {revision.number} · {date(revision.created_at)}
+                      Подача {revision.number} ·{" "}
+                      {timestamp(revision.created_at)}
                     </summary>
                     <pre className="rq-snapshot">
                       {JSON.stringify(revision.payload, null, 2)}

@@ -17,7 +17,12 @@ import {
 import { api, unwrap, useCommand, type Model } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { date } from "@/lib/format";
-import { Facts, WriteRecovery } from "../requests/support";
+import {
+  Facts,
+  WriteRecovery,
+  isAccessDenied,
+  timestamp,
+} from "../requests/support";
 import {
   categoryLabel,
   categoryValue,
@@ -432,6 +437,12 @@ export function CoursePage() {
   );
 }
 
+type LearningIntent = { id: string; expected_version: number } & (
+  | { action: "start" }
+  | { action: "complete_lesson"; lesson_id: string }
+);
+type QuizIntent = Model<"AttemptCommandRequest"> & { id: string };
+
 function AttemptRows({
   enrollment,
 }: {
@@ -451,7 +462,7 @@ function AttemptRows({
               </Link>
             </h3>
             <p className="muted">
-              {date(attempt.submitted_at)} · Версия курса{" "}
+              {timestamp(attempt.submitted_at)} · Версия курса{" "}
               {enrollment.course_version.number}
             </p>
           </div>
@@ -490,42 +501,29 @@ export function LearningPage() {
   const position =
     content?.lessons.findIndex((item) => item.id === lesson?.id) ?? 0;
   const record = enrollment.data;
-  const command = useCommand(
-    async (
-      intent: {
-        action: "start" | "complete_lesson";
-        expected_version: number;
-        lesson_id?: string;
-      },
-      key,
-    ) => {
-      const params = { path: { id }, header: { "Idempotency-Key": key } };
-      return intent.action === "start"
-        ? unwrap(
-            await api.POST("/api/v1/academy/enrollments/{id}/start/", {
-              params,
-              body: { expected_version: intent.expected_version },
-            }),
-          )
-        : unwrap(
-            await api.POST(
-              "/api/v1/academy/enrollments/{id}/complete-lesson/",
-              {
-                params,
-                body: {
-                  expected_version: intent.expected_version,
-                  lesson_id: intent.lesson_id ?? "",
-                },
-              },
-            ),
-          );
-    },
-  );
-  function run(intent: {
-    action: "start" | "complete_lesson";
-    expected_version: number;
-    lesson_id?: string;
-  }) {
+  const command = useCommand(async (intent: LearningIntent, key) => {
+    const params = {
+      path: { id: intent.id },
+      header: { "Idempotency-Key": key },
+    };
+    return intent.action === "start"
+      ? unwrap(
+          await api.POST("/api/v1/academy/enrollments/{id}/start/", {
+            params,
+            body: { expected_version: intent.expected_version },
+          }),
+        )
+      : unwrap(
+          await api.POST("/api/v1/academy/enrollments/{id}/complete-lesson/", {
+            params,
+            body: {
+              expected_version: intent.expected_version,
+              lesson_id: intent.lesson_id,
+            },
+          }),
+        );
+  });
+  function run(intent: LearningIntent) {
     command.mutate(intent, {
       onSuccess: (result) => client.setQueryData(["enrollment", id], result),
     });
@@ -553,7 +551,7 @@ export function LearningPage() {
       />
       {enrollment.isPending ? (
         <LoadingState />
-      ) : enrollment.error ? (
+      ) : enrollment.error && (!record || isAccessDenied(enrollment.error)) ? (
         <ErrorNotice
           error={enrollment.error}
           retry={() => void enrollment.refetch()}
@@ -594,7 +592,11 @@ export function LearningPage() {
                 <ActionButton
                   loading={command.isPending}
                   onClick={() =>
-                    run({ action: "start", expected_version: record.version })
+                    run({
+                      id,
+                      action: "start",
+                      expected_version: record.version,
+                    })
                   }
                 >
                   Начать обучение
@@ -671,6 +673,7 @@ export function LearningPage() {
                                 loading={command.isPending}
                                 onClick={() =>
                                   run({
+                                    id,
                                     action: "complete_lesson",
                                     expected_version: record.version,
                                     lesson_id: lesson.id,
@@ -743,18 +746,18 @@ function QuizForm({
 }) {
   const navigate = useNavigate();
   const [selections, setSelections] = useState<Record<string, string>>({});
-  const submit = useCommand(async (body: Model<"AttemptCommandRequest">, key) =>
+  const submit = useCommand(async ({ id, ...body }: QuizIntent, key) =>
     unwrap(
       await api.POST("/api/v1/academy/enrollments/{id}/submit-attempt/", {
         body,
         params: {
-          path: { id: enrollment.id },
+          path: { id },
           header: { "Idempotency-Key": key },
         },
       }),
     ),
   );
-  function send(body: Model<"AttemptCommandRequest">) {
+  function send(body: QuizIntent) {
     submit.mutate(body, {
       onSuccess: (result) =>
         void navigate(
@@ -768,6 +771,7 @@ function QuizForm({
       onSubmit={(e) => {
         e.preventDefault();
         send({
+          id: enrollment.id,
           expected_version: enrollment.version,
           answers: content.questions.map((question) => ({
             question_id: question.id,
@@ -863,7 +867,7 @@ export function QuizPage() {
       />
       {enrollment.isPending ? (
         <LoadingState />
-      ) : enrollment.error ? (
+      ) : enrollment.error && (!record || isAccessDenied(enrollment.error)) ? (
         <ErrorNotice
           error={enrollment.error}
           retry={() => void enrollment.refetch()}
@@ -871,6 +875,10 @@ export function QuizPage() {
       ) : (
         record && (
           <div className="stack">
+            <ErrorNotice
+              error={enrollment.error}
+              retry={() => void enrollment.refetch()}
+            />
             <DataSection title="Условия теста">
               <Rules version={record.course_version} />
               <p>
@@ -1029,7 +1037,7 @@ export function AttemptPage() {
               items={[
                 {
                   label: "Дата попытки",
-                  value: date(saved.attempt.submitted_at),
+                  value: timestamp(saved.attempt.submitted_at),
                 },
                 {
                   label: "Версия курса",

@@ -9,7 +9,7 @@ export function WriteRecovery({
   retry,
 }: {
   error: unknown;
-  refresh: () => void;
+  refresh?: () => void;
   retry?: () => void;
 }) {
   if (!error) return null;
@@ -18,13 +18,17 @@ export function WriteRecovery({
     <div className="stack">
       <ErrorNotice error={error} />
       <p className="muted">
-        Поля сохранены в этой форме. Обновление записи не заменяет введённые
-        значения. Проверьте актуальную версию перед повторным действием.
+        Поля сохранены в этой форме.{" "}
+        {refresh
+          ? "Обновление записи не заменяет введённые значения. Проверьте актуальную версию перед повторным действием."
+          : "Проверьте поля и повторите сохранение. При неизвестном результате повторите те же данные."}
       </p>
       <div className="button-row">
-        <ActionButton variant="secondary" onClick={refresh}>
-          Обновить запись
-        </ActionButton>
+        {refresh && (
+          <ActionButton variant="secondary" onClick={refresh}>
+            Обновить запись
+          </ActionButton>
+        )}
         {uncertain && retry && (
           <ActionButton variant="secondary" onClick={retry}>
             Повторить те же данные
@@ -50,4 +54,18 @@ export function Facts({
       ))}
     </dl>
   );
+}
+
+export function isAccessDenied(error: unknown) {
+  return error instanceof ApiError && [401, 403, 404].includes(error.status);
+}
+
+export function timestamp(value: string | null | undefined) {
+  return value
+    ? new Intl.DateTimeFormat("ru-KZ", {
+        dateStyle: "medium",
+        timeStyle: "short",
+        timeZone: "Asia/Almaty",
+      }).format(new Date(value))
+    : "Не указано";
 }

@@ -15,7 +15,7 @@ import {
 import { api, unwrap, type Model } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { date } from "@/lib/format";
-import { Facts } from "./requests/support";
+import { Facts, timestamp } from "./requests/support";
 import "./journeys.css";
 
 function EmployeeFacts({ employee }: { employee: Model<"Employee"> }) {
@@ -55,7 +55,7 @@ function EmployeeFacts({ employee }: { employee: Model<"Employee"> }) {
               value: `${employee.leave_balance} дней`,
             },
             { label: "Остаток на дату", value: date(employee.balance_as_of) },
-            { label: "Синхронизация", value: date(employee.synced_at) },
+            { label: "Синхронизация", value: timestamp(employee.synced_at) },
             {
               label: "Версия источника",
               value: employee.source_revision || "Не указана",
