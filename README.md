@@ -50,7 +50,7 @@ cd Jana
 python3 scripts/dev.py up
 ```
 
-Команда создаёт локальный `.env` с отдельными случайными секретами, если его ещё нет, затем собирает и запускает сервисы. `release` применяет миграции, собирает статику админки и наполняет данные. API и worker запускаются после успешного `release`.
+Команда создаёт локальный `.env` с отдельными случайными секретами, если его ещё нет, затем собирает и запускает сервисы. `release` применяет миграции, собирает статику админки и наполняет данные. API и worker запускаются после успешного `release`. Сервис `frontend` собирает Vite-приложение и запускает nginx после готовности API.
 
 Эквивалентный явный запуск:
 
@@ -61,16 +61,17 @@ docker compose up --build -d
 
 | Адрес | Назначение |
 | --- | --- |
+| `http://127.0.0.1:8080/` | Frontend и `/api/` через один origin. Порт задаёт `FRONTEND_PORT` |
 | `http://127.0.0.1:8000/api/v1/ready/` | Готовность API и соединения с БД |
 | `http://127.0.0.1:8000/api/v1/docs/` | Интерактивная документация OpenAPI |
 | `http://127.0.0.1:8000/api/v1/schema/` | Схема API |
 | `http://127.0.0.1:8000/admin/` | Django admin для отдельно созданного технического администратора |
 
-Корневой путь `/` пока не содержит frontend. Успешный `/ready/` не означает, что интерфейс создан. Swagger UI загружает публичные браузерные assets; JSON API и сохранённая схема от этого не зависят.
+Порт 8000 остаётся прямым адресом API. Открывайте продукт на порту 8080: nginx отдаёт `frontend/dist` и передаёт `/api` в Django. Прямые ссылки frontend открывают тот же `index.html`. Неизвестный API-путь и отсутствующий файл в `/assets/` возвращают 404. Успешный `/ready/` не доказывает работу пользовательских сценариев. Swagger UI загружает публичные браузерные assets; JSON API и сохранённая схема от этого не зависят.
 
 ```bash
 docker compose ps -a
-docker compose logs --tail=100 api worker release
+docker compose logs --tail=100 frontend api worker release
 python3 scripts/dev.py down
 ```
 
@@ -204,3 +205,5 @@ node scripts/tooling/rea.mjs --version
 
 Лицензии сторонних skills сохранены в [tooling/licenses](docs/tooling/licenses/). Платные материалы, полные статьи, чужие курсы и закрытые assets в продукт не скопированы.
 
+
+Контейнерный baseline и границы доказательств: [backend baseline](docs/verification/runtime-baseline.md), [same-origin serving](docs/verification/runtime-serving.md).

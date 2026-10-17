@@ -21,3 +21,18 @@ USER janamen
 EXPOSE 8000
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["api"]
+
+FROM node:24.14.0-bookworm-slim AS frontend-build
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY packages/api-client/ ./packages/api-client/
+RUN npm ci --ignore-scripts --no-audit --no-fund
+COPY frontend/package.json frontend/package-lock.json ./frontend/
+RUN npm ci --prefix frontend --ignore-scripts --no-audit --no-fund
+COPY frontend/ ./frontend/
+RUN npm --prefix frontend run build
+
+FROM nginx:1.28.2-alpine AS frontend
+COPY scripts/deploy/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=frontend-build /app/frontend/dist /usr/share/nginx/html
+EXPOSE 80
