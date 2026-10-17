@@ -66,7 +66,7 @@ The main assumption is that a source-bound assistant and mocked integrations mee
 
 The material implementation risks are wrong role scope, stale or duplicate commands, source revocation, inconsistent history, and license contamination. Evidence must target these behaviors, not only build success. The frozen Pace audit excludes uncertain Oxygen dependencies even where registry labels say MIT.
 
-Stop dependent publication for unresolved material findings, failing required checks, absent independent review, missing deployment authority, exposed secrets, or unknown licensing. Continue independent reversible work. Preserve the branch, raw failed evidence and recovery references. Do not delete databases or rewrite shared history to obtain a green result. If tools or time prevent complete delivery, keep missing rows and name the strongest proved layer.
+Stop accepted-release publication for unresolved material findings, failing required checks, absent independent review, missing deployment authority, exposed secrets, or unknown licensing. The owner explicitly authorizes source checkpoint pushes of completed green units. Such a checkpoint must keep incomplete acceptance visible and is not release approval. Continue independent reversible work. Preserve the branch, raw failed evidence and recovery references. Do not delete databases or rewrite shared history to obtain a green result. If tools or time prevent complete delivery, keep missing rows and name the strongest proved layer.
 
 ## Skills that changed decisions
 
@@ -76,7 +76,7 @@ Pstack sequences verifiable commits and separates authors from review. SureForge
 
 | Gate | Snapshot | Round | State | Evidence or remaining condition |
 | --- | --- | --- | --- | --- |
-| Research | C2 inputs and Pace audit | 1 | REPAIR | Brief and source/license audit inspected. Professional HR/LMS interaction research must be translated into reuse decisions before dependent feature work. |
+| Research | C2 inputs, Pace audit and journeys-reuse.md | 1 | READY | Supplied brief, official event, source/license audit and first-party Frappe/Moodle mechanisms are mapped to actual forms, queue, completion and version history. Authenticated third-party LMS behavior is not claimed. |
 | Plan | C2 and coverage inventory | 1 | READY, self-review-only | Requirement traceability and an environment/dependency walk-through completed. Fresh Claude plan review could not run due to `Claude API rate limit reached. Try again later.` Independent release review remains required and is not waived. |
-| Execute | Current working tree | 0 | Unverified | Backend author checks exist. Full frontend is still in implementation. |
+| Execute | Integrated checkpoint | 0 | REPAIR | PostgreSQL 231 tests, production build, both request role journeys and account switch pass. Final integrated learning, knowledge loop, adverse-state and complete visual acceptance remain open. |
 | Deliver | No frozen release yet | 0 | Unverified | Browser, public demo, full CI-equivalent run, independent release review and defense packaging pending. |

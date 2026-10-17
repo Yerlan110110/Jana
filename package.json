@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=24.8.0"
   },
   "scripts": {
     "contracts:generate": "node scripts/contracts/generate.mjs",
@@ -16,10 +16,12 @@
     "skills:verify": "node scripts/tooling/verify-skills.mjs",
     "dev": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
-    "test:e2e": "e2e run"
+    "test:e2e": "e2e run",
+    "typecheck:e2e": "tsc --noEmit -p tests/tsconfig.json"
   },
   "devDependencies": {
     "@e2e-dev/web": "^0.15.2",
+    "@types/node": "^24.19.2",
     "e2e": "^0.21.2",
     "openapi-typescript": "^7.10.1",
     "typescript": "^5.9.3"

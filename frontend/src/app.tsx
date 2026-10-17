@@ -87,6 +87,88 @@ const PolicyEditorPage = lazy(() =>
   import("@/features/knowledge").then((m) => ({ default: m.PolicyEditorPage })),
 );
 
+const RequestsPage = lazy(() =>
+  import("@/features/requests").then((m) => ({ default: m.RequestsPage })),
+);
+const RequestCreatePage = lazy(() =>
+  import("@/features/requests").then((m) => ({ default: m.RequestCreatePage })),
+);
+const RequestDetailPage = lazy(() =>
+  import("@/features/requests").then((m) => ({ default: m.RequestDetailPage })),
+);
+const RequestQueuePage = lazy(() =>
+  import("@/features/requests").then((m) => ({ default: m.RequestQueuePage })),
+);
+const AcademyPage = lazy(() =>
+  import("@/features/academy/learner").then((m) => ({
+    default: m.AcademyPage,
+  })),
+);
+const CatalogPage = lazy(() =>
+  import("@/features/academy/learner").then((m) => ({
+    default: m.CatalogPage,
+  })),
+);
+const CoursePage = lazy(() =>
+  import("@/features/academy/learner").then((m) => ({ default: m.CoursePage })),
+);
+const LearningPage = lazy(() =>
+  import("@/features/academy/learner").then((m) => ({
+    default: m.LearningPage,
+  })),
+);
+const QuizPage = lazy(() =>
+  import("@/features/academy/learner").then((m) => ({ default: m.QuizPage })),
+);
+const AttemptPage = lazy(() =>
+  import("@/features/academy/learner").then((m) => ({
+    default: m.AttemptPage,
+  })),
+);
+const LearningHistoryPage = lazy(() =>
+  import("@/features/academy/learner").then((m) => ({
+    default: m.LearningHistoryPage,
+  })),
+);
+const ManageCoursesPage = lazy(() =>
+  import("@/features/academy/authoring").then((m) => ({
+    default: m.ManageCoursesPage,
+  })),
+);
+const CourseEditorPage = lazy(() =>
+  import("@/features/academy/authoring").then((m) => ({
+    default: m.CourseEditorPage,
+  })),
+);
+const AssignLearningPage = lazy(() =>
+  import("@/features/academy/authoring").then((m) => ({
+    default: m.AssignLearningPage,
+  })),
+);
+const TeamLearningPage = lazy(() =>
+  import("@/features/academy/learner").then((m) => ({
+    default: m.TeamLearningPage,
+  })),
+);
+const ProfilePage = lazy(() =>
+  import("@/features/people").then((m) => ({ default: m.ProfilePage })),
+);
+const TeamPage = lazy(() =>
+  import("@/features/people").then((m) => ({ default: m.TeamPage })),
+);
+const EmployeePage = lazy(() =>
+  import("@/features/people").then((m) => ({ default: m.EmployeePage })),
+);
+
+const IntegrationsPage = lazy(() =>
+  import("@/features/operations").then((m) => ({
+    default: m.IntegrationsPage,
+  })),
+);
+const ExportPage = lazy(() =>
+  import("@/features/operations").then((m) => ({ default: m.ExportPage })),
+);
+
 function Brand() {
   return (
     <Link className="brand" to="/" aria-label="JanaMen, главная">
@@ -471,6 +553,106 @@ function AppShell() {
                 element={
                   <RoleGate roles={["hr"]}>
                     <PolicyEditorPage />
+                  </RoleGate>
+                }
+              />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/requests" element={<RequestsPage />} />
+              <Route path="/requests/new" element={<RequestCreatePage />} />
+              <Route path="/requests/:id" element={<RequestDetailPage />} />
+              <Route
+                path="/team/requests"
+                element={
+                  <RoleGate roles={["manager", "hr"]}>
+                    <RequestQueuePage />
+                  </RoleGate>
+                }
+              />
+              <Route
+                path="/team"
+                element={
+                  <RoleGate roles={["manager", "hr"]}>
+                    <TeamPage />
+                  </RoleGate>
+                }
+              />
+              <Route
+                path="/team/:id"
+                element={
+                  <RoleGate roles={["manager", "hr"]}>
+                    <EmployeePage />
+                  </RoleGate>
+                }
+              />
+              <Route
+                path="/team/learning"
+                element={
+                  <RoleGate roles={["manager", "hr"]}>
+                    <TeamLearningPage />
+                  </RoleGate>
+                }
+              />
+              <Route path="/academy" element={<AcademyPage />} />
+              <Route path="/academy/catalog" element={<CatalogPage />} />
+              <Route path="/academy/courses/:id" element={<CoursePage />} />
+              <Route
+                path="/academy/enrollments/:id"
+                element={<LearningPage />}
+              />
+              <Route
+                path="/academy/enrollments/:id/quiz"
+                element={<QuizPage />}
+              />
+              <Route path="/academy/attempts/:id" element={<AttemptPage />} />
+              <Route
+                path="/academy/history"
+                element={<LearningHistoryPage />}
+              />
+              <Route
+                path="/hr/courses"
+                element={
+                  <RoleGate roles={["hr"]}>
+                    <ManageCoursesPage />
+                  </RoleGate>
+                }
+              />
+              <Route
+                path="/hr/courses/new"
+                element={
+                  <RoleGate roles={["hr"]}>
+                    <CourseEditorPage />
+                  </RoleGate>
+                }
+              />
+              <Route
+                path="/hr/courses/:id"
+                element={
+                  <RoleGate roles={["hr"]}>
+                    <CourseEditorPage />
+                  </RoleGate>
+                }
+              />
+              <Route
+                path="/hr/assignments"
+                element={
+                  <RoleGate roles={["hr"]}>
+                    <AssignLearningPage />
+                  </RoleGate>
+                }
+              />
+              <Route
+                path="/hr/integrations"
+                element={
+                  <RoleGate roles={["hr"]}>
+                    <IntegrationsPage />
+                  </RoleGate>
+                }
+              />
+              <Route
+                path="/hr/integrations/exports/:id"
+                element={
+                  <RoleGate roles={["hr"]}>
+                    <ExportPage />
                   </RoleGate>
                 }
               />

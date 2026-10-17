@@ -32,6 +32,10 @@ Generate migrations and API types. Do not maintain a handwritten duplicate contr
 Test observable behavior, cross-role denials and transaction failure cases. Record limitations honestly.
 No real credentials, personal data, model keys or environment files in Git.
 
+## Verification
+
+Run [.agents/skills/verify-janamen/SKILL.md](.agents/skills/verify-janamen/SKILL.md) for application acceptance. Keep source, Docker and browser evidence distinct.
+
 ## Delivery
 
 Read HANDOFF.md before continuing a delivered project. Update it after meaningful changes.

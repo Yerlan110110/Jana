@@ -65,6 +65,12 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Generate and verify API contracts
         run: npm run contracts:check
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci --ignore-scripts --no-audit --no-fund
+      - name: Check frontend and browser suite types
+        run: npm run typecheck && npm run typecheck:e2e
+      - name: Build frontend
+        run: npm run build
 
   container:
     runs-on: ubuntu-latest

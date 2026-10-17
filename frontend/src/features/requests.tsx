@@ -115,6 +115,7 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
     search,
     kind,
     status: validStatus,
+    waiting: !queue && params.get("waiting") === "true" ? true : undefined,
     ordering: "-created_at",
     ...(queue
       ? { needs_my_action: true, employee: params.get("employee") || undefined }
@@ -207,12 +208,26 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
             </NativeSelect>
           </label>
         </div>
+        {!queue && (
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={params.get("waiting") === "true"}
+              onChange={(event) =>
+                filter("waiting", event.target.checked ? "true" : "")
+              }
+            />
+            Только ожидают рассмотрения
+          </label>
+        )}
         {requests.isPending ? (
           <LoadingState />
         ) : requests.error ? (
           <ErrorNotice
             error={requests.error}
-            retry={() => void requests.refetch()}
+            retry={() =>
+              page > 1 ? filter("page", "") : void requests.refetch()
+            }
           />
         ) : (
           requests.data && (
@@ -257,21 +272,30 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
               ) : (
                 <EmptyState
                   title={
-                    search || kind || validStatus
+                    search ||
+                    kind ||
+                    validStatus ||
+                    params.get("waiting") === "true"
                       ? "Нет заявлений по фильтрам"
                       : queue
                         ? "Решений не требуется"
                         : "Заявлений пока нет"
                   }
                   description={
-                    search || kind || validStatus
+                    search ||
+                    kind ||
+                    validStatus ||
+                    params.get("waiting") === "true"
                       ? "Измените фильтры или очистите их."
                       : queue
                         ? "Новые заявления появятся, когда будут доступны вам для рассмотрения."
                         : "Создайте заявление на отпуск или зарплатный аванс."
                   }
                   action={
-                    search || kind || validStatus ? (
+                    search ||
+                    kind ||
+                    validStatus ||
+                    params.get("waiting") === "true" ? (
                       <ActionButton
                         variant="secondary"
                         onClick={() =>

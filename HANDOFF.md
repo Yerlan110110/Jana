@@ -14,13 +14,13 @@ The current request queue filters `needs_my_action=true` before pagination using
 
 The web application now uses the generated API, Django sessions and CSRF. A licensed Pace subset and official MIT shadcn controls provide the primitives. Navigation uses native links, commands use buttons. [Reuse decisions](docs/research/continuation-reuse.md) record source pins, the rejected Oxygen closure and source notices. Frontend source is offered under AGPL-3.0-only with upstream notices preserved.
 
-Home, login, notifications, source-bound answers, citations, HR cases and policy authoring are connected. Requests, Academy and people are being integrated from the isolated author branch. Do not treat the first web checkpoint as a finished product. The initial 31-view contract remains the acceptance inventory.
+Home, login, notifications, source-bound answers, citations, HR cases and policy authoring are connected. Requests, Academy, people and the integration operator are now connected in the coordinating source. Do not treat the first web checkpoint as a finished product. The initial 31-view contract remains the acceptance inventory.
 
 ## Checks and current limits
 
-The coordinator reran the current PostgreSQL suite in Docker with 231 passed, no failed or skipped tests. Raw output is `.artifacts/postgresql-continuation-231.log`. This extends the restored 191-test baseline. Warnings remain recorded.
+The coordinator reran the current PostgreSQL suite in Docker with 231 passed, no failed or skipped tests. Latest raw output is `.artifacts/postgresql-operator-capability-full.log`. This extends the restored 191-test baseline. Warnings remain recorded.
 
-The first Docker web doctor and employee question-to-citation test pass. Reports are under `.artifacts/browser/doctor-20261017-1/` and `knowledge-20261017-1/`. These checks cover their named paths, not all roles or visual states. The project verification recipe is [.agents/skills/verify-janamen/SKILL.md](.agents/skills/verify-janamen/SKILL.md). Agent-driven exploratory testing is not configured and is not a claimed pass.
+The first Docker web doctor and employee question-to-citation test pass. Reports are under `.artifacts/browser/doctor-20261017-1/` and `knowledge-20261017-1/`. These checks cover their named paths, not all roles or visual states. The integrated Docker role run at `.artifacts/browser/integrated-roles-20261018-1/` passed both request journeys, advance return/resubmission, logout and account switch. The preceding failing logout evidence is retained at `.artifacts/browser/logout-red-20261017-1/`. The project verification recipe is [.agents/skills/verify-janamen/SKILL.md](.agents/skills/verify-janamen/SKILL.md). Agent-driven exploratory testing is not configured and is not a claimed pass.
 
 Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
 
@@ -30,7 +30,7 @@ The coordinating checkout is `/home/yqecea/coding-projects/jana`. Compose projec
 
 Completed runtime and backend author worktrees were stopped and archived. Recovery refs are `refs/archive/worktrees/runtime-5c393cdd` and `refs/archive/worktrees/backend-gaps-8f16f823`. Their durable reports moved to `.artifacts/worktree-archive/`. The old runtime baseline database volume is retained without running containers. Local synthetic credentials remain ignored and protected.
 
-The active product author runs in a T3-managed isolated worktree on `t3/requests-academy-team-journeys`. The host chose `/home/yqecea/.t3/worktrees/jana/t3-4351e3c7`. This is a recorded path exception to the preferred in-project `.worktrees/` convention because T3's delegated isolation tool binds the checkout. Do not create a second copy or move it under an active agent. Archive it after terminal cancellation and integration.
+The completed product author ran in a T3-managed isolated worktree on `t3/requests-academy-team-journeys`. The host chose `/home/yqecea/.t3/worktrees/jana/t3-4351e3c7`. This is a recorded path exception to the preferred in-project `.worktrees/` convention because T3's delegated isolation tool binds the checkout. Do not create a second copy or move it under an active agent. Terminal cancellation and no pending children are confirmed. Its ignored evidence still needs retention before archival.
 
 ## Next acceptance work
 
