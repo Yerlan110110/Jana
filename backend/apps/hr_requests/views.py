@@ -9,9 +9,10 @@ from apps.identity.selectors import employee_for
 
 from . import services
 from .filters import RequestFilter
-from .selectors import leave_projection, visible_requests
+from .selectors import fulfillment_for, leave_projection, visible_requests
 from .serializers import (
     DecisionSerializer,
+    FulfillmentSerializer,
     LeaveProjectionSerializer,
     RequestCreateSerializer,
     RequestDetailSerializer,
@@ -178,3 +179,8 @@ class RequestViewSet(
         if employee is None:
             raise PermissionDenied("An active employee profile is required.")
         return Response(LeaveProjectionSerializer(leave_projection(employee)).data)
+
+    @extend_schema(responses=FulfillmentSerializer)
+    @action(detail=True, methods=["get"])
+    def fulfillment(self, request, pk=None):
+        return Response(FulfillmentSerializer(fulfillment_for(self.get_object())).data)

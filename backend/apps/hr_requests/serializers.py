@@ -112,3 +112,30 @@ class LeaveProjectionSerializer(serializers.Serializer):
     projected_balance = serializers.DecimalField(max_digits=9, decimal_places=2)
     balance_as_of = serializers.DateField()
     day_count_convention = serializers.CharField()
+
+
+class ApprovalEvidenceSerializer(serializers.Serializer):
+    status = serializers.ChoiceField(choices=HRRequest.Status.choices)
+    submitted_revision_id = serializers.UUIDField(allow_null=True)
+    submission_number = serializers.IntegerField()
+
+
+class DeliveryEvidenceSerializer(serializers.Serializer):
+    state = serializers.ChoiceField(choices=["not_queued", "queued", "accepted", "needs_operator"])
+    accepted_at = serializers.DateTimeField(allow_null=True)
+
+
+class SourceAccountingSerializer(serializers.Serializer):
+    state = serializers.ChoiceField(
+        choices=["not_applicable", "not_confirmed", "incorporated", "reversed"]
+    )
+    source_revision = serializers.IntegerField(allow_null=True)
+    confirmed_at = serializers.DateTimeField(allow_null=True)
+    balance_as_of = serializers.DateField(allow_null=True)
+
+
+class FulfillmentSerializer(serializers.Serializer):
+    request_id = serializers.UUIDField()
+    approval = ApprovalEvidenceSerializer()
+    delivery = DeliveryEvidenceSerializer()
+    source_accounting = SourceAccountingSerializer()

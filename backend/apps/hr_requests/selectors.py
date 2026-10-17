@@ -2,8 +2,10 @@ from decimal import Decimal
 
 from django.db.models import Q, Sum
 
+from apps.core.models import OutboxMessage
 from apps.identity.models import User
 from apps.identity.selectors import employee_for, visible_employees
+from apps.integrations.selectors import EXPORT_TOPIC
 
 from .models import HRRequest, LeaveBalanceIncorporation
 
@@ -59,4 +61,52 @@ def leave_projection(employee, exclude_request=None):
         "projected_balance": employee.leave_balance - reserved,
         "balance_as_of": employee.balance_as_of,
         "day_count_convention": "calendar_days_inclusive_demo",
+    }
+
+
+def fulfillment_for(request):
+    revision = request.revisions.filter(number=request.submission_number).first()
+    message = (
+        OutboxMessage.objects.filter(
+            topic=EXPORT_TOPIC,
+            event__requesthistory__request=request,
+            event__requesthistory__submission_number=request.submission_number,
+            event__requesthistory__to_status=HRRequest.Status.APPROVED,
+        )
+        .select_related("export_receipt")
+        .first()
+    )
+    receipt = getattr(message, "export_receipt", None)
+    delivery = "not_queued"
+    accepted_at = None
+    if message:
+        if receipt and revision and receipt.request_revision_id == revision.pk:
+            delivery, accepted_at = "accepted", receipt.accepted_at
+        elif message.status in {OutboxMessage.Status.FAILED, OutboxMessage.Status.PROCESSED}:
+            delivery = "needs_operator"
+        else:
+            delivery = "queued"
+    incorporation = None
+    if request.kind == HRRequest.Kind.LEAVE and revision:
+        incorporation = LeaveBalanceIncorporation.objects.filter(
+            request=request, request_revision=revision
+        ).first()
+    return {
+        "request_id": request.pk,
+        "approval": {
+            "status": request.status,
+            "submitted_revision_id": revision.pk if revision else None,
+            "submission_number": request.submission_number,
+        },
+        "delivery": {"state": delivery, "accepted_at": accepted_at},
+        "source_accounting": {
+            "state": "not_applicable"
+            if request.kind != HRRequest.Kind.LEAVE
+            else (incorporation.state if incorporation else "not_confirmed"),
+            "source_revision": incorporation.source_revision if incorporation else None,
+            "confirmed_at": incorporation.confirmed_at if incorporation else None,
+            "balance_as_of": request.employee.balance_as_of
+            if request.kind == HRRequest.Kind.LEAVE
+            else None,
+        },
     }

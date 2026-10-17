@@ -67,6 +67,16 @@ Never allow generic PATCH status to bypass a command.
 
 The request list accepts `needs_my_action=true` before pagination and uses `hr_requests.selectors.review_requests`, the same canonical selector as the workbench. False and omission add no restriction. Search, other filters and ordering compose with this queue. The owning selector retains current scope, stage, assigned reviewer, active employee and self-review rules.
 
+### Request fulfillment evidence
+
+`GET /api/v1/requests/{id}/fulfillment/` uses the normal request read scope, including the owner, current direct manager and scoped HR. It is read-only and grants no integration operator capability. Approval exposes the actual request status, current submitted revision ID and submission number. Delivery and source accounting remain independent of approval.
+
+Delivery is `not_queued` without an export, `queued` during automatic delivery or retry, `needs_operator` after terminal failure, and `accepted` only with a saved receipt for the submitted revision. The response exposes the acceptance timestamp, not delivery keys, payloads, raw errors or retry controls. A processed message without that receipt is not accepted evidence. Receipt means document receipt, not payment or signature.
+
+Source accounting is `not_applicable` for an advance, `not_confirmed` for leave without explicit source evidence, or the existing `incorporated` or `reversed` state. It exposes the source revision, confirmation timestamp and official balance date. A delivery receipt does not confirm source incorporation. The endpoint does not calculate a second balance or mutate employee facts. The existing balance projection remains authoritative. This read combines current records under ordinary database isolation and is not a frozen cross-module snapshot.
+
+This scoped G3 implementation does not add the proposed paginated balance breakdown or a new execution state machine.
+
 ## Academy module
 
 Separate catalogue availability, immutable course revision, enrollment, lesson progress and quiz attempt.
