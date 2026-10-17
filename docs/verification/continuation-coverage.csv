@@ -7,19 +7,19 @@ S01,Вход,route-states,320,missing,unverified,,reachable states in screen/sta
 S01,Вход,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
 S01,Вход,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
 S01,Вход,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
-S02,Главная сотрудника,route-states,1280,missing,unverified,,Primary action color pairs and overflow pilot pass; remaining states unverified
+S02,Главная сотрудника,route-states,1280,missing,unverified,,Loaded entry-view audit and viewport region inspected; raw monogram finding adjudicated. Other reachable states and full visual review remain open. See docs/verification/interface-pilot.md.
 S02,Главная сотрудника,route-states,1440,missing,unverified,,reachable states in screen/state contract
 S02,Главная сотрудника,route-states,768,missing,unverified,,reachable states in screen/state contract
 S02,Главная сотрудника,route-states,390,missing,unverified,,reachable states in screen/state contract
-S02,Главная сотрудника,route-states,320,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,320,missing,unverified,,Loaded entry-view audit and viewport region inspected; raw monogram finding adjudicated. Other reachable states and full visual review remain open. See docs/verification/interface-pilot.md.
 S02,Главная сотрудника,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
 S02,Главная сотрудника,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
 S02,Главная сотрудника,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
-S03,Мой профиль,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,1280,missing,unverified,,Loaded entry-view audit and viewport region inspected; raw monogram finding adjudicated. Other reachable states and full visual review remain open. See docs/verification/interface-pilot.md.
 S03,Мой профиль,route-states,1440,missing,unverified,,reachable states in screen/state contract
 S03,Мой профиль,route-states,768,missing,unverified,,reachable states in screen/state contract
 S03,Мой профиль,route-states,390,missing,unverified,,reachable states in screen/state contract
-S03,Мой профиль,route-states,320,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,320,missing,unverified,,Loaded entry-view audit and viewport region inspected; raw monogram finding adjudicated. Other reachable states and full visual review remain open. See docs/verification/interface-pilot.md.
 S03,Мой профиль,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
 S03,Мой профиль,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
 S03,Мой профиль,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
@@ -39,11 +39,11 @@ S05,Черновик отпуска,route-states,320,missing,unverified,,reachab
 S05,Черновик отпуска,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
 S05,Черновик отпуска,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
 S05,Черновик отпуска,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
-S06,Черновик аванса,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,1280,missing,unverified,,Loaded entry-view audit and viewport region inspected; raw monogram finding adjudicated. Other reachable states and full visual review remain open. See docs/verification/interface-pilot.md.
 S06,Черновик аванса,route-states,1440,missing,unverified,,reachable states in screen/state contract
 S06,Черновик аванса,route-states,768,missing,unverified,,reachable states in screen/state contract
 S06,Черновик аванса,route-states,390,missing,unverified,,reachable states in screen/state contract
-S06,Черновик аванса,route-states,320,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,320,missing,unverified,,Loaded entry-view audit and viewport region inspected; raw monogram finding adjudicated. Other reachable states and full visual review remain open. See docs/verification/interface-pilot.md.
 S06,Черновик аванса,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
 S06,Черновик аванса,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
 S06,Черновик аванса,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
@@ -258,7 +258,7 @@ J08,Grounded answer refusal HR published policy loop,journey-or-package,Docker-C
 J09,Source permission revoked after answer,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; knowledge-loop
 J10,Delivery failure recovery and independent facts,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,Earlier recovery proof retained; fresh integrated operator flow pending
 P01,Clean Docker launch release seed health worker,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,https://github.com/Yerlan110110/Jana/actions/runs/39066151009; .artifacts/nginx-api-replacement-ci-explicit-network-20261018-1.json,Clean application steps pass; job fails separately at artifact upload
-P02,CI-equivalent source and generated contract checks,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,Local source checks pass; revised artifact upload needs next GitHub run
+P02,CI-equivalent source and generated contract checks,journey-or-package,Docker-Chromium-or-source-as-applicable,pass,verified,https://github.com/Yerlan110110/Jana/actions/runs/39067652005,"Both verify and container jobs pass at c048590, including safe trace-summary upload. Later source checkpoints require their own CI result."
 P03,Public source and synthetic live demo,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,Source published; HTTPS synthetic demo pending
 P04,Defense artifacts and truthful boundaries,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
 P05,Secret and license review,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2

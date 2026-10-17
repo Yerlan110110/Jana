@@ -108,7 +108,7 @@
   --card-foreground: var(--ink);
   --popover-foreground: var(--ink);
   --border: color-mix(in srgb, var(--ink) 12%, transparent);
-  --input: color-mix(in srgb, var(--ink) 14%, transparent);
+  --input: color-mix(in srgb, var(--ink) 50%, transparent);
   /* hover wash */
   --accent: color-mix(in srgb, var(--ink) 5%, transparent);
   --accent-foreground: var(--ink);

@@ -69,6 +69,11 @@ textarea,
 select {
   font-size: 16px;
 }
+@media (hover: hover) and (pointer: fine) {
+  textarea[data-pace-component="textarea"]:hover {
+    border-color: var(--input);
+  }
+}
 img,
 svg {
   flex-shrink: 0;
@@ -712,7 +717,7 @@ legend {
   letter-spacing: -0.035em;
 }
 .next-step-card .eyebrow {
-  color: #557b48;
+  color: var(--foreground);
   font-size: 9px;
   margin-block-end: 12px;
 }
@@ -1167,7 +1172,7 @@ summary {
 }
 .login-caption {
   font-size: 11px;
-  color: #66795e;
+  color: var(--muted-foreground);
 }
 .login-form-side {
   display: grid;

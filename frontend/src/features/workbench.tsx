@@ -57,7 +57,7 @@ export function HomePage() {
   const data = query.data;
   const next = data.returned_requests.results[0]
     ? {
-        title: "Заявку ждут после исправления",
+        title: "Заявку нужно исправить",
         text: "Откройте причину возврата, исправьте данные и отправьте снова.",
         to: `/requests/${data.returned_requests.results[0].id}`,
         action: "Исправить заявку",

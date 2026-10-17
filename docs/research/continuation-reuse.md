@@ -38,3 +38,7 @@ Existing HR/LMS research remains relevant. Further feature work must record the 
 | [shadcn registry](https://ui.shadcn.com/docs/registry) | Accessible source-distributed controls with explicit dependencies | Reuse controls; compose domain pages around the existing Django session and API. No second auth or backend. |
 
 These references justify mechanism reuse, not a pixel copy of an unrelated dashboard. A full HR suite replacement would discard the tested contract and duplicate the HR source. A complete Pace screen is currently blocked by provenance. Safe primitives plus the existing domain APIs are the smaller verified foundation.
+
+## Existing accessibility engine
+
+The visual checks reuse [Deque axe-core 4.14.0](https://github.com/dequelabs/axe-core/tree/v4.14.0), pinned as a development dependency. Its [license is MPL-2.0](https://github.com/dequelabs/axe-core/blob/v4.14.0/LICENSE). The package retains its license. JanaMen does not modify its source or import it into the shipped frontend. The installed browser runner injects its published test engine into the isolated synthetic app. This avoids writing a substitute accessibility analyzer. Automated findings still need human adjudication and do not replace keyboard or screen-reader walks. See `docs/verification/interface-pilot.md` for the retained raw logo finding and narrowly checked interpretation.
