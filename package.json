@@ -3,15 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "workspaces": ["packages/*"],
-  "engines": {"node": ">=22.19.0"},
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
   "scripts": {
     "contracts:generate": "node scripts/contracts/generate.mjs",
     "contracts:check": "node scripts/contracts/generate.mjs --check",
-    "typecheck": "tsc --noEmit -p packages/api-client/tsconfig.json",
-    "skills:verify": "node scripts/tooling/verify-skills.mjs"
+    "typecheck": "tsc --noEmit -p packages/api-client/tsconfig.json && npm --prefix frontend run typecheck",
+    "skills:verify": "node scripts/tooling/verify-skills.mjs",
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build"
   },
   "devDependencies": {
+    "@e2e-dev/web": "^0.15.2",
+    "e2e": "^0.21.2",
     "openapi-typescript": "^7.10.1",
     "typescript": "^5.9.3"
   }

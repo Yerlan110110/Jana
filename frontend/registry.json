@@ -1,0 +1,82 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "janamen",
+  "homepage": "https://github.com/Yerlan110110/Jana",
+  "items": [
+    {
+      "name": "jana-shadcn-input",
+      "type": "registry:ui",
+      "title": "Input",
+      "files": [
+        {
+          "path": "src/components/upstream/input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "role": "text-input",
+        "provenance": [
+          {
+            "source": "shadcn/ui",
+            "url": "https://ui.shadcn.com/r/styles/base-nova/input.json",
+            "license": "MIT",
+            "role": "Base UI input"
+          }
+        ],
+        "useWhen": "Text/date entry. Pace Input is excluded pending Oxygen permission."
+      }
+    },
+    {
+      "name": "jana-process-status",
+      "type": "registry:ui",
+      "title": "StatusLabel",
+      "files": [
+        {
+          "path": "src/components/ui.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "provenance": [
+          {
+            "source": "JanaMen",
+            "path": "src/components/ui.tsx",
+            "role": "readable domain status with text and decorative dot"
+          }
+        ],
+        "useWhen": "Backend business status. Pace Badge has unverified Oxygen permission."
+      }
+    },
+    {
+      "name": "jana-shadcn-action",
+      "type": "registry:ui",
+      "title": "ActionButton",
+      "files": [
+        {
+          "path": "src/components/upstream/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/components/actions.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "provenance": [
+          {
+            "source": "shadcn/ui",
+            "url": "https://ui.shadcn.com/r/styles/base-nova/button.json",
+            "license": "MIT",
+            "role": "Base UI button"
+          },
+          {
+            "source": "JanaMen",
+            "path": "src/components/actions.tsx",
+            "role": "stable pending label and icon slots"
+          }
+        ],
+        "useWhen": "Product actions. Pace Button is excluded because its full helper file retains Oxygen source."
+      }
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "pace-c06be54881ff9e38fa6c029051a776cd",
+  "status": "verified",
+  "paceRoot": "/home/yqecea/coding-projects/pace",
+  "targetRoot": "/home/yqecea/coding-projects/jana/frontend",
+  "version": "4.0.3",
+  "createdAt": "2026-10-17T17:46:17.378Z",
+  "cssEntry": "src/index.css",
+  "cssImport": "@import \"../styles/pace.css\";",
+  "foundation": {
+    "action": "create",
+    "path": "components.json",
+    "style": "new-york",
+    "base": "radix"
+  },
+  "packageManager": "npm",
+  "installCommand": [
+    "npm",
+    "install"
+  ],
+  "dependencies": {
+    "@fontsource-variable/inter-tight": "^5.3.0",
+    "@fontsource-variable/geist-mono": "^5.3.0",
+    "lucide-react": "^0.563.0",
+    "@base-ui/react": "^1.8.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.4.0"
+  },
+  "entries": [
+    {
+      "action": "created",
+      "destination": "styles/pace.css",
+      "created": true,
+      "afterHash": "527bd6001b2452af8ddd7ea3c1f8ae09b0e2895287d7a5901aeb8e0ea023ea1b",
+      "source": "kit/pace.css",
+      "sourceHash": "527bd6001b2452af8ddd7ea3c1f8ae09b0e2895287d7a5901aeb8e0ea023ea1b"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/cn.ts",
+      "created": true,
+      "afterHash": "a0a331c0e1255e90b20148261caa469562a5157b68fde2a2f9c188b6b648e068",
+      "source": "kit/components/cn.ts",
+      "sourceHash": "a0a331c0e1255e90b20148261caa469562a5157b68fde2a2f9c188b6b648e068"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/card.tsx",
+      "created": true,
+      "afterHash": "7c463efc70750c172ae4840cd6e8cd59bfc1ed194153e16031aca6f7a06f2f01",
+      "source": "kit/components/card.tsx",
+      "sourceHash": "7c463efc70750c172ae4840cd6e8cd59bfc1ed194153e16031aca6f7a06f2f01"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/textarea.tsx",
+      "created": true,
+      "afterHash": "0211328f8428da2b9f60c846d83990f4e0c37fdee4b77c75d4b452e057bca851",
+      "source": "kit/components/textarea.tsx",
+      "sourceHash": "0211328f8428da2b9f60c846d83990f4e0c37fdee4b77c75d4b452e057bca851"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/skeleton.tsx",
+      "created": true,
+      "afterHash": "88a5e3bb655852d4d3eaaa8a2f26ea33e9d39005192d1e4af2482ed1ae8f5dc2",
+      "source": "kit/components/skeleton.tsx",
+      "sourceHash": "88a5e3bb655852d4d3eaaa8a2f26ea33e9d39005192d1e4af2482ed1ae8f5dc2"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/dialog.tsx",
+      "created": true,
+      "afterHash": "9dc5a55fe5b796c4553c7abb6836e56355977954e800da32be344195bb99baae",
+      "source": "kit/components/dialog.tsx",
+      "sourceHash": "9dc5a55fe5b796c4553c7abb6836e56355977954e800da32be344195bb99baae"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/native-select.tsx",
+      "created": true,
+      "afterHash": "0c0ae408f80198a2ee88841ad4108b2bbe7ae0cf03d6691e26703a668a824b7c",
+      "source": "kit/components/native-select.tsx",
+      "sourceHash": "0c0ae408f80198a2ee88841ad4108b2bbe7ae0cf03d6691e26703a668a824b7c"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/empty.tsx",
+      "created": true,
+      "afterHash": "3d1306b38a79db673145c1de0fca421d7d03f6d9ddf64acb955ab3da5ec1a294",
+      "source": "kit/components/empty.tsx",
+      "sourceHash": "3d1306b38a79db673145c1de0fca421d7d03f6d9ddf64acb955ab3da5ec1a294"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/amicro-LICENSE",
+      "created": true,
+      "afterHash": "4b2e0abfc3fdc8722545c3772ee7c6fd0bcdbe8af76112af50066689fca4a9c2",
+      "source": "vendor/amicro/LICENSE",
+      "sourceHash": "4b2e0abfc3fdc8722545c3772ee7c6fd0bcdbe8af76112af50066689fca4a9c2"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/oa-LICENSE",
+      "created": true,
+      "afterHash": "6f1d6135b411f87e906619bcaae2e90bfca8497aa4c31f14b86db3d0c5df3bfa",
+      "source": "vendor/oa/LICENSE",
+      "sourceHash": "6f1d6135b411f87e906619bcaae2e90bfca8497aa4c31f14b86db3d0c5df3bfa"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/shadcn-LICENSE.md",
+      "created": true,
+      "afterHash": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f",
+      "source": "vendor/shadcn/LICENSE.md",
+      "sourceHash": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/pace-LICENSE",
+      "created": true,
+      "afterHash": "6b3af5459d10adc5967c7de6af4ddfa9b0af9fded05a998dd6eb6effc55e8968",
+      "source": "LICENSE",
+      "sourceHash": "6b3af5459d10adc5967c7de6af4ddfa9b0af9fded05a998dd6eb6effc55e8968"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/pace-NOTICE.md",
+      "created": true,
+      "afterHash": "df2729b406d5bfd456459a225088ab9ba1ca4560ae8331fe62db66f069297de3",
+      "source": "NOTICE.md",
+      "sourceHash": "df2729b406d5bfd456459a225088ab9ba1ca4560ae8331fe62db66f069297de3"
+    },
+    {
+      "action": "modified",
+      "destination": "src/index.css",
+      "created": false,
+      "beforeHash": "42070e0b45bb201b2b838a52aaaa6e965f964e0b542d97f1fe517fe59c4b75a8",
+      "backupPath": ".pace/backups/pace-c06be54881ff9e38fa6c029051a776cd/src/index.css",
+      "afterHash": "c48db028ed1087006b4f668cc0348c7c630af2ee7ce7312b22607c78af93fb90"
+    },
+    {
+      "action": "modified",
+      "destination": "package.json",
+      "created": false,
+      "beforeHash": "7c3d2f5c654d2e0a83b67011613e4888010d6b10b13312570fe0da2b370bf7e1",
+      "backupPath": ".pace/backups/pace-c06be54881ff9e38fa6c029051a776cd/package.json",
+      "afterHash": "e5224e5ca26181cc3bf14ae23c9f8c32cbe4b11f6bbed55f4fb0d6183778ea88"
+    },
+    {
+      "action": "created",
+      "destination": "components.json",
+      "created": true,
+      "afterHash": "aa1b56411ed0e8fc2ac14315f211c7059406e03d68666e1921f640186b8c096f"
+    },
+    {
+      "action": "modified",
+      "alias": "@/components/pace/*",
+      "destination": "tsconfig.json",
+      "created": false,
+      "beforeHash": "534fc415ec27d8c5f987a950c6f6a409ca371a8c8838219d19be35a591d6b64b",
+      "backupPath": ".pace/backups/pace-c06be54881ff9e38fa6c029051a776cd/tsconfig.json",
+      "afterHash": "c24714ed6a8c59916e23a909ab4c2f1ef462e7f1c69b0d16b34db688ea95195b"
+    }
+  ],
+  "transactionDestinations": [
+    "styles/pace.css",
+    "components/pace/cn.ts",
+    "components/pace/card.tsx",
+    "components/pace/textarea.tsx",
+    "components/pace/skeleton.tsx",
+    "components/pace/dialog.tsx",
+    "components/pace/native-select.tsx",
+    "components/pace/empty.tsx",
+    "components/pace/notices/amicro-LICENSE",
+    "components/pace/notices/oa-LICENSE",
+    "components/pace/notices/shadcn-LICENSE.md",
+    "components/pace/notices/pace-LICENSE",
+    "components/pace/notices/pace-NOTICE.md",
+    "src/index.css",
+    "package.json",
+    "components.json",
+    "tsconfig.json"
+  ],
+  "verifiedAt": "2026-10-17T17:59:42.263Z"
+}

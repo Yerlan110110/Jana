@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "pace-15b5115e49e1540f57d55276cd196ba3",
+  "status": "rolled-back",
+  "paceRoot": "/home/yqecea/coding-projects/pace",
+  "targetRoot": "/home/yqecea/coding-projects/jana/frontend",
+  "version": "4.0.3",
+  "createdAt": "2026-10-17T17:39:48.269Z",
+  "cssEntry": "src/index.css",
+  "cssImport": "@import \"../styles/pace.css\";",
+  "foundation": {
+    "action": "create",
+    "path": "components.json",
+    "style": "new-york",
+    "base": "radix"
+  },
+  "packageManager": "npm",
+  "installCommand": [
+    "npm",
+    "install"
+  ],
+  "dependencies": {
+    "@fontsource-variable/inter-tight": "^5.3.0",
+    "@fontsource-variable/geist-mono": "^5.3.0",
+    "class-variance-authority": "^0.7.1",
+    "motion": "^12.34.0",
+    "lucide-react": "^0.563.0",
+    "@base-ui/react": "^1.8.0",
+    "sonner": "^2.0.7",
+    "radix-ui": "^1.4.3",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.4.0"
+  },
+  "entries": [
+    {
+      "action": "created",
+      "destination": "styles/pace.css",
+      "created": true,
+      "afterHash": "527bd6001b2452af8ddd7ea3c1f8ae09b0e2895287d7a5901aeb8e0ea023ea1b",
+      "source": "kit/pace.css",
+      "sourceHash": "527bd6001b2452af8ddd7ea3c1f8ae09b0e2895287d7a5901aeb8e0ea023ea1b"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/cn.ts",
+      "created": true,
+      "afterHash": "a0a331c0e1255e90b20148261caa469562a5157b68fde2a2f9c188b6b648e068",
+      "source": "kit/components/cn.ts",
+      "sourceHash": "a0a331c0e1255e90b20148261caa469562a5157b68fde2a2f9c188b6b648e068"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/springs.ts",
+      "created": true,
+      "afterHash": "937893a71eeb518033da37a0e5578ea7d75484785f7abb514c3ddeadc205ec2e",
+      "source": "kit/components/springs.ts",
+      "sourceHash": "937893a71eeb518033da37a0e5578ea7d75484785f7abb514c3ddeadc205ec2e"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/button.tsx",
+      "created": true,
+      "afterHash": "944eaec31367417d24e09fb6cf339f7faf765cab20a92e49489a0326171921a2",
+      "source": "kit/components/button.tsx",
+      "sourceHash": "944eaec31367417d24e09fb6cf339f7faf765cab20a92e49489a0326171921a2"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/card.tsx",
+      "created": true,
+      "afterHash": "7c463efc70750c172ae4840cd6e8cd59bfc1ed194153e16031aca6f7a06f2f01",
+      "source": "kit/components/card.tsx",
+      "sourceHash": "7c463efc70750c172ae4840cd6e8cd59bfc1ed194153e16031aca6f7a06f2f01"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/textarea.tsx",
+      "created": true,
+      "afterHash": "0211328f8428da2b9f60c846d83990f4e0c37fdee4b77c75d4b452e057bca851",
+      "source": "kit/components/textarea.tsx",
+      "sourceHash": "0211328f8428da2b9f60c846d83990f4e0c37fdee4b77c75d4b452e057bca851"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/label.tsx",
+      "created": true,
+      "afterHash": "f0f81b439d4d4182b40f91f4967979a35b4027d5ee9215f6fa08309c341fee6d",
+      "source": "kit/components/label.tsx",
+      "sourceHash": "f0f81b439d4d4182b40f91f4967979a35b4027d5ee9215f6fa08309c341fee6d"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/field.tsx",
+      "created": true,
+      "afterHash": "24bb0b94e0e2bb292f70b081c5fa085ab89f83ffb85b4c4bebbf4ed9088df584",
+      "source": "kit/components/field.tsx",
+      "sourceHash": "24bb0b94e0e2bb292f70b081c5fa085ab89f83ffb85b4c4bebbf4ed9088df584"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/tabs.tsx",
+      "created": true,
+      "afterHash": "0551fea30258d55525430d858409d4addec5ef4b475320313dba50c418beb893",
+      "source": "kit/components/tabs.tsx",
+      "sourceHash": "0551fea30258d55525430d858409d4addec5ef4b475320313dba50c418beb893"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/skeleton.tsx",
+      "created": true,
+      "afterHash": "88a5e3bb655852d4d3eaaa8a2f26ea33e9d39005192d1e4af2482ed1ae8f5dc2",
+      "source": "kit/components/skeleton.tsx",
+      "sourceHash": "88a5e3bb655852d4d3eaaa8a2f26ea33e9d39005192d1e4af2482ed1ae8f5dc2"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/separator.tsx",
+      "created": true,
+      "afterHash": "ef2c1f58ce80e3be081da022c24813cd50e4cd10a6418178c73b9cd2a17d2918",
+      "source": "kit/components/separator.tsx",
+      "sourceHash": "ef2c1f58ce80e3be081da022c24813cd50e4cd10a6418178c73b9cd2a17d2918"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/dialog.tsx",
+      "created": true,
+      "afterHash": "9dc5a55fe5b796c4553c7abb6836e56355977954e800da32be344195bb99baae",
+      "source": "kit/components/dialog.tsx",
+      "sourceHash": "9dc5a55fe5b796c4553c7abb6836e56355977954e800da32be344195bb99baae"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/sheet.tsx",
+      "created": true,
+      "afterHash": "ce240104436362df1568a0bcfc940a81719c69cb4599da7daeb7cf7fccba6bfb",
+      "source": "kit/components/sheet.tsx",
+      "sourceHash": "ce240104436362df1568a0bcfc940a81719c69cb4599da7daeb7cf7fccba6bfb"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/dropdown-menu.tsx",
+      "created": true,
+      "afterHash": "b35921585a69b442e948d65b314c2267a656f6a5a8d143b665c735e4d900b827",
+      "source": "kit/components/dropdown-menu.tsx",
+      "sourceHash": "b35921585a69b442e948d65b314c2267a656f6a5a8d143b665c735e4d900b827"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/native-select.tsx",
+      "created": true,
+      "afterHash": "0c0ae408f80198a2ee88841ad4108b2bbe7ae0cf03d6691e26703a668a824b7c",
+      "source": "kit/components/native-select.tsx",
+      "sourceHash": "0c0ae408f80198a2ee88841ad4108b2bbe7ae0cf03d6691e26703a668a824b7c"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/breadcrumb.tsx",
+      "created": true,
+      "afterHash": "9c87ee23ee70287eb7d04e5e6beed36ea473efd2a7ca52caa63574dd32da9eb3",
+      "source": "kit/components/breadcrumb.tsx",
+      "sourceHash": "9c87ee23ee70287eb7d04e5e6beed36ea473efd2a7ca52caa63574dd32da9eb3"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/pagination.tsx",
+      "created": true,
+      "afterHash": "5b07c6d5ef781c93abdb825fcb1fe8e94d0f5c54e3d43801bbc4402a2c4b8ab8",
+      "source": "kit/components/pagination.tsx",
+      "sourceHash": "5b07c6d5ef781c93abdb825fcb1fe8e94d0f5c54e3d43801bbc4402a2c4b8ab8"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/progress.tsx",
+      "created": true,
+      "afterHash": "ad0a42dae084b592c77385b82250f9a832a4f9e41fcbda73a7776d487501772e",
+      "source": "kit/components/progress.tsx",
+      "sourceHash": "ad0a42dae084b592c77385b82250f9a832a4f9e41fcbda73a7776d487501772e"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/toast.tsx",
+      "created": true,
+      "afterHash": "8e9f350f03a86d2066274da8d598ac1486743561561534840b6e473981febb0f",
+      "source": "kit/components/toast.tsx",
+      "sourceHash": "8e9f350f03a86d2066274da8d598ac1486743561561534840b6e473981febb0f"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/avatar.tsx",
+      "created": true,
+      "afterHash": "2c2ad28fbd537203a73cc2df48678ee09ed581b47eceef26c6373ba2e2108f91",
+      "source": "kit/components/avatar.tsx",
+      "sourceHash": "2c2ad28fbd537203a73cc2df48678ee09ed581b47eceef26c6373ba2e2108f91"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/empty.tsx",
+      "created": true,
+      "afterHash": "3d1306b38a79db673145c1de0fca421d7d03f6d9ddf64acb955ab3da5ec1a294",
+      "source": "kit/components/empty.tsx",
+      "sourceHash": "3d1306b38a79db673145c1de0fca421d7d03f6d9ddf64acb955ab3da5ec1a294"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/use-reduced-motion.ts",
+      "created": true,
+      "afterHash": "5898ce4ae6bb60086cb5756b50db0e142f2f984ccace0408d899def933cbecf4",
+      "source": "kit/components/use-reduced-motion.ts",
+      "sourceHash": "5898ce4ae6bb60086cb5756b50db0e142f2f984ccace0408d899def933cbecf4"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/motion-prefs.tsx",
+      "created": true,
+      "afterHash": "1aca723ca0b8e73547e7861ba07b8a649e625258c23d9b61beba2d0d23cad6cc",
+      "source": "kit/components/motion-prefs.tsx",
+      "sourceHash": "1aca723ca0b8e73547e7861ba07b8a649e625258c23d9b61beba2d0d23cad6cc"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/amicro-LICENSE",
+      "created": true,
+      "afterHash": "4b2e0abfc3fdc8722545c3772ee7c6fd0bcdbe8af76112af50066689fca4a9c2",
+      "source": "vendor/amicro/LICENSE",
+      "sourceHash": "4b2e0abfc3fdc8722545c3772ee7c6fd0bcdbe8af76112af50066689fca4a9c2"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/oa-LICENSE",
+      "created": true,
+      "afterHash": "6f1d6135b411f87e906619bcaae2e90bfca8497aa4c31f14b86db3d0c5df3bfa",
+      "source": "vendor/oa/LICENSE",
+      "sourceHash": "6f1d6135b411f87e906619bcaae2e90bfca8497aa4c31f14b86db3d0c5df3bfa"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/shadcn-LICENSE.md",
+      "created": true,
+      "afterHash": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f",
+      "source": "vendor/shadcn/LICENSE.md",
+      "sourceHash": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/pace-LICENSE",
+      "created": true,
+      "afterHash": "6b3af5459d10adc5967c7de6af4ddfa9b0af9fded05a998dd6eb6effc55e8968",
+      "source": "LICENSE",
+      "sourceHash": "6b3af5459d10adc5967c7de6af4ddfa9b0af9fded05a998dd6eb6effc55e8968"
+    },
+    {
+      "action": "created",
+      "destination": "components/pace/notices/pace-NOTICE.md",
+      "created": true,
+      "afterHash": "df2729b406d5bfd456459a225088ab9ba1ca4560ae8331fe62db66f069297de3",
+      "source": "NOTICE.md",
+      "sourceHash": "df2729b406d5bfd456459a225088ab9ba1ca4560ae8331fe62db66f069297de3"
+    },
+    {
+      "action": "modified",
+      "destination": "src/index.css",
+      "created": false,
+      "beforeHash": "42070e0b45bb201b2b838a52aaaa6e965f964e0b542d97f1fe517fe59c4b75a8",
+      "backupPath": ".pace/backups/pace-15b5115e49e1540f57d55276cd196ba3/src/index.css",
+      "afterHash": "c48db028ed1087006b4f668cc0348c7c630af2ee7ce7312b22607c78af93fb90"
+    },
+    {
+      "action": "modified",
+      "destination": "package.json",
+      "created": false,
+      "beforeHash": "7c3d2f5c654d2e0a83b67011613e4888010d6b10b13312570fe0da2b370bf7e1",
+      "backupPath": ".pace/backups/pace-15b5115e49e1540f57d55276cd196ba3/package.json",
+      "afterHash": "94f1a9749d90ad575421fd8808279738a6fd753df0c654234c6653627077baef"
+    },
+    {
+      "action": "created",
+      "destination": "components.json",
+      "created": true,
+      "afterHash": "aa1b56411ed0e8fc2ac14315f211c7059406e03d68666e1921f640186b8c096f"
+    },
+    {
+      "action": "modified",
+      "alias": "@/components/pace/*",
+      "destination": "tsconfig.json",
+      "created": false,
+      "beforeHash": "534fc415ec27d8c5f987a950c6f6a409ca371a8c8838219d19be35a591d6b64b",
+      "backupPath": ".pace/backups/pace-15b5115e49e1540f57d55276cd196ba3/tsconfig.json",
+      "afterHash": "c24714ed6a8c59916e23a909ab4c2f1ef462e7f1c69b0d16b34db688ea95195b"
+    }
+  ],
+  "transactionDestinations": [
+    "styles/pace.css",
+    "components/pace/cn.ts",
+    "components/pace/springs.ts",
+    "components/pace/button.tsx",
+    "components/pace/card.tsx",
+    "components/pace/textarea.tsx",
+    "components/pace/label.tsx",
+    "components/pace/field.tsx",
+    "components/pace/tabs.tsx",
+    "components/pace/skeleton.tsx",
+    "components/pace/separator.tsx",
+    "components/pace/dialog.tsx",
+    "components/pace/sheet.tsx",
+    "components/pace/dropdown-menu.tsx",
+    "components/pace/native-select.tsx",
+    "components/pace/breadcrumb.tsx",
+    "components/pace/pagination.tsx",
+    "components/pace/progress.tsx",
+    "components/pace/toast.tsx",
+    "components/pace/avatar.tsx",
+    "components/pace/empty.tsx",
+    "components/pace/use-reduced-motion.ts",
+    "components/pace/motion-prefs.tsx",
+    "components/pace/notices/amicro-LICENSE",
+    "components/pace/notices/oa-LICENSE",
+    "components/pace/notices/shadcn-LICENSE.md",
+    "components/pace/notices/pace-LICENSE",
+    "components/pace/notices/pace-NOTICE.md",
+    "src/index.css",
+    "package.json",
+    "components.json",
+    "tsconfig.json"
+  ],
+  "rolledBackAt": "2026-10-17T17:45:32.499Z"
+}

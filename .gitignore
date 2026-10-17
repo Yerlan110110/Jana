@@ -21,3 +21,4 @@ runtime/
 .worktrees/
 frontend/dist/
 .e2e/
+frontend/.pace/backups/

@@ -1,0 +1,265 @@
+unit,name,check,environment,status,result,evidence,notes
+S01,Вход,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S01,Вход,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S01,Вход,route-states,768,missing,unverified,,reachable states in screen/state contract
+S01,Вход,route-states,390,missing,unverified,,reachable states in screen/state contract
+S01,Вход,route-states,320,missing,unverified,,reachable states in screen/state contract
+S01,Вход,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S01,Вход,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S01,Вход,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,768,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,390,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,320,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,768,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,390,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,320,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S03,Мой профиль,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S04,Мои заявки,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S04,Мои заявки,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S04,Мои заявки,route-states,768,missing,unverified,,reachable states in screen/state contract
+S04,Мои заявки,route-states,390,missing,unverified,,reachable states in screen/state contract
+S04,Мои заявки,route-states,320,missing,unverified,,reachable states in screen/state contract
+S04,Мои заявки,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S04,Мои заявки,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S04,Мои заявки,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S05,Черновик отпуска,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S05,Черновик отпуска,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S05,Черновик отпуска,route-states,768,missing,unverified,,reachable states in screen/state contract
+S05,Черновик отпуска,route-states,390,missing,unverified,,reachable states in screen/state contract
+S05,Черновик отпуска,route-states,320,missing,unverified,,reachable states in screen/state contract
+S05,Черновик отпуска,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S05,Черновик отпуска,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S05,Черновик отпуска,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,768,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,390,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,320,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S06,Черновик аванса,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S07,Деталь собственной заявки,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S07,Деталь собственной заявки,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S07,Деталь собственной заявки,route-states,768,missing,unverified,,reachable states in screen/state contract
+S07,Деталь собственной заявки,route-states,390,missing,unverified,,reachable states in screen/state contract
+S07,Деталь собственной заявки,route-states,320,missing,unverified,,reachable states in screen/state contract
+S07,Деталь собственной заявки,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S07,Деталь собственной заявки,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S07,Деталь собственной заявки,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S08,Возврат на исправление,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S08,Возврат на исправление,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S08,Возврат на исправление,route-states,768,missing,unverified,,reachable states in screen/state contract
+S08,Возврат на исправление,route-states,390,missing,unverified,,reachable states in screen/state contract
+S08,Возврат на исправление,route-states,320,missing,unverified,,reachable states in screen/state contract
+S08,Возврат на исправление,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S08,Возврат на исправление,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S08,Возврат на исправление,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S09,Очередь руководителя,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S09,Очередь руководителя,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S09,Очередь руководителя,route-states,768,missing,unverified,,reachable states in screen/state contract
+S09,Очередь руководителя,route-states,390,missing,unverified,,reachable states in screen/state contract
+S09,Очередь руководителя,route-states,320,missing,unverified,,reachable states in screen/state contract
+S09,Очередь руководителя,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S09,Очередь руководителя,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S09,Очередь руководителя,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S10,Решение по заявке,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S10,Решение по заявке,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S10,Решение по заявке,route-states,768,missing,unverified,,reachable states in screen/state contract
+S10,Решение по заявке,route-states,390,missing,unverified,,reachable states in screen/state contract
+S10,Решение по заявке,route-states,320,missing,unverified,,reachable states in screen/state contract
+S10,Решение по заявке,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S10,Решение по заявке,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S10,Решение по заявке,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S11,Сотрудник команды,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S11,Сотрудник команды,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S11,Сотрудник команды,route-states,768,missing,unverified,,reachable states in screen/state contract
+S11,Сотрудник команды,route-states,390,missing,unverified,,reachable states in screen/state contract
+S11,Сотрудник команды,route-states,320,missing,unverified,,reachable states in screen/state contract
+S11,Сотрудник команды,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S11,Сотрудник команды,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S11,Сотрудник команды,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S12,Обучение команды,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S12,Обучение команды,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S12,Обучение команды,route-states,768,missing,unverified,,reachable states in screen/state contract
+S12,Обучение команды,route-states,390,missing,unverified,,reachable states in screen/state contract
+S12,Обучение команды,route-states,320,missing,unverified,,reachable states in screen/state contract
+S12,Обучение команды,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S12,Обучение команды,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S12,Обучение команды,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S13,Моё обучение,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S13,Моё обучение,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S13,Моё обучение,route-states,768,missing,unverified,,reachable states in screen/state contract
+S13,Моё обучение,route-states,390,missing,unverified,,reachable states in screen/state contract
+S13,Моё обучение,route-states,320,missing,unverified,,reachable states in screen/state contract
+S13,Моё обучение,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S13,Моё обучение,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S13,Моё обучение,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S14,Каталог,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S14,Каталог,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S14,Каталог,route-states,768,missing,unverified,,reachable states in screen/state contract
+S14,Каталог,route-states,390,missing,unverified,,reachable states in screen/state contract
+S14,Каталог,route-states,320,missing,unverified,,reachable states in screen/state contract
+S14,Каталог,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S14,Каталог,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S14,Каталог,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S15,Деталь курса,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S15,Деталь курса,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S15,Деталь курса,route-states,768,missing,unverified,,reachable states in screen/state contract
+S15,Деталь курса,route-states,390,missing,unverified,,reachable states in screen/state contract
+S15,Деталь курса,route-states,320,missing,unverified,,reachable states in screen/state contract
+S15,Деталь курса,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S15,Деталь курса,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S15,Деталь курса,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S16,Урок и структура курса,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S16,Урок и структура курса,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S16,Урок и структура курса,route-states,768,missing,unverified,,reachable states in screen/state contract
+S16,Урок и структура курса,route-states,390,missing,unverified,,reachable states in screen/state contract
+S16,Урок и структура курса,route-states,320,missing,unverified,,reachable states in screen/state contract
+S16,Урок и структура курса,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S16,Урок и структура курса,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S16,Урок и структура курса,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S17,Условия теста,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S17,Условия теста,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S17,Условия теста,route-states,768,missing,unverified,,reachable states in screen/state contract
+S17,Условия теста,route-states,390,missing,unverified,,reachable states in screen/state contract
+S17,Условия теста,route-states,320,missing,unverified,,reachable states in screen/state contract
+S17,Условия теста,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S17,Условия теста,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S17,Условия теста,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S18,Попытка теста,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S18,Попытка теста,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S18,Попытка теста,route-states,768,missing,unverified,,reachable states in screen/state contract
+S18,Попытка теста,route-states,390,missing,unverified,,reachable states in screen/state contract
+S18,Попытка теста,route-states,320,missing,unverified,,reachable states in screen/state contract
+S18,Попытка теста,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S18,Попытка теста,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S18,Попытка теста,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S19,Результат попытки,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S19,Результат попытки,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S19,Результат попытки,route-states,768,missing,unverified,,reachable states in screen/state contract
+S19,Результат попытки,route-states,390,missing,unverified,,reachable states in screen/state contract
+S19,Результат попытки,route-states,320,missing,unverified,,reachable states in screen/state contract
+S19,Результат попытки,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S19,Результат попытки,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S19,Результат попытки,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S20,История обучения,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S20,История обучения,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S20,История обучения,route-states,768,missing,unverified,,reachable states in screen/state contract
+S20,История обучения,route-states,390,missing,unverified,,reachable states in screen/state contract
+S20,История обучения,route-states,320,missing,unverified,,reachable states in screen/state contract
+S20,История обучения,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S20,История обучения,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S20,История обучения,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S21,Вопрос по регламенту,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S21,Вопрос по регламенту,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S21,Вопрос по регламенту,route-states,768,missing,unverified,,reachable states in screen/state contract
+S21,Вопрос по регламенту,route-states,390,missing,unverified,,reachable states in screen/state contract
+S21,Вопрос по регламенту,route-states,320,missing,unverified,,reachable states in screen/state contract
+S21,Вопрос по регламенту,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S21,Вопрос по регламенту,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S21,Вопрос по регламенту,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S22,Источник ответа,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S22,Источник ответа,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S22,Источник ответа,route-states,768,missing,unverified,,reachable states in screen/state contract
+S22,Источник ответа,route-states,390,missing,unverified,,reachable states in screen/state contract
+S22,Источник ответа,route-states,320,missing,unverified,,reachable states in screen/state contract
+S22,Источник ответа,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S22,Источник ответа,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S22,Источник ответа,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S23,Обращение HR из пробела знаний,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S23,Обращение HR из пробела знаний,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S23,Обращение HR из пробела знаний,route-states,768,missing,unverified,,reachable states in screen/state contract
+S23,Обращение HR из пробела знаний,route-states,390,missing,unverified,,reachable states in screen/state contract
+S23,Обращение HR из пробела знаний,route-states,320,missing,unverified,,reachable states in screen/state contract
+S23,Обращение HR из пробела знаний,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S23,Обращение HR из пробела знаний,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S23,Обращение HR из пробела знаний,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S24,Центр уведомлений,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S24,Центр уведомлений,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S24,Центр уведомлений,route-states,768,missing,unverified,,reachable states in screen/state contract
+S24,Центр уведомлений,route-states,390,missing,unverified,,reachable states in screen/state contract
+S24,Центр уведомлений,route-states,320,missing,unverified,,reachable states in screen/state contract
+S24,Центр уведомлений,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S24,Центр уведомлений,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S24,Центр уведомлений,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S25,Очередь HR,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S25,Очередь HR,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S25,Очередь HR,route-states,768,missing,unverified,,reachable states in screen/state contract
+S25,Очередь HR,route-states,390,missing,unverified,,reachable states in screen/state contract
+S25,Очередь HR,route-states,320,missing,unverified,,reachable states in screen/state contract
+S25,Очередь HR,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S25,Очередь HR,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S25,Очередь HR,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S26,Каталог для HR,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S26,Каталог для HR,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S26,Каталог для HR,route-states,768,missing,unverified,,reachable states in screen/state contract
+S26,Каталог для HR,route-states,390,missing,unverified,,reachable states in screen/state contract
+S26,Каталог для HR,route-states,320,missing,unverified,,reachable states in screen/state contract
+S26,Каталог для HR,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S26,Каталог для HR,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S26,Каталог для HR,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S27,Содержание и публикация курса,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S27,Содержание и публикация курса,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S27,Содержание и публикация курса,route-states,768,missing,unverified,,reachable states in screen/state contract
+S27,Содержание и публикация курса,route-states,390,missing,unverified,,reachable states in screen/state contract
+S27,Содержание и публикация курса,route-states,320,missing,unverified,,reachable states in screen/state contract
+S27,Содержание и публикация курса,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S27,Содержание и публикация курса,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S27,Содержание и публикация курса,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S28,Назначение обучения,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S28,Назначение обучения,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S28,Назначение обучения,route-states,768,missing,unverified,,reachable states in screen/state contract
+S28,Назначение обучения,route-states,390,missing,unverified,,reachable states in screen/state contract
+S28,Назначение обучения,route-states,320,missing,unverified,,reachable states in screen/state contract
+S28,Назначение обучения,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S28,Назначение обучения,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S28,Назначение обучения,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S29,Регламенты и публикация,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S29,Регламенты и публикация,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S29,Регламенты и публикация,route-states,768,missing,unverified,,reachable states in screen/state contract
+S29,Регламенты и публикация,route-states,390,missing,unverified,,reachable states in screen/state contract
+S29,Регламенты и публикация,route-states,320,missing,unverified,,reachable states in screen/state contract
+S29,Регламенты и публикация,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S29,Регламенты и публикация,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S29,Регламенты и публикация,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S30,Обращения по знаниям,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S30,Обращения по знаниям,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S30,Обращения по знаниям,route-states,768,missing,unverified,,reachable states in screen/state contract
+S30,Обращения по знаниям,route-states,390,missing,unverified,,reachable states in screen/state contract
+S30,Обращения по знаниям,route-states,320,missing,unverified,,reachable states in screen/state contract
+S30,Обращения по знаниям,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S30,Обращения по знаниям,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S30,Обращения по знаниям,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+S31,Доставка и синхронизация,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S31,Доставка и синхронизация,route-states,1440,missing,unverified,,reachable states in screen/state contract
+S31,Доставка и синхронизация,route-states,768,missing,unverified,,reachable states in screen/state contract
+S31,Доставка и синхронизация,route-states,390,missing,unverified,,reachable states in screen/state contract
+S31,Доставка и синхронизация,route-states,320,missing,unverified,,reachable states in screen/state contract
+S31,Доставка и синхронизация,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
+S31,Доставка и синхронизация,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
+S31,Доставка и синхронизация,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
+J01,Leave across employee manager HR,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J02,Advance across employee manager HR,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J03,Return edit resubmit,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J04,Stale write and uncertain retry,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J05,Foreign scope and account cache isolation,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J06,Learning failure success persistence and history,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J07,Course publication archive and retained revision,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J08,Grounded answer refusal HR published policy loop,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J09,Source permission revoked after answer,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J10,Delivery failure recovery and independent facts,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+P01,Clean Docker launch release seed health worker,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+P02,CI-equivalent source and generated contract checks,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+P03,Public source and synthetic live demo,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+P04,Defense artifacts and truthful boundaries,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+P05,Secret and license review,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+P06,Independent release review,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
