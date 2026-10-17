@@ -55,7 +55,32 @@ class RequestHistorySerializer(serializers.ModelSerializer):
         read_only_fields = fields
 
 
+class RequestSnapshotSerializer(serializers.Serializer):
+    kind = serializers.ChoiceField(choices=HRRequest.Kind.choices)
+    reason = serializers.CharField(allow_blank=True)
+    employee_id = serializers.UUIDField()
+    employee_name = serializers.CharField()
+    employee_external_id = serializers.CharField()
+    legal_entity_id = serializers.UUIDField()
+    department_id = serializers.UUIDField()
+    start_date = serializers.DateField(allow_null=True)
+    end_date = serializers.DateField(allow_null=True)
+    leave_days = serializers.CharField(allow_null=True)
+    amount = serializers.CharField(allow_null=True)
+    currency = serializers.CharField()
+    requested_payment_date = serializers.DateField(allow_null=True)
+    assigned_manager_id = serializers.UUIDField(allow_null=True)
+    policy = serializers.CharField()
+    day_count_convention = serializers.CharField()
+
+
 class RequestRevisionSerializer(serializers.ModelSerializer):
+    payload = serializers.SerializerMethodField()
+
+    @extend_schema_field(RequestSnapshotSerializer)
+    def get_payload(self, instance):
+        return instance.payload
+
     class Meta:
         model = RequestRevision
         fields = ["id", "number", "payload", "assigned_manager", "created_at"]

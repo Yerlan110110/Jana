@@ -6190,6 +6190,8 @@ components:
           type: integer
           readOnly: true
         payload:
+          allOf:
+          - $ref: '#/components/schemas/RequestSnapshot'
           readOnly: true
         assigned_manager:
           type: string
@@ -6206,6 +6208,71 @@ components:
       - id
       - number
       - payload
+    RequestSnapshot:
+      type: object
+      properties:
+        kind:
+          $ref: '#/components/schemas/KindEnum'
+        reason:
+          type: string
+        employee_id:
+          type: string
+          format: uuid
+        employee_name:
+          type: string
+        employee_external_id:
+          type: string
+        legal_entity_id:
+          type: string
+          format: uuid
+        department_id:
+          type: string
+          format: uuid
+        start_date:
+          type: string
+          format: date
+          nullable: true
+        end_date:
+          type: string
+          format: date
+          nullable: true
+        leave_days:
+          type: string
+          nullable: true
+        amount:
+          type: string
+          nullable: true
+        currency:
+          type: string
+        requested_payment_date:
+          type: string
+          format: date
+          nullable: true
+        assigned_manager_id:
+          type: string
+          format: uuid
+          nullable: true
+        policy:
+          type: string
+        day_count_convention:
+          type: string
+      required:
+      - amount
+      - assigned_manager_id
+      - currency
+      - day_count_convention
+      - department_id
+      - employee_external_id
+      - employee_id
+      - employee_name
+      - end_date
+      - kind
+      - leave_days
+      - legal_entity_id
+      - policy
+      - reason
+      - requested_payment_date
+      - start_date
     ResolutionKindEnum:
       enum:
       - individual_answer

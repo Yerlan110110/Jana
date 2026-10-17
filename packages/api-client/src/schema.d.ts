@@ -2430,11 +2430,36 @@ export interface components {
             /** Format: uuid */
             readonly id: string;
             readonly number: number;
-            readonly payload: unknown;
+            readonly payload: components["schemas"]["RequestSnapshot"];
             /** Format: uuid */
             readonly assigned_manager: string | null;
             /** Format: date-time */
             readonly created_at: string;
+        };
+        RequestSnapshot: {
+            kind: components["schemas"]["KindEnum"];
+            reason: string;
+            /** Format: uuid */
+            employee_id: string;
+            employee_name: string;
+            employee_external_id: string;
+            /** Format: uuid */
+            legal_entity_id: string;
+            /** Format: uuid */
+            department_id: string;
+            /** Format: date */
+            start_date: string | null;
+            /** Format: date */
+            end_date: string | null;
+            leave_days: string | null;
+            amount: string | null;
+            currency: string;
+            /** Format: date */
+            requested_payment_date: string | null;
+            /** Format: uuid */
+            assigned_manager_id: string | null;
+            policy: string;
+            day_count_convention: string;
         };
         /**
          * @description * `individual_answer` - individual_answer

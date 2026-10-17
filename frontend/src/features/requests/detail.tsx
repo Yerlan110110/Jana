@@ -7,8 +7,9 @@ import {
   PageHeader,
   StatusLabel,
 } from "@/components/ui";
-import { api, unwrap } from "@/lib/api";
+import { api, unwrap, type Model } from "@/lib/api";
 import { date } from "@/lib/format";
+import { useSession } from "@/lib/session";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import { RequestActions } from "./actions";
@@ -18,6 +19,7 @@ import { Facts, isAccessDenied, timestamp } from "./support";
 
 export function RequestDetailPage() {
   const { id = "" } = useParams();
+  const { employee } = useSession();
   const request = useQuery({
     queryKey: ["request", id],
     queryFn: async ({ signal }) =>
@@ -45,6 +47,12 @@ export function RequestDetailPage() {
     return result.data;
   }
   const record = request.data;
+  const reviewer =
+    record?.assigned_manager === employee?.id
+      ? employee?.full_name
+      : record?.assigned_manager && record.assigned_manager === employee?.manager
+        ? employee.manager_name
+        : null;
   return (
     <>
       <BackLink to="/requests">К заявлениям</BackLink>
@@ -86,18 +94,13 @@ export function RequestDetailPage() {
                       record.status === "pending_hr"
                         ? "HR"
                         : record.status === "pending_manager"
-                          ? "Назначенный руководитель"
+                          ? reviewer
+                            ? `Руководитель · ${reviewer}`
+                            : "Назначенный руководитель"
                           : "Нет текущего рассмотрения",
                   },
                 ]}
               />
-              {record.assigned_manager && (
-                <details>
-                  <summary>Назначенный согласующий</summary>
-                  <p className="muted">Идентификатор на поданной версии</p>
-                  <code>{record.assigned_manager}</code>
-                </details>
-              )}
             </DataSection>
             {record.allowed_actions.includes("update_draft") && (
               <RequestEditor
@@ -207,7 +210,7 @@ export function RequestDetailPage() {
             </DataSection>
             <DataSection
               title="Поданные версии"
-              description="Точные неизменяемые снимки сервера. Исправления создают новую подачу."
+              description="Данные на момент отправки. После исправления сохраняется новая подача, предыдущая остаётся в истории."
             >
               {record.revisions.length ? (
                 record.revisions.map((revision) => (
@@ -216,14 +219,13 @@ export function RequestDetailPage() {
                       Подача {revision.number} ·{" "}
                       {timestamp(revision.created_at)}
                     </summary>
-                    <pre className="rq-snapshot">
-                      {JSON.stringify(revision.payload, null, 2)}
-                    </pre>
+                    <SubmittedFacts snapshot={revision.payload} />
                   </details>
                 ))
               ) : (
                 <p className="muted">
-                  Заявление ещё не отправлено. Снимок появится после подачи.
+                  Заявление ещё не отправлено. Поданная версия появится после
+                  отправки.
                 </p>
               )}
             </DataSection>
@@ -232,5 +234,44 @@ export function RequestDetailPage() {
         )
       )}
     </>
+  );
+}
+
+function SubmittedFacts({ snapshot }: { snapshot: Model<"RequestSnapshot"> }) {
+  return (
+    <div className="rq-snapshot">
+      <Facts
+        items={[
+          { label: "Сотрудник при подаче", value: snapshot.employee_name },
+          {
+            label: "Вид заявления",
+            value: snapshot.kind === "leave" ? "Отпуск" : "Аванс",
+          },
+          {
+            label: snapshot.kind === "leave" ? "Период" : "Сумма и дата",
+            value: <RequestSummary record={snapshot} />,
+          },
+          { label: "Причина", value: snapshot.reason || "Не указана" },
+          {
+            label: "Демонстрационный порядок рассмотрения",
+            value:
+              snapshot.policy === "synthetic_manager_then_hr_v1"
+                ? snapshot.assigned_manager_id
+                  ? "Руководитель, затем HR"
+                  : "HR"
+                : "Уточните порядок у HR",
+          },
+          ...(snapshot.kind === "leave"
+            ? [{
+                label: "Как считаются дни",
+                value:
+                  snapshot.day_count_convention === "calendar_days_inclusive_demo"
+                    ? "Календарные дни, включая первый и последний"
+                    : "Уточните правило подсчёта у HR",
+              }]
+            : []),
+        ]}
+      />
+    </div>
   );
 }

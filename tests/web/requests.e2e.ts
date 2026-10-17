@@ -1,6 +1,7 @@
 import { test, type Browser } from "@e2e-dev/web";
 import { expect, type Screen } from "e2e";
 import { changeRole, signIn } from "./support.js";
+import { sessionClient } from "./api.js";
 
 async function decide(screen: Screen, label: string, comment?: string) {
   await screen.getByRole("button", label).first().tap();
@@ -20,6 +21,11 @@ test(
   async ({ app, screen, browser }) => {
     const marker = `Browser journey ${Date.now()}`;
     await signIn(app, screen, "employee");
+    if (!app.baseUrl) throw new Error("Synthetic app URL is missing");
+    const { client } = await sessionClient(browser, new URL(app.baseUrl).origin);
+    const me = await client.GET("/api/v1/auth/me/");
+    if (!me.data?.employee?.manager) throw new Error("A named manager fixture is required");
+    const managerName = me.data.employee.manager_name;
     await app.open("/requests/new?type=advance");
     await screen.getByLabel("Сумма аванса, KZT").fill("5000");
     await screen.getByLabel("Желаемая дата выплаты").fill("2027-01-15");
@@ -28,6 +34,7 @@ test(
     const advancePath = await requestPath(browser);
     await decide(screen, "Отправить на рассмотрение");
     await expect(screen.getByRole("main")).toContainText("У руководителя");
+    await expect(screen.getByRole("main")).toContainText(`Руководитель · ${managerName}`);
 
     await changeRole(app, screen, "manager");
     await app.open(advancePath);
@@ -68,6 +75,14 @@ test(
     ).toBeVisible();
     await expect(screen.getByRole("main")).toContainText("Подача 2");
     await expect(screen.getByRole("button", "Одобрить")).toHaveCount(0);
+    await screen.getByText(/^Подача 1 ·/).tap();
+    const firstSubmission = browser.locator("details[open]").filter({ hasText: "Подача 1 ·" });
+    await expect(firstSubmission.getByText("Причина", { exact: true })).toBeVisible();
+    await expect(firstSubmission.getByText(marker, { exact: true })).toBeVisible();
+    await expect(firstSubmission.getByText(`${marker}, причина уточнена.`, { exact: true })).toHaveCount(0);
+    await screen.getByText(/^Подача 2 ·/).tap();
+    const secondSubmission = browser.locator("details[open]").filter({ hasText: "Подача 2 ·" });
+    await expect(secondSubmission.getByText(`${marker}, причина уточнена.`, { exact: true })).toBeVisible();
 
     await app.open("/requests/new?type=leave");
     const future = new Date(
@@ -98,5 +113,7 @@ test(
     await expect(screen.getByRole("main")).toContainText("Не подтверждён");
     await expect(screen.getByRole("main")).toContainText("Подача 1");
     await expect(screen.getByRole("button", "Одобрить")).toHaveCount(0);
+    await screen.getByText(/^Подача 1 ·/).tap();
+    await expect(browser.locator("details[open]").getByText(`${marker}, отпуск`, { exact: true })).toBeVisible();
   },
 );

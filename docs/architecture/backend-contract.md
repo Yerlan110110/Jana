@@ -53,6 +53,7 @@ States are draft, pending_manager, pending_hr, approved, rejected, returned and 
 The demonstration policy sends submission to the employee's direct manager, then HR. Without a manager it goes to HR. The actual company's process remains an integration configuration question.
 A reviewer cannot approve its own request, even when the role is HR.
 A returned request can be edited and resubmitted. Submitted revisions are immutable. Amendments create a new snapshot.
+`RequestRevision.payload` has the generated `RequestSnapshot` schema for the existing sixteen snapshot fields. Person, dates, money, reason, assigned-manager ID and demonstration policy conventions remain the values saved at submission. `RequestRevisionSerializer` returns the stored JSON unchanged; schema annotation does not normalize decimal strings, replace historical names or alter old idempotency responses. The frontend derives its snapshot type from this schema and displays submitted facts separately from the current editable request.
 A pending or draft request can be cancelled by its owner. Cancellation of an already approved request requires a separate future policy decision; never silently erase the approval.
 Rejected or completed decisions remain in history.
 Every write uses transaction.atomic and row locks around the shared invariant. Expected version is required for edits and transitions.

@@ -55,11 +55,31 @@ export function initialFields(record: RequestRecord): RequestFields {
       };
 }
 
-export function RequestSummary({ record }: { record: Model<"Request"> }) {
+type SummaryFields = Pick<
+  Model<"Request">,
+  | "kind"
+  | "start_date"
+  | "end_date"
+  | "leave_days"
+  | "amount"
+  | "currency"
+  | "requested_payment_date"
+>;
+
+export function RequestSummary({ record }: { record: SummaryFields }) {
+  const duration =
+    record.leave_days === null || record.leave_days === undefined
+      ? "Количество дней не указано"
+      : new Intl.NumberFormat("ru-KZ", {
+          style: "unit",
+          unit: "day",
+          unitDisplay: "long",
+          maximumFractionDigits: 2,
+        }).format(Number(record.leave_days));
   return (
     <>
       {record.kind === "leave"
-        ? `${date(record.start_date)} → ${date(record.end_date)} · ${record.leave_days ?? "—"} дней`
+        ? `${date(record.start_date)} → ${date(record.end_date)} · ${duration}`
         : `${money(record.amount ?? "0", record.currency)} · дата ${date(record.requested_payment_date)}`}
     </>
   );

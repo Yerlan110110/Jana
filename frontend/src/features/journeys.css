@@ -69,14 +69,14 @@
   overflow-wrap: anywhere;
 }
 .rq-snapshot {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
   max-width: 100%;
-  font-size: 0.8125rem;
-  line-height: 1.6;
+  margin-block-start: 1rem;
   padding: 1rem;
   background: var(--muted);
   border-radius: 0.5rem;
+}
+.rq-snapshot dd {
+  white-space: pre-wrap;
 }
 .rq-balance {
   display: grid;

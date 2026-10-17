@@ -297,8 +297,10 @@ def test_invalid_idempotency_keys_are_rejected(api_client, employees, key):
     assert not HRRequest.objects.exists()
 
 
-def test_return_edit_resubmit_keeps_first_submitted_revision(api_client, employees):
-    created = create_via_api(api_client, employees["employee"]).data
+@pytest.mark.parametrize("kind", ["leave", "advance"])
+def test_return_edit_resubmit_keeps_first_submitted_revision(api_client, employees, kind):
+    values = leave_details() if kind == "leave" else advance_details()
+    created = create_via_api(api_client, employees["employee"], values).data
     submitted = transition(api_client, employees["employee"], created, "submit").data
     assert (
         transition(api_client, employees["manager"], submitted, "return-for-changes").status_code
@@ -324,6 +326,9 @@ def test_return_edit_resubmit_keeps_first_submitted_revision(api_client, employe
     assert [revision["number"] for revision in second.data["revisions"]] == [1, 2]
     assert second.data["revisions"][0]["payload"]["reason"] == created["reason"]
     assert second.data["revisions"][1]["payload"]["reason"] == "Уточнённая причина"
+    for saved in second.json()["revisions"]:
+        assert saved["payload"] == RequestRevision.objects.get(pk=saved["id"]).payload
+        assert saved["payload"]["employee_name"] == employees["employee"].full_name
     revision = RequestRevision.objects.first()
     revision.payload = {"tampered": True}
     with pytest.raises(ModelValidationError):

@@ -34,6 +34,8 @@ The [interface inventory checkpoint](docs/verification/interface-inventory.md) r
 
 The [native zoom checkpoint](docs/verification/native-zoom.md) supplies a repeatable owned-profile 200% check and a 100% negative control. Native screenshot calibration found and repaired a coordinate mismatch in the ordinary capture path. Keep the failed images as verification evidence rather than counting them as inspected interface content. Full visual and state acceptance remain open.
 
+The [submitted-version checkpoint](docs/verification/request-snapshots.md) replaces raw request JSON with readable immutable facts and uses a name only for a proved reviewer identity. Both request kinds retain their saved payloads. PostgreSQL now passes 232 tests with 193 retained warnings. The refreshed normal and native matrices pass twelve and ten tests respectively. Full interface acceptance and independent release review remain open.
+
 Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. The first source checkpoint `3709c00` is published. Both GitHub Actions jobs passed at https://github.com/Yerlan110110/Jana/actions/runs/39060785959. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
 
 ## Environment and retained work
