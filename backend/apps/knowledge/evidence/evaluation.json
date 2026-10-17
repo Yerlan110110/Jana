@@ -1,0 +1,182 @@
+{
+  "dataset": "janamen-knowledge-behavior-v1",
+  "scope": "Synthetic fixture regression suite. No claim about unseen production questions or live generated answer quality.",
+  "calibration": "The lexical gate and stop words were tuned against this synthetic regression set. These are not held-out accuracy results.",
+  "generated_at": "2026-10-17T13:45:55.177337+00:00",
+  "database_vendor": "postgresql",
+  "package_versions": {
+    "Django": "5.2.18",
+    "rank-bm25": "0.2.2",
+    "snowballstemmer": "3.1.1",
+    "openai": "2.54.0"
+  },
+  "input_hashes": {
+    "data/policies.json": "826624de0bc5ef748886a19f5764d314b9b38ebb86749a86be391c7f66d7912e",
+    "data/evaluation.json": "952b1c0684ac50f8f73efd9d219ec8d8a26009ed0e8614c80233bff3971df34c",
+    "retrieval.py": "bb8fba9962dbba4f7ff87b2bb0721c5db968054717f5e2ca0978798ffa7c2821"
+  },
+  "total": 20,
+  "passed": 20,
+  "cases": [
+    {
+      "id": "leave-route",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "advance-route",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "official-balance",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "profile-correction",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "quiz-attempt",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "read-notification",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "explicit-hr-help",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "kazakh-leave",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "unprovided-mortgage",
+      "kind": "unanswered",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "no_matching_policy",
+      "failures": []
+    },
+    {
+      "id": "unprovided-salary",
+      "kind": "unanswered",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "no_matching_policy",
+      "failures": []
+    },
+    {
+      "id": "unknown-benefit",
+      "kind": "unanswered",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "no_matching_policy",
+      "failures": []
+    },
+    {
+      "id": "future-source",
+      "kind": "unanswered",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "no_matching_policy",
+      "failures": []
+    },
+    {
+      "id": "draft-source",
+      "kind": "unanswered",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "no_matching_policy",
+      "failures": []
+    },
+    {
+      "id": "restricted-payroll",
+      "kind": "restricted",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "no_matching_policy",
+      "failures": []
+    },
+    {
+      "id": "hr-payroll-allowed",
+      "kind": "answered",
+      "passed": true,
+      "mode": "extractive",
+      "reason": "lexical_evidence",
+      "failures": []
+    },
+    {
+      "id": "ambiguous-request",
+      "kind": "ambiguous",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "clarification_required",
+      "failures": []
+    },
+    {
+      "id": "ambiguous-approval",
+      "kind": "ambiguous",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "clarification_required",
+      "failures": []
+    },
+    {
+      "id": "prompt-override-ru",
+      "kind": "injection",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "unsafe_instruction",
+      "failures": []
+    },
+    {
+      "id": "prompt-override-en",
+      "kind": "injection",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "unsafe_instruction",
+      "failures": []
+    },
+    {
+      "id": "forbidden-action",
+      "kind": "injection",
+      "passed": true,
+      "mode": "insufficient_evidence",
+      "reason": "unsafe_instruction",
+      "failures": []
+    }
+  ]
+}

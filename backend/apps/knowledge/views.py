@@ -1,0 +1,359 @@
+from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import OpenApiParameter, extend_schema, extend_schema_view
+from rest_framework import generics
+from rest_framework.permissions import BasePermission, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.throttling import UserRateThrottle
+from rest_framework.views import APIView
+
+from apps.core.idempotency import execute
+from apps.identity.permissions import require_hr
+
+from . import selectors, services
+from .models import AssistantAnswer
+from .presentation import present_answer, present_citation
+from .serializers import (
+    AnswerSerializer,
+    CitationSerializer,
+    DocumentAdminSerializer,
+    DocumentCreateSerializer,
+    DocumentReadSerializer,
+    DocumentUpdateSerializer,
+    EscalationSerializer,
+    GapCaseSerializer,
+    GapResolutionSerializer,
+    ProviderErrorSerializer,
+    QuestionSerializer,
+    RevisionSerializer,
+    VersionCommandSerializer,
+)
+
+
+class HRKnowledgePermission(BasePermission):
+    def has_permission(self, request, view):
+        selectors.require_active_actor(request.user)
+        require_hr(request.user)
+        return True
+
+
+class AssistantThrottle(UserRateThrottle):
+    scope = "assistant"
+
+
+COMMAND_PARAMETERS = [
+    OpenApiParameter("Idempotency-Key", str, OpenApiParameter.HEADER, required=True)
+]
+
+
+def _idempotent(request, command, operation):
+    employee = selectors.require_active_actor(request.user)
+    payload = {
+        "body": request.data,
+        "actor_entity": str(employee.legal_entity_id) if employee else None,
+        "actor_role": request.user.role,
+    }
+    data, response_status, replayed = execute(
+        request.user,
+        request.headers.get("Idempotency-Key"),
+        command,
+        payload,
+        operation,
+    )
+    return Response(
+        data, status=response_status, headers={"Idempotency-Replayed": str(replayed).lower()}
+    )
+
+
+@extend_schema_view(
+    get=extend_schema(
+        tags=["Knowledge"],
+        description="Only effective published revisions visible to the active employee are returned.",
+    )
+)
+class DocumentListView(generics.ListAPIView):
+    serializer_class = DocumentReadSerializer
+    filterset_fields = ["current_revision__language", "current_revision__topic"]
+    search_fields = ["current_revision__title", "current_revision__summary"]
+    ordering_fields = ["current_revision__title", "current_revision__published_at"]
+    ordering = ["current_revision__title", "id"]
+
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            from .models import KnowledgeDocument
+
+            return KnowledgeDocument.objects.none()
+        return selectors.accessible_documents(self.request.user)
+
+
+@extend_schema_view(get=extend_schema(tags=["Knowledge"]))
+class DocumentDetailView(generics.RetrieveAPIView):
+    serializer_class = DocumentReadSerializer
+
+    def get_queryset(self):
+        return selectors.accessible_documents(self.request.user)
+
+
+class CitationView(APIView):
+    @extend_schema(tags=["Knowledge"], responses=CitationSerializer)
+    def get(self, request, pk):
+        chunk = get_object_or_404(selectors.accessible_chunks(request.user), pk=pk)
+        return Response(CitationSerializer(present_citation(chunk)).data)
+
+
+@extend_schema_view(
+    get=extend_schema(tags=["Knowledge administration"]),
+    post=extend_schema(
+        tags=["Knowledge administration"],
+        request=DocumentCreateSerializer,
+        responses={201: DocumentAdminSerializer},
+        parameters=COMMAND_PARAMETERS,
+    ),
+)
+class AdminDocumentListView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated, HRKnowledgePermission]
+    serializer_class = DocumentAdminSerializer
+    filterset_fields = ["state", "language", "topic", "audience"]
+    search_fields = ["title", "summary"]
+    ordering_fields = ["title", "updated_at"]
+
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            from .models import KnowledgeDocument
+
+            return KnowledgeDocument.objects.none()
+        return selectors.manageable_documents(self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        serializer = DocumentCreateSerializer(data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+        return _idempotent(
+            request,
+            "knowledge.create_document",
+            lambda: (
+                DocumentAdminSerializer(
+                    services.create_document(request.user, serializer.validated_data)
+                ).data,
+                201,
+            ),
+        )
+
+
+class AdminDocumentDetailView(APIView):
+    permission_classes = [IsAuthenticated, HRKnowledgePermission]
+
+    @extend_schema(tags=["Knowledge administration"], responses=DocumentAdminSerializer)
+    def get(self, request, pk):
+        document = get_object_or_404(selectors.manageable_documents(request.user), pk=pk)
+        return Response(DocumentAdminSerializer(document).data)
+
+    @extend_schema(
+        tags=["Knowledge administration"],
+        request=DocumentUpdateSerializer,
+        responses=DocumentAdminSerializer,
+        parameters=COMMAND_PARAMETERS,
+    )
+    def patch(self, request, pk):
+        serializer = DocumentUpdateSerializer(data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+        get_object_or_404(selectors.manageable_documents(request.user), pk=pk)
+        values = dict(serializer.validated_data)
+        expected_version = values.pop("expected_version")
+        return _idempotent(
+            request,
+            f"knowledge.update_document:{pk}",
+            lambda: (
+                DocumentAdminSerializer(
+                    services.update_document(request.user, pk, expected_version, values)
+                ).data,
+                200,
+            ),
+        )
+
+
+class PublishDocumentView(APIView):
+    permission_classes = [IsAuthenticated, HRKnowledgePermission]
+
+    @extend_schema(
+        tags=["Knowledge administration"],
+        request=VersionCommandSerializer,
+        responses=DocumentAdminSerializer,
+        parameters=COMMAND_PARAMETERS,
+    )
+    def post(self, request, pk):
+        serializer = VersionCommandSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        get_object_or_404(selectors.manageable_documents(request.user), pk=pk)
+        return _idempotent(
+            request,
+            f"knowledge.publish_document:{pk}",
+            lambda: (
+                DocumentAdminSerializer(
+                    services.publish_document(
+                        request.user, pk, serializer.validated_data["expected_version"]
+                    )
+                ).data,
+                200,
+            ),
+        )
+
+
+class ArchiveDocumentView(APIView):
+    permission_classes = [IsAuthenticated, HRKnowledgePermission]
+
+    @extend_schema(
+        tags=["Knowledge administration"],
+        request=VersionCommandSerializer,
+        responses=DocumentAdminSerializer,
+        parameters=COMMAND_PARAMETERS,
+    )
+    def post(self, request, pk):
+        serializer = VersionCommandSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        get_object_or_404(selectors.manageable_documents(request.user), pk=pk)
+        return _idempotent(
+            request,
+            f"knowledge.archive_document:{pk}",
+            lambda: (
+                DocumentAdminSerializer(
+                    services.archive_document(
+                        request.user, pk, serializer.validated_data["expected_version"]
+                    )
+                ).data,
+                200,
+            ),
+        )
+
+
+class AdminRevisionListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated, HRKnowledgePermission]
+    serializer_class = RevisionSerializer
+    filter_backends = []
+
+    @extend_schema(
+        tags=["Knowledge administration"],
+        parameters=[OpenApiParameter("pk", str, OpenApiParameter.PATH)],
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        document = get_object_or_404(
+            selectors.manageable_documents(self.request.user), pk=self.kwargs["pk"]
+        )
+        return document.revisions.order_by("-number")
+
+
+class AnswerListCreateView(generics.ListAPIView):
+    serializer_class = AnswerSerializer
+    throttle_classes = [AssistantThrottle]
+    filter_backends = []
+
+    def get_queryset(self):
+        return selectors.own_answers(self.request.user)
+
+    @extend_schema(tags=["AI Jana"], responses=AnswerSerializer(many=True))
+    def get(self, request, *args, **kwargs):
+        page = self.paginate_queryset(self.get_queryset())
+        answers = [present_answer(answer, request.user) for answer in page]
+        return self.get_paginated_response(AnswerSerializer(answers, many=True).data)
+
+    @extend_schema(
+        tags=["AI Jana"],
+        request=QuestionSerializer,
+        responses={200: AnswerSerializer, 201: AnswerSerializer, 503: ProviderErrorSerializer},
+        description="client_message_id deduplicates the persisted answer. A new id asks again. Extractive mode does not call an LLM. Provider failures return 503 with the persisted answer in the answer field.",
+    )
+    def post(self, request, *args, **kwargs):
+        serializer = QuestionSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        answer, created = services.ask_question(request.user, **serializer.validated_data)
+        data = AnswerSerializer(present_answer(answer, request.user)).data
+        if data["mode"] == AssistantAnswer.Mode.UNAVAILABLE:
+            return Response(
+                {
+                    "code": "provider_unavailable",
+                    "message": data["message"],
+                    "field_errors": {},
+                    "request_id": getattr(request, "request_id", None),
+                    "answer": data,
+                },
+                status=503,
+            )
+        return Response(data, status=201 if created else 200)
+
+
+class AnswerDetailView(APIView):
+    @extend_schema(tags=["AI Jana"], responses=AnswerSerializer)
+    def get(self, request, pk):
+        answer = get_object_or_404(selectors.own_answers(request.user), pk=pk)
+        return Response(AnswerSerializer(present_answer(answer, request.user)).data)
+
+
+@extend_schema_view(get=extend_schema(tags=["Knowledge gaps"]))
+class GapCaseListView(generics.ListAPIView):
+    serializer_class = GapCaseSerializer
+    filterset_fields = ["status"]
+    search_fields = ["question"]
+    ordering_fields = ["created_at", "resolved_at"]
+
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            from .models import KnowledgeGapCase
+
+            return KnowledgeGapCase.objects.none()
+        return selectors.visible_gap_cases(self.request.user)
+
+    @extend_schema(
+        tags=["Knowledge gaps"],
+        request=EscalationSerializer,
+        responses={200: GapCaseSerializer, 201: GapCaseSerializer},
+        parameters=COMMAND_PARAMETERS,
+    )
+    def post(self, request, *args, **kwargs):
+        serializer = EscalationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        get_object_or_404(
+            selectors.own_answers(request.user), pk=serializer.validated_data["answer_id"]
+        )
+
+        def operation():
+            case, created = services.escalate_answer(request.user, **serializer.validated_data)
+            return GapCaseSerializer(
+                case, context={"request": request}
+            ).data, 201 if created else 200
+
+        return _idempotent(request, "knowledge.escalate_answer", operation)
+
+
+@extend_schema_view(get=extend_schema(tags=["Knowledge gaps"]))
+class GapCaseDetailView(generics.RetrieveAPIView):
+    serializer_class = GapCaseSerializer
+
+    def get_queryset(self):
+        return selectors.visible_gap_cases(self.request.user)
+
+
+class GapResolutionView(APIView):
+    permission_classes = [IsAuthenticated, HRKnowledgePermission]
+
+    @extend_schema(
+        tags=["Knowledge gaps"],
+        request=GapResolutionSerializer,
+        responses=GapCaseSerializer,
+        parameters=COMMAND_PARAMETERS,
+    )
+    def post(self, request, pk):
+        serializer = GapResolutionSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        get_object_or_404(selectors.visible_gap_cases(request.user), pk=pk)
+        return _idempotent(
+            request,
+            f"knowledge.resolve_gap:{pk}",
+            lambda: (
+                GapCaseSerializer(
+                    services.resolve_gap_case(request.user, pk, **serializer.validated_data),
+                    context={"request": request},
+                ).data,
+                200,
+            ),
+        )
