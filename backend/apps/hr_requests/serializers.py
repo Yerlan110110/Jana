@@ -52,12 +52,14 @@ class RequestHistorySerializer(serializers.ModelSerializer):
             "submission_number",
             "created_at",
         ]
+        read_only_fields = fields
 
 
 class RequestRevisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestRevision
         fields = ["id", "number", "payload", "assigned_manager", "created_at"]
+        read_only_fields = fields
 
 
 class RequestSerializer(serializers.ModelSerializer):

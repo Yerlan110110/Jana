@@ -2333,16 +2333,14 @@ export interface components {
             /** Format: uuid */
             readonly id: string;
             /** Format: uuid */
-            actor: string;
-            actor_name: string;
-            action: string;
-            from_status?: string;
-            to_status: string;
-            /** Format: int64 */
-            version: number;
-            comment?: string;
-            /** Format: int64 */
-            submission_number?: number;
+            readonly actor: string;
+            readonly actor_name: string;
+            readonly action: string;
+            readonly from_status: string;
+            readonly to_status: string;
+            readonly version: number;
+            readonly comment: string;
+            readonly submission_number: number;
             /** Format: date-time */
             readonly created_at: string;
         };
@@ -2353,11 +2351,10 @@ export interface components {
         RequestRevision: {
             /** Format: uuid */
             readonly id: string;
-            /** Format: int64 */
-            number: number;
-            payload: unknown;
+            readonly number: number;
+            readonly payload: unknown;
             /** Format: uuid */
-            assigned_manager?: string | null;
+            readonly assigned_manager: string | null;
             /** Format: date-time */
             readonly created_at: string;
         };

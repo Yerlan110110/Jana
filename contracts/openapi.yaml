@@ -5962,31 +5962,28 @@ components:
         actor:
           type: string
           format: uuid
+          readOnly: true
         actor_name:
           type: string
-          maxLength: 200
+          readOnly: true
         action:
           type: string
-          maxLength: 40
+          readOnly: true
         from_status:
           type: string
-          maxLength: 24
+          readOnly: true
         to_status:
           type: string
-          maxLength: 24
+          readOnly: true
         version:
           type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
+          readOnly: true
         comment:
           type: string
-          maxLength: 2000
+          readOnly: true
         submission_number:
           type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -5995,8 +5992,11 @@ components:
       - action
       - actor
       - actor_name
+      - comment
       - created_at
+      - from_status
       - id
+      - submission_number
       - to_status
       - version
     RequestPreview:
@@ -6020,19 +6020,20 @@ components:
           readOnly: true
         number:
           type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
-        payload: {}
+          readOnly: true
+        payload:
+          readOnly: true
         assigned_manager:
           type: string
           format: uuid
+          readOnly: true
           nullable: true
         created_at:
           type: string
           format: date-time
           readOnly: true
       required:
+      - assigned_manager
       - created_at
       - id
       - number
