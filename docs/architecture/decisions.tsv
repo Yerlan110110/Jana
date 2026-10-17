@@ -1,0 +1,3 @@
+ts	phase	decision	why	evidence	result
+2026-10-17T12:45:40Z	start	Started autonomous JanaMen repository delivery	User authorized architecture, backend, research and handoff with quality before time savings	AGENTS.md	In progress
+2026-10-17T12:45:40Z	architecture	Selected a Django modular backend with generated frontend contracts	Shared transactional invariants and imported official data favor one domain owner; framework capabilities are reused	docs/architecture/backend-contract.md	Implementation baseline committed at 4e56faa

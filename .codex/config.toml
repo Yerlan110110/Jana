@@ -1,0 +1,8 @@
+[skills]
+max_context_tokens = 10000
+
+[mcp_servers.rea]
+command = "node"
+args = ["scripts/tooling/rea.mjs", "mcp"]
+startup_timeout_sec = 30
+tool_timeout_sec = 180

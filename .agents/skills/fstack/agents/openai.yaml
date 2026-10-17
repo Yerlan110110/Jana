@@ -1,0 +1,4 @@
+interface:
+  display_name: "JanaMen Fstack"
+  short_description: "Route JanaMen work through Emil and Jakub skills"
+  default_prompt: "Use $fstack to research, specify, or review this JanaMen interface."

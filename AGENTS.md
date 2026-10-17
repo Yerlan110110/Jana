@@ -13,9 +13,11 @@ Never copy private MIS Pro code or documents into this public repository.
 Read .agents/skills/poteto-mode/SKILL.md and its Codex tool mapping for every substantial task.
 Use architect, model-the-domain, type-system-discipline and technical-writing where relevant.
 Use the local REA skill for REA-compatible runtime or shipped-artifact investigations. Ordinary complete-source inspection is not a claimed REA run.
-For every frontend or design task, read docs/tooling/ and the installed author-skill inventory. Apply the relevant original Emil Kowalski and Jakub Krehel skills. These requirements are mandatory; there is no requirement to run irrelevant marketing or refactoring workflows.
+For interface research, specifications, frontend work and backend contracts that affect visible states, read .agents/skills/fstack/SKILL.md, docs/tooling/ and the installed author-skill inventory. Apply the relevant original Emil Kowalski and Jakub Krehel skills. These requirements are mandatory; there is no requirement to run irrelevant marketing or refactoring workflows.
 Record which skills changed a concrete decision in the task handoff. An installation list alone is not evidence of use.
 Actual tool availability and higher-priority instructions override examples in vendored skills. Do not invent tools, model access or verification results.
+Use the parent model for ordinary delegation unless the task and host authorize another model. Independent reviewers must not author the change they review. Report unavailable review capacity and reduced model diversity honestly.
+Run node scripts/tooling/verify-skills.mjs after tooling changes. REA CLI or standalone server success does not prove active MCP discovery inside an existing client session. Keep evidence identities and distinguish observed behavior from inference.
 
 ## Engineering contract
 
