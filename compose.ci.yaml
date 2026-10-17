@@ -1,0 +1,5 @@
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${JANAMEN_TEST_SUBNET:-172.29.1.0/24}

@@ -76,6 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       COMPOSE_PROJECT_NAME: janamen-ci
+      COMPOSE_FILE: compose.yaml:compose.ci.yaml
       LOGIN_THROTTLE_RATE: 120/min
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1

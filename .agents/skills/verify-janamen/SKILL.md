@@ -35,6 +35,8 @@ Prove the action and resulting server state. A notification read does not decide
 
 On Linux, `docker compose --profile test run --build --rm browser-test` runs the same role suite in an isolated browser image. Its host network reaches the app through loopback because the browser engine rejects plain HTTP on non-loopback hosts. The fixture shares the selected Compose project's synthetic credentials. It writes `.artifacts/browser/ci/`; retain that directory before another run. CI uploads trace summaries, not saved sessions or cookies.
 
+The API-replacement check reserves the API's old address. Start its isolated stack with `COMPOSE_FILE=compose.yaml:compose.ci.yaml` so Docker permits that reservation. `JANAMEN_TEST_SUBNET` selects an unused private CIDR when the default conflicts with another local network. Set these variables for every command that operates on that stack. The application launch without this override keeps Docker's normal address allocation.
+
 ## Bug bash
 
 Use the charters in `features/`. An exploratory model is not configured. Agent-driven `e2e explore` remains unproven until an authorized model actually runs the mapped charter. Do not invent a passing bug bash. A future local bug-bash config stays ignored under `.e2e/bugbash/`. Keep one signed-in charter per session and one writer to the database. A reported defect becomes a verified bug only after its specific assertion fails with `ASSERTION_FAILED` in `tests/web/bugbash/<slug>.e2e.ts`.
