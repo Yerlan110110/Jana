@@ -5,7 +5,13 @@ from .selectors import employee_for
 
 
 def can_manage_employee(user, employee):
-    if not user or not user.is_authenticated or not user.is_active or employee.user_id == user.pk:
+    if (
+        not user
+        or not user.is_authenticated
+        or not user.is_active
+        or not employee.is_active
+        or employee.user_id == user.pk
+    ):
         return False
     if user.is_superuser:
         return True

@@ -7,6 +7,11 @@ from rest_framework.test import APIClient
 from apps.identity.models import Department, Employee, LegalEntity, User
 
 
+@pytest.fixture(autouse=True)
+def fast_test_password_hasher(settings):
+    settings.PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
+
+
 @pytest.fixture
 def api_client():
     return APIClient()
