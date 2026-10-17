@@ -29,6 +29,7 @@ class Command(BaseCommand):
         parser.add_argument("--skip-requests", action="store_true")
         parser.add_argument("--skip-academy", action="store_true")
         parser.add_argument("--skip-knowledge", action="store_true")
+        parser.add_argument("--skip-integrations", action="store_true")
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -67,6 +68,7 @@ class Command(BaseCommand):
                 ("hr_requests", "seed_requests", (employees,)),
                 ("academy", "seed_academy", (employees,)),
                 ("knowledge", "seed_knowledge", ()),
+                ("integrations", "seed_integrations", (employees,)),
             ]:
                 option = "skip_requests" if module == "hr_requests" else f"skip_{module}"
                 if options[option] or not apps.is_installed(f"apps.{module}"):

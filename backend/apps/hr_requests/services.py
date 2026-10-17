@@ -265,6 +265,7 @@ def _snapshot(request):
         "reason": request.reason,
         "employee_id": str(request.employee_id),
         "employee_name": request.employee.full_name,
+        "employee_external_id": request.employee.external_id,
         "legal_entity_id": str(request.employee.legal_entity_id),
         "department_id": str(request.employee.department_id),
         "start_date": request.start_date.isoformat() if request.start_date else None,

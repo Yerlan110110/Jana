@@ -125,3 +125,31 @@ class RequestHistory(AppendOnlyModel):
 
     class Meta:
         ordering = ["created_at", "id"]
+
+
+class LeaveBalanceIncorporation(TimestampedModel):
+    class State(models.TextChoices):
+        INCORPORATED = "incorporated", "Included in the official source balance"
+        REVERSED = "reversed", "Source reversed the incorporation"
+
+    request = models.OneToOneField(
+        HRRequest, on_delete=models.PROTECT, related_name="balance_incorporation"
+    )
+    request_revision = models.ForeignKey(RequestRevision, on_delete=models.PROTECT)
+    leave_days = models.DecimalField(max_digits=7, decimal_places=2)
+    state = models.CharField(max_length=16, choices=State)
+    source = models.CharField(max_length=32, default="mock_1c")
+    source_revision = models.PositiveBigIntegerField()
+    source_batch_id = models.UUIDField()
+    confirmed_at = models.DateTimeField()
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(leave_days__gt=0), name="incorporated_leave_days_positive"
+            ),
+            models.CheckConstraint(
+                condition=models.Q(state__in=["incorporated", "reversed"]),
+                name="leave_incorporation_state_valid",
+            ),
+        ]

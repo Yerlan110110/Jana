@@ -64,10 +64,33 @@ class OutboxMessage(TimestampedModel):
     available_at = models.DateTimeField(default=timezone.now)
     last_error = models.TextField(blank=True)
     processed_at = models.DateTimeField(null=True, blank=True)
+    version = models.PositiveIntegerField(default=1)
+    cycle_attempt_count = models.PositiveIntegerField(default=0)
+    claim_token = models.UUIDField(null=True, blank=True)
+    lease_expires_at = models.DateTimeField(null=True, blank=True)
+    failure_code = models.CharField(max_length=64, blank=True)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["event", "topic"], name="outbox_event_topic_unique")
+            models.UniqueConstraint(fields=["event", "topic"], name="outbox_event_topic_unique"),
+            models.CheckConstraint(
+                condition=(
+                    models.Q(
+                        status="processing",
+                        claim_token__isnull=False,
+                        lease_expires_at__isnull=False,
+                    )
+                    | models.Q(
+                        status__in=["pending", "processed", "failed"],
+                        claim_token__isnull=True,
+                        lease_expires_at__isnull=True,
+                    )
+                ),
+                name="outbox_claim_matches_status",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(version__gte=1), name="outbox_version_positive"
+            ),
         ]
         indexes = [models.Index(fields=["status", "available_at"])]
         ordering = ["available_at", "id"]

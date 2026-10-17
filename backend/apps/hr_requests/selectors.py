@@ -4,7 +4,7 @@ from django.db.models import Sum
 
 from apps.identity.selectors import visible_employees
 
-from .models import HRRequest
+from .models import HRRequest, LeaveBalanceIncorporation
 
 RESERVING_STATUSES = [
     HRRequest.Status.PENDING_MANAGER,
@@ -27,10 +27,17 @@ def leave_projection(employee, exclude_request=None):
     )
     if exclude_request:
         queryset = queryset.exclude(pk=exclude_request)
+    incorporated = queryset.filter(
+        status=HRRequest.Status.APPROVED,
+        balance_incorporation__state=LeaveBalanceIncorporation.State.INCORPORATED,
+    )
+    accounted = incorporated.aggregate(total=Sum("leave_days"))["total"] or Decimal("0.00")
+    queryset = queryset.exclude(pk__in=incorporated.values("pk"))
     reserved = queryset.aggregate(total=Sum("leave_days"))["total"] or Decimal("0.00")
     return {
         "official_balance": employee.leave_balance,
         "portal_reserved_days": reserved,
+        "source_incorporated_days": accounted,
         "projected_balance": employee.leave_balance - reserved,
         "balance_as_of": employee.balance_as_of,
         "day_count_convention": "calendar_days_inclusive_demo",

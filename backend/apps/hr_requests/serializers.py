@@ -106,6 +106,7 @@ class RequestDetailSerializer(RequestSerializer):
 class LeaveProjectionSerializer(serializers.Serializer):
     official_balance = serializers.DecimalField(max_digits=9, decimal_places=2)
     portal_reserved_days = serializers.DecimalField(max_digits=9, decimal_places=2)
+    source_incorporated_days = serializers.DecimalField(max_digits=9, decimal_places=2)
     projected_balance = serializers.DecimalField(max_digits=9, decimal_places=2)
     balance_as_of = serializers.DateField()
     day_count_convention = serializers.CharField()
