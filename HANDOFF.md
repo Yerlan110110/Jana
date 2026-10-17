@@ -22,11 +22,11 @@ The coordinator reran the current PostgreSQL suite in Docker with 231 passed, no
 
 The first Docker web doctor and employee question-to-citation test pass. Reports are under `.artifacts/browser/doctor-20261017-1/` and `knowledge-20261017-1/`. These checks cover their named paths, not all roles or visual states. The integrated Docker role run at `.artifacts/browser/integrated-roles-20261018-1/` passed both request journeys, advance return/resubmission, logout and account switch. The preceding failing logout evidence is retained at `.artifacts/browser/logout-red-20261017-1/`. The project verification recipe is [.agents/skills/verify-janamen/SKILL.md](.agents/skills/verify-janamen/SKILL.md). Agent-driven exploratory testing is not configured and is not a claimed pass.
 
-Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
+Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. The first source checkpoint `3709c00` is published. Both GitHub Actions jobs passed at https://github.com/Yerlan110110/Jana/actions/runs/39060785959. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
 
 ## Environment and retained work
 
-The coordinating checkout is `/home/yqecea/coding-projects/jana`. Compose project `janamen-demo` owns API port 8000 and web port 8080. A coordinator-owned Vite process serves port 5173 for development. `janamen-ci` owns the database suite environment. Do not stop another task's services by process name.
+The coordinating checkout is `/home/yqecea/coding-projects/jana`. Compose project `janamen-demo` owns API port 8000 and web port 8080. The coordinator stopped the owned Vite process on port 5173 after switching acceptance to immutable Docker builds. `janamen-ci` owns the database suite environment. Do not stop another task's services by process name.
 
 Completed runtime and backend author worktrees were stopped and archived. Recovery refs are `refs/archive/worktrees/runtime-5c393cdd` and `refs/archive/worktrees/backend-gaps-8f16f823`. Their durable reports moved to `.artifacts/worktree-archive/`. The old runtime baseline database volume is retained without running containers. Local synthetic credentials remain ignored and protected.
 

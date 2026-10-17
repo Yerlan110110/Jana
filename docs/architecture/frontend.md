@@ -102,3 +102,9 @@ Base UI уменьшает собственную механику, но не г
 Pace установлен только в проверенном составе. Источники, лицензии и отклонённые зависимости описаны в [решении о повторном использовании](../research/continuation-reuse.md). Consumer theme компилируется из `frontend/jana.json`; upstream-файлы не правятся. Публичный исходник frontend и тексты лицензий доступны из footer. Текущий интерфейс светлый. Полный казахский перевод и dark mode не заявлены. Язык материала регламента и казахские символы сохраняются отдельно от языка интерфейса.
 
 Браузерная приёмка следует [.agents/skills/verify-janamen](../../.agents/skills/verify-janamen/SKILL.md). Текущий объём и незакрытые проверки находятся в [C2](../continuation-status.md). Сборка не означает прохождения всех 31 представления.
+
+## Feature source boundaries
+
+The connected features retain their named route exports through small entry modules. Request lists, forms, commands and detail live in separate files. Academy separates enrollment lists, catalogue, learning, assessment, author fields and assignment. Knowledge separates answers, reading, cases and publication. No new state owner or framework is added.
+
+The coordinator compared keeping large multi-page files with a mechanical split along existing component dependencies. The split keeps the current route and API contracts while reducing the largest resulting feature file to 572 lines. A generic form engine and a router rewrite were rejected because neither is needed to separate these existing responsibilities. The dependency tool rejected cycles and TypeScript removed unused imports. Build and five real-browser tests pass on the rebuilt Docker image. Raw evidence is `.artifacts/build-split-feature-modules.log` and `.artifacts/browser/split-modules-20261018-1/`. This is owner verification, not independent review.
