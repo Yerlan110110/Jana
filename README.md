@@ -11,7 +11,7 @@
 | Нужно | Открыть |
 | --- | --- |
 | Понять ТЗ простыми словами | [Краткое объяснение](docs/product/brief-in-russian.md) |
-| Продолжить работу | [Handoff следующему агенту](HANDOFF.md) |
+| Продолжить работу | [Handoff следующему агенту](HANDOFF.md), [готовый промпт Codex](CODEX_START.md) |
 | Узнать требования | [Спецификация](docs/product/specification.md), [решения владельца](docs/product/project-rules.md) |
 | Разобраться в backend | [Архитектура](docs/architecture/system.md), [контракт модулей](docs/architecture/backend-contract.md) |
 | Выбрать готовые компоненты | [Сравнение архитектур](docs/architecture/reuse-decision.md), [frontend architecture](docs/architecture/frontend.md) |

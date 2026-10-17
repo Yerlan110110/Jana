@@ -6,6 +6,8 @@ The GitHub connector can read the target repository, but the authorized initial 
 
 This is a GitHub integration permission failure, not an automatic approval-review rejection. User authorization to publish is already present. Repeating the same write or substituting another Git API endpoint does not resolve the integration's access boundary.
 
+After the user explicitly selected GitHub again and requested the push, a fresh read confirmed an empty branch list. One fresh initial-file write was then attempted through that selected connection and received the same403. No successful remote mutation is claimed.
+
 All reviewed code and documents are committed locally. A recovery archive contains the tracked working tree and a complete Git bundle so the next agent can preserve the original reviewed commit identities. The [native verification](final.md) remains valid; remote CI and Docker runtime are **not run**.
 
 ## Publish from a permitted environment
