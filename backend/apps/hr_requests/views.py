@@ -47,6 +47,8 @@ class RequestViewSet(
         return RequestDetailSerializer if self.action == "retrieve" else RequestSerializer
 
     def _command(self, request, command, payload, operation, status_code=200):
+        if command == "request.create" and employee_for(request.user) is None:
+            raise PermissionDenied("An active employee profile is required.")
         if (
             "pk" in self.kwargs
             and not visible_requests(request.user).filter(pk=self.kwargs["pk"]).exists()

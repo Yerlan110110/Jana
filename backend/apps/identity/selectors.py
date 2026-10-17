@@ -4,7 +4,7 @@ from .models import Employee, User
 
 
 def employee_for(user):
-    if not user or not user.is_authenticated:
+    if not user or not user.is_authenticated or not user.is_active:
         return None
     return (
         Employee.objects.filter(user=user, is_active=True)

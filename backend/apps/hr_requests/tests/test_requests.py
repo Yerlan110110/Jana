@@ -6,6 +6,7 @@ import pytest
 from django.core.exceptions import ValidationError as ModelValidationError
 from django.db import IntegrityError, transaction
 from django.utils import timezone
+from rest_framework.test import APIClient
 
 from apps.core.models import DomainEvent, IdempotencyRecord, OutboxMessage
 from apps.hr_requests import services
@@ -110,6 +111,44 @@ def test_salary_advance_has_explicit_fields_and_approval_is_separate_from_export
     assert approved.data["status"] == "approved"
     assert OutboxMessage.objects.get().processed_at is None
     assert "paid" not in approved.data
+
+
+def test_real_session_request_commands_require_rotated_csrf_token(employees):
+    client = APIClient(enforce_csrf_checks=True)
+    original = client.get("/api/v1/auth/csrf/").data["csrf_token"]
+    logged_in = client.post(
+        "/api/v1/auth/login/",
+        {"username": "employee", "password": "Synthetic-test-password-42!"},
+        format="json",
+        HTTP_X_CSRFTOKEN=original,
+    )
+    assert logged_in.status_code == 200
+    for token in [None, original]:
+        headers = {"HTTP_IDEMPOTENCY_KEY": str(uuid4())}
+        if token:
+            headers["HTTP_X_CSRFTOKEN"] = token
+        assert (
+            client.post("/api/v1/requests/", leave_details(), format="json", **headers).status_code
+            == 403
+        )
+    assert not HRRequest.objects.exists()
+    created = client.post(
+        "/api/v1/requests/",
+        leave_details(),
+        format="json",
+        HTTP_IDEMPOTENCY_KEY="csrf-valid-create",
+        HTTP_X_CSRFTOKEN=logged_in.data["csrf_token"],
+    )
+    assert created.status_code == 201
+
+
+def test_inactive_profile_cannot_replay_a_previous_create(api_client, employees):
+    owner = employees["employee"]
+    assert create_via_api(api_client, owner, key="before-deactivation").status_code == 201
+    owner.is_active = False
+    owner.save()
+    assert create_via_api(api_client, owner, key="before-deactivation").status_code == 403
+    assert api_client.get("/api/v1/requests/").data["count"] == 0
 
 
 @pytest.mark.parametrize("outsider", ["peer", "other_team", "other_entity", "other_manager"])

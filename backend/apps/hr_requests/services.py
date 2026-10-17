@@ -31,6 +31,8 @@ def _can_review(user, request):
 
 
 def allowed_actions(user, request):
+    if not user or not user.is_authenticated or not user.is_active:
+        return []
     actions = []
     if request.employee.user_id == user.pk and request.employee.is_active:
         if request.status in EDITABLE:
