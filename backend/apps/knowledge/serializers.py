@@ -14,6 +14,7 @@ from .models import (
     KnowledgeGapCase,
     KnowledgeRevision,
 )
+from .presentation import present_policy_reference
 from .services import draft_hash
 
 LANGUAGE_CHOICES = [("ru", "Русский"), ("kk", "Қазақша")]
@@ -247,9 +248,19 @@ class EscalationSerializer(StrictSerializer):
 
 class GapResolutionSerializer(KnowledgeVersionCommandSerializer):
     response = serializers.CharField(min_length=10, max_length=8000)
+    published_revision_id = serializers.UUIDField(required=False, allow_null=True)
+
+
+class PolicyReferenceSerializer(serializers.Serializer):
+    revision_id = serializers.UUIDField()
+    state = serializers.ChoiceField(choices=["current", "superseded", "unavailable"])
+    revision = RevisionSerializer(allow_null=True)
+    url = serializers.CharField()
 
 
 class GapCaseSerializer(serializers.ModelSerializer):
+    resolution_kind = serializers.SerializerMethodField()
+    policy_reference = serializers.SerializerMethodField()
     allowed_actions = serializers.SerializerMethodField()
 
     class Meta:
@@ -264,6 +275,8 @@ class GapCaseSerializer(serializers.ModelSerializer):
             "status",
             "version",
             "response",
+            "resolution_kind",
+            "policy_reference",
             "resolved_by",
             "resolved_at",
             "created_at",
@@ -271,6 +284,15 @@ class GapCaseSerializer(serializers.ModelSerializer):
             "allowed_actions",
         ]
         read_only_fields = fields
+
+    @extend_schema_field(serializers.ChoiceField(choices=["individual_answer", "published_policy"]))
+    def get_resolution_kind(self, obj):
+        return "published_policy" if obj.published_revision_id else "individual_answer"
+
+    @extend_schema_field(PolicyReferenceSerializer(allow_null=True))
+    def get_policy_reference(self, obj):
+        reference = present_policy_reference(obj, self.context["request"].user)
+        return PolicyReferenceSerializer(reference).data if reference else None
 
     @extend_schema_field(serializers.ListField(child=serializers.ChoiceField(choices=["resolve"])))
     def get_allowed_actions(self, obj):

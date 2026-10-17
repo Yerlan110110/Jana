@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import OpenApiParameter, extend_schema, extend_schema_view
 from rest_framework import generics
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
@@ -11,7 +12,7 @@ from apps.identity.permissions import require_hr
 
 from . import selectors, services
 from .models import AssistantAnswer
-from .presentation import present_answer, present_citation
+from .presentation import present_answer, present_citation, present_policy_reference
 from .serializers import (
     AnswerSerializer,
     CitationSerializer,
@@ -23,6 +24,7 @@ from .serializers import (
     GapCaseSerializer,
     GapResolutionSerializer,
     KnowledgeVersionCommandSerializer,
+    PolicyReferenceSerializer,
     ProviderErrorSerializer,
     QuestionSerializer,
     RevisionSerializer,
@@ -345,8 +347,14 @@ class GapResolutionView(APIView):
     def post(self, request, pk):
         serializer = GapResolutionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        get_object_or_404(selectors.visible_gap_cases(request.user), pk=pk)
-        return _idempotent(
+        case = get_object_or_404(selectors.visible_gap_cases(request.user), pk=pk)
+        revision_id = serializer.validated_data.get("published_revision_id")
+        if (
+            revision_id is not None
+            and selectors.policy_revision_for_case(request.user, case, revision_id) is None
+        ):
+            raise NotFound("Choose a published policy available to both you and the employee.")
+        response = _idempotent(
             request,
             f"knowledge.resolve_gap:{pk}",
             lambda: (
@@ -357,3 +365,19 @@ class GapResolutionView(APIView):
                 200,
             ),
         )
+        case.refresh_from_db()
+        reference = present_policy_reference(case, request.user)
+        response.data["policy_reference"] = (
+            PolicyReferenceSerializer(reference).data if reference else None
+        )
+        return response
+
+
+class GapPolicyReferenceView(APIView):
+    @extend_schema(tags=["Knowledge gaps"], responses=PolicyReferenceSerializer)
+    def get(self, request, pk):
+        case = get_object_or_404(selectors.visible_gap_cases(request.user), pk=pk)
+        reference = present_policy_reference(case, request.user)
+        if reference is None:
+            raise NotFound("This case has an individual answer without a policy reference.")
+        return Response(PolicyReferenceSerializer(reference).data)

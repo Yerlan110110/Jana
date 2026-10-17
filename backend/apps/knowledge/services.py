@@ -21,7 +21,13 @@ from .models import (
 )
 from .provider import GenerationConfig, ProviderUnavailable, generate_claims
 from .retrieval import retrieve
-from .selectors import manageable_documents, own_answers, require_active_actor, visible_gap_cases
+from .selectors import (
+    manageable_documents,
+    own_answers,
+    policy_revision_for_case,
+    require_active_actor,
+    visible_gap_cases,
+)
 
 
 def _check_version(record, expected_version):
@@ -309,7 +315,7 @@ def escalate_answer(user, answer_id, details=""):
 
 
 @transaction.atomic
-def resolve_gap_case(user, case_id, expected_version, response):
+def resolve_gap_case(user, case_id, expected_version, response, published_revision_id=None):
     require_hr(user)
     case = visible_gap_cases(user).select_for_update(of=("self",)).filter(pk=case_id).first()
     if case is None:
@@ -318,16 +324,38 @@ def resolve_gap_case(user, case_id, expected_version, response):
     _check_version(case, expected_version)
     if case.status != KnowledgeGapCase.Status.OPEN:
         raise Conflict("This question is already resolved. Open the saved HR response.")
+    if published_revision_id is not None:
+        revision = policy_revision_for_case(user, case, published_revision_id)
+        if revision is None:
+            raise NotFound("Choose a published policy available to both you and the employee.")
+        case.published_revision = revision
     case.response = response
     case.status = KnowledgeGapCase.Status.RESOLVED
     case.resolved_by = user
     case.resolved_at = timezone.now()
     case.version += 1
     case.save(
-        update_fields=["response", "status", "resolved_by", "resolved_at", "version", "updated_at"]
+        update_fields=[
+            "response",
+            "status",
+            "resolved_by",
+            "resolved_at",
+            "version",
+            "updated_at",
+            "published_revision",
+        ]
     )
     event = emit(
-        "knowledge.gap_resolved", "knowledge_gap", case.id, {"version": case.version}, user
+        "knowledge.gap_resolved",
+        "knowledge_gap",
+        case.id,
+        {
+            "version": case.version,
+            "published_revision_id": str(case.published_revision_id)
+            if case.published_revision_id
+            else None,
+        },
+        user,
     )
     notify(
         case.employee.user,

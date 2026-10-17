@@ -5,7 +5,13 @@ from rest_framework.exceptions import PermissionDenied
 from apps.identity.models import User
 from apps.identity.selectors import employee_for
 
-from .models import AssistantAnswer, KnowledgeChunk, KnowledgeDocument, KnowledgeGapCase
+from .models import (
+    AssistantAnswer,
+    KnowledgeChunk,
+    KnowledgeDocument,
+    KnowledgeGapCase,
+    KnowledgeRevision,
+)
 
 
 def require_active_actor(user):
@@ -67,16 +73,37 @@ def manageable_documents(user):
     return documents.filter(legal_entity_id=employee.legal_entity_id)
 
 
-def accessible_chunks(user, *, current_only=False, language=None):
-    documents = accessible_documents(user)
-    chunks = KnowledgeChunk.objects.filter(revision__document__in=documents).filter(
-        scope_filter(user, "revision__"), effective_filter("revision__")
+def accessible_revisions(user):
+    return (
+        KnowledgeRevision.objects.filter(document__in=accessible_documents(user))
+        .filter(scope_filter(user), effective_filter())
+        .select_related("document", "owner", "legal_entity", "department")
     )
+
+
+def accessible_chunks(user, *, current_only=False, language=None):
+    revisions = accessible_revisions(user)
     if current_only:
-        chunks = chunks.filter(revision_id__in=documents.values("current_revision_id"))
+        revisions = revisions.filter(
+            pk__in=accessible_documents(user).values("current_revision_id")
+        )
     if language:
-        chunks = chunks.filter(revision__language=language)
-    return chunks.select_related("revision__document", "revision__owner")
+        revisions = revisions.filter(language=language)
+    return KnowledgeChunk.objects.filter(revision__in=revisions).select_related(
+        "revision__document", "revision__owner"
+    )
+
+
+def policy_revision_for_case(user, case, revision_id):
+    try:
+        owner_revisions = accessible_revisions(case.employee.user)
+    except PermissionDenied:
+        return None
+    return (
+        accessible_revisions(user)
+        .filter(pk=revision_id, pk__in=owner_revisions.values("pk"))
+        .first()
+    )
 
 
 def own_answers(user):
@@ -86,7 +113,9 @@ def own_answers(user):
 
 def visible_gap_cases(user):
     employee = require_active_actor(user)
-    cases = KnowledgeGapCase.objects.select_related("employee__user", "answer", "resolved_by")
+    cases = KnowledgeGapCase.objects.select_related(
+        "employee__user", "answer", "resolved_by", "published_revision__document"
+    )
     if user.is_superuser:
         return cases
     if user.role == User.Role.HR:

@@ -1,7 +1,7 @@
 from django.urls import reverse
 
 from .models import AssistantAnswer, KnowledgeGapCase
-from .selectors import accessible_chunks
+from .selectors import accessible_chunks, policy_revision_for_case
 
 MESSAGES = {
     "ru": {
@@ -98,4 +98,18 @@ def present_answer(answer, user):
         "case_id": case_id,
         "allowed_actions": ["ask_again", "open_hr_case" if case_id else "escalate_to_hr"],
         "created_at": answer.created_at,
+    }
+
+
+def present_policy_reference(case, user):
+    if case.published_revision_id is None:
+        return None
+    revision = policy_revision_for_case(user, case, case.published_revision_id)
+    return {
+        "revision_id": case.published_revision_id,
+        "state": "unavailable"
+        if revision is None
+        else ("current" if revision.document.current_revision_id == revision.pk else "superseded"),
+        "revision": revision,
+        "url": reverse("knowledge-gap-policy-reference", kwargs={"pk": case.pk}),
     }

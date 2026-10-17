@@ -38,6 +38,11 @@ urlpatterns = [
     path("assistant/answers/", views.AnswerListCreateView.as_view(), name="knowledge-answers"),
     path("assistant/answers/<uuid:pk>/", views.AnswerDetailView.as_view(), name="knowledge-answer"),
     path("knowledge/gaps/", views.GapCaseListView.as_view(), name="knowledge-gaps"),
+    path(
+        "knowledge/gaps/<uuid:pk>/policy-reference/",
+        views.GapPolicyReferenceView.as_view(),
+        name="knowledge-gap-policy-reference",
+    ),
     path("knowledge/gaps/<uuid:pk>/", views.GapCaseDetailView.as_view(), name="knowledge-gap"),
     path(
         "knowledge/gaps/<uuid:pk>/resolve/",

@@ -172,13 +172,21 @@ class KnowledgeGapCase(TimestampedModel):
     response = models.TextField(blank=True)
     resolved_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True)
     resolved_at = models.DateTimeField(null=True)
+    published_revision = models.ForeignKey(
+        KnowledgeRevision, on_delete=models.PROTECT, null=True, blank=True, related_name="gap_cases"
+    )
 
     class Meta:
         ordering = ["-created_at", "id"]
         constraints = [
             models.CheckConstraint(
                 condition=(
-                    models.Q(status="open", resolved_at__isnull=True, resolved_by__isnull=True)
+                    models.Q(
+                        status="open",
+                        resolved_at__isnull=True,
+                        resolved_by__isnull=True,
+                        published_revision__isnull=True,
+                    )
                     | models.Q(
                         status="resolved", resolved_at__isnull=False, resolved_by__isnull=False
                     )

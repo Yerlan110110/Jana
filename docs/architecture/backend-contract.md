@@ -65,6 +65,8 @@ Commands include create, update_draft, submit, approve, reject, return_for_chang
 Detail responses include allowed_actions, version and chronological history. The server computes allowed_actions.
 Never allow generic PATCH status to bypass a command.
 
+The request list accepts `needs_my_action=true` before pagination and uses `hr_requests.selectors.review_requests`, the same canonical selector as the workbench. False and omission add no restriction. Search, other filters and ordering compose with this queue. The owning selector retains current scope, stage, assigned reviewer, active employee and self-review rules.
+
 ## Academy module
 
 Separate catalogue availability, immutable course revision, enrollment, lesson progress and quiz attempt.
@@ -93,6 +95,16 @@ Implement HR knowledge-gap cases as internal application records when the employ
 The assistant never makes HR decisions or changes requests.
 Provide seed_knowledge() with substantive synthetic policies and a machine-readable evaluation set of answered, unanswered, restricted, ambiguous and injection-style questions.
 The module owns apps/knowledge and its tests. It depends on the shared identity/event APIs.
+
+### Knowledge case resolution
+
+When resolving an HR case against a policy, the existing `POST /api/v1/knowledge/gaps/{id}/resolve/` accepts optional nullable `published_revision_id` alongside `expected_version` and `response`. The case stores a protected foreign key to that immutable `KnowledgeRevision`. Omission or null retains an individual answer. A link requires an effective published revision readable by both the resolver and the case owner. An inaccessible or unknown revision returns 404 without changing the case.
+
+Read-only `resolution_kind` is derived from the link as `individual_answer` or `published_policy`. `policy_reference` is null without a link. Otherwise it includes `revision_id`, `state`, nullable `revision`, and `url`. The state is `current`, `superseded`, or `unavailable`. The explicit `GET /api/v1/knowledge/gaps/{id}/policy-reference/` resolver returns that same shape and returns 404 for an individual answer. Lists, details, the resolver and command replays recompute access. Unavailable references retain the revision ID but return no revision content. New publication preserves the old link and marks it superseded while it remains accessible.
+
+Publication uses the existing document authoring and publish commands, followed by resolve with the published revision ID. These are two independent transactions. A failed resolve leaves the published policy intact and the case open. The successful resolution, its event, notification and idempotency receipt commit together. A repeated command keeps one resolution and refreshes the policy projection rather than returning cached source content.
+
+The accepted G2 design uses one nullable FK and the complete permitted revision. It derives the resolution kind and does not require a new chunk-selection relation. Copying policy text into the case was rejected because it creates a second content owner and cannot follow access revocation. A generic linkage table and automatic publication were rejected because this relationship has one known target and requires human publication. The response text remains private to the case. Closing a case does not train AI. Only a separately published policy participates in ordinary retrieval.
 
 ## Integration module
 
@@ -126,4 +138,3 @@ Prove enrollment ownership, hidden answer keys, server scoring, completed histor
 Prove policy access before retrieval, valid citation resolution, unknown-answer refusal and generation failure handling.
 Use PostgreSQL to verify row-lock/concurrency semantics. Record unavailable tool gates without claiming a pass.
 All acceptance evidence belongs in docs/verification and HANDOFF.md.
-
