@@ -2,7 +2,7 @@ from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
 
 import pytest
-from django.db import close_old_connections, connection
+from django.db import close_old_connections, connection, connections
 from rest_framework.test import APIClient
 
 from apps.academy.models import Enrollment, QuizAttempt
@@ -26,7 +26,7 @@ def parallel_post(user_id, url, payloads):
             result = client.post(url, payload, HTTP_IDEMPOTENCY_KEY=key)
             return result.status_code, result.get("Idempotency-Replayed")
         finally:
-            close_old_connections()
+            connections.close_all()
 
     with ThreadPoolExecutor(max_workers=len(payloads)) as executor:
         return list(executor.map(send, payloads))
