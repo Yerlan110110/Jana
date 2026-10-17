@@ -11,7 +11,6 @@ import { api, unwrap } from "@/lib/api";
 import { date } from "@/lib/format";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import "../journeys.css";
 import { RequestActions } from "./actions";
 import { RequestSummary, historyLabels } from "./common";
 import { RequestEditor } from "./forms";

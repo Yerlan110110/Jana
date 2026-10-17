@@ -4,7 +4,6 @@ import { DataSection } from "@/components/ui";
 import { api, unwrap, useCommand } from "@/lib/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import "../journeys.css";
 import type { RequestAction, RequestRecord } from "./common";
 import { actionLabels, actionPaths } from "./common";
 import { WriteRecovery } from "./support";

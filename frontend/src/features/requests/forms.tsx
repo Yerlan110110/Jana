@@ -15,7 +15,6 @@ import { date } from "@/lib/format";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
-import "../journeys.css";
 import { RequestActions } from "./actions";
 import type { EditIntent, RequestFields, RequestRecord } from "./common";
 import { initialFields } from "./common";

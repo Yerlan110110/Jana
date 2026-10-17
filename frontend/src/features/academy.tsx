@@ -1,4 +1,3 @@
-import "./journeys.css";
 export {
   AcademyPage,
   CatalogPage,

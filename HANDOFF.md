@@ -30,6 +30,8 @@ The expanded Docker suite now passes 14 tests, including real lost-response reco
 
 The [entry-view interface pilot](docs/verification/interface-pilot.md) records repaired input and caption contrast, six inspected viewport regions and the raw axe monogram finding. It is a scoped check. Complete visual, keyboard and zoom acceptance remain open.
 
+The [interface inventory checkpoint](docs/verification/interface-inventory.md) records the repaired direct-entry stylesheet defect. All 31 views now pass normal-state automated checks at five widths, with 155 cell records and 585 saved segments. These are not all inspected images or complete state acceptance. Two non-brand incomplete contrast nodes remain for manual adjudication. The current Docker role suite still passes 14 tests. The fresh PostgreSQL run passes 231 with a retained teardown-session warning under investigation.
+
 Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. The first source checkpoint `3709c00` is published. Both GitHub Actions jobs passed at https://github.com/Yerlan110110/Jana/actions/runs/39060785959. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
 
 ## Environment and retained work

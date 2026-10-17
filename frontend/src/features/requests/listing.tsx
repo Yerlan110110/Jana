@@ -17,7 +17,6 @@ import { useSession } from "@/lib/session";
 import { useQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { Link, useSearchParams } from "react-router";
-import "../journeys.css";
 import { RequestSummary } from "./common";
 
 function RequestsList({ queue = false }: { queue?: boolean }) {

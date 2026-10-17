@@ -16,7 +16,6 @@ import {
 import { api, ApiError, unwrap, useCommand, type Model } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { Facts, timestamp } from "./requests/support";
-import "./journeys.css";
 
 const deliveryOutcomeLabels: Record<Model<"OutcomeEnum">, string> = {
   accepted: "Документ принят",

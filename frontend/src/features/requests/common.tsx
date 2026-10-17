@@ -1,6 +1,5 @@
 import { type Model } from "@/lib/api";
 import { date, money } from "@/lib/format";
-import "../journeys.css";
 
 export type RequestRecord = Model<"RequestDetail">;
 

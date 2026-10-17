@@ -16,7 +16,6 @@ import { api, unwrap, type Model } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { date } from "@/lib/format";
 import { Facts, timestamp } from "./requests/support";
-import "./journeys.css";
 
 function EmployeeFacts({ employee }: { employee: Model<"Employee"> }) {
   return (
