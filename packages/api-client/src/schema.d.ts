@@ -758,6 +758,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/knowledge/gaps/{id}/policy-reference/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_gaps_policy_reference_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/knowledge/gaps/{id}/resolve/": {
         parameters: {
             query?: never;
@@ -934,6 +950,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/requests/{id}/fulfillment/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["requests_fulfillment_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/requests/{id}/reject/": {
         parameters: {
             query?: never;
@@ -1062,6 +1094,12 @@ export interface components {
          * @enum {string}
          */
         AnswerStrategyEnum: "source_bound_selection" | "ranked_excerpts" | "refusal" | "unavailable";
+        ApprovalEvidence: {
+            status: components["schemas"]["HRRequestStatusEnum"];
+            /** Format: uuid */
+            submitted_revision_id: string | null;
+            submission_number: number;
+        };
         AssignmentRequest: {
             /** Format: uuid */
             employee: string;
@@ -1357,6 +1395,19 @@ export interface components {
             /** Format: date-time */
             readonly created_at: string;
         };
+        DeliveryEvidence: {
+            state: components["schemas"]["DeliveryEvidenceStateEnum"];
+            /** Format: date-time */
+            accepted_at: string | null;
+        };
+        /**
+         * @description * `not_queued` - not_queued
+         *     * `queued` - queued
+         *     * `accepted` - accepted
+         *     * `needs_operator` - needs_operator
+         * @enum {string}
+         */
+        DeliveryEvidenceStateEnum: "not_queued" | "queued" | "accepted" | "needs_operator";
         /**
          * @description * `pending` - pending
          *     * `processing` - processing
@@ -1669,6 +1720,13 @@ export interface components {
             /** @default document_received_only */
             readonly acceptance_meaning: string;
         };
+        Fulfillment: {
+            /** Format: uuid */
+            request_id: string;
+            approval: components["schemas"]["ApprovalEvidence"];
+            delivery: components["schemas"]["DeliveryEvidence"];
+            source_accounting: components["schemas"]["SourceAccounting"];
+        };
         GapCase: {
             /** Format: uuid */
             readonly id: string;
@@ -1683,6 +1741,8 @@ export interface components {
             readonly status: components["schemas"]["KnowledgeGapStatusEnum"];
             readonly version: number;
             readonly response: string;
+            readonly resolution_kind: components["schemas"]["ResolutionKindEnum"];
+            readonly policy_reference: components["schemas"]["PolicyReference"] | null;
             /** Format: uuid */
             readonly resolved_by: string | null;
             /** Format: date-time */
@@ -1705,6 +1765,8 @@ export interface components {
         GapResolutionRequest: {
             expected_version: number;
             response: string;
+            /** Format: uuid */
+            published_revision_id?: string | null;
         };
         /**
          * @description * `draft` - Draft
@@ -2212,6 +2274,20 @@ export interface components {
             /** Format: date */
             requested_payment_date?: string;
         };
+        PolicyReference: {
+            /** Format: uuid */
+            revision_id: string;
+            state: components["schemas"]["PolicyReferenceStateEnum"];
+            revision: components["schemas"]["Revision"] | null;
+            url: string;
+        };
+        /**
+         * @description * `current` - current
+         *     * `superseded` - superseded
+         *     * `unavailable` - unavailable
+         * @enum {string}
+         */
+        PolicyReferenceStateEnum: "current" | "superseded" | "unavailable";
         ProviderError: {
             code: string;
             message: string;
@@ -2358,6 +2434,12 @@ export interface components {
             /** Format: date-time */
             readonly created_at: string;
         };
+        /**
+         * @description * `individual_answer` - individual_answer
+         *     * `published_policy` - published_policy
+         * @enum {string}
+         */
+        ResolutionKindEnum: "individual_answer" | "published_policy";
         Revision: {
             /** Format: uuid */
             readonly id: string;
@@ -2405,6 +2487,22 @@ export interface components {
             employee: components["schemas"]["Employee"] | null;
             csrf_token: string;
         };
+        SourceAccounting: {
+            state: components["schemas"]["SourceAccountingStateEnum"];
+            source_revision: number | null;
+            /** Format: date-time */
+            confirmed_at: string | null;
+            /** Format: date */
+            balance_as_of: string | null;
+        };
+        /**
+         * @description * `not_applicable` - not_applicable
+         *     * `not_confirmed` - not_confirmed
+         *     * `incorporated` - incorporated
+         *     * `reversed` - reversed
+         * @enum {string}
+         */
+        SourceAccountingStateEnum: "not_applicable" | "not_confirmed" | "incorporated" | "reversed";
         /**
          * @description * `mock_1c` - mock_1c
          * @enum {string}
@@ -4029,6 +4127,27 @@ export interface operations {
             };
         };
     };
+    knowledge_gaps_policy_reference_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PolicyReference"];
+                };
+            };
+        };
+    };
     knowledge_gaps_resolve_create: {
         parameters: {
             query?: never;
@@ -4217,6 +4336,8 @@ export interface operations {
                  *     * `advance` - Salary advance
                  */
                 kind?: "advance" | "leave";
+                /** @description True restricts to the current review queue before pagination. False adds no restriction. */
+                needs_my_action?: boolean;
                 /** @description Which field to use when ordering the results. */
                 ordering?: string;
                 /** @description A page number within the paginated result set. */
@@ -4391,6 +4512,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RequestDetail"];
+                };
+            };
+        };
+    };
+    requests_fulfillment_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this hr request. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Fulfillment"];
                 };
             };
         };

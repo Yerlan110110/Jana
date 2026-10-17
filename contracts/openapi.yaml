@@ -1964,6 +1964,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/GapCase'
           description: ''
+  /api/v1/knowledge/gaps/{id}/policy-reference/:
+    get:
+      operationId: knowledge_gaps_policy_reference_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge gaps
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyReference'
+          description: ''
   /api/v1/knowledge/gaps/{id}/resolve/:
     post:
       operationId: knowledge_gaps_resolve_create
@@ -2187,6 +2208,12 @@ paths:
         description: |-
           * `leave` - Leave
           * `advance` - Salary advance
+      - in: query
+        name: needs_my_action
+        schema:
+          type: boolean
+        description: True restricts to the current review queue before pagination.
+          False adds no restriction.
       - name: ordering
         required: false
         in: query
@@ -2417,6 +2444,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RequestDetail'
+          description: ''
+  /api/v1/requests/{id}/fulfillment/:
+    get:
+      operationId: requests_fulfillment_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this hr request.
+        required: true
+      tags:
+      - requests
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fulfillment'
           description: ''
   /api/v1/requests/{id}/reject/:
     post:
@@ -2684,6 +2733,21 @@ components:
         * `ranked_excerpts` - ranked_excerpts
         * `refusal` - refusal
         * `unavailable` - unavailable
+    ApprovalEvidence:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/HRRequestStatusEnum'
+        submitted_revision_id:
+          type: string
+          format: uuid
+          nullable: true
+        submission_number:
+          type: integer
+      required:
+      - status
+      - submission_number
+      - submitted_revision_id
     AssignmentRequest:
       type: object
       properties:
@@ -3530,6 +3594,30 @@ components:
       - next_attempt_at
       - outcome
       - receipt
+    DeliveryEvidence:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/DeliveryEvidenceStateEnum'
+        accepted_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - accepted_at
+      - state
+    DeliveryEvidenceStateEnum:
+      enum:
+      - not_queued
+      - queued
+      - accepted
+      - needs_operator
+      type: string
+      description: |-
+        * `not_queued` - not_queued
+        * `queued` - queued
+        * `accepted` - accepted
+        * `needs_operator` - needs_operator
     DeliveryStatusEnum:
       enum:
       - pending
@@ -4507,6 +4595,23 @@ components:
       - payload_hash
       - provider
       - request_revision
+    Fulfillment:
+      type: object
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        approval:
+          $ref: '#/components/schemas/ApprovalEvidence'
+        delivery:
+          $ref: '#/components/schemas/DeliveryEvidence'
+        source_accounting:
+          $ref: '#/components/schemas/SourceAccounting'
+      required:
+      - approval
+      - delivery
+      - request_id
+      - source_accounting
     GapCase:
       type: object
       properties:
@@ -4542,6 +4647,15 @@ components:
         response:
           type: string
           readOnly: true
+        resolution_kind:
+          allOf:
+          - $ref: '#/components/schemas/ResolutionKindEnum'
+          readOnly: true
+        policy_reference:
+          allOf:
+          - $ref: '#/components/schemas/PolicyReference'
+          nullable: true
+          readOnly: true
         resolved_by:
           type: string
           format: uuid
@@ -4573,7 +4687,9 @@ components:
       - employee
       - id
       - legal_entity
+      - policy_reference
       - question
+      - resolution_kind
       - resolved_at
       - resolved_by
       - response
@@ -4607,6 +4723,10 @@ components:
           type: string
           minLength: 10
           maxLength: 8000
+        published_revision_id:
+          type: string
+          format: uuid
+          nullable: true
       required:
       - expected_version
       - response
@@ -5605,6 +5725,35 @@ components:
         requested_payment_date:
           type: string
           format: date
+    PolicyReference:
+      type: object
+      properties:
+        revision_id:
+          type: string
+          format: uuid
+        state:
+          $ref: '#/components/schemas/PolicyReferenceStateEnum'
+        revision:
+          allOf:
+          - $ref: '#/components/schemas/Revision'
+          nullable: true
+        url:
+          type: string
+      required:
+      - revision
+      - revision_id
+      - state
+      - url
+    PolicyReferenceStateEnum:
+      enum:
+      - current
+      - superseded
+      - unavailable
+      type: string
+      description: |-
+        * `current` - current
+        * `superseded` - superseded
+        * `unavailable` - unavailable
     ProviderError:
       type: object
       properties:
@@ -6038,6 +6187,14 @@ components:
       - id
       - number
       - payload
+    ResolutionKindEnum:
+      enum:
+      - individual_answer
+      - published_policy
+      type: string
+      description: |-
+        * `individual_answer` - individual_answer
+        * `published_policy` - published_policy
     Revision:
       type: object
       properties:
@@ -6176,6 +6333,39 @@ components:
       - csrf_token
       - employee
       - user
+    SourceAccounting:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/SourceAccountingStateEnum'
+        source_revision:
+          type: integer
+          nullable: true
+        confirmed_at:
+          type: string
+          format: date-time
+          nullable: true
+        balance_as_of:
+          type: string
+          format: date
+          nullable: true
+      required:
+      - balance_as_of
+      - confirmed_at
+      - source_revision
+      - state
+    SourceAccountingStateEnum:
+      enum:
+      - not_applicable
+      - not_confirmed
+      - incorporated
+      - reversed
+      type: string
+      description: |-
+        * `not_applicable` - not_applicable
+        * `not_confirmed` - not_confirmed
+        * `incorporated` - incorporated
+        * `reversed` - reversed
     SourceEnum:
       enum:
       - mock_1c
