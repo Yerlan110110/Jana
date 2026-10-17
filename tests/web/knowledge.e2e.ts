@@ -12,7 +12,7 @@ test(
     await screen.getByRole("button", "Найти ответ").tap();
     await expect(browser).toHaveURL(/\/assistant\/answers\/[a-f0-9-]+$/);
     await expect(
-      screen.getByRole("heading", "Как подать заявление на отпуск?"),
+      screen.getByRole("heading", "Как подать заявление на отпуск?", { level: 1 }),
     ).toBeVisible();
     await expect(screen.getByText("Выдержки из регламента")).toBeVisible();
     await expect(
@@ -24,7 +24,7 @@ test(
       .tap();
     await expect(browser).toHaveURL(/\/knowledge\/citations\/[a-f0-9-]+$/);
     await expect(
-      screen.getByRole("heading", "Отпуск и маршрут согласования"),
+      screen.getByRole("heading", "Отпуск и маршрут согласования", { level: 1 }),
     ).toBeVisible();
     await expect(screen.getByText("Действующая редакция")).toBeVisible();
     await expect(screen.getByRole("main")).toContainText(
