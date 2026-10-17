@@ -1,0 +1,975 @@
+{
+  "check": "combined_backend_postgresql",
+  "source_commit": "f779305",
+  "environment": {
+    "python": "3.12.14",
+    "postgresql": "16.15",
+    "execution": "native",
+    "docker": false
+  },
+  "command": "DATABASE_URL=<isolated PostgreSQL database> uv run --frozen pytest -q --durations=10 --junitxml=/tmp/janamen-final-postgresql.xml",
+  "junit_sha256": "dff5ca5dc1c40218e33198bcd66f6d226e612572519baf3b33fa9eb1f3b8c9c1",
+  "tests": 191,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 145.92,
+  "timestamp": "2026-10-17T19:49:30.896727+05:00",
+  "cases": [
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_catalog_has_only_published_scoped_metadata",
+      "seconds": 2.371
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_authoring_is_hr_only_and_replay_rechecks_current_role",
+      "seconds": 0.33
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_hr_cannot_author_foreign_entity",
+      "seconds": 0.437
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_draft_validation_and_publish_require_complete_content",
+      "seconds": 0.091
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_assignments_scoped_retried_without_duplicates",
+      "seconds": 0.206
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_scope_applies_to_lists_details_and_progress",
+      "seconds": 0.245
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_learner_reads_key_free_published_revision_only",
+      "seconds": 0.163
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_scoring_requires_material_and_rejects_forged_fields",
+      "seconds": 0.203
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_lesson_completion_is_idempotent_and_stale_writes_conflict",
+      "seconds": 0.554
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_failed_attempt_preserves_progress_then_success_records_result",
+      "seconds": 0.274
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_question_sets_options_and_attempt_limit_are_server_rules",
+      "seconds": 0.402
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_archival_and_new_revision_preserve_learning_history",
+      "seconds": 0.227
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_archive_disables_new_progress_without_erasing_saved_progress",
+      "seconds": 0.172
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_completion_notification_failure_rolls_back_result",
+      "seconds": 0.104
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_summary_filter_denominator_and_overdue_are_independent",
+      "seconds": 0.166
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_course_create_replay_cannot_reveal_previous_entity_draft",
+      "seconds": 0.075
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_employee_transfer_hides_old_entity_content_without_erasing_results",
+      "seconds": 0.154
+    },
+    {
+      "class": "apps.academy.tests.test_academy",
+      "name": "test_unrounded_threshold_and_past_deadline_are_separate_rules",
+      "seconds": 0.15
+    },
+    {
+      "class": "apps.academy.tests.test_seed",
+      "name": "test_curriculum_contains_distinct_substantive_material_and_matching_questions",
+      "seconds": 0.007
+    },
+    {
+      "class": "apps.academy.tests.test_seed",
+      "name": "test_seed_creates_full_catalogue_and_canonical_independent_states",
+      "seconds": 11.551
+    },
+    {
+      "class": "apps.academy.tests.test_seed",
+      "name": "test_seed_repetition_preserves_live_draft_learning_and_notifications",
+      "seconds": 11.191
+    },
+    {
+      "class": "apps.core.tests.test_scoped_filters",
+      "name": "test_relation_filters_do_not_reveal_hidden_object_existence[/api/v1/employees/-department-department_id-count]",
+      "seconds": 0.043
+    },
+    {
+      "class": "apps.core.tests.test_scoped_filters",
+      "name": "test_relation_filters_do_not_reveal_hidden_object_existence[/api/v1/requests/-employee-pk-count]",
+      "seconds": 0.041
+    },
+    {
+      "class": "apps.core.tests.test_scoped_filters",
+      "name": "test_relation_filters_do_not_reveal_hidden_object_existence[/api/v1/academy/enrollments/-employee-pk-count]",
+      "seconds": 0.041
+    },
+    {
+      "class": "apps.core.tests.test_scoped_filters",
+      "name": "test_relation_filters_do_not_reveal_hidden_object_existence[/api/v1/academy/enrollments/summary/-employee-pk-total]",
+      "seconds": 0.042
+    },
+    {
+      "class": "apps.core.tests.test_seeds",
+      "name": "test_seed_populates_distinct_teams_roles_and_empty_new_employee",
+      "seconds": 0.21
+    },
+    {
+      "class": "apps.core.tests.test_seeds",
+      "name": "test_request_seed_covers_all_states_and_preserves_user_changes",
+      "seconds": 7.146
+    },
+    {
+      "class": "apps.core.tests.test_seeds",
+      "name": "test_identity_seed_preserves_imported_facts_and_existing_passwords",
+      "seconds": 0.344
+    },
+    {
+      "class": "apps.core.tests.test_seeds",
+      "name": "test_seed_cli_uses_env_and_private_credentials_file_preserves_password_on_rerun",
+      "seconds": 12.566
+    },
+    {
+      "class": "apps.core.tests.test_seeds",
+      "name": "test_non_demo_runtime_does_not_seed_without_explicit_flag",
+      "seconds": 0.014
+    },
+    {
+      "class": "apps.core.tests.test_seeds",
+      "name": "test_credentials_write_failure_rolls_back_new_records",
+      "seconds": 1.456
+    },
+    {
+      "class": "apps.core.tests.test_seeds",
+      "name": "test_complete_seed_serializes_module_manifests_and_preserves_combined_records",
+      "seconds": 28.717
+    },
+    {
+      "class": "apps.hr_requests.tests.test_date_bounds",
+      "name": "test_computed_leave_days_overflow_returns_field_error_without_writes",
+      "seconds": 0.051
+    },
+    {
+      "class": "apps.hr_requests.tests.test_date_bounds",
+      "name": "test_overflowing_edit_preserves_draft_and_event_history",
+      "seconds": 0.084
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_complete_leave_route_preserves_official_balance_and_creates_evidence",
+      "seconds": 0.243
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_salary_advance_has_explicit_fields_and_approval_is_separate_from_export",
+      "seconds": 0.213
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_real_session_request_commands_require_rotated_csrf_token",
+      "seconds": 0.086
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_inactive_profile_cannot_replay_a_previous_create",
+      "seconds": 0.066
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_list_detail_and_command_apply_same_scope[peer]",
+      "seconds": 0.074
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_list_detail_and_command_apply_same_scope[other_team]",
+      "seconds": 0.074
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_list_detail_and_command_apply_same_scope[other_entity]",
+      "seconds": 0.07
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_list_detail_and_command_apply_same_scope[other_manager]",
+      "seconds": 0.082
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_hr_scope_and_direct_manager_scope_are_different",
+      "seconds": 0.144
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_own_hr_request_cannot_be_reviewed_even_by_technical_superuser",
+      "seconds": 0.134
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_review_order_and_draft_ownership_cannot_be_bypassed",
+      "seconds": 0.209
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_versions_and_mass_assignment_are_enforced",
+      "seconds": 0.118
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_idempotency_replays_original_snapshot_and_rejects_reuse",
+      "seconds": 0.191
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_invalid_idempotency_keys_are_rejected[]",
+      "seconds": 0.035
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_invalid_idempotency_keys_are_rejected[contains space]",
+      "seconds": 0.031
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_invalid_idempotency_keys_are_rejected[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]",
+      "seconds": 0.037
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_invalid_idempotency_keys_are_rejected[\\u043a\\u0438\\u0440\\u0438\\u043b\\u043b\\u0438\\u0446\\u0430]",
+      "seconds": 0.029
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_invalid_idempotency_keys_are_rejected[null\\x00byte]",
+      "seconds": 0.03
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_return_edit_resubmit_keeps_first_submitted_revision",
+      "seconds": 0.485
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_organization_change_does_not_transfer_approval",
+      "seconds": 0.212
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_idempotent_response_does_not_bypass_revoked_scope",
+      "seconds": 0.161
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_submission_rolls_back_every_effect_when_notification_fails",
+      "seconds": 0.098
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_final_approval_rolls_back_when_export_outbox_fails",
+      "seconds": 0.22
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_overlap_balance_and_released_reservation",
+      "seconds": 0.288
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_approval_rechecks_changed_official_balance",
+      "seconds": 0.133
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_invalid_request_field_combinations_fail_at_api[invalid0]",
+      "seconds": 0.049
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_invalid_request_field_combinations_fail_at_api[invalid1]",
+      "seconds": 0.041
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_invalid_request_field_combinations_fail_at_api[invalid2]",
+      "seconds": 0.041
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_database_also_rejects_invalid_request_shapes[leave-fields0]",
+      "seconds": 0.021
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_database_also_rejects_invalid_request_shapes[advance-fields1]",
+      "seconds": 0.013
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_database_also_rejects_invalid_request_shapes[unknown-fields2]",
+      "seconds": 0.016
+    },
+    {
+      "class": "apps.hr_requests.tests.test_requests",
+      "name": "test_rejected_request_is_terminal_and_approved_request_cannot_be_cancelled",
+      "seconds": 0.406
+    },
+    {
+      "class": "apps.identity.tests.test_identity",
+      "name": "test_employee_and_manager_lists_have_distinct_scopes",
+      "seconds": 0.069
+    },
+    {
+      "class": "apps.identity.tests.test_identity",
+      "name": "test_hr_cannot_view_other_legal_entity",
+      "seconds": 0.038
+    },
+    {
+      "class": "apps.identity.tests.test_identity",
+      "name": "test_official_profile_has_no_write_api",
+      "seconds": 0.027
+    },
+    {
+      "class": "apps.identity.tests.test_identity",
+      "name": "test_manager_never_manages_own_record",
+      "seconds": 0.021
+    },
+    {
+      "class": "apps.identity.tests.test_identity",
+      "name": "test_cyclic_and_cross_entity_manager_relationships_are_rejected",
+      "seconds": 0.014
+    },
+    {
+      "class": "apps.identity.tests.test_identity",
+      "name": "test_login_requires_csrf_and_rotates_token",
+      "seconds": 0.086
+    },
+    {
+      "class": "apps.identity.tests.test_identity",
+      "name": "test_login_rejects_role_mass_assignment",
+      "seconds": 0.025
+    },
+    {
+      "class": "apps.identity.tests.test_login_throttle",
+      "name": "test_login_attempt_limit_remains_active_within_a_session",
+      "seconds": 0.043
+    },
+    {
+      "class": "apps.identity.tests.test_session_revocation",
+      "name": "test_deactivated_profile_revokes_observed_session_everywhere[me]",
+      "seconds": 0.095
+    },
+    {
+      "class": "apps.identity.tests.test_session_revocation",
+      "name": "test_deactivated_profile_revokes_observed_session_everywhere[notifications]",
+      "seconds": 0.109
+    },
+    {
+      "class": "apps.identity.tests.test_session_revocation",
+      "name": "test_deactivated_profile_revokes_observed_session_everywhere[mark_read]",
+      "seconds": 0.094
+    },
+    {
+      "class": "apps.identity.tests.test_session_revocation",
+      "name": "test_missing_profile_cannot_keep_existing_session",
+      "seconds": 0.063
+    },
+    {
+      "class": "apps.identity.tests.test_session_revocation",
+      "name": "test_technical_superuser_does_not_require_employee_profile",
+      "seconds": 0.051
+    },
+    {
+      "class": "apps.integrations.tests.test_seed",
+      "name": "test_demo_bootstrap_grants_only_synthetic_hr_and_preserves_revocation",
+      "seconds": 1.008
+    },
+    {
+      "class": "apps.integrations.tests.test_seed",
+      "name": "test_seed_command_includes_integration_setup",
+      "seconds": 0.943
+    },
+    {
+      "class": "apps.integrations.tests.test_seed",
+      "name": "test_delivery_demo_faults_preserve_operator_changes_on_rerun",
+      "seconds": 9.494
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_anonymous_cannot_read_knowledge",
+      "seconds": 0.018
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_scope_applies_to_lists_details_and_citations",
+      "seconds": 0.287
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_only_current_effective_published_documents_are_visible",
+      "seconds": 0.265
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_draft_changes_do_not_change_published_text_or_scope",
+      "seconds": 0.198
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_revisions_and_chunks_are_immutable",
+      "seconds": 0.067
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_widened_publication_does_not_expose_old_restricted_revision",
+      "seconds": 0.141
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_employee_cannot_edit_publish_or_supply_sensitive_fields",
+      "seconds": 0.104
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_publication_replay_and_stale_version",
+      "seconds": 0.16
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_hr_cannot_create_content_for_another_entity_or_owner",
+      "seconds": 0.086
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_inactive_profile_loses_knowledge_access_in_an_existing_session",
+      "seconds": 0.101
+    },
+    {
+      "class": "apps.knowledge.tests.test_access_and_publication",
+      "name": "test_unsafe_knowledge_posts_require_csrf_in_session",
+      "seconds": 0.044
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_no_key_extracts_accessible_source_and_citation_resolves",
+      "seconds": 0.178
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_unknown_ambiguous_and_injection_have_no_citations",
+      "seconds": 0.24
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_answer_replay_and_question_conflict",
+      "seconds": 0.154
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_answers_are_private_even_from_manager_and_hr",
+      "seconds": 0.208
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_archiving_source_withdraws_saved_answer_and_replayed_answer",
+      "seconds": 0.192
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_old_accessible_revision_is_labeled_superseded",
+      "seconds": 0.235
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_official_sdk_receives_only_allowed_excerpts_and_returns_source_bound_claim",
+      "seconds": 0.935
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_generated_claim_with_invalid_or_insufficient_support_is_rejected[foreign_id]",
+      "seconds": 0.132
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_generated_claim_with_invalid_or_insufficient_support_is_rejected[invented_quote]",
+      "seconds": 0.132
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_generated_claim_with_invalid_or_insufficient_support_is_rejected[unsupported_claim]",
+      "seconds": 0.11
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_generated_claim_with_invalid_or_insufficient_support_is_rejected[negation_removal]",
+      "seconds": 0.107
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_generated_claim_with_invalid_or_insufficient_support_is_rejected[extra_field]",
+      "seconds": 0.125
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_generated_claim_with_invalid_or_insufficient_support_is_rejected[partial_sentence]",
+      "seconds": 0.119
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_provider_refusal_is_distinct_from_provider_outage",
+      "seconds": 0.186
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_explicit_provider_with_missing_or_invalid_model_is_reported_as_unconfigured[]",
+      "seconds": 0.128
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_explicit_provider_with_missing_or_invalid_model_is_reported_as_unconfigured[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]",
+      "seconds": 0.113
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_source_prompt_injection_never_enters_answer",
+      "seconds": 0.115
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_questions_reject_hidden_controls_and_mass_assignment",
+      "seconds": 0.037
+    },
+    {
+      "class": "apps.knowledge.tests.test_answers_and_provider",
+      "name": "test_source_revoked_during_generation_is_withdrawn_before_response",
+      "seconds": 0.133
+    },
+    {
+      "class": "apps.knowledge.tests.test_gap_cases",
+      "name": "test_explicit_escalation_replays_once_and_notifies_hr",
+      "seconds": 0.123
+    },
+    {
+      "class": "apps.knowledge.tests.test_gap_cases",
+      "name": "test_cases_are_private_to_employee_and_legal_entity_hr",
+      "seconds": 0.139
+    },
+    {
+      "class": "apps.knowledge.tests.test_gap_cases",
+      "name": "test_hr_resolution_saves_response_version_and_notification",
+      "seconds": 0.194
+    },
+    {
+      "class": "apps.knowledge.tests.test_gap_cases",
+      "name": "test_escalation_rejects_another_users_answer_and_client_owned_state",
+      "seconds": 0.059
+    },
+    {
+      "class": "apps.knowledge.tests.test_gap_cases",
+      "name": "test_notification_failure_rolls_back_case_event_and_receipt",
+      "seconds": 0.302
+    },
+    {
+      "class": "apps.knowledge.tests.test_gap_cases",
+      "name": "test_case_keeps_original_entity_after_employee_transfer",
+      "seconds": 0.095
+    },
+    {
+      "class": "apps.knowledge.tests.test_seed_and_evaluation",
+      "name": "test_seed_is_populated_idempotent_and_preserves_hr_edits",
+      "seconds": 1.294
+    },
+    {
+      "class": "apps.knowledge.tests.test_seed_and_evaluation",
+      "name": "test_machine_readable_knowledge_regression_cases",
+      "seconds": 2.363
+    },
+    {
+      "class": "apps.notifications.tests.test_notifications",
+      "name": "test_notification_is_owned_and_mark_read_is_idempotent",
+      "seconds": 0.046
+    },
+    {
+      "class": "apps.workbench.tests.test_workbench",
+      "name": "test_requires_authenticated_active_profile",
+      "seconds": 0.037
+    },
+    {
+      "class": "apps.workbench.tests.test_workbench",
+      "name": "test_scoped_preview_counts_and_no_read_side_effect",
+      "seconds": 0.182
+    },
+    {
+      "class": "apps.workbench.tests.test_workbench",
+      "name": "test_query_cannot_change_employee_scope_or_remove_limit",
+      "seconds": 0.035
+    },
+    {
+      "class": "apps.workbench.tests.test_workbench",
+      "name": "test_manager_review_uses_assigned_and_current_team",
+      "seconds": 0.383
+    },
+    {
+      "class": "apps.workbench.tests.test_workbench",
+      "name": "test_hr_queue_respects_stage_entity_and_no_self_review",
+      "seconds": 0.289
+    },
+    {
+      "class": "apps.workbench.tests.test_workbench",
+      "name": "test_learning_is_personal_and_due_and_availability_are_separate",
+      "seconds": 0.439
+    },
+    {
+      "class": "apps.workbench.tests.test_workbench",
+      "name": "test_private_hr_cases_never_enter_managers_team_workbench",
+      "seconds": 0.2
+    },
+    {
+      "class": "apps.workbench.tests.test_workbench",
+      "name": "test_returned_request_disappears_from_correction_queue_after_resubmit",
+      "seconds": 0.264
+    },
+    {
+      "class": "apps.academy.tests.test_assignment_source_race",
+      "name": "test_assignment_rechecks_locked_employee_after_source_change[entity_transfer]",
+      "seconds": 0.541
+    },
+    {
+      "class": "apps.academy.tests.test_assignment_source_race",
+      "name": "test_assignment_rechecks_locked_employee_after_source_change[deactivate]",
+      "seconds": 0.849
+    },
+    {
+      "class": "apps.academy.tests.test_concurrency",
+      "name": "test_concurrent_quiz_submission_replays_one_attempt",
+      "seconds": 1.024
+    },
+    {
+      "class": "apps.academy.tests.test_concurrency",
+      "name": "test_concurrent_different_attempt_keys_do_not_double_score",
+      "seconds": 1.142
+    },
+    {
+      "class": "apps.academy.tests.test_concurrency",
+      "name": "test_concurrent_assignments_create_one_enrollment",
+      "seconds": 0.803
+    },
+    {
+      "class": "apps.academy.tests.test_concurrency",
+      "name": "test_concurrent_course_code_collision_returns_conflict",
+      "seconds": 1.016
+    },
+    {
+      "class": "apps.hr_requests.tests.test_concurrency",
+      "name": "test_two_overlapping_submissions_reserve_leave_once",
+      "seconds": 0.711
+    },
+    {
+      "class": "apps.hr_requests.tests.test_concurrency",
+      "name": "test_two_final_decisions_create_one_export",
+      "seconds": 0.797
+    },
+    {
+      "class": "apps.hr_requests.tests.test_concurrency",
+      "name": "test_same_idempotency_key_concurrently_creates_one_request",
+      "seconds": 0.647
+    },
+    {
+      "class": "apps.integrations.tests.test_concurrency",
+      "name": "test_two_workers_deliver_one_message_once",
+      "seconds": 0.676
+    },
+    {
+      "class": "apps.integrations.tests.test_concurrency",
+      "name": "test_two_receiver_calls_with_the_same_key_return_the_same_receipt",
+      "seconds": 0.597
+    },
+    {
+      "class": "apps.integrations.tests.test_concurrency",
+      "name": "test_worker_skips_a_locked_message_and_claims_the_next",
+      "seconds": 0.753
+    },
+    {
+      "class": "apps.integrations.tests.test_concurrency",
+      "name": "test_concurrent_partial_manager_updates_cannot_create_a_cycle",
+      "seconds": 0.64
+    },
+    {
+      "class": "apps.integrations.tests.test_concurrency",
+      "name": "test_same_source_revision_concurrently_converges_to_one_audit",
+      "seconds": 0.644
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_import_updates_official_facts_without_provisioning_or_changing_role",
+      "seconds": 0.482
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_import_requires_operator_permission_and_hr_role",
+      "seconds": 0.691
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_import_hides_other_entity_and_rejects_cross_entity_employee",
+      "seconds": 0.498
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_import_rejects_mass_assigned_roles_and_unknown_fields",
+      "seconds": 0.537
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_source_revision_remains_exact_in_javascript_clients",
+      "seconds": 0.449
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_duplicate_transport_key_and_identical_source_revision_converge",
+      "seconds": 0.553
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_record_order_does_not_change_source_identity",
+      "seconds": 0.71
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_stale_or_conflicting_revision_preserves_facts_and_records_rejection",
+      "seconds": 0.771
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_replay_of_old_accepted_snapshot_does_not_regress_a_newer_import",
+      "seconds": 0.689
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_capture_and_balance_dates_cannot_regress",
+      "seconds": 0.821
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_invalid_later_record_rolls_back_the_complete_batch",
+      "seconds": 0.746
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_database_failure_rolls_back_facts_state_and_acceptance_audit",
+      "seconds": 0.578
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_manager_batch_validates_intended_graph_instead_of_update_order",
+      "seconds": 0.562
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_manager_cycle_and_inactive_manager_reject_entire_snapshot",
+      "seconds": 0.694
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_confirmed_approved_leave_is_not_subtracted_twice",
+      "seconds": 0.621
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_new_snapshot_must_reaffirm_incorporation_or_explicitly_reverse_it",
+      "seconds": 1.142
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_balance_confirmation_requires_own_final_leave[another_employee]",
+      "seconds": 0.515
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_balance_confirmation_requires_own_final_leave[advance]",
+      "seconds": 0.586
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_balance_confirmation_requires_own_final_leave[pending]",
+      "seconds": 0.626
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_balance_confirmation_requires_own_final_leave[unknown]",
+      "seconds": 0.448
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_import_replay_is_reauthorized_after_permission_is_revoked",
+      "seconds": 0.427
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_import_audit_is_immutable",
+      "seconds": 0.42
+    },
+    {
+      "class": "apps.integrations.tests.test_imports",
+      "name": "test_source_lists_and_detail_are_scoped_without_foreign_filter_choices",
+      "seconds": 0.505
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_export_uses_immutable_submitted_facts_after_source_changes",
+      "seconds": 0.566
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_salary_advance_exports_exact_decimal_without_claiming_payment",
+      "seconds": 0.661
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_transient_failure_preserves_approval_and_retries_same_identity",
+      "seconds": 0.601
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_permanent_failure_needs_explicit_operator_retry",
+      "seconds": 0.57
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_automatic_retry_cycle_is_bounded_and_manual_retry_preserves_history",
+      "seconds": 0.611
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_crash_after_receiver_acceptance_reuses_receipt_and_fences_old_worker",
+      "seconds": 0.515
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_expired_unreclaimed_worker_cannot_acknowledge",
+      "seconds": 0.509
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_repeated_worker_crashes_eventually_require_operator_action",
+      "seconds": 0.539
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_local_acknowledgment_failure_rolls_back_but_receiver_receipt_survives",
+      "seconds": 0.538
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_receiver_rejects_different_payload_under_same_key",
+      "seconds": 0.475
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_receipt_with_invalid_identity_is_not_reported_as_delivered",
+      "seconds": 0.489
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_unexpected_provider_exception_does_not_expose_secret_text",
+      "seconds": 0.501
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_delivery_cannot_run_inside_business_transaction",
+      "seconds": 0.513
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_unknown_topic_records_a_permanent_failure",
+      "seconds": 0.495
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_worker_cli_processes_due_messages_and_watch_limit_exits",
+      "seconds": 0.556
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_operator_export_api_includes_recoverable_states_and_exact_receipt",
+      "seconds": 0.677
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_export_read_and_retry_deny_employee_manager_and_other_entity",
+      "seconds": 0.589
+    },
+    {
+      "class": "apps.integrations.tests.test_worker",
+      "name": "test_mock_controls_can_be_disabled_without_disabling_real_reads",
+      "seconds": 0.575
+    },
+    {
+      "class": "apps.knowledge.tests.test_concurrency",
+      "name": "test_concurrent_publish_creates_one_immutable_revision",
+      "seconds": 0.513
+    },
+    {
+      "class": "apps.knowledge.tests.test_concurrency",
+      "name": "test_concurrent_escalation_creates_one_case_and_one_hr_notification",
+      "seconds": 0.579
+    },
+    {
+      "class": "apps.knowledge.tests.test_concurrency",
+      "name": "test_concurrent_resolution_preserves_one_response",
+      "seconds": 0.665
+    },
+    {
+      "class": "apps.identity.tests.test_cors",
+      "name": "test_configured_frontend_can_send_command_headers[POST]",
+      "seconds": 0.013
+    },
+    {
+      "class": "apps.identity.tests.test_cors",
+      "name": "test_configured_frontend_can_send_command_headers[PATCH]",
+      "seconds": 0.015
+    },
+    {
+      "class": "apps.identity.tests.test_cors",
+      "name": "test_unknown_origin_is_not_granted_command_access",
+      "seconds": 0.012
+    },
+    {
+      "class": "apps.identity.tests.test_cors",
+      "name": "test_configured_frontend_can_read_request_and_receipt_headers",
+      "seconds": 0.244
+    }
+  ]
+}

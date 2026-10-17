@@ -1,0 +1,34 @@
+{
+  "target_url": "https://monschool.frappe.cloud/courses",
+  "date": "2026-10-17",
+  "tool_version": "REA 6.5.0",
+  "artifact_scope": "Public course catalogue of an instance linked by the official frappe/lms repository. No login, enrollment, purchase, or user-data mutation.",
+  "attempts": [
+    {
+      "attempt": "native_browser",
+      "scenario_sha256": "f1bd14aa3bae67c7121bd74005b9f1bdb20dcbd4fa6f08814c3087d02aad0a73",
+      "result_sha256": "bf4d3f00b4b11980c7ca04178cbbc8632e5e1a85d83f1a7db9eb885da2945821",
+      "ok": false,
+      "error_code": "execution_failure",
+      "evidence_id": null,
+      "limits": [
+        "No successful live application state captured.",
+        "Underlying cause was not disclosed by the tool; proxy configuration was an attempted diagnostic change, not a confirmed remedy."
+      ]
+    },
+    {
+      "attempt": "owned_browser_with_environment_proxy",
+      "scenario_sha256": "d029cd54aabf89819b7f13618565a7ceed4674c3c7cd50f129cdebea01f1b98b",
+      "result_sha256": "dba9b0b599c50fc66bee4c19cc987afb7e1f94749f60a7a5f01406ccc008529f",
+      "ok": false,
+      "error_code": "execution_failure",
+      "evidence_id": null,
+      "limits": [
+        "No successful live application state captured.",
+        "Underlying cause was not disclosed by the tool; proxy configuration was an attempted diagnostic change, not a confirmed remedy."
+      ]
+    }
+  ],
+  "cleanup": "Provider-owned first browser terminated by REA; separately launched diagnostic browser closed by its owning script after SIGTERM.",
+  "followup": "A better-equipped agent can capture an authorized demo or analyze exact public shipped assets; do not treat these failed attempts as product observations."
+}

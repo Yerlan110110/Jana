@@ -16,3 +16,14 @@ The tooling implementation read the original instructions below. These are recor
 | `reverse-engineer-anything` | Use ordinary tools for complete-source architecture, and retain REA evidence for the separate public artifact investigation. | `research-method.md`, design research artifacts |
 
 The design research agent separately read Emil's design engineering, library selection, and UI stress skills; Jakub's complete six-domain interface review; and the reference explanation and component state skills. Its design handoff records the resulting requirements. The root implementation agent read Pstack architecture and domain principles before backend implementation.
+
+## Backend and frontend-contract applications
+
+| Applied workflow | Concrete effect |
+| --- | --- |
+| Pstack architect, domain modeling, type discipline | One transactional backend owns requests, course evidence and source-scoped knowledge; serializers generate the committed TypeScript contract. |
+| Pstack how, prove-it-works, show-me-the-work | Verification uses actual PostgreSQL races and real session/CSRF HTTP journeys. Docker config, mocked provider transport and live provider calls retain separate gates. |
+| Pstack swarm and review routing | Independent aggregates use separate worktrees. A later non-author reviewer inspects the merged implementation before delivery. Review findings and fixes belong to the verification report. |
+| Fstack, Emil pick-ui-library | Base UI is selected for primitives, Sonner for toasts, conditional Motion/clsx/cva/Virtuoso for their actual tasks. Router/query/form choices are explicitly outside that curated list and have primary-source research. |
+| Jakub state and interface principles | The workbench preserves separate notification, request, learning and knowledge states. It reuses domain serializers instead of fabricating a second generic task state machine. |
+| REA evidence discipline | Failed Mon School live attempts are recorded with hashes as failures. The successful documentation replay is not described as authenticated product behavior. |

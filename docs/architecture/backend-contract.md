@@ -9,7 +9,7 @@ Use a Django 5.2 LTS modular monolith and Django REST framework. PostgreSQL is t
 Django supplies authentication, sessions, CSRF, ORM, migrations, transactions and trusted operator administration. DRF supplies parsing, serialization, API permissions and pagination. Generate OpenAPI with drf-spectacular.
 The future frontend talks to /api/v1/ through the same origin in deployment. A development origin must be explicitly allowed.
 
-Modules live in backend/apps. They are core, identity, hr_requests, notifications, academy, knowledge and integrations.
+Modules live in backend/apps. They are core, identity, hr_requests, notifications, academy, knowledge, integrations and workbench. Workbench owns a read projection, not another mutable task database.
 Use backend/config for settings, root URL configuration and WSGI.
 Within a module, models.py owns persistence, services.py owns commands, selectors.py owns scoped reads, serializers.py and views.py own transport.
 Use richer modules only when their responsibilities require them. Do not create repository interfaces around every ORM call.
@@ -36,7 +36,7 @@ All mutations validate their own action permission. Frontend visibility does not
 
 ## Events and notifications API
 
-core.models.DomainEvent has event_type, aggregate_type, aggregate_id, payload and optional actor. Events are append-only.
+core.models.DomainEvent has event_type, aggregate_type, aggregate_id, payload and optional actor. Events are append-only through the application model/queryset and admin boundaries. This is not a claim of cryptographic tamper evidence or protection against a privileged database operator.
 core.events.emit(event_type, aggregate_type, aggregate_id, payload, actor=None) creates and returns the event within the caller transaction.
 core.models.OutboxMessage references an event and stores topic, status, attempt_count, available_at, last_error and processed_at. Its id or event id is the receiver's deduplication key.
 notifications.services.notify(recipient, kind, title, body, target_type, target_id, event=None) creates a per-user message. recipient is a User instance.
@@ -46,7 +46,7 @@ Use unique event/recipient delivery keys where an event exists. Store no externa
 ## Request model and commands
 
 hr_requests.HRRequest supports kind leave or advance.
-Shared fields include employee, status, version, reason, submitted_at and immutable submitted snapshots.
+Shared fields include employee, status, version, reason, submitted_at and immutable submitted snapshots. One HRRequest table holds the two validated field sets; database constraints prohibit mixed kinds. Separate LeaveDetails and AdvanceDetails tables from the early design sketch were not needed for the accepted aggregate.
 Leave fields include start_date and end_date. Advance fields include amount, currency and requested_payment_date. Reject invalid kind/field combinations at both validation and database constraints where practical.
 Salary advance means a request for an advance payment on compensation. Do not implement an expense ledger under the same name.
 States are draft, pending_manager, pending_hr, approved, rejected, returned and cancelled.
@@ -68,8 +68,8 @@ Never allow generic PATCH status to bypass a command.
 ## Academy module
 
 Separate catalogue availability, immutable course revision, enrollment, lesson progress and quiz attempt.
-Course owns slug, title, title_kk, summary, category, publication/availability state and metadata.
-A published CourseVersion owns its lesson and question snapshots. An enrollment refers to a fixed version.
+Course owns slug, legal entity, owner, a validated editable JSON draft, optimistic version, availability and the current published-version pointer.
+A published CourseVersion owns title, title_kk, summary, summary_kk, category, content_language, assessment rules and immutable JSON snapshots of its ordered lessons and questions. An enrollment refers to a fixed version. Strict transport/content validation checks the complete snapshot before publication; JSON does not grant arbitrary learner writes.
 Enrollment links employee and course version with assigned_by, required, due_at, started_at and completed_at. Duplicate enrollment identity is constrained.
 Completion state and quiz success are distinct. An archived course can retain a historical completion.
 Lesson completion and quiz scoring are server-owned. Learners cannot write scores, progress percentages, employee ids or completion flags.
@@ -87,7 +87,7 @@ Publishing and editing belong to authorized HR. An employee conversation cannot 
 Scope documents before retrieval. Recheck publication/access when opening a citation.
 The retrieval layer returns actual chunk ids, revision ids, text, titles and locators. The server builds citation URLs from these ids.
 Use mature local lexical retrieval for a reproducible no-key mode, with an optional configured embedding/reranking or LLM adapter. Do not describe extractive fallback as generated RAG.
-A configured generation adapter receives only retrieved permitted excerpts, returns structured claims with chunk references, and rejects invalid references. No retrieved support means a refusal with HR escalation.
+A configured generation adapter receives only retrieved permitted excerpts, returns structured claims with chunk references, and rejects invalid references. The selected generated strategy is source_bound_selection: complete source sentences must equal the displayed claim and preserve numbers and negation. A valid reference alone does not prove an arbitrary paraphrase. Fluent synthesis remains a separate strategy requiring an entailment and quality evaluation. No retrieved support means a refusal with HR escalation.
 Keep answer modes explicit: generated, extractive, insufficient_evidence, provider_unavailable. A provider failure cannot become a fabricated answer.
 Implement HR knowledge-gap cases as internal application records when the employee explicitly escalates. Do not send external messages.
 The assistant never makes HR decisions or changes requests.
@@ -102,6 +102,11 @@ Adapters have a mock implementation and explicit contracts. Do not guess real un
 Outbox processing is retryable and idempotent. Retrying an export must not create duplicate remote requests.
 Expose failed synchronization state to permitted operators. Business approval and delivery state remain separate.
 Production connector credentials are supplied through environment or a secret manager.
+
+## Workbench read model
+
+workbench_for(user) combines the caller's profile, leave projection, own learning summary, scoped request previews, knowledge cases and unread count. Each section retains its domain serializer and full count. Preview limits do not change aggregate counts. See workbench.md for ordering and scope.
+The view does not change a task by marking an event read. Business writes remain in their owning application commands. A read view is not a transactionally frozen historical snapshot across all modules.
 
 ## API and error rules
 

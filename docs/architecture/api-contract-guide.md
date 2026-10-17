@@ -9,6 +9,7 @@ Product screen and state specifications live in docs/design.
 Use Django session cookies with credentials included.
 Request the CSRF endpoint before the login POST. Send X-CSRFToken with every unsafe request.
 Refresh the token after login because login rotates CSRF state.
+A rejected login returns `401` with `code=authentication_failed`; a missing or invalid CSRF token returns `403` with `code=csrf_failed`. The login throttle returns `429` and `Retry-After`. Treat these as distinct recovery states.
 A frontend development origin must be explicitly listed in backend configuration.
 Use a same-origin reverse proxy in deployment so the session boundary is understandable.
 
@@ -89,7 +90,7 @@ Marking a notification read must not change the request or course.
 ## Type generation
 
 Generate TypeScript definitions from the committed OpenAPI artifact.
-The next agent chooses its frontend framework and component composition within the product requirements.
+The accepted frontend baseline is React Router Framework Mode as an SPA, with TanStack Query and Base UI; see [frontend architecture](frontend.md). The next agent implements the visual composition and can amend this decision with evidence. The frontend is not installed or implemented in this backend delivery.
 Do not write a second independent collection of response interfaces by guessing from screenshots.
 Runtime validation is still needed for untrusted external data and adapter responses.
 

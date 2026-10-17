@@ -1,0 +1,4207 @@
+{
+  "schema_version": 1,
+  "check": "workflow_http_journey",
+  "run_id": "41b0ee0a7dcf4c2f930c9fa90add1abb",
+  "synthetic": true,
+  "outcome": "passed",
+  "started_at": "2026-10-17T14:36:11.805540+00:00",
+  "finished_at": "2026-10-17T14:36:22.810301+00:00",
+  "scope": "Real loopback HTTP, independent cookie sessions, CSRF, and persisted API state.",
+  "excludes": [
+    "rendered_frontend",
+    "live_ai",
+    "real_1c",
+    "real_documentolog",
+    "payments",
+    "signatures"
+  ],
+  "http_request_count": 190,
+  "passed": 807,
+  "total": 807,
+  "failure": null,
+  "checks": [
+    {
+      "check": "independent_demo_accounts",
+      "passed": true
+    },
+    {
+      "check": "employee.named_synthetic_account",
+      "passed": true
+    },
+    {
+      "check": "employee.synthetic_credential_available",
+      "passed": true
+    },
+    {
+      "check": "employee.csrf_bootstrap",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "employee.csrf_bootstrap.json_object",
+      "passed": true
+    },
+    {
+      "check": "employee.csrf_token_present",
+      "passed": true
+    },
+    {
+      "check": "anonymous_session_denied",
+      "passed": true,
+      "http_status": 401,
+      "expected_status": [
+        401,
+        403
+      ]
+    },
+    {
+      "check": "anonymous_session_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "login_without_csrf_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "employee.login",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200,
+        429
+      ]
+    },
+    {
+      "check": "employee.login.json_object",
+      "passed": true
+    },
+    {
+      "check": "employee.authenticated",
+      "passed": true
+    },
+    {
+      "check": "employee.post_login_csrf_present",
+      "passed": true
+    },
+    {
+      "check": "employee.persisted_session",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "employee.persisted_session.json_object",
+      "passed": true
+    },
+    {
+      "check": "employee.employee_profile_present",
+      "passed": true
+    },
+    {
+      "check": "employee.server_confirms_synthetic_identity",
+      "passed": true
+    },
+    {
+      "check": "employee.expected_active_role",
+      "passed": true
+    },
+    {
+      "check": "employee.credential_employee_matches_session",
+      "passed": true
+    },
+    {
+      "check": "employee.cookie_session_present",
+      "passed": true
+    },
+    {
+      "check": "manager.named_synthetic_account",
+      "passed": true
+    },
+    {
+      "check": "manager.synthetic_credential_available",
+      "passed": true
+    },
+    {
+      "check": "manager.csrf_bootstrap",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "manager.csrf_bootstrap.json_object",
+      "passed": true
+    },
+    {
+      "check": "manager.csrf_token_present",
+      "passed": true
+    },
+    {
+      "check": "manager.login",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200,
+        429
+      ]
+    },
+    {
+      "check": "manager.login.json_object",
+      "passed": true
+    },
+    {
+      "check": "manager.authenticated",
+      "passed": true
+    },
+    {
+      "check": "manager.post_login_csrf_present",
+      "passed": true
+    },
+    {
+      "check": "manager.persisted_session",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "manager.persisted_session.json_object",
+      "passed": true
+    },
+    {
+      "check": "manager.employee_profile_present",
+      "passed": true
+    },
+    {
+      "check": "manager.server_confirms_synthetic_identity",
+      "passed": true
+    },
+    {
+      "check": "manager.expected_active_role",
+      "passed": true
+    },
+    {
+      "check": "manager.credential_employee_matches_session",
+      "passed": true
+    },
+    {
+      "check": "manager.cookie_session_present",
+      "passed": true
+    },
+    {
+      "check": "hr.named_synthetic_account",
+      "passed": true
+    },
+    {
+      "check": "hr.synthetic_credential_available",
+      "passed": true
+    },
+    {
+      "check": "hr.csrf_bootstrap",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "hr.csrf_bootstrap.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.csrf_token_present",
+      "passed": true
+    },
+    {
+      "check": "hr.login",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200,
+        429
+      ]
+    },
+    {
+      "check": "hr.login.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.authenticated",
+      "passed": true
+    },
+    {
+      "check": "hr.post_login_csrf_present",
+      "passed": true
+    },
+    {
+      "check": "hr.persisted_session",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "hr.persisted_session.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.employee_profile_present",
+      "passed": true
+    },
+    {
+      "check": "hr.server_confirms_synthetic_identity",
+      "passed": true
+    },
+    {
+      "check": "hr.expected_active_role",
+      "passed": true
+    },
+    {
+      "check": "hr.credential_employee_matches_session",
+      "passed": true
+    },
+    {
+      "check": "hr.cookie_session_present",
+      "passed": true
+    },
+    {
+      "check": "foreign.named_synthetic_account",
+      "passed": true
+    },
+    {
+      "check": "foreign.synthetic_credential_available",
+      "passed": true
+    },
+    {
+      "check": "foreign.csrf_bootstrap",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "foreign.csrf_bootstrap.json_object",
+      "passed": true
+    },
+    {
+      "check": "foreign.csrf_token_present",
+      "passed": true
+    },
+    {
+      "check": "foreign.login",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200,
+        429
+      ]
+    },
+    {
+      "check": "foreign.login.json_object",
+      "passed": true
+    },
+    {
+      "check": "foreign.authenticated",
+      "passed": true
+    },
+    {
+      "check": "foreign.post_login_csrf_present",
+      "passed": true
+    },
+    {
+      "check": "foreign.persisted_session",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "foreign.persisted_session.json_object",
+      "passed": true
+    },
+    {
+      "check": "foreign.employee_profile_present",
+      "passed": true
+    },
+    {
+      "check": "foreign.server_confirms_synthetic_identity",
+      "passed": true
+    },
+    {
+      "check": "foreign.expected_active_role",
+      "passed": true
+    },
+    {
+      "check": "foreign.credential_employee_matches_session",
+      "passed": true
+    },
+    {
+      "check": "foreign.cookie_session_present",
+      "passed": true
+    },
+    {
+      "check": "employee_has_selected_direct_manager",
+      "passed": true
+    },
+    {
+      "check": "reviewers_share_employee_entity",
+      "passed": true
+    },
+    {
+      "check": "foreign_actor_is_in_another_entity",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.employee.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.own_profile",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.draft_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.draft_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.employee.draft_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.draft_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.draft_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.employee.draft_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.draft_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.returned_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.returned_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.employee.returned_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.returned_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.returned_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.employee.returned_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.returned_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.requests_to_review.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.waiting_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy/enrollments.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.object_rows",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.learning_is_self_scoped",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.learning_summary_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.learning_availability_counts",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.employee.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.employee.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.employee.unread_count_is_nonnegative",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.manager.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.own_profile",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.draft_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.draft_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.manager.draft_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.draft_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.returned_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.requests_to_review.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.requests_to_review.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.manager.requests_to_review.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.requests_to_review.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.review_excludes_self",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.requests_to_review.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.manager.requests_to_review.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.requests_to_review.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.review_excludes_self",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.waiting_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy/enrollments.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.object_rows",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.learning_is_self_scoped",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.learning_summary_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.learning_availability_counts",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.manager.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.manager.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.manager.unread_count_is_nonnegative",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.hr.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.own_profile",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.draft_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.returned_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.requests_to_review.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.requests_to_review.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.hr.requests_to_review.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.requests_to_review.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.review_excludes_self",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.requests_to_review.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.hr.requests_to_review.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.requests_to_review.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.review_excludes_self",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.waiting_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy/enrollments.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.object_rows",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.learning_is_self_scoped",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.learning_summary_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.learning_availability_counts",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.hr.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "baseline.hr.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "baseline.hr.unread_count_is_nonnegative",
+      "passed": true
+    },
+    {
+      "check": "synthetic_employee_has_one_unreserved_leave_day",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "future_leave_date_avoids_existing_api_records",
+      "passed": true
+    },
+    {
+      "check": "official_employee_facts_are_read_only",
+      "passed": true,
+      "http_status": 405,
+      "expected_status": [
+        405
+      ]
+    },
+    {
+      "check": "official_employee_facts_are_read_only.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.employee.before",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.employee.before.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.employee.before.own_profile",
+      "passed": true
+    },
+    {
+      "check": "leave.employee.before.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.employee.before.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.employee.before.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.employee.before.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.employee.before.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager.before",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.manager.before.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.manager.before.own_profile",
+      "passed": true
+    },
+    {
+      "check": "leave.manager.before.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager.before.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager.before.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager.before.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager.before.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr.before",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.hr.before.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.hr.before.own_profile",
+      "passed": true
+    },
+    {
+      "check": "leave.hr.before.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr.before.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr.before.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr.before.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr.before.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.create",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "leave.create.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_owner_actions",
+      "passed": true
+    },
+    {
+      "check": "leave.create_replay",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "leave.create_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.create_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "leave.key_payload_conflict",
+      "passed": true,
+      "http_status": 409,
+      "expected_status": [
+        409
+      ]
+    },
+    {
+      "check": "leave.key_payload_conflict.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.unsafe_write_without_csrf_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "leave.status_mass_assignment_denied",
+      "passed": true,
+      "http_status": 400,
+      "expected_status": [
+        400
+      ]
+    },
+    {
+      "check": "leave.status_mass_assignment_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.edit_draft",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.edit_draft.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.stale_draft_conflict",
+      "passed": true,
+      "http_status": 409,
+      "expected_status": [
+        409
+      ]
+    },
+    {
+      "check": "leave.stale_draft_conflict.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.draft_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.draft_in_workbench_count",
+      "passed": true
+    },
+    {
+      "check": "leave.submit",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.submit.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.submit_replay",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.submit_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.submit_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_stage_and_first_revision",
+      "passed": true
+    },
+    {
+      "check": "leave.employee_self_approval_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "leave.employee_self_approval_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_cannot_skip_manager",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "leave.hr_cannot_skip_manager.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.foreign_detail_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "leave.foreign_detail_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.foreign_command_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "leave.foreign_command_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "leave.foreign_list_scope",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_waiting_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.manager_waiting_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_waiting_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_waiting_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_waiting_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_waiting_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_waiting_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_waiting_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_review_count_increased",
+      "passed": true
+    },
+    {
+      "check": "leave.return_for_changes",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.return_for_changes.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.owner_reads_return",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.owner_reads_return.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_owner_can_edit",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.returned_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.returned_count_increased",
+      "passed": true
+    },
+    {
+      "check": "leave.edit_returned",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.edit_returned.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.resubmit",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.resubmit.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.resubmission_preserves_immutable_first_snapshot",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.manager_current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_can_approve",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_approves",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.manager_approves.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_stage",
+      "passed": true
+    },
+    {
+      "check": "leave.manager_cannot_finalize",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "leave.manager_cannot_finalize.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_waiting_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.hr_waiting_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_waiting_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_waiting_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_waiting_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_waiting_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_waiting_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_waiting_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_review_count_increased",
+      "passed": true
+    },
+    {
+      "check": "leave.hr_approves",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.hr_approves.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.approval_replay",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.approval_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.approval_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "leave.employee_reads_final_state",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "leave.employee_reads_final_state.json_object",
+      "passed": true
+    },
+    {
+      "check": "leave.approved_terminal_owner_state",
+      "passed": true
+    },
+    {
+      "check": "leave.complete_chronological_history",
+      "passed": true
+    },
+    {
+      "check": "leave.history_versions_monotonic",
+      "passed": true
+    },
+    {
+      "check": "advance.employee.before",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.employee.before.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.employee.before.own_profile",
+      "passed": true
+    },
+    {
+      "check": "advance.employee.before.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.employee.before.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.employee.before.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.employee.before.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.employee.before.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager.before",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.manager.before.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.manager.before.own_profile",
+      "passed": true
+    },
+    {
+      "check": "advance.manager.before.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager.before.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager.before.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager.before.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager.before.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr.before",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.hr.before.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.hr.before.own_profile",
+      "passed": true
+    },
+    {
+      "check": "advance.hr.before.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr.before.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr.before.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr.before.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr.before.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.create",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "advance.create.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_owner_actions",
+      "passed": true
+    },
+    {
+      "check": "advance.create_replay",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "advance.create_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.create_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "advance.key_payload_conflict",
+      "passed": true,
+      "http_status": 409,
+      "expected_status": [
+        409
+      ]
+    },
+    {
+      "check": "advance.key_payload_conflict.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.unsafe_write_without_csrf_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "advance.status_mass_assignment_denied",
+      "passed": true,
+      "http_status": 400,
+      "expected_status": [
+        400
+      ]
+    },
+    {
+      "check": "advance.status_mass_assignment_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.edit_draft",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.edit_draft.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.stale_draft_conflict",
+      "passed": true,
+      "http_status": 409,
+      "expected_status": [
+        409
+      ]
+    },
+    {
+      "check": "advance.stale_draft_conflict.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.draft_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.draft_in_workbench_count",
+      "passed": true
+    },
+    {
+      "check": "advance.submit",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.submit.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.submit_replay",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.submit_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.submit_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_stage_and_first_revision",
+      "passed": true
+    },
+    {
+      "check": "advance.employee_self_approval_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "advance.employee_self_approval_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_cannot_skip_manager",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "advance.hr_cannot_skip_manager.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.foreign_detail_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "advance.foreign_detail_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.foreign_command_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "advance.foreign_command_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "advance.foreign_list_scope",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_waiting_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.manager_waiting_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_waiting_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_waiting_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_waiting_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_waiting_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_waiting_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_waiting_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_review_count_increased",
+      "passed": true
+    },
+    {
+      "check": "advance.return_for_changes",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.return_for_changes.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.owner_reads_return",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.owner_reads_return.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_owner_can_edit",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.returned_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.returned_count_increased",
+      "passed": true
+    },
+    {
+      "check": "advance.edit_returned",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.edit_returned.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.resubmit",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.resubmit.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.resubmission_preserves_immutable_first_snapshot",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.manager_current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_can_approve",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_approves",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.manager_approves.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_stage",
+      "passed": true
+    },
+    {
+      "check": "advance.manager_cannot_finalize",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "advance.manager_cannot_finalize.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_waiting_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.hr_waiting_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_waiting_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_waiting_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_waiting_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_waiting_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_waiting_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_waiting_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_review_count_increased",
+      "passed": true
+    },
+    {
+      "check": "advance.hr_approves",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.hr_approves.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.approval_replay",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.approval_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.approval_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "advance.employee_reads_final_state",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "advance.employee_reads_final_state.json_object",
+      "passed": true
+    },
+    {
+      "check": "advance.approved_terminal_owner_state",
+      "passed": true
+    },
+    {
+      "check": "advance.complete_chronological_history",
+      "passed": true
+    },
+    {
+      "check": "advance.history_versions_monotonic",
+      "passed": true
+    },
+    {
+      "check": "hr.create_denial_probe",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "hr.create_denial_probe.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.submit_denial_probe",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "hr.submit_denial_probe.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.self_approval_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "hr.self_approval_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.no_self_approval_action",
+      "passed": true
+    },
+    {
+      "check": "hr.self_request_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "hr.self_request_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.self_request_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "hr.self_request_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "hr.self_request_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "hr.self_request_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "hr.self_request_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "hr.self_request_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "hr.self_request_not_in_review_preview",
+      "passed": true
+    },
+    {
+      "check": "employee.cannot_read_hr_personal_request",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "employee.cannot_read_hr_personal_request.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.cancel_own_probe",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "hr.cancel_own_probe.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.probe_cancelled",
+      "passed": true
+    },
+    {
+      "check": "foreign.create_denial_probe",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "foreign.create_denial_probe.json_object",
+      "passed": true
+    },
+    {
+      "check": "foreign.submit_denial_probe",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "foreign.submit_denial_probe.json_object",
+      "passed": true
+    },
+    {
+      "check": "foreign.self_approval_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "foreign.self_approval_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "manager.foreign_request_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "manager.foreign_request_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "manager.foreign_approval_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "manager.foreign_approval_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.foreign_request_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "hr.foreign_request_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "hr.foreign_approval_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "hr.foreign_approval_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "foreign.cancel_own_probe",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "foreign.cancel_own_probe.json_object",
+      "passed": true
+    },
+    {
+      "check": "foreign.probe_cancelled",
+      "passed": true
+    },
+    {
+      "check": "academy.employee.before",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.employee.before.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.employee.before.own_profile",
+      "passed": true
+    },
+    {
+      "check": "academy.employee.before.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.employee.before.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.employee.before.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.employee.before.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.employee.before.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.employee_cannot_author",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "academy.employee_cannot_author.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.manager_cannot_open_authoring",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "academy.manager_cannot_open_authoring.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.hr_creates_course",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "academy.hr_creates_course.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.course_create_replay",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "academy.course_create_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.course_create_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "academy.draft_not_in_learner_catalog",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "academy.draft_not_in_learner_catalog.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.hr_publishes",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.hr_publishes.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.stale_publish_conflict",
+      "passed": true,
+      "http_status": 409,
+      "expected_status": [
+        409
+      ]
+    },
+    {
+      "check": "academy.stale_publish_conflict.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.published_course_in_catalog",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.published_course_in_catalog.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.catalog_has_no_answer_key",
+      "passed": true
+    },
+    {
+      "check": "academy.employee_cannot_assign",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "academy.employee_cannot_assign.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.manager_cannot_assign",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "academy.manager_cannot_assign.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.hr_assigns",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "academy.hr_assigns.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.assignment_replay",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "academy.assignment_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.assignment_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "academy.duplicate_assignment_conflict",
+      "passed": true,
+      "http_status": 409,
+      "expected_status": [
+        409
+      ]
+    },
+    {
+      "check": "academy.duplicate_assignment_conflict.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.employee_reads_assignment",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.employee_reads_assignment.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.initial_owner_actions",
+      "passed": true
+    },
+    {
+      "check": "academy.assigned_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.assigned_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.assigned_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "academy.assigned_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.assigned_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.assigned_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.assigned_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.assigned_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.assignment_in_workbench_count",
+      "passed": true
+    },
+    {
+      "check": "academy.foreign_enrollment_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "academy.foreign_enrollment_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.foreign_progress_hidden",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "academy.foreign_progress_hidden.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.manager_reads_team_progress",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.manager_reads_team_progress.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.manager_has_no_learner_actions",
+      "passed": true
+    },
+    {
+      "check": "academy.manager_cannot_complete_for_employee",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "academy.manager_cannot_complete_for_employee.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.employee_reads_materials",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.employee_reads_materials.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.complete_published_materials",
+      "passed": true
+    },
+    {
+      "check": "academy.learning_has_no_answer_key",
+      "passed": true
+    },
+    {
+      "check": "academy.employee_starts",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.employee_starts.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.stale_progress_conflict",
+      "passed": true,
+      "http_status": 409,
+      "expected_status": [
+        409
+      ]
+    },
+    {
+      "check": "academy.stale_progress_conflict.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.quiz_requires_materials",
+      "passed": true,
+      "http_status": 409,
+      "expected_status": [
+        409
+      ]
+    },
+    {
+      "check": "academy.quiz_requires_materials.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.client_score_rejected",
+      "passed": true,
+      "http_status": 400,
+      "expected_status": [
+        400
+      ]
+    },
+    {
+      "check": "academy.client_score_rejected.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.complete_material.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.complete_material.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.material_progress.1",
+      "passed": true
+    },
+    {
+      "check": "academy.complete_material.2",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.complete_material.2.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.material_progress.2",
+      "passed": true
+    },
+    {
+      "check": "academy.quiz_action_after_materials",
+      "passed": true
+    },
+    {
+      "check": "academy.failed_attempt",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "academy.failed_attempt.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.attempt_replay",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "academy.attempt_replay.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.attempt_replay.original_result_preserved",
+      "passed": true
+    },
+    {
+      "check": "academy.server_failure_preserves_material_progress",
+      "passed": true
+    },
+    {
+      "check": "academy.failed_result_has_no_answer_key",
+      "passed": true
+    },
+    {
+      "check": "academy.passing_attempt",
+      "passed": true,
+      "http_status": 201,
+      "expected_status": [
+        201
+      ]
+    },
+    {
+      "check": "academy.passing_attempt.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.server_calculates_passing_result",
+      "passed": true
+    },
+    {
+      "check": "academy.passing_result_has_no_answer_key",
+      "passed": true
+    },
+    {
+      "check": "academy.persisted_completion",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.persisted_completion.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.completion_and_attempt_history_preserved",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments/0a8167a2-636e-4cb8-be5f-150cd2211835/attempts.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments/0a8167a2-636e-4cb8-be5f-150cd2211835/attempts.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy/enrollments/0a8167a2-636e-4cb8-be5f-150cd2211835/attempts.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments/0a8167a2-636e-4cb8-be5f-150cd2211835/attempts.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments/0a8167a2-636e-4cb8-be5f-150cd2211835/attempts.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments/0a8167a2-636e-4cb8-be5f-150cd2211835/attempts.object_rows",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments/0a8167a2-636e-4cb8-be5f-150cd2211835/attempts.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "academy.attempt_history_has_no_answer_key",
+      "passed": true
+    },
+    {
+      "check": "academy.exactly_two_server_attempts",
+      "passed": true
+    },
+    {
+      "check": "academy.hr_edits_new_draft",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.hr_edits_new_draft.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.hr_publishes_second_version",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.hr_publishes_second_version.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.original_learning_after_republish",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.original_learning_after_republish.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.enrollment_pins_published_version",
+      "passed": true
+    },
+    {
+      "check": "academy.historical_material_has_no_answer_key",
+      "passed": true
+    },
+    {
+      "check": "academy.hr_archives_own_smoke_course",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.hr_archives_own_smoke_course.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.archived_course_hidden_from_catalog",
+      "passed": true,
+      "http_status": 404,
+      "expected_status": [
+        404
+      ]
+    },
+    {
+      "check": "academy.archived_course_hidden_from_catalog.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.completed_result_after_archive",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.completed_result_after_archive.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.archive_preserves_completed_history",
+      "passed": true
+    },
+    {
+      "check": "academy.completed_workbench",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy.completed_workbench.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy.completed_workbench.own_profile",
+      "passed": true
+    },
+    {
+      "check": "academy.completed_workbench.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.completed_workbench.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.completed_workbench.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.completed_workbench.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.completed_workbench.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "academy.completion_updates_own_workbench",
+      "passed": true
+    },
+    {
+      "check": "integration.employee_operator_access_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "integration.employee_operator_access_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "integration.manager_operator_access_denied",
+      "passed": true,
+      "http_status": 403,
+      "expected_status": [
+        403
+      ]
+    },
+    {
+      "check": "integration.manager_operator_access_denied.json_object",
+      "passed": true
+    },
+    {
+      "check": "integrations/exports.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "integrations/exports.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "integrations/exports.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "integrations/exports.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "integrations/exports.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "integrations/exports.object_rows",
+      "passed": true
+    },
+    {
+      "check": "integrations/exports.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "integration.one_outbox_per_new_final_approval",
+      "passed": true
+    },
+    {
+      "check": "integration.export_detail",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "integration.export_detail.json_object",
+      "passed": true
+    },
+    {
+      "check": "integration.explicit_delivery_state",
+      "passed": true
+    },
+    {
+      "check": "integration.new_export_has_no_delivery_failure",
+      "passed": true
+    },
+    {
+      "check": "integration.receipt_confirms_only_mock_document_acceptance",
+      "passed": true
+    },
+    {
+      "check": "integration.accepted_attempt_persisted",
+      "passed": true
+    },
+    {
+      "check": "integration.export_detail",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "integration.export_detail.json_object",
+      "passed": true
+    },
+    {
+      "check": "integration.explicit_delivery_state",
+      "passed": true
+    },
+    {
+      "check": "integration.new_export_has_no_delivery_failure",
+      "passed": true
+    },
+    {
+      "check": "integration.receipt_confirms_only_mock_document_acceptance",
+      "passed": true
+    },
+    {
+      "check": "integration.accepted_attempt_persisted",
+      "passed": true
+    },
+    {
+      "check": "integration.business_decision_after_delivery",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "integration.business_decision_after_delivery.json_object",
+      "passed": true
+    },
+    {
+      "check": "integration.delivery_does_not_rewrite_human_decision",
+      "passed": true
+    },
+    {
+      "check": "integration.business_decision_after_delivery",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "integration.business_decision_after_delivery.json_object",
+      "passed": true
+    },
+    {
+      "check": "integration.delivery_does_not_rewrite_human_decision",
+      "passed": true
+    },
+    {
+      "check": "final.employee",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.employee.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.employee.own_profile",
+      "passed": true
+    },
+    {
+      "check": "final.employee.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.employee.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.employee.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.employee.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.employee.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "final.employee.draft_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.employee.draft_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.employee.draft_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.employee.draft_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.employee.draft_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.employee.draft_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.employee.draft_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.employee.returned_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.employee.returned_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.employee.returned_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.employee.returned_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.employee.returned_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.employee.returned_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.employee.returned_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.employee.requests_to_review.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.employee.waiting_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy/enrollments.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.object_rows",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "final.employee.learning_is_self_scoped",
+      "passed": true
+    },
+    {
+      "check": "final.employee.learning_summary_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "final.employee.learning_availability_counts",
+      "passed": true
+    },
+    {
+      "check": "final.employee.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.employee.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.employee.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.employee.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.employee.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.employee.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.employee.unread_count_is_nonnegative",
+      "passed": true
+    },
+    {
+      "check": "final.manager",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.manager.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.manager.own_profile",
+      "passed": true
+    },
+    {
+      "check": "final.manager.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.manager.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.manager.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.manager.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.manager.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "final.manager.draft_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.manager.draft_requests.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.manager.draft_requests.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.manager.draft_requests.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.manager.returned_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.manager.requests_to_review.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.manager.requests_to_review.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.manager.requests_to_review.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.manager.requests_to_review.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.manager.review_excludes_self",
+      "passed": true
+    },
+    {
+      "check": "final.manager.requests_to_review.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.manager.requests_to_review.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.manager.requests_to_review.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.manager.review_excludes_self",
+      "passed": true
+    },
+    {
+      "check": "final.manager.waiting_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy/enrollments.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.object_rows",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "final.manager.learning_is_self_scoped",
+      "passed": true
+    },
+    {
+      "check": "final.manager.learning_summary_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "final.manager.learning_availability_counts",
+      "passed": true
+    },
+    {
+      "check": "final.manager.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.manager.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.manager.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.manager.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.manager.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.manager.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.manager.unread_count_is_nonnegative",
+      "passed": true
+    },
+    {
+      "check": "final.hr",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.hr.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.hr.own_profile",
+      "passed": true
+    },
+    {
+      "check": "final.hr.returned_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.hr.draft_requests.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.hr.requests_to_review.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.hr.learning_outstanding.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "final.hr.open_knowledge_cases.full_count_and_bounded_preview",
+      "passed": true
+    },
+    {
+      "check": "requests.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "requests.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "requests.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "requests.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "requests.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "requests.object_rows",
+      "passed": true
+    },
+    {
+      "check": "requests.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "final.hr.draft_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.hr.returned_requests.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.hr.requests_to_review.matches_scoped_registry",
+      "passed": true
+    },
+    {
+      "check": "final.hr.requests_to_review.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.hr.requests_to_review.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.hr.requests_to_review.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.hr.review_excludes_self",
+      "passed": true
+    },
+    {
+      "check": "final.hr.requests_to_review.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.hr.requests_to_review.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.hr.requests_to_review.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.hr.review_excludes_self",
+      "passed": true
+    },
+    {
+      "check": "final.hr.waiting_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.pagination_advances",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.page.1",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "academy/enrollments.page.1.json_object",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.paginated_shape",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.stable_page_count",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.object_rows",
+      "passed": true
+    },
+    {
+      "check": "academy/enrollments.complete_pagination",
+      "passed": true
+    },
+    {
+      "check": "final.hr.learning_is_self_scoped",
+      "passed": true
+    },
+    {
+      "check": "final.hr.learning_summary_matches_registry",
+      "passed": true
+    },
+    {
+      "check": "final.hr.learning_availability_counts",
+      "passed": true
+    },
+    {
+      "check": "final.hr.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.hr.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.hr.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.hr.learning.current_actions",
+      "passed": true,
+      "http_status": 200,
+      "expected_status": [
+        200
+      ]
+    },
+    {
+      "check": "final.hr.learning.current_actions.json_object",
+      "passed": true
+    },
+    {
+      "check": "final.hr.learning.actions_match_detail",
+      "passed": true
+    },
+    {
+      "check": "final.hr.unread_count_is_nonnegative",
+      "passed": true
+    },
+    {
+      "check": "official_balance_unchanged_and_one_new_portal_day_reserved",
+      "passed": true
+    },
+    {
+      "check": "employee.logout",
+      "passed": true,
+      "http_status": 204,
+      "expected_status": [
+        204
+      ]
+    },
+    {
+      "check": "manager.logout",
+      "passed": true,
+      "http_status": 204,
+      "expected_status": [
+        204
+      ]
+    },
+    {
+      "check": "hr.logout",
+      "passed": true,
+      "http_status": 204,
+      "expected_status": [
+        204
+      ]
+    },
+    {
+      "check": "foreign.logout",
+      "passed": true,
+      "http_status": 204,
+      "expected_status": [
+        204
+      ]
+    }
+  ],
+  "artifacts": {
+    "requests": [
+      {
+        "id": "30886978-f636-4143-9b45-f0d63cc1e987",
+        "kind": "leave",
+        "purpose": "approval_journey",
+        "status": "approved",
+        "version": 8,
+        "submitted_revisions": 2,
+        "final_revision": "d4af216b-7418-48b2-8fff-58f7f7c76dd3",
+        "start_date": "2026-11-16",
+        "end_date": "2026-11-16",
+        "leave_days": "1.00"
+      },
+      {
+        "id": "4f93562b-ef48-4f55-8a2c-3a5ed6fc023b",
+        "kind": "advance",
+        "purpose": "approval_journey",
+        "status": "approved",
+        "version": 8,
+        "submitted_revisions": 2,
+        "final_revision": "6e9ce57b-e685-4c35-a2fd-c2a6c2c397e3"
+      },
+      {
+        "id": "a6a6f8c3-b928-4d43-800a-b429398e3243",
+        "kind": "advance",
+        "purpose": "hr_denial_probe",
+        "status": "cancelled",
+        "version": 3
+      },
+      {
+        "id": "e2d4bd6c-00ec-469e-acc0-efd823acbb62",
+        "kind": "advance",
+        "purpose": "foreign_denial_probe",
+        "status": "cancelled",
+        "version": 3
+      }
+    ],
+    "exports": [
+      {
+        "id": "30f83712-ac1a-4aae-8323-862536163cb0",
+        "request_id": "30886978-f636-4143-9b45-f0d63cc1e987",
+        "delivery_status": "processed",
+        "observed_states": [
+          "processed"
+        ],
+        "attempt_count": 1,
+        "receipt": {
+          "id": "94324c9b-a902-4fb5-9114-25d4bf8754ad",
+          "provider": "mock_documentolog",
+          "request_revision": "d4af216b-7418-48b2-8fff-58f7f7c76dd3",
+          "acceptance_meaning": "document_received_only"
+        }
+      },
+      {
+        "id": "69f633f4-93c5-45da-b4aa-75b01d97b902",
+        "request_id": "4f93562b-ef48-4f55-8a2c-3a5ed6fc023b",
+        "delivery_status": "processed",
+        "observed_states": [
+          "processed"
+        ],
+        "attempt_count": 1,
+        "receipt": {
+          "id": "d1107bf0-a955-40c4-9440-19d85f7cf1ce",
+          "provider": "mock_documentolog",
+          "request_revision": "6e9ce57b-e685-4c35-a2fd-c2a6c2c397e3",
+          "acceptance_meaning": "document_received_only"
+        }
+      }
+    ],
+    "course": {
+      "id": "943746e8-ba65-4963-b4d1-64605a095ba0",
+      "slug": "http-smoke-41b0ee0a7dcf4c2f930c9fa90add1abb",
+      "availability": "archived",
+      "published_revisions": 2
+    },
+    "enrollment": {
+      "id": "0a8167a2-636e-4cb8-be5f-150cd2211835",
+      "course_version": "52dc8137-6e29-4ab7-9e5e-5aaedbdf2dc1",
+      "completion_state": "completed",
+      "attempts": 2,
+      "result_scores": [
+        "0.00",
+        "100.00"
+      ]
+    }
+  },
+  "observations": {
+    "target": "http://127.0.0.1:8000",
+    "transport": "stdlib urllib, CookieJar, no redirects, no environment proxies",
+    "workbench": {
+      "baseline.employee": {
+        "draft_requests": 2,
+        "returned_requests": 2,
+        "requests_to_review": 0,
+        "waiting_requests": 4,
+        "learning": {
+          "total": 24,
+          "completed": 8,
+          "in_progress": 6,
+          "not_started": 10
+        },
+        "learning_outstanding": 16,
+        "unavailable_learning": 0,
+        "unread_notifications": 54
+      },
+      "baseline.manager": {
+        "draft_requests": 1,
+        "returned_requests": 0,
+        "requests_to_review": 4,
+        "waiting_requests": 0,
+        "learning": {
+          "total": 6,
+          "completed": 1,
+          "in_progress": 4,
+          "not_started": 1
+        },
+        "learning_outstanding": 5,
+        "unavailable_learning": 0,
+        "unread_notifications": 35
+      },
+      "baseline.hr": {
+        "draft_requests": 0,
+        "returned_requests": 0,
+        "requests_to_review": 11,
+        "waiting_requests": 0,
+        "learning": {
+          "total": 6,
+          "completed": 1,
+          "in_progress": 3,
+          "not_started": 2
+        },
+        "learning_outstanding": 5,
+        "unavailable_learning": 0,
+        "unread_notifications": 39
+      },
+      "final.employee": {
+        "draft_requests": 2,
+        "returned_requests": 2,
+        "requests_to_review": 0,
+        "waiting_requests": 4,
+        "learning": {
+          "total": 25,
+          "completed": 9,
+          "in_progress": 6,
+          "not_started": 10
+        },
+        "learning_outstanding": 16,
+        "unavailable_learning": 0,
+        "unread_notifications": 68
+      },
+      "final.manager": {
+        "draft_requests": 1,
+        "returned_requests": 0,
+        "requests_to_review": 4,
+        "waiting_requests": 0,
+        "learning": {
+          "total": 6,
+          "completed": 1,
+          "in_progress": 4,
+          "not_started": 1
+        },
+        "learning_outstanding": 5,
+        "unavailable_learning": 0,
+        "unread_notifications": 39
+      },
+      "final.hr": {
+        "draft_requests": 0,
+        "returned_requests": 0,
+        "requests_to_review": 11,
+        "waiting_requests": 0,
+        "learning": {
+          "total": 6,
+          "completed": 1,
+          "in_progress": 3,
+          "not_started": 2
+        },
+        "learning_outstanding": 5,
+        "unavailable_learning": 0,
+        "unread_notifications": 43
+      }
+    },
+    "mock_export_delivery_verified": true,
+    "leave_projection": {
+      "official_balance": "24.00",
+      "projected_before": "18.00",
+      "projected_after": "17.00",
+      "source_incorporated_days": "0.00"
+    }
+  }
+}

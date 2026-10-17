@@ -1,0 +1,124 @@
+{
+  "check": "knowledge_http_journey",
+  "scope": "Synthetic loopback HTTP with real Django session cookies and CSRF. No frontend or live model provider.",
+  "passed": 29,
+  "total": 29,
+  "checks": [
+    {
+      "check": "credential_available:employee.demo",
+      "passed": true
+    },
+    {
+      "check": "csrf:employee.demo",
+      "passed": true
+    },
+    {
+      "check": "login:employee.demo",
+      "passed": true
+    },
+    {
+      "check": "ask_supported_question",
+      "passed": true
+    },
+    {
+      "check": "explicit_no_key_mode",
+      "passed": true
+    },
+    {
+      "check": "supported_answer_has_evidence",
+      "passed": true
+    },
+    {
+      "check": "citation_resolves_exact_excerpt",
+      "passed": true
+    },
+    {
+      "check": "unknown_question_refused",
+      "passed": true
+    },
+    {
+      "check": "hr_source_excluded",
+      "passed": true
+    },
+    {
+      "check": "explicit_hr_case_created",
+      "passed": true
+    },
+    {
+      "check": "hr_case_replay",
+      "passed": true
+    },
+    {
+      "check": "logout",
+      "passed": true
+    },
+    {
+      "check": "credential_available:manager.demo",
+      "passed": true
+    },
+    {
+      "check": "csrf:manager.demo",
+      "passed": true
+    },
+    {
+      "check": "login:manager.demo",
+      "passed": true
+    },
+    {
+      "check": "manager_cannot_open_private_hr_case",
+      "passed": true
+    },
+    {
+      "check": "logout",
+      "passed": true
+    },
+    {
+      "check": "credential_available:hr.demo",
+      "passed": true
+    },
+    {
+      "check": "csrf:hr.demo",
+      "passed": true
+    },
+    {
+      "check": "login:hr.demo",
+      "passed": true
+    },
+    {
+      "check": "entity_hr_can_open_case",
+      "passed": true
+    },
+    {
+      "check": "hr_response_persisted",
+      "passed": true
+    },
+    {
+      "check": "logout",
+      "passed": true
+    },
+    {
+      "check": "credential_available:employee.demo",
+      "passed": true
+    },
+    {
+      "check": "csrf:employee.demo",
+      "passed": true
+    },
+    {
+      "check": "login:employee.demo",
+      "passed": true
+    },
+    {
+      "check": "employee_reads_hr_response",
+      "passed": true
+    },
+    {
+      "check": "employee_receives_notification",
+      "passed": true
+    },
+    {
+      "check": "logout",
+      "passed": true
+    }
+  ]
+}

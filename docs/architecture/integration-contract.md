@@ -31,7 +31,11 @@ The profile exposes the official balance and the time of its source snapshot. Po
 
 An import must establish which approved portal requests the new official balance already incorporates. Without that correlation, subtracting every portal approval after every import can count the same leave twice.
 
-For the synthetic adapter, accept explicit incorporated request ids or retain the documented fixed baseline. A real connector must supply a comparable receipt or source reconciliation identity before projected balances can be described as authoritative. Do not guess incorporation from a matching date or amount.
+The implemented mock accepts explicit `incorporated_request_ids` for each employee snapshot. Each id must identify that employee's approved leave request and its immutable submitted revision. The HR-owned `LeaveBalanceIncorporation` stores the confirmed revision and day count. A later snapshot must reaffirm every currently incorporated id; omission is a validation error. To remove an incorporation, the caller supplies `balance_reversals` with a request id and reason. The source import history retains both the original inclusion and correction. A later explicit reincorporation is supported.
+
+The calculation is `projected_balance = official_balance - portal_reserved_days`. Reservations include pending and approved portal leave except approved leave explicitly incorporated by the source. `source_incorporated_days` is exposed separately to explain the difference. Documentolog acceptance never reduces these reservations by itself.
+
+A real connector must supply comparable source accounting evidence and revision semantics before the projection can be described as authoritative. Do not guess incorporation from a matching date, amount or document-delivery receipt. The exact normalized request fields and response schema are generated in OpenAPI; [integration verification](../verification/integrations.md) records the implemented rules and recovery cases.
 
 ## Export after final approval
 

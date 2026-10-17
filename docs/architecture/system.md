@@ -36,6 +36,7 @@ The adapter boxes identify integration boundaries. Mock implementations are expl
 | knowledge | Published documents, chunks, answers, citations, HR cases | Identity scope, model/retrieval adapters, core events |
 | notifications | Per-user event messages and read state | Identity user reference, core event reference |
 | integrations | Source snapshots, export receipts, retry commands | Explicit request/profile import/export services |
+| workbench | Read projection of personal work, scoped review queues and full counts | Existing identity, requests, Academy, knowledge and notification selectors |
 | core | UUID/timestamps, errors, audit events, idempotency and outbox | Django transaction facilities |
 
 A domain module keeps related rules together. API views parse input and call a command.
@@ -48,9 +49,11 @@ The ORM is the persistence interface. Extra repository wrappers must demonstrate
 JanaMen stores imported values with freshness metadata.
 A portal approval cannot silently modify an official fact.
 A projection explains the effects of portal requests without overwriting the imported baseline.
-The future connector needs a reconciliation policy for source balances that already include exported leave. Its contract must establish a source revision or matching receipt.
+The normalized mock source explicitly lists approved leave requests already included in each employee balance. JanaMen records the exact immutable request revision and days in LeaveBalanceIncorporation. Subsequent snapshots reaffirm those ids; removing an inclusion requires an explicit reversal with a reason. A real 1C connector must map its own accounting evidence to this contract. A Documentolog delivery receipt supplies no evidence that a leave balance changed.
 
 This separation prevents double subtraction of leave during synchronization.
+
+Workbench reuses these calculated balances and existing resource serializers. It combines personal work and the caller's permitted review queues without creating another mutable task store. See [workbench contract](workbench.md) for ordering, count semantics and excluded information.
 
 ## Request transaction
 
