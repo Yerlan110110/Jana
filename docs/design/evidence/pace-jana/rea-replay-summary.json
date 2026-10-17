@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-17",
+  "classification": "controlled local replay of public shipped Pace design HTML with declared static assets",
+  "tool": {
+    "name": "REA",
+    "version": "6.5.0",
+    "operation": "capture_browser_scenario",
+    "provider": {
+      "id": "rea-playwright-browser-scenario",
+      "name": "REA Playwright browser scenario capture provider",
+      "version": "1"
+    }
+  },
+  "evidence_id": "ev_ccf7f31c9583359e00f3381ff31cce2120a395afd227915b09552210676648fd",
+  "authority": "controlled-replay",
+  "confidence": "observed",
+  "source": {
+    "url": "https://pace-ui.vercel.app/design",
+    "sha256": "797e13d2f25fe81ef3d89aaddbdc72c007271f5d4cbf2734331aa029991ff5d9",
+    "bytes": 437306,
+    "transformations": "No HTML-byte modification. HTML served as text/html on loopback. The 35 declared static assets were mirrored under their original URL paths. No source-repository code was used in the replay."
+  },
+  "scenario": {
+    "browser": {
+      "mode": "launch",
+      "executable_path": "/tmp/janamen-chrome/chrome-headless-shell-linux64/chrome-headless-shell",
+      "headless": true
+    },
+    "start_url": {
+      "url": "http://127.0.0.1:8784/design",
+      "query": []
+    },
+    "environment": {
+      "viewport": {
+        "width": 1440,
+        "height": 1000,
+        "device_scale_factor": 1
+      },
+      "locale": "ru-RU",
+      "timezone": "Asia/Almaty",
+      "color_scheme": "light",
+      "reduced_motion": "reduce",
+      "service_workers": "block"
+    },
+    "actions": [
+      {
+        "step_id": "page_visible",
+        "timeout_ms": 15000,
+        "action": "wait_for",
+        "locator": {
+          "kind": "css",
+          "selector": "h1"
+        },
+        "state": "visible"
+      }
+    ],
+    "storage": {
+      "cookies": [],
+      "local_storage": [],
+      "session_storage": []
+    },
+    "secrets": [],
+    "capture": {
+      "after_each_step": [],
+      "at_end": [
+        "url",
+        "dom",
+        "accessibility"
+      ],
+      "events": [],
+      "network": {
+        "request_body": false,
+        "response_body": false,
+        "header_values": false
+      }
+    },
+    "scenario_sha256": "7a7fbf9ebf6286e298e6a32d2a4dd84fa6da1bfdb168755854a1993b295376ae"
+  },
+  "result": {
+    "browser": {
+      "mode": "launch",
+      "process_ownership": "provider-owned",
+      "cleanup": "terminated-owned-process",
+      "product": "Chromium",
+      "version": "155.0.8059.84"
+    },
+    "completeness": {
+      "status": "complete",
+      "equality_eligible": true,
+      "missing_sections": [],
+      "truncated_sections": []
+    },
+    "steps": [
+      {
+        "id": "scenario_start",
+        "action": "goto_start",
+        "status": "completed"
+      },
+      {
+        "id": "page_visible",
+        "action": "wait_for",
+        "status": "completed"
+      }
+    ],
+    "artifacts": {
+      "screenshot": {
+        "state": "not_requested"
+      },
+      "dom": {
+        "state": "captured",
+        "sha256": "c99f2ec41217b39369dcf14aa2e0a8d99ebfae3a2170eae794553922a21a62d5",
+        "bytes": 436593
+      },
+      "accessibility": {
+        "state": "captured",
+        "sha256": "ae03b8e4c715e664557e3d5c81bfbe5f0d4c2bdf9113a66042f74c84ff6dd056",
+        "bytes": 13730
+      },
+      "url": {
+        "state": "captured"
+      },
+      "history": {
+        "state": "not_requested"
+      },
+      "storage": {
+        "state": "not_requested"
+      }
+    },
+    "raw_tool_output": {
+      "sha256": "ef24349280d1926b00de799658f796600906424e3225dc1dec4c27b4ede2e9a7",
+      "bytes": 506520,
+      "committed": false
+    },
+    "local_server_cleanup": "Owned loopback server stopped after capture, exit130 from KeyboardInterrupt."
+  },
+  "bounded_observations": [
+    "The selected public document exposes design-token groups, type and spacing sections, component-role sections and motion documentation in DOM and accessibility evidence.",
+    "The DOM contains 19 occurrences of base-ui markers. This is a shipped/runtime fingerprint, not proof of any particular component implementation.",
+    "The final capture still contains var(--ink) token labels. Resolved style values and complete hydration readiness were not established."
+  ],
+  "not_verified": [
+    "Live vendor origin behavior",
+    "Pointer or keyboard interaction beyond waiting for the heading",
+    "Screenshot or pixel comparison",
+    "Computed styles",
+    "Dark mode",
+    "Narrow viewports",
+    "Reduced-motion behavior beyond requested environment",
+    "Signed-in HR or LMS flows"
+  ],
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+    "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+    "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+    "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+    "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+    "Storage values are hashed only after declared-secret redaction.",
+    "Browser host platform and architecture were not observed."
+  ],
+  "live_attempt": {
+    "url": "https://pace-ui.vercel.app/design",
+    "outcome": "execution_failure before initial navigation capture",
+    "retryable": false,
+    "browser_cleanup": "terminated-owned-process",
+    "sha256": "d08566d7ec216ef5ddbf8c811baf54b757eaa48665d3d8249ef81048f9bad3f1",
+    "bytes": 2309
+  },
+  "redistribution": "No full third-party HTML, DOM, accessibility text, JavaScript bundle, font, image, or private repository source is committed."
+}

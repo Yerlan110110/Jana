@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-17",
+  "identity": {
+    "requested_site": "https://pace-ui.vercel.app",
+    "linked_repository": "https://github.com/yqecea/pace",
+    "different_product_excluded": "https://paceui.com"
+  },
+  "repository_observation": {
+    "access": "Authorized GitHub connector read",
+    "private": true,
+    "branch": "main",
+    "commit": "fa7401f5adf36a073d3126e6baebce31d92bcb89",
+    "kit_manifest_files": 21,
+    "kit_registry_items": 20,
+    "kit_registry_names": [
+      "cn",
+      "springs",
+      "button",
+      "card",
+      "input",
+      "textarea",
+      "label",
+      "field",
+      "notice",
+      "badge",
+      "switch",
+      "checkbox",
+      "radio-group",
+      "tabs",
+      "toggle",
+      "toggle-group",
+      "skeleton",
+      "spinner",
+      "separator",
+      "surface"
+    ],
+    "cli_commands": [
+      "doctor",
+      "plan",
+      "apply",
+      "verify",
+      "rollback"
+    ],
+    "cli_check_usage_present": false,
+    "compatibility": {
+      "frameworks": [
+        "next",
+        "vite",
+        "react"
+      ],
+      "react": ">=19.0.0",
+      "tailwind": ">=4.0.0",
+      "typescript": true,
+      "colorMode": "class"
+    }
+  },
+  "public_site_claims": {
+    "installed_kit_components": 44,
+    "registry_entries": 369,
+    "usage_gate_command": "check-usage",
+    "equality_with_inspected_main": "Not established; observed content differs"
+  },
+  "licenses_inspected": [
+    {
+      "path": "vendor/oa/LICENSE",
+      "license": "MIT",
+      "copyright": "2026 Voprex Labs"
+    },
+    {
+      "path": "vendor/amicro/LICENSE",
+      "license": "MIT",
+      "copyright": "2026 SYED SUBHAN UDDIN"
+    },
+    {
+      "path": "vendor/shadcn/LICENSE.md",
+      "license": "MIT",
+      "copyright": "2023 shadcn"
+    },
+    {
+      "path": "vendor/oxygen/PACE-NOTICE.md",
+      "license": "No LICENSE at the pinned revision; notice says retained for local use and not to redistribute as a licensed component library"
+    }
+  ],
+  "license_claim_not_source_verified": {
+    "source": "https://pace-ui.vercel.app/",
+    "claim": "Vendored OpenAnalytics product snapshot AGPL-3.0",
+    "scope": "Public deployment only; absent from the inspected main upstream lock"
+  },
+  "source_paths_read": [
+    "NOTICE.md",
+    "upstream-lock.json",
+    "package.json",
+    "kit/manifest.json",
+    "kit/registry.json",
+    "kit/pace.css",
+    "bin/pace.mjs",
+    "vendor/oa/LICENSE",
+    "vendor/amicro/LICENSE",
+    "vendor/shadcn/LICENSE.md",
+    "vendor/oxygen/PACE-NOTICE.md"
+  ],
+  "reuse_decision": "Inspect exact deploy/source correspondence and select a file-level licensed subset. Do not copy the complete catalog or private source into Jana by assumption.",
+  "private_source_redistributed": false
+}

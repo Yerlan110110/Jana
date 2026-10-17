@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-17",
+  "documents": [
+    {
+      "file": "pace.css",
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/05jw3jsc2xh8-.css",
+      "final_url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/05jw3jsc2xh8-.css",
+      "status": 200,
+      "bytes": 536966,
+      "sha256": "b23fe01a853724e0a7500762fa332ca37f99045701674d69559ad00430642e82",
+      "fetched_at": "2026-10-17T16:51:49.756948+00:00"
+    },
+    {
+      "file": "jana-entry.css",
+      "url": "https://janapost.kz/_nuxt/entry.DcV0Ir1j.css",
+      "final_url": "https://janapost.kz/_nuxt/entry.DcV0Ir1j.css",
+      "status": 200,
+      "bytes": 93077,
+      "sha256": "b3279e2038269f7542eed7c265b887dfc5f04e82cd6fe10a008fe7e4e1051b47",
+      "fetched_at": "2026-10-17T16:51:50.688161+00:00"
+    },
+    {
+      "file": "jana-default.css",
+      "url": "https://janapost.kz/_nuxt/default.B8iT7mGo.css",
+      "final_url": "https://janapost.kz/_nuxt/default.B8iT7mGo.css",
+      "status": 200,
+      "bytes": 421,
+      "sha256": "004a7a25f53af1ec8260ccaa1f4c3f6f638fa32fe7f57de1cca295f505a34091",
+      "fetched_at": "2026-10-17T16:51:50.209891+00:00"
+    },
+    {
+      "file": "pace-design.html",
+      "url": "https://pace-ui.vercel.app/design",
+      "final_url": "https://pace-ui.vercel.app/design",
+      "status": 200,
+      "bytes": 437306,
+      "sha256": "797e13d2f25fe81ef3d89aaddbdc72c007271f5d4cbf2734331aa029991ff5d9",
+      "fetched_at": "2026-10-17T16:51:50.010864+00:00"
+    },
+    {
+      "file": "pace-components.html",
+      "url": "https://pace-ui.vercel.app/components",
+      "final_url": "https://pace-ui.vercel.app/components",
+      "status": 200,
+      "bytes": 1305316,
+      "sha256": "b53456673157aec0682a896096638bc77f94b98581f9ccce74f0f269bc3d510f",
+      "fetched_at": "2026-10-17T16:51:50.099354+00:00"
+    },
+    {
+      "file": "pace-workspace.html",
+      "url": "https://pace-ui.vercel.app/workspace",
+      "final_url": "https://pace-ui.vercel.app/workspace",
+      "status": 200,
+      "bytes": 93502,
+      "sha256": "079dd0d1c34baa2d26643062a5e3b1eade9442e7e9ea177ecfe90c924899b713",
+      "fetched_at": "2026-10-17T16:51:50.307891+00:00"
+    },
+    {
+      "file": "pace-sources.html",
+      "url": "https://pace-ui.vercel.app/sources",
+      "final_url": "https://pace-ui.vercel.app/sources",
+      "status": 200,
+      "bytes": 51618,
+      "sha256": "c79eecc85aee6516ccd2b852c39f0305db397aa53cd24a3adac8fa230c2e7264",
+      "fetched_at": "2026-10-17T16:51:50.454500+00:00"
+    },
+    {
+      "file": "pace.html",
+      "url": "https://pace-ui.vercel.app/",
+      "status": 200,
+      "sha256": "69fa332ea80208ad30f3d96294a38f867ae500cc474a85ea40e65e4c167ed6d3",
+      "bytes": 126421
+    },
+    {
+      "file": "jana.html",
+      "url": "https://janapost.kz/ru",
+      "final_url": "https://janapost.kz/ru/home",
+      "status": 200,
+      "sha256": "d1c5895ea77ede6d7f9ee291da05d9a72a1ac551ac2d50d9edb49642cebb3ed4",
+      "bytes": 122939
+    }
+  ],
+  "replay_assets": [
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/00vf9p1rm0gal.js",
+      "local_path": "_next/static/immutable/chunks/00vf9p1rm0gal.js",
+      "status": 200,
+      "bytes": 140001,
+      "sha256": "18c99740369a5b550acfc381345cc86b1c112d38ff398bca4c3c1085726a9edb"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/05jw3jsc2xh8-.css",
+      "local_path": "_next/static/immutable/chunks/05jw3jsc2xh8-.css",
+      "status": 200,
+      "bytes": 536966,
+      "sha256": "b23fe01a853724e0a7500762fa332ca37f99045701674d69559ad00430642e82"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/08vqtitr9r3ec.js",
+      "local_path": "_next/static/immutable/chunks/08vqtitr9r3ec.js",
+      "status": 200,
+      "bytes": 3341,
+      "sha256": "44fc20320c0679d535d8a02b2c9b2b1b15de68fbc58975744e0d917285b312b3"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+      "local_path": "_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+      "status": 200,
+      "bytes": 112594,
+      "sha256": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/0j0h_372-egpp.js",
+      "local_path": "_next/static/immutable/chunks/0j0h_372-egpp.js",
+      "status": 200,
+      "bytes": 27489,
+      "sha256": "4dcde4909b7c7c33a5beb5886555e04c3fcfa1a83f84e38431229f0c434e2aa5"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/0sjkigjmguj2m.js",
+      "local_path": "_next/static/immutable/chunks/0sjkigjmguj2m.js",
+      "status": 200,
+      "bytes": 48834,
+      "sha256": "aeab906ba6a36d17f04646f56a7fa46c802066f1b086fa6c57f19e27b0126a33"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/0vn_c-qtmgve7.js",
+      "local_path": "_next/static/immutable/chunks/0vn_c-qtmgve7.js",
+      "status": 200,
+      "bytes": 31423,
+      "sha256": "34c29ad6438bf544b8c9e4865d00a95f0851ebb5efba09a4306f4e722683307e"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/12fmbqx9yrtlv.js",
+      "local_path": "_next/static/immutable/chunks/12fmbqx9yrtlv.js",
+      "status": 200,
+      "bytes": 156550,
+      "sha256": "0e62b124e69126246ec9e1603d535a677bb184a2deece23f4341651c26cf28fb"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/1os3ru96zcd3f.js",
+      "local_path": "_next/static/immutable/chunks/1os3ru96zcd3f.js",
+      "status": 200,
+      "bytes": 24443,
+      "sha256": "25e73f0f796b08f5d03db9e59af4c5301a4099ababcfa83380856faf5b410955"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/242pj6i5rlmnu.js",
+      "local_path": "_next/static/immutable/chunks/242pj6i5rlmnu.js",
+      "status": 200,
+      "bytes": 229760,
+      "sha256": "2f4657b06453b766d4f29403d042af9145fe86e71726945ee79033cb27c9a735"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/29tfu65sn-b8_.js",
+      "local_path": "_next/static/immutable/chunks/29tfu65sn-b8_.js",
+      "status": 200,
+      "bytes": 28399,
+      "sha256": "8e334b7b943def123ec3f3221766b98c3e7c59246abeb97ed92769ec6596d97d"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/2b3y81qb2q4n3.js",
+      "local_path": "_next/static/immutable/chunks/2b3y81qb2q4n3.js",
+      "status": 200,
+      "bytes": 12696,
+      "sha256": "f2fcb3150b82f8229aab63f7f2e34937a3fd3c00071b0840a24ba76e6878d16c"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/2jok84mbujulq.js",
+      "local_path": "_next/static/immutable/chunks/2jok84mbujulq.js",
+      "status": 200,
+      "bytes": 42067,
+      "sha256": "d4748e0271e8cfcb0f3ef1d8d3ddb77c75a644a0d48ad21e5ec41652cf7694c6"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/2l2rdngz3vcke.js",
+      "local_path": "_next/static/immutable/chunks/2l2rdngz3vcke.js",
+      "status": 200,
+      "bytes": 17383,
+      "sha256": "d2ffdc9c39e4ab8ed1a0b2befeac611c82834980e55b41a358a5eba9c0db5676"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/3gqzf90ujmf3u.js",
+      "local_path": "_next/static/immutable/chunks/3gqzf90ujmf3u.js",
+      "status": 200,
+      "bytes": 49613,
+      "sha256": "09a8462557fbfa0750fe59cfe84947d28e70544bacbde6c9c062e1f50da55291"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/3gws74h7g61xb.js",
+      "local_path": "_next/static/immutable/chunks/3gws74h7g61xb.js",
+      "status": 200,
+      "bytes": 27238,
+      "sha256": "aa9e56d28e19a473364992bbdf7e7043c611ce06d4683d0c3b7d11a03c3c6a0a"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/3qr7ru8-3mjib.js",
+      "local_path": "_next/static/immutable/chunks/3qr7ru8-3mjib.js",
+      "status": 200,
+      "bytes": 32903,
+      "sha256": "b154aa6d96b25be596c3eeccee1a0f7a1f62b16fdb5938b6fd56ee35c8d1a97a"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/3rlw9cl4zibdo.js",
+      "local_path": "_next/static/immutable/chunks/3rlw9cl4zibdo.js",
+      "status": 200,
+      "bytes": 23842,
+      "sha256": "28688358e26e9e8210c5811bd7b895a9db0f00c19ef06075dea56cec9705d903"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/3tj_7hz5_1hrz.js",
+      "local_path": "_next/static/immutable/chunks/3tj_7hz5_1hrz.js",
+      "status": 200,
+      "bytes": 3750,
+      "sha256": "f02bc3f36156b751e59a4500d7c6f9a73f934bad650044ffbd25ba6f0d98bf81"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/3xc7bkvs3k6ok.js",
+      "local_path": "_next/static/immutable/chunks/3xc7bkvs3k6ok.js",
+      "status": 200,
+      "bytes": 33310,
+      "sha256": "18139602c55cf6e1c1ffe2e5853904596802df3b4a88eb813c238a9653ecd360"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/3xysqvb7wju8l.js",
+      "local_path": "_next/static/immutable/chunks/3xysqvb7wju8l.js",
+      "status": 200,
+      "bytes": 24524,
+      "sha256": "1d69ad52f2fa5c00afae16b559da1068e3c35bb124293e08cb88eed7323d9b5e"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/chunks/turbopack-37xrr99c4a6j2.js",
+      "local_path": "_next/static/immutable/chunks/turbopack-37xrr99c4a6j2.js",
+      "status": 200,
+      "bytes": 9762,
+      "sha256": "9646da1ec194ede3b7e3504679e788352cd7e90fa5965fd8773060f2f081d6ec"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/geist-mono-cyrillic-ext-wght-normal.2j4htzlmj3gcc.woff2",
+      "local_path": "_next/static/immutable/media/geist-mono-cyrillic-ext-wght-normal.2j4htzlmj3gcc.woff2",
+      "status": 200,
+      "bytes": 6176,
+      "sha256": "cd8800999070b729e1cc0bf7a48da6c3ac096a044251171b9a7574b56d96d4b4"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/geist-mono-cyrillic-wght-normal.1zh-elm7yw814.woff2",
+      "local_path": "_next/static/immutable/media/geist-mono-cyrillic-wght-normal.1zh-elm7yw814.woff2",
+      "status": 200,
+      "bytes": 12940,
+      "sha256": "4866787fc952dbdbd591d6923d67bc21c2d894b93f34ab69d0cdf25d47bfb2df"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/geist-mono-latin-ext-wght-normal.41xmsrsmrahbg.woff2",
+      "local_path": "_next/static/immutable/media/geist-mono-latin-ext-wght-normal.41xmsrsmrahbg.woff2",
+      "status": 200,
+      "bytes": 14696,
+      "sha256": "1a189eb997c3e2ece68373e387afaec9e8617424186c4b1ab3cff7c54ba6223b"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/geist-mono-latin-wght-normal.29txv0wq9-da0.woff2",
+      "local_path": "_next/static/immutable/media/geist-mono-latin-wght-normal.29txv0wq9-da0.woff2",
+      "status": 200,
+      "bytes": 23128,
+      "sha256": "684ad5b531f81d43c1e8c7038262d5db7cdc1f68006e04d6c7769efa8d33c8cc"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/geist-mono-symbols2-wght-normal.0j0zjzdqzpnyk.woff2",
+      "local_path": "_next/static/immutable/media/geist-mono-symbols2-wght-normal.0j0zjzdqzpnyk.woff2",
+      "status": 200,
+      "bytes": 5812,
+      "sha256": "5bb66d8319ba1602bb2eb67dce8d79c2b4687be8ce183a0574433e949b3c60ad"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/geist-mono-vietnamese-wght-normal.1t_5gnvplukf1.woff2",
+      "local_path": "_next/static/immutable/media/geist-mono-vietnamese-wght-normal.1t_5gnvplukf1.woff2",
+      "status": 200,
+      "bytes": 7696,
+      "sha256": "d39b60889a94a527a7f73c7988a2d6efb6c081614aef683b0b386c02d74c2175"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/inter-tight-cyrillic-ext-wght-normal.1sunu9eb5_sxu.woff2",
+      "local_path": "_next/static/immutable/media/inter-tight-cyrillic-ext-wght-normal.1sunu9eb5_sxu.woff2",
+      "status": 200,
+      "bytes": 26660,
+      "sha256": "9bba92a871106008d89cc9734c218a3660b92ff647bdfb6879bf0440fba002c0"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/inter-tight-cyrillic-wght-normal.1rqv_3a6skkye.woff2",
+      "local_path": "_next/static/immutable/media/inter-tight-cyrillic-wght-normal.1rqv_3a6skkye.woff2",
+      "status": 200,
+      "bytes": 16996,
+      "sha256": "3937173d62f238179ca073aee632d53ebc088967ac841bf213211be05720881a"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/inter-tight-greek-ext-wght-normal.31y28gb9pzhru.woff2",
+      "local_path": "_next/static/immutable/media/inter-tight-greek-ext-wght-normal.31y28gb9pzhru.woff2",
+      "status": 200,
+      "bytes": 11700,
+      "sha256": "83735bbea54cc7c4e7ee2af3ede4c2bc5e421ba5bdef4cd3ea2ec8d25b5afaa8"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/inter-tight-greek-wght-normal.0skbnr0ze_la9.woff2",
+      "local_path": "_next/static/immutable/media/inter-tight-greek-wght-normal.0skbnr0ze_la9.woff2",
+      "status": 200,
+      "bytes": 22192,
+      "sha256": "815c54f4279b399a2afb93e99844e0ba6d9df2fc809eab372aa05e8b8d0847da"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/inter-tight-latin-ext-wght-normal.1n8_hbq_-ush1.woff2",
+      "local_path": "_next/static/immutable/media/inter-tight-latin-ext-wght-normal.1n8_hbq_-ush1.woff2",
+      "status": 200,
+      "bytes": 89800,
+      "sha256": "fd9beddaaec644945809da574cf1caf342073c7e4b46a2ea5bd136c8cf1a9eca"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/inter-tight-latin-wght-normal.0yzw701nbs_dl.woff2",
+      "local_path": "_next/static/immutable/media/inter-tight-latin-wght-normal.0yzw701nbs_dl.woff2",
+      "status": 200,
+      "bytes": 44872,
+      "sha256": "77fefe8ca19b9f69b5284832c519e0493127c1f091f0a8936884be7721c4e618"
+    },
+    {
+      "url": "https://pace-ui.vercel.app/_next/static/immutable/media/inter-tight-vietnamese-wght-normal.2_s4xw9qw46k6.woff2",
+      "local_path": "_next/static/immutable/media/inter-tight-vietnamese-wght-normal.2_s4xw9qw46k6.woff2",
+      "status": 200,
+      "bytes": 10480,
+      "sha256": "88599e6f2f36551c98dd836df944179f0d4e31eefa620bb753c96069b53ac55a"
+    }
+  ],
+  "redistribution": "Metadata only. Downloaded third-party bytes stay outside the repository."
+}

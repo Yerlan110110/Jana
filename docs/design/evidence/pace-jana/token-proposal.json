@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-17",
+  "status": "Design proposal, not an implemented or rendered design system",
+  "jana_css_source": "https://janapost.kz/_nuxt/entry.DcV0Ir1j.css",
+  "observed_jana_tokens": {
+    "brand": "#008c00",
+    "text": "#12151a",
+    "text_secondary": "#5e5e60",
+    "text_tertiary": "#898989",
+    "stroke": "#dfdfdf",
+    "surface": "#f6f6f6",
+    "brand_tint": "#f1fff1",
+    "yellow": "#ffbd00",
+    "error": "#dc2625"
+  },
+  "proposed_role_mapping": {
+    "--ink": "#12151a",
+    "--foreground": "var(--ink)",
+    "--background": "#f6f6f6",
+    "--card": "#ffffff",
+    "--popover": "#ffffff",
+    "--muted-foreground": "#5e5e60",
+    "--brand": "#008c00",
+    "--primary": "#007a00",
+    "--primary-deep": "#006b00",
+    "--primary-foreground": "#ffffff",
+    "--primary-text": "#007a00",
+    "--ring": "#007a00",
+    "--selected-surface": "#f1fff1",
+    "--separator": "#dfdfdf"
+  },
+  "mapping_caveats": [
+    "Brand identity and action roles are distinct. Action colors are proposed accessible derivatives, not official Jana brand tokens.",
+    "Separators do not automatically qualify as input boundaries. If the boundary identifies the control, provide and verify an independent contrasting role.",
+    "The proposed ring is opaque. Existing Pace 50%-alpha focus recipes must be remeasured or replaced as a reviewed component change.",
+    "Completed, request approval, Documentolog delivery and 1C incorporation require separate labels. Color does not replace these distinctions.",
+    "A dark theme requires its own measured pairs and has not been designed in this task."
+  ],
+  "contrast": {
+    "method": "WCAG relative sRGB luminance with 0.04045 linearization threshold; ratio=(lighter+0.05)/(darker+0.05). Solid declared pairs only.",
+    "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+    "pairs": [
+      {
+        "foreground": "#ffffff",
+        "background": "#008c00",
+        "role": "brand fill with white ordinary text",
+        "origin": "Observed Jana declaration pair, not a rendered UI audit",
+        "ratio": 4.419904940168463,
+        "passes_normal_text_4_5": false,
+        "passes_nontext_3": true
+      },
+      {
+        "foreground": "#ffffff",
+        "background": "#007a00",
+        "role": "action fill with white ordinary text",
+        "origin": "Proposed JanaMen pair",
+        "ratio": 5.549956491292769,
+        "passes_normal_text_4_5": true,
+        "passes_nontext_3": true
+      },
+      {
+        "foreground": "#ffffff",
+        "background": "#006b00",
+        "role": "pressed action fill with white ordinary text",
+        "origin": "Proposed JanaMen pair",
+        "ratio": 6.767474057943452,
+        "passes_normal_text_4_5": true,
+        "passes_nontext_3": true
+      },
+      {
+        "foreground": "#12151a",
+        "background": "#ffffff",
+        "role": "body text",
+        "origin": "Observed Jana declaration pair",
+        "ratio": 18.294243725183662,
+        "passes_normal_text_4_5": true,
+        "passes_nontext_3": true
+      },
+      {
+        "foreground": "#5e5e60",
+        "background": "#ffffff",
+        "role": "secondary text",
+        "origin": "Observed Jana declaration pair",
+        "ratio": 6.469652849073357,
+        "passes_normal_text_4_5": true,
+        "passes_nontext_3": true
+      },
+      {
+        "foreground": "#898989",
+        "background": "#ffffff",
+        "role": "tertiary ordinary text",
+        "origin": "Observed Jana declaration pair",
+        "ratio": 3.498154318627802,
+        "passes_normal_text_4_5": false,
+        "passes_nontext_3": true
+      },
+      {
+        "foreground": "#dfdfdf",
+        "background": "#ffffff",
+        "role": "separator or input boundary",
+        "origin": "Observed Jana declaration pair",
+        "ratio": 1.3326388232838635,
+        "passes_normal_text_4_5": false,
+        "passes_nontext_3": false
+      },
+      {
+        "foreground": "#dc2625",
+        "background": "#ffffff",
+        "role": "error text",
+        "origin": "Observed Jana declaration pair",
+        "ratio": 4.830819665347101,
+        "passes_normal_text_4_5": true,
+        "passes_nontext_3": true
+      }
+    ]
+  },
+  "font_coverage": {
+    "source": "https://janapost.kz/ru/home",
+    "observed_family": "Inter",
+    "observed_preloads": [
+      "/fonts/inter-cyrillic-wght-normal.woff2",
+      "/fonts/inter-latin-wght-normal.woff2"
+    ],
+    "covered_by_declared_ranges": "ҰұІі",
+    "not_covered_by_declared_ranges": "ӘәҒғҚқҢңӨөҮүҺһ",
+    "claim_boundary": "Checks CSS unicode-range declarations. No claim that the vendor page displays missing glyph boxes; fallback fonts may provide these letters.",
+    "proposed": "Self-host a verified Cyrillic Extended Inter font subset with license notice; inspect rendered fonts and all Kazakh letters on Linux, Android, Windows and iOS."
+  }
+}
