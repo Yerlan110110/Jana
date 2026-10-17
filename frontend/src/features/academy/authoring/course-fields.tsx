@@ -164,18 +164,6 @@ export function CourseFields({
             <h3>Материал {index + 1}</h3>
             <div className="form-grid">
               <label className="field">
-                Код материала
-                <Input
-                  required
-                  pattern={"[a-zA-Z0-9_\\-]+"}
-                  maxLength={80}
-                  value={lesson.id}
-                  onChange={(e) =>
-                    lessonChange(index, { ...lesson, id: e.target.value })
-                  }
-                />
-              </label>
-              <label className="field">
                 Название материала
                 <Input
                   required
@@ -275,18 +263,7 @@ export function CourseFields({
         {questions.map((question, index) => (
           <section className="ac-editor-block" key={index}>
             <h3>Вопрос {index + 1}</h3>
-            <label className="field">
-              Код вопроса
-              <Input
-                required
-                pattern={"[a-zA-Z0-9_\\-]+"}
-                maxLength={80}
-                value={question.id}
-                onChange={(e) =>
-                  questionChange(index, { ...question, id: e.target.value })
-                }
-              />
-            </label>
+
             <label className="field">
               Формулировка
               <Textarea
@@ -301,29 +278,6 @@ export function CourseFields({
             </label>
             {question.options.map((option, optionIndex) => (
               <div className="form-grid" key={optionIndex}>
-                <label className="field">
-                  Код варианта {optionIndex + 1}
-                  <Input
-                    required
-                    pattern={"[a-zA-Z0-9_\\-]+"}
-                    maxLength={40}
-                    value={option.id}
-                    onChange={(e) =>
-                      questionChange(index, {
-                        ...question,
-                        options: question.options.map((item, i) =>
-                          i === optionIndex
-                            ? { ...option, id: e.target.value }
-                            : item,
-                        ),
-                        correct_option_id:
-                          question.correct_option_id === option.id
-                            ? e.target.value
-                            : question.correct_option_id,
-                      })
-                    }
-                  />
-                </label>
                 <label className="field">
                   Текст варианта {optionIndex + 1}
                   <Input

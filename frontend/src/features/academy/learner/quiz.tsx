@@ -18,17 +18,8 @@ import { Rules, useEnrollment } from "../common";
 
 type QuizIntent = Model<"AttemptCommandRequest"> & { id: string };
 
-function QuizForm({
-  enrollment,
-  content,
-  refresh,
-}: {
-  enrollment: Model<"EnrollmentDetail">;
-  content: Model<"LearningContent">;
-  refresh: () => void;
-}) {
+function useQuizSubmission() {
   const navigate = useNavigate();
-  const [selections, setSelections] = useState<Record<string, string>>({});
   const submit = useCommand(async ({ id, ...body }: QuizIntent, key) =>
     unwrap(
       await api.POST("/api/v1/academy/enrollments/{id}/submit-attempt/", {
@@ -44,10 +35,26 @@ function QuizForm({
     submit.mutate(body, {
       onSuccess: (result) =>
         void navigate(
-          `/academy/attempts/${result.attempt.id}?enrollment=${enrollment.id}`,
+          `/academy/attempts/${result.attempt.id}?enrollment=${body.id}`,
         ),
     });
   }
+  return { submit, send };
+}
+
+function QuizForm({
+  enrollment,
+  content,
+  refresh,
+  submission,
+}: {
+  enrollment: Model<"EnrollmentDetail">;
+  content: Model<"LearningContent">;
+  refresh: () => void;
+  submission: ReturnType<typeof useQuizSubmission>;
+}) {
+  const [selections, setSelections] = useState<Record<string, string>>({});
+  const { submit, send } = submission;
   return (
     <form
       className="form-stack"
@@ -124,6 +131,7 @@ function QuizForm({
 export function QuizPage() {
   const { id = "" } = useParams();
   const session = useSession();
+  const submission = useQuizSubmission();
   const enrollment = useEnrollment(id);
   const own = enrollment.data?.employee === session.employee?.id;
   const learning = useQuery({
@@ -216,6 +224,7 @@ export function QuizPage() {
                   <QuizForm
                     key={record.id}
                     enrollment={record}
+                    submission={submission}
                     content={learning.data}
                     refresh={() => void enrollment.refetch()}
                   />
