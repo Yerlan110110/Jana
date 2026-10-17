@@ -17,3 +17,7 @@ demo-credentials.json
 runtime/
 .tmp/
 .DS_Store
+.artifacts/
+.worktrees/
+frontend/dist/
+.e2e/
