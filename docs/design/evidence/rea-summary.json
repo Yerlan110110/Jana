@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-17",
+  "classification": "controlled replay of a downloaded public documentation artifact",
+  "tool": {
+    "name": "REA",
+    "version": "6.5.0",
+    "command": "capture-browser-scenario",
+    "operation": "capture_browser_scenario",
+    "provider": {
+      "id": "rea-playwright-browser-scenario",
+      "name": "REA Playwright browser scenario capture provider",
+      "version": "1"
+    }
+  },
+  "evidence_id": "ev_33cc4b6721164f4b9ab1846a18011d38631ee9b080288aab3a491ed4db0c1fce",
+  "tool_authority": "controlled-replay",
+  "tool_confidence": "observed",
+  "tool_subject": null,
+  "source": {
+    "url": "https://support.learnupon.com/hc/en-us/articles/10014314018717-Learner-view-Home",
+    "sha256": "7d07ed9f4ca49ec93d27d4b338c6dfc52ae3aad8a571ff4a3f60c4df491b4a0d",
+    "bytes": 30152,
+    "transformations": "None. Downloaded HTML bytes served directly. Browser serialization has a separate hash. Relative resources were not mirrored.",
+    "redistribution": "Source HTML, full DOM, full accessibility text and proprietary images are not committed."
+  },
+  "scenario": {
+    "sha256_reported_by_rea": "7f6c9b94f9c511bbf256465852da7737112966aede63650b5e2c8170694b8d52",
+    "start_url": "http://127.0.0.1:8768/learnupon-home-source.html",
+    "environment": {
+      "viewport": {
+        "width": 1440,
+        "height": 1000,
+        "device_scale_factor": 1
+      },
+      "locale": "en-US",
+      "timezone": "Asia/Almaty",
+      "color_scheme": "light",
+      "reduced_motion": "reduce",
+      "service_workers": "block"
+    },
+    "actions": [
+      {
+        "step_id": "article_visible",
+        "timeout_ms": 20000,
+        "action": "wait_for",
+        "locator": {
+          "kind": "css",
+          "selector": "h1"
+        },
+        "state": "visible"
+      }
+    ],
+    "capture": {
+      "after_each_step": [],
+      "at_end": [
+        "url",
+        "dom",
+        "accessibility"
+      ],
+      "events": [],
+      "network": {
+        "request_body": false,
+        "response_body": false,
+        "header_values": false
+      }
+    },
+    "authentication": "None",
+    "outbound_messages": "None",
+    "mutations": "None on vendor service. Temporary local replay server and provider-owned browser only."
+  },
+  "result": {
+    "ok": true,
+    "completeness": {
+      "status": "complete",
+      "equality_eligible": true,
+      "missing_sections": [],
+      "truncated_sections": []
+    },
+    "browser": {
+      "mode": "launch",
+      "process_ownership": "provider-owned",
+      "cleanup": "terminated-owned-process",
+      "product": "Chromium",
+      "version": "155.0.8059.84"
+    },
+    "steps": [
+      {
+        "step_id": "scenario_start",
+        "action": "goto_start",
+        "status": "completed",
+        "completeness": {
+          "status": "complete",
+          "equality_eligible": true,
+          "missing_sections": [],
+          "truncated_sections": []
+        }
+      },
+      {
+        "step_id": "article_visible",
+        "action": "wait_for",
+        "status": "completed",
+        "completeness": {
+          "status": "complete",
+          "equality_eligible": true,
+          "missing_sections": [],
+          "truncated_sections": []
+        }
+      }
+    ],
+    "artifacts": {
+      "screenshot": {
+        "state": "not_requested"
+      },
+      "dom": {
+        "state": "captured",
+        "sha256": "70071115ea92b84250ad63e7d16655b06b3e50d59d0ba58f8d12934e93782535",
+        "bytes": 30144
+      },
+      "accessibility": {
+        "state": "captured",
+        "sha256": "77cd0b262fc7ab63b881cee061994299207649b7984479626ea6e4eb47cef0df",
+        "bytes": 18569
+      },
+      "url": {
+        "state": "captured"
+      },
+      "history": {
+        "state": "not_requested"
+      },
+      "storage": {
+        "state": "not_requested"
+      }
+    },
+    "raw_tool_output": {
+      "sha256": "8a1a1aa59a7ee2cdb311b47071412023ead1476de95220886a6b23ad55941b8e",
+      "bytes": 56059,
+      "publicly_committed": false,
+      "reason": "Full output contains the copyrighted article DOM and accessibility text."
+    }
+  },
+  "bounded_observations": [
+    {
+      "id": "R01",
+      "class": "observed in controlled replay",
+      "statement": "The downloaded document exposes an article heading, navigation and an article update time through the accessibility capture."
+    },
+    {
+      "id": "R02",
+      "class": "observed in controlled replay",
+      "statement": "The document contains learner-home sections and links to related official course and catalog documentation."
+    },
+    {
+      "id": "R03",
+      "class": "observed in local HTTP server output",
+      "statement": "Relative theme CSS, script and image requests returned 404 because the replay retained the original relative URLs and did not mirror those resources."
+    }
+  ],
+  "failed_prior_attempt": {
+    "target_url": "https://support.learnupon.com/hc/en-us/articles/10014314018717-Learner-view-Home",
+    "ok": false,
+    "error_code": "execution_failure",
+    "sha256": "3cccdfc704e0bee9eeb2f0ed5ab8c655540b882c53486a8c61458d3059519a2c",
+    "bytes": 2356,
+    "bounded_result": "Navigation failed before initial state capture. The exact underlying cause was not exposed. This run is not evidence of live product behavior."
+  },
+  "visual_observations": [
+    {
+      "id": "V01",
+      "source_url": "https://support.learnupon.com/hc/article_attachments/39027145654557",
+      "sha256": "4a27c5ed357c6b508f1dfe120058de7bb62160664009bb1ce61666e0563348b0",
+      "bytes": 638426,
+      "method": "Downloaded public screenshot opened with view_image. Not an authenticated runtime capture.",
+      "bounded_observation": "Published learner home screenshot. Navigation counts, filters and heterogeneous course metadata were visually inspected.",
+      "publicly_committed": false
+    },
+    {
+      "id": "V02",
+      "source_url": "https://support.learnupon.com/hc/article_attachments/26546340900765",
+      "sha256": "3e0aaa89e51b19cf8612f99d4470edce3a7edfa27b9d5493f2ee9ed75dfe1d17",
+      "bytes": 27687,
+      "method": "Downloaded public screenshot opened with view_image. Not an authenticated runtime capture.",
+      "bounded_observation": "Published exam instructions screenshot. Exam conditions precede the start action.",
+      "publicly_committed": false
+    },
+    {
+      "id": "V03",
+      "source_url": "https://help.talentlms.com/hc/article_attachments/22625546724252",
+      "sha256": "c164a870a98c251d4a824821585b42fbd90e435fdbfd3f42910b0cb46f8da208",
+      "bytes": 308859,
+      "method": "Downloaded public screenshot opened with view_image. Not an authenticated runtime capture.",
+      "bounded_observation": "Published report screenshot. Separate report views and per-user historical result columns were visually inspected.",
+      "publicly_committed": false
+    }
+  ],
+  "tool_reported_limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+    "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+    "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+    "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+    "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+    "Storage values are hashed only after declared-secret redaction.",
+    "Browser host platform and architecture were not observed."
+  ],
+  "research_limitations": [
+    "REA reported no subject/artifact identity. The separately recorded source SHA-256 binds this local input only and does not upgrade the tool authority.",
+    "The replay is public documentation, not a signed-in LearnUpon tenant or learner workflow.",
+    "Styles, relative scripts and images were not mirrored. No visual equivalence or production accessibility audit is inferred.",
+    "No competitor backend, persistence, permission enforcement, performance, offline behavior or unvisited state was verified.",
+    "Tool completeness describes the requested local capture, not coverage of the vendor product.",
+    "Public screenshots establish visible information only. Interactive behavior remains documented or unknown.",
+    "No proprietary screenshot, full help article or full DOM/AX response is redistributed in this repository."
+  ],
+  "cleanup": {
+    "provider_owned_browser": "terminated-owned-process",
+    "local_http_server": "Stopped with Ctrl-C after capture. Only the owned research server was stopped."
+  }
+}
