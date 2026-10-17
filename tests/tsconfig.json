@@ -15,6 +15,7 @@
     "web/**/*.ts",
     "visual/**/*.ts",
     "keyboard/**/*.ts",
+    "operator/**/*.ts",
     "zoom/**/*.ts"
   ]
 }
