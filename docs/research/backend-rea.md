@@ -30,7 +30,7 @@ REA означает Reverse Engineer Anything, проект [morluto/rea](https
 - [EmployeeAdvance](https://github.com/frappe/hrms/blob/develop/hrms/hr/doctype/employee_advance/employee_advance.py): денежные суммы, статусы выплаты, возврата и списания, счета и финансовые проводки.
 - [Документация Leave Application](https://docs.frappe.io/hr/leave-application): маршрут согласования, назначение согласующего на уровне сотрудника или отдела, уведомления.
 - [REST API Frappe](https://docs.frappe.io/framework/user/en/api/rest): вызовы от имени пользователя, сессионная и токенная аутентификация.
-- [HR v15.64.5 pyproject](https://github.com/frappe/hrms/blob/v15.64.5/pyproject.toml) и [лицензия GPLv3](https://github.com/frappe/hrms/blob/develop/license.txt).
+- [HR v15.64.5 pyproject](https://github.com/frappe/hrms/blob/v15.64.5/pyproject.toml) и [лицензия GPLv3 этой версии](https://github.com/frappe/hrms/blob/v15.64.5/license.txt).
 
 ### Наблюдения
 
@@ -55,7 +55,7 @@ REA означает Reverse Engineer Anything, проект [morluto/rea](https
 
 Не проверено: установка совместимого набора приложений на одном сайте, точное поведение всех кастомных прав, соответствие правил отпусков практике Jana Post. GPL/AGPL код в Jana не копируется; используются выводы о модели и собственная реализация конкретного контракта.
 
-## 2. Frappe Learning: изучены реальные ошибки, которые нельзя повторить
+## 2. Frappe Learning: что переносим из учебной модели
 
 ### Что прочитано
 

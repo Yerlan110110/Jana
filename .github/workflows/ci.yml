@@ -1,0 +1,84 @@
+name: Backend and contracts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: janamen-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16.15-bookworm
+        env:
+          POSTGRES_DB: janamen_ci
+          POSTGRES_USER: janamen
+          POSTGRES_PASSWORD: synthetic-ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U janamen -d janamen_ci"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgresql://janamen:synthetic-ci-only@127.0.0.1:5432/janamen_ci
+      DJANGO_DEBUG: "true"
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,testserver
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.23"
+          python-version: "3.12.14"
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install backend dependencies
+        working-directory: backend
+        run: uv sync --frozen --group dev
+      - name: Check style
+        working-directory: backend
+        run: uv run --frozen ruff check .
+      - name: Check migrations
+        working-directory: backend
+        run: uv run --frozen python manage.py makemigrations --check --dry-run
+      - name: Run PostgreSQL behavior tests
+        working-directory: backend
+        run: uv run --frozen pytest -q
+      - name: Verify pinned skills
+        run: node scripts/tooling/verify-skills.mjs
+      - name: Install contract tools
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Generate and verify API contracts
+        run: npm run contracts:check
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Prepare synthetic local configuration
+        run: python3 scripts/dev.py prepare
+      - name: Run full database suite in containers
+        run: python3 scripts/dev.py test-postgres
+      - name: Start release, API and worker
+        run: python3 scripts/dev.py up
+      - name: Check service readiness
+        run: curl --fail --retry 20 --retry-all-errors --retry-delay 3 http://127.0.0.1:8000/api/v1/ready/
+      - name: Show status on failure
+        if: failure()
+        run: docker compose ps -a
+      - name: Stop services
+        if: always()
+        run: docker compose down
