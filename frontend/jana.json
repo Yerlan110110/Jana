@@ -1,0 +1,16 @@
+{
+  "$extends": "pace",
+  "color": {
+    "ink": { "$value": "#12151a", "$type": "color" },
+    "brand": {
+      "primary": { "$value": "#007a00", "$type": "color" },
+      "primary-deep": { "$value": "#006b00", "$type": "color" },
+      "ring": { "$value": "#007a00", "$type": "color" },
+      "chart-1": { "$value": "#007a00", "$type": "color" }
+    },
+    "surface": {
+      "background": { "$value": "#f6f6f6", "$type": "color" },
+      "muted-foreground": { "$value": "#5e5e60", "$type": "color" }
+    }
+  }
+}

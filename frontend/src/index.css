@@ -1,3 +1,5 @@
 @import "tailwindcss";
 
 @import "../styles/pace.css";
+@import "./themes/jana.css";
+@import "./application.css";

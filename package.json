@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit -p packages/api-client/tsconfig.json && npm --prefix frontend run typecheck",
     "skills:verify": "node scripts/tooling/verify-skills.mjs",
     "dev": "npm --prefix frontend run dev",
-    "build": "npm --prefix frontend run build"
+    "build": "npm --prefix frontend run build",
+    "test:e2e": "e2e run"
   },
   "devDependencies": {
     "@e2e-dev/web": "^0.15.2",

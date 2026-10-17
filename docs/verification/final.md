@@ -1,3 +1,5 @@
+> Historical backend delivery at the restored checkpoint. Current continuation and browser acceptance are tracked in [C2](../continuation-status.md).
+
 # Итоговая проверка JanaMen
 
 Дата: 17 октября 2026 года. Проверяется backend, данные, API-контракт, инструменты и передача следующему агенту. Пользовательский frontend в этой поставке не реализован.
