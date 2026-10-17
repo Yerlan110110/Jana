@@ -1,5 +1,6 @@
 import json
 import stat
+from datetime import datetime
 from io import StringIO
 
 import pytest
@@ -145,3 +146,45 @@ def test_credentials_write_failure_rolls_back_new_records(settings, monkeypatch,
         )
     assert not User.objects.exists()
     assert blocked.read_text() == "Existing file must stay intact."
+
+
+def test_complete_seed_serializes_module_manifests_and_preserves_combined_records(
+    settings, monkeypatch, tmp_path
+):
+    from apps.academy.models import Course, Enrollment, QuizAttempt
+    from apps.integrations.models import SourceImportBatch
+    from apps.knowledge.models import KnowledgeDocument
+
+    settings.DEBUG = True
+    monkeypatch.setenv("DEMO_PASSWORD", PASSWORD)
+    path = tmp_path / "complete-demo.json"
+    output = StringIO()
+    call_command("seed_demo", credentials_file=str(path), stdout=output)
+    first = json.loads(path.read_text())
+    academy = first["modules"]["academy"]
+    assert academy["course_count"] == 30
+    assert academy["enrollment_count"] == 189
+    assert academy["lesson_count"] == 60
+    assert academy["question_count"] == 90
+    assert datetime.fromisoformat(academy["demo_employee"]["computed_at"]).tzinfo is not None
+    assert Employee.objects.count() == 58
+    assert HRRequest.objects.count() == 126
+    assert KnowledgeDocument.objects.count() > 20
+    assert SourceImportBatch.objects.filter(status="accepted").count() == 2
+    models = [
+        Employee,
+        HRRequest,
+        Course,
+        Enrollment,
+        QuizAttempt,
+        KnowledgeDocument,
+        SourceImportBatch,
+        DomainEvent,
+    ]
+    counts = [model.objects.count() for model in models]
+    call_command("seed_demo", credentials_file=str(path), stdout=output)
+    second = json.loads(path.read_text())
+    assert second["modules"]["academy"]["preserved_existing"] is True
+    assert counts == [model.objects.count() for model in models]
+    assert PASSWORD not in output.getvalue()
+    assert stat.S_IMODE(path.stat().st_mode) == 0o600

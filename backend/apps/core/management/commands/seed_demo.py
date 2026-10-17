@@ -10,6 +10,7 @@ from django.conf import settings
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import transaction
 from django.utils import timezone
 
@@ -118,7 +119,7 @@ class Command(BaseCommand):
             path.parent.mkdir(parents=True, exist_ok=True)
             descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
             with os.fdopen(descriptor, "w") as stream:
-                json.dump(document, stream, ensure_ascii=False, indent=2)
+                json.dump(document, stream, cls=DjangoJSONEncoder, ensure_ascii=False, indent=2)
                 stream.write("\n")
             os.replace(temporary, path)
         except OSError as error:
@@ -132,4 +133,6 @@ class Command(BaseCommand):
                 f"Synthetic fixtures ready: {len(employees)} employees. Credentials: {path}"
             )
         )
-        self.stdout.write(f"Modules: {json.dumps(results, ensure_ascii=False)}")
+        self.stdout.write(
+            f"Modules: {json.dumps(results, cls=DjangoJSONEncoder, ensure_ascii=False)}"
+        )

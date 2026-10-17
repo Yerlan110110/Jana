@@ -4,6 +4,935 @@ info:
   version: 1.0.0
   description: Employee services with synthetic demonstration data.
 paths:
+  /api/v1/academy/courses/:
+    get:
+      operationId: academy_courses_list
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+          enum:
+          - communication
+          - hr
+          - information_security
+          - knowledge
+          - logistics
+          - team
+        description: |-
+          * `hr` - Кадровые действия
+          * `logistics` - Логистические данные
+          * `communication` - Общение
+          * `information_security` - Доступ и информация
+          * `team` - Руководитель и HR
+          * `knowledge` - Регламенты и знания
+      - in: query
+        name: language
+        schema:
+          type: string
+          enum:
+          - kk
+          - ru
+        description: |-
+          * `ru` - Русский
+          * `kk` - Қазақша
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCatalogCourseList'
+          description: ''
+  /api/v1/academy/courses/{id}/:
+    get:
+      operationId: academy_courses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this course.
+        required: true
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogCourse'
+          description: ''
+  /api/v1/academy/enrollments/:
+    get:
+      operationId: academy_enrollments_list
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+          enum:
+          - communication
+          - hr
+          - information_security
+          - knowledge
+          - logistics
+          - team
+        description: |-
+          * `hr` - Кадровые действия
+          * `logistics` - Логистические данные
+          * `communication` - Общение
+          * `information_security` - Доступ и информация
+          * `team` - Руководитель и HR
+          * `knowledge` - Регламенты и знания
+      - in: query
+        name: completion_state
+        schema:
+          type: string
+          enum:
+          - completed
+          - in_progress
+          - not_started
+        description: |-
+          * `not_started` - Not started
+          * `in_progress` - In progress
+          * `completed` - Completed
+      - in: query
+        name: course
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: due_after
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: due_before
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: employee
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: has_failed_attempt
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: overdue
+        schema:
+          type: boolean
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: required
+        schema:
+          type: boolean
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEnrollmentList'
+          description: ''
+    post:
+      operationId: academy_enrollments_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AssignmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AssignmentRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentDetail'
+          description: ''
+  /api/v1/academy/enrollments/{id}/:
+    get:
+      operationId: academy_enrollments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this enrollment.
+        required: true
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentDetail'
+          description: ''
+  /api/v1/academy/enrollments/{id}/attempts/:
+    get:
+      operationId: academy_enrollments_attempts_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this enrollment.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAttemptDetailList'
+          description: ''
+  /api/v1/academy/enrollments/{id}/complete-lesson/:
+    post:
+      operationId: academy_enrollments_complete_lesson_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this enrollment.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LessonCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LessonCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentDetail'
+          description: ''
+  /api/v1/academy/enrollments/{id}/learning/:
+    get:
+      operationId: academy_enrollments_learning_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this enrollment.
+        required: true
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningContent'
+          description: ''
+  /api/v1/academy/enrollments/{id}/start/:
+    post:
+      operationId: academy_enrollments_start_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this enrollment.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentDetail'
+          description: ''
+  /api/v1/academy/enrollments/{id}/submit-attempt/:
+    post:
+      operationId: academy_enrollments_submit_attempt_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this enrollment.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttemptCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AttemptCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AttemptCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttemptResult'
+          description: ''
+  /api/v1/academy/enrollments/summary/:
+    get:
+      operationId: academy_enrollments_summary_retrieve
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+          enum:
+          - communication
+          - hr
+          - information_security
+          - knowledge
+          - logistics
+          - team
+        description: |-
+          * `hr` - Кадровые действия
+          * `logistics` - Логистические данные
+          * `communication` - Общение
+          * `information_security` - Доступ и информация
+          * `team` - Руководитель и HR
+          * `knowledge` - Регламенты и знания
+      - in: query
+        name: completion_state
+        schema:
+          type: string
+          enum:
+          - completed
+          - in_progress
+          - not_started
+        description: |-
+          * `not_started` - Not started
+          * `in_progress` - In progress
+          * `completed` - Completed
+      - in: query
+        name: course
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: due_after
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: due_before
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: employee
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: has_failed_attempt
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: overdue
+        schema:
+          type: boolean
+      - in: query
+        name: required
+        schema:
+          type: boolean
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollmentSummary'
+          description: ''
+  /api/v1/academy/manage/courses/:
+    get:
+      operationId: academy_manage_courses_list
+      parameters:
+      - in: query
+        name: availability
+        schema:
+          type: string
+          enum:
+          - archived
+          - draft
+          - published
+        description: |-
+          * `draft` - Draft
+          * `published` - Published
+          * `archived` - Archived
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCourseAdminSummaryList'
+          description: ''
+    post:
+      operationId: academy_manage_courses_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseCreateRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseAdmin'
+          description: ''
+  /api/v1/academy/manage/courses/{id}/:
+    get:
+      operationId: academy_manage_courses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this course.
+        required: true
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseAdmin'
+          description: ''
+  /api/v1/academy/manage/courses/{id}/archive/:
+    post:
+      operationId: academy_manage_courses_archive_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this course.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseAdmin'
+          description: ''
+  /api/v1/academy/manage/courses/{id}/publish/:
+    post:
+      operationId: academy_manage_courses_publish_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this course.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseAdmin'
+          description: ''
+  /api/v1/academy/manage/courses/{id}/restore/:
+    post:
+      operationId: academy_manage_courses_restore_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this course.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcademyVersionCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseAdmin'
+          description: ''
+  /api/v1/academy/manage/courses/{id}/revisions/:
+    get:
+      operationId: academy_manage_courses_revisions_list
+      parameters:
+      - in: query
+        name: availability
+        schema:
+          type: string
+          enum:
+          - archived
+          - draft
+          - published
+        description: |-
+          * `draft` - Draft
+          * `published` - Published
+          * `archived` - Archived
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this course.
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - academy
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCourseVersionAuthorList'
+          description: ''
+  /api/v1/academy/manage/courses/{id}/save-draft/:
+    post:
+      operationId: academy_manage_courses_save_draft_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        description: Use the same key and payload to recover the same command result
+          after a lost response.
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this course.
+        required: true
+      tags:
+      - academy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseEditRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseEditRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseEditRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseAdmin'
+          description: ''
+  /api/v1/assistant/answers/:
+    get:
+      operationId: assistant_answers_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - AI Jana
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAnswerList'
+          description: ''
+    post:
+      operationId: assistant_answers_create
+      description: client_message_id deduplicates the persisted answer. A new id asks
+        again. Extractive mode does not call an LLM. Provider failures return 503
+        with the persisted answer in the answer field.
+      tags:
+      - AI Jana
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/QuestionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/QuestionRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+          description: ''
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+          description: ''
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderError'
+          description: ''
+  /api/v1/assistant/answers/{id}/:
+    get:
+      operationId: assistant_answers_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - AI Jana
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+          description: ''
   /api/v1/auth/csrf/:
     get:
       operationId: auth_csrf_retrieve
@@ -206,6 +1135,872 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Health'
+          description: ''
+  /api/v1/integrations/exports/:
+    get:
+      operationId: integrations_exports_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - failed
+          - pending
+          - processed
+          - processing
+        description: |-
+          * `pending` - Pending
+          * `processing` - Processing
+          * `processed` - Processed
+          * `failed` - Failed
+      tags:
+      - integrations
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedExportList'
+          description: ''
+  /api/v1/integrations/exports/{id}/:
+    get:
+      operationId: integrations_exports_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this outbox message.
+        required: true
+      tags:
+      - integrations
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportDetail'
+          description: ''
+  /api/v1/integrations/exports/{id}/mock-fault/:
+    post:
+      operationId: integrations_exports_mock_fault_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this outbox message.
+        required: true
+      tags:
+      - integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MockFaultRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MockFaultRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MockFaultRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportDetail'
+          description: ''
+  /api/v1/integrations/exports/{id}/retry/:
+    post:
+      operationId: integrations_exports_retry_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this outbox message.
+        required: true
+      tags:
+      - integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExportCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExportCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportDetail'
+          description: ''
+  /api/v1/integrations/imports/:
+    get:
+      operationId: integrations_imports_list
+      parameters:
+      - in: query
+        name: legal_entity
+        schema:
+          type: string
+          format: uuid
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: source_revision
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - accepted
+          - rejected
+        description: |-
+          * `accepted` - Accepted
+          * `rejected` - Rejected
+      tags:
+      - integrations
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSourceImportBatchList'
+          description: ''
+  /api/v1/integrations/imports/{id}/:
+    get:
+      operationId: integrations_imports_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this source import batch.
+        required: true
+      tags:
+      - integrations
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceImportDetail'
+          description: ''
+  /api/v1/integrations/mock-1c/imports/:
+    post:
+      operationId: integrations_mock_1c_imports_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      tags:
+      - integrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportSnapshotRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ImportSnapshotRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImportSnapshotRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportAccepted'
+          description: ''
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportAccepted'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportRejected'
+          description: ''
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportRejected'
+          description: ''
+  /api/v1/integrations/sources/:
+    get:
+      operationId: integrations_sources_list
+      parameters:
+      - in: query
+        name: legal_entity
+        schema:
+          type: string
+          format: uuid
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - integrations
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEntitySyncStateList'
+          description: ''
+  /api/v1/integrations/sources/{id}/:
+    get:
+      operationId: integrations_sources_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this entity sync state.
+        required: true
+      tags:
+      - integrations
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntitySyncState'
+          description: ''
+  /api/v1/knowledge/admin/documents/:
+    get:
+      operationId: knowledge_admin_documents_list
+      parameters:
+      - in: query
+        name: audience
+        schema:
+          type: string
+          enum:
+          - all
+          - employee
+          - hr
+          - manager
+        description: |-
+          * `all` - All employees
+          * `employee` - Employees
+          * `manager` - Managers
+          * `hr` - HR
+      - in: query
+        name: language
+        schema:
+          type: string
+          enum:
+          - kk
+          - ru
+        description: |-
+          * `ru` - Русский
+          * `kk` - Қазақша
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: state
+        schema:
+          type: string
+          enum:
+          - archived
+          - draft
+          - published
+        description: |-
+          * `draft` - Draft
+          * `published` - Published
+          * `archived` - Archived
+      - in: query
+        name: topic
+        schema:
+          type: string
+      tags:
+      - Knowledge administration
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDocumentAdminList'
+          description: ''
+    post:
+      operationId: knowledge_admin_documents_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      tags:
+      - Knowledge administration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DocumentCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DocumentCreateRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentAdmin'
+          description: ''
+  /api/v1/knowledge/admin/documents/{id}/:
+    get:
+      operationId: knowledge_admin_documents_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge administration
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentAdmin'
+          description: ''
+    patch:
+      operationId: knowledge_admin_documents_partial_update
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge administration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDocumentUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDocumentUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDocumentUpdateRequest'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentAdmin'
+          description: ''
+  /api/v1/knowledge/admin/documents/{id}/archive/:
+    post:
+      operationId: knowledge_admin_documents_archive_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge administration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeVersionCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/KnowledgeVersionCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/KnowledgeVersionCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentAdmin'
+          description: ''
+  /api/v1/knowledge/admin/documents/{id}/publish/:
+    post:
+      operationId: knowledge_admin_documents_publish_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge administration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeVersionCommandRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/KnowledgeVersionCommandRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/KnowledgeVersionCommandRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentAdmin'
+          description: ''
+  /api/v1/knowledge/admin/documents/{id}/revisions/:
+    get:
+      operationId: knowledge_admin_documents_revisions_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: path
+        name: pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - Knowledge administration
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRevisionList'
+          description: ''
+  /api/v1/knowledge/citations/{id}/:
+    get:
+      operationId: knowledge_citations_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Citation'
+          description: ''
+  /api/v1/knowledge/documents/:
+    get:
+      operationId: knowledge_documents_list
+      description: Only effective published revisions visible to the active employee
+        are returned.
+      parameters:
+      - in: query
+        name: current_revision__language
+        schema:
+          type: string
+      - in: query
+        name: current_revision__topic
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - Knowledge
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDocumentReadList'
+          description: ''
+  /api/v1/knowledge/documents/{id}/:
+    get:
+      operationId: knowledge_documents_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentRead'
+          description: ''
+  /api/v1/knowledge/gaps/:
+    get:
+      operationId: knowledge_gaps_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - open
+          - resolved
+        description: |-
+          * `open` - Open
+          * `resolved` - Resolved
+      tags:
+      - Knowledge gaps
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGapCaseList'
+          description: ''
+    post:
+      operationId: knowledge_gaps_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      tags:
+      - Knowledge gaps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EscalationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EscalationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EscalationRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GapCase'
+          description: ''
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GapCase'
+          description: ''
+  /api/v1/knowledge/gaps/{id}/:
+    get:
+      operationId: knowledge_gaps_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge gaps
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GapCase'
+          description: ''
+  /api/v1/knowledge/gaps/{id}/resolve/:
+    post:
+      operationId: knowledge_gaps_resolve_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge gaps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GapResolutionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GapResolutionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GapResolutionRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GapCase'
           description: ''
   /api/v1/legal-entities/:
     get:
@@ -760,8 +2555,367 @@ paths:
               schema:
                 $ref: '#/components/schemas/LeaveProjection'
           description: ''
+  /api/v1/workbench/:
+    get:
+      operationId: workbench_retrieve
+      parameters:
+      - in: query
+        name: preview_limit
+        schema:
+          type: integer
+          maximum: 20
+          minimum: 1
+          default: 5
+      tags:
+      - workbench
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workbench'
+          description: ''
 components:
   schemas:
+    AcademyVersionCommandRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+      required:
+      - expected_version
+    Answer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        client_message_id:
+          type: string
+          format: uuid
+        question:
+          type: string
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        mode:
+          $ref: '#/components/schemas/ModeEnum'
+        answer_strategy:
+          $ref: '#/components/schemas/AnswerStrategyEnum'
+        reason:
+          type: string
+        message:
+          type: string
+        claims:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnswerClaim'
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Citation'
+        evidence_status:
+          $ref: '#/components/schemas/EvidenceStatusEnum'
+        provider:
+          type: string
+        model:
+          type: string
+        case_id:
+          type: string
+          format: uuid
+          nullable: true
+        allowed_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnswerAllowedActionsEnum'
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - allowed_actions
+      - answer_strategy
+      - case_id
+      - citations
+      - claims
+      - client_message_id
+      - created_at
+      - evidence_status
+      - id
+      - language
+      - message
+      - mode
+      - model
+      - provider
+      - question
+      - reason
+    AnswerAllowedActionsEnum:
+      enum:
+      - ask_again
+      - escalate_to_hr
+      - open_hr_case
+      type: string
+      description: |-
+        * `ask_again` - ask_again
+        * `escalate_to_hr` - escalate_to_hr
+        * `open_hr_case` - open_hr_case
+    AnswerClaim:
+      type: object
+      properties:
+        text:
+          type: string
+        supports:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimSupport'
+      required:
+      - supports
+      - text
+    AnswerStrategyEnum:
+      enum:
+      - source_bound_selection
+      - ranked_excerpts
+      - refusal
+      - unavailable
+      type: string
+      description: |-
+        * `source_bound_selection` - source_bound_selection
+        * `ranked_excerpts` - ranked_excerpts
+        * `refusal` - refusal
+        * `unavailable` - unavailable
+    AssignmentRequest:
+      type: object
+      properties:
+        employee:
+          type: string
+          format: uuid
+        course_version:
+          type: string
+          format: uuid
+        required:
+          type: boolean
+          default: true
+        due_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - course_version
+      - employee
+    AttemptCommandRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuizAnswerRequest'
+      required:
+      - answers
+      - expected_version
+    AttemptDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        number:
+          type: integer
+          readOnly: true
+        correct_count:
+          type: integer
+          readOnly: true
+        question_count:
+          type: integer
+          readOnly: true
+        score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          readOnly: true
+        passing_percent:
+          type: integer
+          readOnly: true
+        passed:
+          type: boolean
+          readOnly: true
+        material_completed:
+          type: boolean
+          readOnly: true
+        submitted_at:
+          type: string
+          format: date-time
+          readOnly: true
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuizAnswer'
+          readOnly: true
+      required:
+      - answers
+      - correct_count
+      - id
+      - material_completed
+      - number
+      - passed
+      - passing_percent
+      - question_count
+      - score
+      - submitted_at
+    AttemptResult:
+      type: object
+      properties:
+        attempt:
+          $ref: '#/components/schemas/AttemptDetail'
+        enrollment:
+          $ref: '#/components/schemas/EnrollmentDetail'
+      required:
+      - attempt
+      - enrollment
+    AttemptSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        number:
+          type: integer
+          readOnly: true
+        correct_count:
+          type: integer
+          readOnly: true
+        question_count:
+          type: integer
+          readOnly: true
+        score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          readOnly: true
+        passing_percent:
+          type: integer
+          readOnly: true
+        passed:
+          type: boolean
+          readOnly: true
+        material_completed:
+          type: boolean
+          readOnly: true
+        submitted_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - correct_count
+      - id
+      - material_completed
+      - number
+      - passed
+      - passing_percent
+      - question_count
+      - score
+      - submitted_at
+    AudienceEnum:
+      enum:
+      - all
+      - employee
+      - manager
+      - hr
+      type: string
+      description: |-
+        * `all` - All employees
+        * `employee` - Employees
+        * `manager` - Managers
+        * `hr` - HR
+    AuthorQuestion:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        prompt:
+          type: string
+          maxLength: 2000
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Option'
+        correct_option_id:
+          type: string
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+        explanation:
+          type: string
+          maxLength: 3000
+      required:
+      - correct_option_id
+      - explanation
+      - id
+      - options
+      - prompt
+    AuthorQuestionRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        prompt:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionRequest'
+        correct_option_id:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+        explanation:
+          type: string
+          minLength: 1
+          maxLength: 3000
+      required:
+      - correct_option_id
+      - explanation
+      - id
+      - options
+      - prompt
+    BalanceReversal:
+      type: object
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 5
+      required:
+      - reason
+      - request_id
+    BalanceReversalRequest:
+      type: object
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        reason:
+          type: string
+          minLength: 5
+          maxLength: 500
+      required:
+      - reason
+      - request_id
     CSRF:
       type: object
       properties:
@@ -769,6 +2923,533 @@ components:
           type: string
       required:
       - csrf_token
+    CatalogCourse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        availability:
+          allOf:
+          - $ref: '#/components/schemas/PublicationStateEnum'
+          readOnly: true
+        published_version:
+          allOf:
+          - $ref: '#/components/schemas/CourseVersionSummary'
+          readOnly: true
+      required:
+      - availability
+      - id
+      - published_version
+      - slug
+    CategoryEnum:
+      enum:
+      - hr
+      - logistics
+      - communication
+      - information_security
+      - team
+      - knowledge
+      type: string
+      description: |-
+        * `hr` - Кадровые действия
+        * `logistics` - Логистические данные
+        * `communication` - Общение
+        * `information_security` - Доступ и информация
+        * `team` - Руководитель и HR
+        * `knowledge` - Регламенты и знания
+    Citation:
+      type: object
+      properties:
+        chunk_id:
+          type: string
+          format: uuid
+        document_id:
+          type: string
+          format: uuid
+        revision_id:
+          type: string
+          format: uuid
+        revision_number:
+          type: integer
+        title:
+          type: string
+        heading:
+          type: string
+        locator:
+          type: string
+        text:
+          type: string
+        url:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+        effective_from:
+          type: string
+          format: date
+        effective_until:
+          type: string
+          format: date
+          nullable: true
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        is_synthetic:
+          type: boolean
+        is_current:
+          type: boolean
+        content_hash:
+          type: string
+      required:
+      - chunk_id
+      - content_hash
+      - document_id
+      - effective_from
+      - effective_until
+      - heading
+      - is_current
+      - is_synthetic
+      - language
+      - locator
+      - published_at
+      - revision_id
+      - revision_number
+      - text
+      - title
+      - url
+    ClaimSupport:
+      type: object
+      properties:
+        chunk_id:
+          type: string
+          format: uuid
+        quote:
+          type: string
+      required:
+      - chunk_id
+      - quote
+    CompletionStateEnum:
+      enum:
+      - not_started
+      - in_progress
+      - completed
+      type: string
+      description: |-
+        * `not_started` - not_started
+        * `in_progress` - in_progress
+        * `completed` - completed
+    CourseAdmin:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        title:
+          type: string
+          readOnly: true
+        legal_entity:
+          type: string
+          format: uuid
+          readOnly: true
+        owner:
+          type: string
+          format: uuid
+          readOnly: true
+        availability:
+          allOf:
+          - $ref: '#/components/schemas/PublicationStateEnum'
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+        published_version:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        draft:
+          allOf:
+          - $ref: '#/components/schemas/CourseDraft'
+          readOnly: true
+      required:
+      - availability
+      - created_at
+      - draft
+      - id
+      - legal_entity
+      - owner
+      - published_version
+      - slug
+      - title
+      - updated_at
+      - version
+    CourseAdminSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        title:
+          type: string
+          readOnly: true
+        legal_entity:
+          type: string
+          format: uuid
+          readOnly: true
+        owner:
+          type: string
+          format: uuid
+          readOnly: true
+        availability:
+          allOf:
+          - $ref: '#/components/schemas/PublicationStateEnum'
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+        published_version:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - availability
+      - created_at
+      - id
+      - legal_entity
+      - owner
+      - published_version
+      - slug
+      - title
+      - updated_at
+      - version
+    CourseCreateRequest:
+      type: object
+      properties:
+        slug:
+          type: string
+          minLength: 1
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        legal_entity:
+          type: string
+          format: uuid
+        draft:
+          $ref: '#/components/schemas/CourseDraftRequest'
+      required:
+      - draft
+      - slug
+    CourseDraft:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        title_kk:
+          type: string
+          default: ''
+          maxLength: 200
+        summary:
+          type: string
+          maxLength: 2000
+        summary_kk:
+          type: string
+          default: ''
+          maxLength: 2000
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        content_language:
+          allOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          default: ru
+        lessons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lesson'
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorQuestion'
+        passing_percent:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 80
+        max_attempts:
+          type: integer
+          maximum: 100
+          minimum: 1
+          nullable: true
+          default: 3
+        estimated_minutes:
+          type: integer
+          maximum: 600
+          minimum: 1
+          nullable: true
+      required:
+      - category
+      - summary
+      - title
+    CourseDraftRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        title_kk:
+          type: string
+          default: ''
+          maxLength: 200
+        summary:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        summary_kk:
+          type: string
+          default: ''
+          maxLength: 2000
+        category:
+          $ref: '#/components/schemas/CategoryEnum'
+        content_language:
+          allOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          default: ru
+        lessons:
+          type: array
+          items:
+            $ref: '#/components/schemas/LessonRequest'
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorQuestionRequest'
+        passing_percent:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 80
+        max_attempts:
+          type: integer
+          maximum: 100
+          minimum: 1
+          nullable: true
+          default: 3
+        estimated_minutes:
+          type: integer
+          maximum: 600
+          minimum: 1
+          nullable: true
+      required:
+      - category
+      - summary
+      - title
+    CourseEditRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        draft:
+          $ref: '#/components/schemas/CourseDraftRequest'
+      required:
+      - draft
+      - expected_version
+    CourseVersionAuthor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        course:
+          type: string
+          format: uuid
+          readOnly: true
+        course_slug:
+          type: string
+          readOnly: true
+        number:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        title_kk:
+          type: string
+          readOnly: true
+        summary:
+          type: string
+          readOnly: true
+        summary_kk:
+          type: string
+          readOnly: true
+        category:
+          type: string
+          readOnly: true
+        content_language:
+          allOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          readOnly: true
+        passing_percent:
+          type: integer
+          readOnly: true
+        max_attempts:
+          type: integer
+          readOnly: true
+          nullable: true
+        estimated_minutes:
+          type: integer
+          readOnly: true
+          nullable: true
+        lesson_count:
+          type: integer
+          readOnly: true
+        question_count:
+          type: integer
+          readOnly: true
+        published_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lessons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lesson'
+          readOnly: true
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorQuestion'
+          readOnly: true
+        published_by:
+          type: string
+          format: uuid
+          readOnly: true
+      required:
+      - category
+      - content_language
+      - course
+      - course_slug
+      - estimated_minutes
+      - id
+      - lesson_count
+      - lessons
+      - max_attempts
+      - number
+      - passing_percent
+      - published_at
+      - published_by
+      - question_count
+      - questions
+      - summary
+      - summary_kk
+      - title
+      - title_kk
+    CourseVersionSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        course:
+          type: string
+          format: uuid
+          readOnly: true
+        course_slug:
+          type: string
+          readOnly: true
+        number:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        title_kk:
+          type: string
+          readOnly: true
+        summary:
+          type: string
+          readOnly: true
+        summary_kk:
+          type: string
+          readOnly: true
+        category:
+          type: string
+          readOnly: true
+        content_language:
+          allOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          readOnly: true
+        passing_percent:
+          type: integer
+          readOnly: true
+        max_attempts:
+          type: integer
+          readOnly: true
+          nullable: true
+        estimated_minutes:
+          type: integer
+          readOnly: true
+          nullable: true
+        lesson_count:
+          type: integer
+          readOnly: true
+        question_count:
+          type: integer
+          readOnly: true
+        published_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category
+      - content_language
+      - course
+      - course_slug
+      - estimated_minutes
+      - id
+      - lesson_count
+      - max_attempts
+      - number
+      - passing_percent
+      - published_at
+      - question_count
+      - summary
+      - summary_kk
+      - title
+      - title_kk
     CurrencyEnum:
       enum:
       - KZT
@@ -786,6 +3467,81 @@ components:
           maxLength: 2000
       required:
       - expected_version
+    DeliveryAttempt:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        number:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lease_expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+        result:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryAttemptResult'
+          readOnly: true
+          nullable: true
+      required:
+      - created_at
+      - id
+      - lease_expires_at
+      - number
+      - result
+    DeliveryAttemptResult:
+      type: object
+      properties:
+        outcome:
+          allOf:
+          - $ref: '#/components/schemas/OutcomeEnum'
+          readOnly: true
+        failure_code:
+          type: string
+          readOnly: true
+        error_message:
+          type: string
+          readOnly: true
+        next_attempt_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        receipt:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - error_message
+      - failure_code
+      - next_attempt_at
+      - outcome
+      - receipt
+    DeliveryStatusEnum:
+      enum:
+      - pending
+      - processing
+      - processed
+      - failed
+      type: string
+      description: |-
+        * `pending` - pending
+        * `processing` - processing
+        * `processed` - processed
+        * `failed` - failed
     Department:
       type: object
       properties:
@@ -807,6 +3563,192 @@ components:
       - id
       - legal_entity
       - name
+    DocumentAdmin:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        title:
+          type: string
+          readOnly: true
+        summary:
+          type: string
+          readOnly: true
+        language:
+          allOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          readOnly: true
+        topic:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        owner:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        department:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        audience:
+          allOf:
+          - $ref: '#/components/schemas/AudienceEnum'
+          readOnly: true
+        draft_sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+          readOnly: true
+        effective_from:
+          type: string
+          format: date
+          readOnly: true
+        effective_until:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        is_synthetic:
+          type: boolean
+          readOnly: true
+        state:
+          allOf:
+          - $ref: '#/components/schemas/PublicationStateEnum'
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+        current_revision:
+          allOf:
+          - $ref: '#/components/schemas/Revision'
+          readOnly: true
+        has_unpublished_changes:
+          type: boolean
+          readOnly: true
+        allowed_actions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - allowed_actions
+      - audience
+      - created_at
+      - current_revision
+      - department
+      - draft_sections
+      - effective_from
+      - effective_until
+      - has_unpublished_changes
+      - id
+      - is_synthetic
+      - language
+      - legal_entity
+      - owner
+      - slug
+      - state
+      - summary
+      - title
+      - topic
+      - updated_at
+      - version
+    DocumentCreateRequest:
+      type: object
+      properties:
+        slug:
+          type: string
+          minLength: 1
+          maxLength: 100
+          pattern: ^[-a-zA-Z0-9_]+$
+        title:
+          type: string
+          minLength: 1
+          maxLength: 240
+        summary:
+          type: string
+          default: ''
+          maxLength: 4000
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        topic:
+          type: string
+          minLength: 1
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        owner:
+          type: string
+          format: uuid
+        legal_entity:
+          type: string
+          format: uuid
+          nullable: true
+        department:
+          type: string
+          format: uuid
+          nullable: true
+        audience:
+          allOf:
+          - $ref: '#/components/schemas/AudienceEnum'
+          default: all
+        draft_sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/SectionRequest'
+        effective_from:
+          type: string
+          format: date
+        effective_until:
+          type: string
+          format: date
+          nullable: true
+        is_synthetic:
+          type: boolean
+          default: true
+      required:
+      - draft_sections
+      - language
+      - slug
+      - title
+      - topic
+    DocumentRead:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        revision:
+          allOf:
+          - $ref: '#/components/schemas/Revision'
+          readOnly: true
+      required:
+      - id
+      - revision
+      - slug
     Employee:
       type: object
       properties:
@@ -858,7 +3800,7 @@ components:
           readOnly: true
         locale:
           allOf:
-          - $ref: '#/components/schemas/LocaleEnum'
+          - $ref: '#/components/schemas/LanguageEnum'
           readOnly: true
         is_active:
           type: boolean
@@ -888,6 +3830,804 @@ components:
       - source_revision
       - synced_at
       - user
+    EmployeeSnapshot:
+      type: object
+      properties:
+        external_id:
+          type: string
+          maxLength: 80
+        full_name:
+          type: string
+          maxLength: 200
+        position:
+          type: string
+          maxLength: 200
+        department_code:
+          type: string
+          maxLength: 50
+        manager_external_id:
+          type: string
+          nullable: true
+          maxLength: 80
+        hired_on:
+          type: string
+          format: date
+        leave_balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,2})?$
+        balance_as_of:
+          type: string
+          format: date
+        locale:
+          $ref: '#/components/schemas/LanguageEnum'
+        is_active:
+          type: boolean
+        incorporated_request_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 1000
+        balance_reversals:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceReversal'
+      required:
+      - balance_as_of
+      - department_code
+      - external_id
+      - full_name
+      - hired_on
+      - incorporated_request_ids
+      - is_active
+      - leave_balance
+      - locale
+      - manager_external_id
+      - position
+    EmployeeSnapshotRequest:
+      type: object
+      properties:
+        external_id:
+          type: string
+          minLength: 1
+          maxLength: 80
+        full_name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        position:
+          type: string
+          minLength: 1
+          maxLength: 200
+        department_code:
+          type: string
+          minLength: 1
+          maxLength: 50
+        manager_external_id:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 80
+        hired_on:
+          type: string
+          format: date
+        leave_balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,2})?$
+        balance_as_of:
+          type: string
+          format: date
+        locale:
+          $ref: '#/components/schemas/LanguageEnum'
+        is_active:
+          type: boolean
+        incorporated_request_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 1000
+        balance_reversals:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceReversalRequest'
+      required:
+      - balance_as_of
+      - department_code
+      - external_id
+      - full_name
+      - hired_on
+      - incorporated_request_ids
+      - is_active
+      - leave_balance
+      - locale
+      - manager_external_id
+      - position
+    Enrollment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        employee:
+          type: string
+          format: uuid
+          readOnly: true
+        employee_name:
+          type: string
+          readOnly: true
+        course_version:
+          allOf:
+          - $ref: '#/components/schemas/CourseVersionSummary'
+          readOnly: true
+        assigned_by:
+          type: string
+          format: uuid
+          readOnly: true
+        required:
+          type: boolean
+          readOnly: true
+        due_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        version:
+          type: integer
+          readOnly: true
+        availability:
+          allOf:
+          - $ref: '#/components/schemas/PublicationStateEnum'
+          readOnly: true
+        completion_state:
+          allOf:
+          - $ref: '#/components/schemas/CompletionStateEnum'
+          readOnly: true
+        overdue:
+          type: boolean
+          readOnly: true
+        material_progress:
+          allOf:
+          - $ref: '#/components/schemas/MaterialProgress'
+          readOnly: true
+        last_attempt:
+          allOf:
+          - $ref: '#/components/schemas/AttemptSummary'
+          nullable: true
+          readOnly: true
+        attempt_count:
+          type: integer
+          readOnly: true
+        remaining_attempts:
+          type: integer
+          nullable: true
+          readOnly: true
+        has_failed_attempt:
+          type: boolean
+          readOnly: true
+        allowed_actions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - allowed_actions
+      - assigned_by
+      - attempt_count
+      - availability
+      - completed_at
+      - completion_state
+      - course_version
+      - created_at
+      - due_at
+      - employee
+      - employee_name
+      - has_failed_attempt
+      - id
+      - last_attempt
+      - material_progress
+      - overdue
+      - remaining_attempts
+      - required
+      - started_at
+      - updated_at
+      - version
+    EnrollmentDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        employee:
+          type: string
+          format: uuid
+          readOnly: true
+        employee_name:
+          type: string
+          readOnly: true
+        course_version:
+          allOf:
+          - $ref: '#/components/schemas/CourseVersionSummary'
+          readOnly: true
+        assigned_by:
+          type: string
+          format: uuid
+          readOnly: true
+        required:
+          type: boolean
+          readOnly: true
+        due_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        version:
+          type: integer
+          readOnly: true
+        availability:
+          allOf:
+          - $ref: '#/components/schemas/PublicationStateEnum'
+          readOnly: true
+        completion_state:
+          allOf:
+          - $ref: '#/components/schemas/CompletionStateEnum'
+          readOnly: true
+        overdue:
+          type: boolean
+          readOnly: true
+        material_progress:
+          allOf:
+          - $ref: '#/components/schemas/MaterialProgress'
+          readOnly: true
+        last_attempt:
+          allOf:
+          - $ref: '#/components/schemas/AttemptSummary'
+          nullable: true
+          readOnly: true
+        attempt_count:
+          type: integer
+          readOnly: true
+        remaining_attempts:
+          type: integer
+          nullable: true
+          readOnly: true
+        has_failed_attempt:
+          type: boolean
+          readOnly: true
+        allowed_actions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lesson_completions:
+          type: array
+          items:
+            $ref: '#/components/schemas/LessonCompletion'
+          readOnly: true
+        attempts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttemptSummary'
+          readOnly: true
+      required:
+      - allowed_actions
+      - assigned_by
+      - attempt_count
+      - attempts
+      - availability
+      - completed_at
+      - completion_state
+      - course_version
+      - created_at
+      - due_at
+      - employee
+      - employee_name
+      - has_failed_attempt
+      - id
+      - last_attempt
+      - lesson_completions
+      - material_progress
+      - overdue
+      - remaining_attempts
+      - required
+      - started_at
+      - updated_at
+      - version
+    EnrollmentSummary:
+      type: object
+      properties:
+        scope:
+          type: string
+        computed_at:
+          type: string
+          format: date-time
+        total:
+          type: integer
+        completed:
+          type: integer
+        in_progress:
+          type: integer
+        not_started:
+          type: integer
+        overdue:
+          type: integer
+        required_outstanding:
+          type: integer
+        has_failed_attempt:
+          type: integer
+        due_next_seven_days:
+          type: integer
+        completion_percent:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+      required:
+      - completed
+      - completion_percent
+      - computed_at
+      - due_next_seven_days
+      - has_failed_attempt
+      - in_progress
+      - not_started
+      - overdue
+      - required_outstanding
+      - scope
+      - total
+    EntitySyncState:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity_name:
+          type: string
+          readOnly: true
+        source:
+          type: string
+          readOnly: true
+        last_revision:
+          type: integer
+          readOnly: true
+        last_captured_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        last_accepted_batch:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - id
+      - last_accepted_batch
+      - last_captured_at
+      - last_revision
+      - legal_entity
+      - legal_entity_name
+      - source
+      - updated_at
+    EscalationRequest:
+      type: object
+      properties:
+        answer_id:
+          type: string
+          format: uuid
+        details:
+          type: string
+          default: ''
+          maxLength: 4000
+      required:
+      - answer_id
+    EvidenceStatusEnum:
+      enum:
+      - current
+      - superseded
+      - unavailable
+      - not_applicable
+      type: string
+      description: |-
+        * `current` - current
+        * `superseded` - superseded
+        * `unavailable` - unavailable
+        * `not_applicable` - not_applicable
+    Export:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        request_id:
+          type: string
+          format: uuid
+          readOnly: true
+        employee_name:
+          type: string
+          readOnly: true
+        topic:
+          type: string
+          readOnly: true
+        delivery_status:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryStatusEnum'
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+        attempt_count:
+          type: integer
+          readOnly: true
+        cycle_attempt_count:
+          type: integer
+          readOnly: true
+        available_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lease_expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        last_error:
+          type: string
+          readOnly: true
+        failure_code:
+          type: string
+          readOnly: true
+        processed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        export_receipt:
+          allOf:
+          - $ref: '#/components/schemas/ExportReceipt'
+          readOnly: true
+          nullable: true
+        allowed_actions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - allowed_actions
+      - attempt_count
+      - available_at
+      - created_at
+      - cycle_attempt_count
+      - delivery_status
+      - employee_name
+      - export_receipt
+      - failure_code
+      - id
+      - last_error
+      - lease_expires_at
+      - processed_at
+      - request_id
+      - topic
+      - updated_at
+      - version
+    ExportCommandRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+      required:
+      - expected_version
+    ExportDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        request_id:
+          type: string
+          format: uuid
+          readOnly: true
+        employee_name:
+          type: string
+          readOnly: true
+        topic:
+          type: string
+          readOnly: true
+        delivery_status:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryStatusEnum'
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+        attempt_count:
+          type: integer
+          readOnly: true
+        cycle_attempt_count:
+          type: integer
+          readOnly: true
+        available_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lease_expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        last_error:
+          type: string
+          readOnly: true
+        failure_code:
+          type: string
+          readOnly: true
+        processed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        export_receipt:
+          allOf:
+          - $ref: '#/components/schemas/ExportReceipt'
+          readOnly: true
+          nullable: true
+        allowed_actions:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        delivery_attempts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryAttempt'
+          readOnly: true
+      required:
+      - allowed_actions
+      - attempt_count
+      - available_at
+      - created_at
+      - cycle_attempt_count
+      - delivery_attempts
+      - delivery_status
+      - employee_name
+      - export_receipt
+      - failure_code
+      - id
+      - last_error
+      - lease_expires_at
+      - processed_at
+      - request_id
+      - topic
+      - updated_at
+      - version
+    ExportReceipt:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        provider:
+          type: string
+          readOnly: true
+        document_id:
+          type: string
+          readOnly: true
+        request_revision:
+          type: string
+          format: uuid
+          readOnly: true
+        idempotency_key:
+          type: string
+          readOnly: true
+        payload_hash:
+          type: string
+          readOnly: true
+        accepted_at:
+          type: string
+          format: date-time
+          readOnly: true
+        acceptance_meaning:
+          type: string
+          readOnly: true
+          default: document_received_only
+      required:
+      - acceptance_meaning
+      - accepted_at
+      - document_id
+      - id
+      - idempotency_key
+      - payload_hash
+      - provider
+      - request_revision
+    GapCase:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        employee:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity:
+          type: string
+          format: uuid
+          readOnly: true
+        answer:
+          type: string
+          format: uuid
+          readOnly: true
+        question:
+          type: string
+          readOnly: true
+        details:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/KnowledgeGapStatusEnum'
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+        response:
+          type: string
+          readOnly: true
+        resolved_by:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        resolved_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        allowed_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/GapCaseAllowedActionsEnum'
+          readOnly: true
+      required:
+      - allowed_actions
+      - answer
+      - created_at
+      - details
+      - employee
+      - id
+      - legal_entity
+      - question
+      - resolved_at
+      - resolved_by
+      - response
+      - status
+      - updated_at
+      - version
+    GapCaseAllowedActionsEnum:
+      enum:
+      - resolve
+      type: string
+      description: '* `resolve` - resolve'
+    GapPreview:
+      type: object
+      properties:
+        count:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GapCase'
+      required:
+      - count
+      - results
+    GapResolutionRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        response:
+          type: string
+          minLength: 10
+          maxLength: 8000
+      required:
+      - expected_version
+      - response
+    HRRequestStatusEnum:
+      enum:
+      - draft
+      - pending_manager
+      - pending_hr
+      - approved
+      - rejected
+      - returned
+      - cancelled
+      type: string
+      description: |-
+        * `draft` - Draft
+        * `pending_manager` - Pending manager
+        * `pending_hr` - Pending HR
+        * `approved` - Approved
+        * `rejected` - Rejected
+        * `returned` - Returned for changes
+        * `cancelled` - Cancelled
     Health:
       type: object
       properties:
@@ -895,6 +4635,98 @@ components:
           type: string
       required:
       - status
+    ImportAccepted:
+      type: object
+      properties:
+        batch:
+          $ref: '#/components/schemas/SourceImportBatch'
+        source_replayed:
+          type: boolean
+      required:
+      - batch
+      - source_replayed
+    ImportRejected:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        field_errors:
+          type: object
+          additionalProperties: {}
+        request_id:
+          type: string
+          nullable: true
+        integration_audit_id:
+          type: string
+          format: uuid
+      required:
+      - code
+      - field_errors
+      - integration_audit_id
+      - message
+      - request_id
+    ImportSnapshot:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/SourceEnum'
+        legal_entity_id:
+          type: string
+          format: uuid
+        source_revision:
+          type: integer
+          maximum: 9007199254740991
+          minimum: 1
+          format: int64
+        captured_at:
+          type: string
+          format: date-time
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeSnapshot'
+      required:
+      - captured_at
+      - employees
+      - legal_entity_id
+      - source
+      - source_revision
+    ImportSnapshotRequest:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/SourceEnum'
+        legal_entity_id:
+          type: string
+          format: uuid
+        source_revision:
+          type: integer
+          maximum: 9007199254740991
+          minimum: 1
+          format: int64
+        captured_at:
+          type: string
+          format: date-time
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeSnapshotRequest'
+      required:
+      - captured_at
+      - employees
+      - legal_entity_id
+      - source
+      - source_revision
+    ImportStatusEnum:
+      enum:
+      - accepted
+      - rejected
+      type: string
+      description: |-
+        * `accepted` - accepted
+        * `rejected` - rejected
     KindEnum:
       enum:
       - leave
@@ -903,6 +4735,136 @@ components:
       description: |-
         * `leave` - Leave
         * `advance` - Salary advance
+    KnowledgeCasePurposeEnum:
+      enum:
+      - track_own
+      - hr_response
+      type: string
+      description: |-
+        * `track_own` - track_own
+        * `hr_response` - hr_response
+    KnowledgeGapStatusEnum:
+      enum:
+      - open
+      - resolved
+      type: string
+      description: |-
+        * `open` - Open
+        * `resolved` - Resolved
+    KnowledgeVersionCommandRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+      required:
+      - expected_version
+    LanguageEnum:
+      enum:
+      - ru
+      - kk
+      type: string
+      description: |-
+        * `ru` - Русский
+        * `kk` - Қазақша
+    LearningContent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        course:
+          type: string
+          format: uuid
+          readOnly: true
+        course_slug:
+          type: string
+          readOnly: true
+        number:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        title_kk:
+          type: string
+          readOnly: true
+        summary:
+          type: string
+          readOnly: true
+        summary_kk:
+          type: string
+          readOnly: true
+        category:
+          type: string
+          readOnly: true
+        content_language:
+          allOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          readOnly: true
+        passing_percent:
+          type: integer
+          readOnly: true
+        max_attempts:
+          type: integer
+          readOnly: true
+          nullable: true
+        estimated_minutes:
+          type: integer
+          readOnly: true
+          nullable: true
+        lesson_count:
+          type: integer
+          readOnly: true
+        question_count:
+          type: integer
+          readOnly: true
+        published_at:
+          type: string
+          format: date-time
+          readOnly: true
+        lessons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lesson'
+          readOnly: true
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+          readOnly: true
+      required:
+      - category
+      - content_language
+      - course
+      - course_slug
+      - estimated_minutes
+      - id
+      - lesson_count
+      - lessons
+      - max_attempts
+      - number
+      - passing_percent
+      - published_at
+      - question_count
+      - questions
+      - summary
+      - summary_kk
+      - title
+      - title_kk
+    LearningPreview:
+      type: object
+      properties:
+        count:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Enrollment'
+      required:
+      - count
+      - results
     LeaveProjection:
       type: object
       properties:
@@ -911,6 +4873,10 @@ components:
           format: decimal
           pattern: ^-?\d{0,7}(?:\.\d{0,2})?$
         portal_reserved_days:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,7}(?:\.\d{0,2})?$
+        source_incorporated_days:
           type: string
           format: decimal
           pattern: ^-?\d{0,7}(?:\.\d{0,2})?$
@@ -929,6 +4895,7 @@ components:
       - official_balance
       - portal_reserved_days
       - projected_balance
+      - source_incorporated_days
     LegalEntity:
       type: object
       properties:
@@ -946,14 +4913,76 @@ components:
       - code
       - id
       - name
-    LocaleEnum:
-      enum:
-      - ru
-      - kk
-      type: string
-      description: |-
-        * `ru` - Русский
-        * `kk` - Қазақша
+    Lesson:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        title:
+          type: string
+          maxLength: 200
+        body_markdown:
+          type: string
+          maxLength: 20000
+        required:
+          type: boolean
+          default: true
+      required:
+      - body_markdown
+      - id
+      - title
+    LessonCommandRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        lesson_id:
+          type: string
+          minLength: 1
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - expected_version
+      - lesson_id
+    LessonCompletion:
+      type: object
+      properties:
+        lesson_id:
+          type: string
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - completed_at
+      - lesson_id
+    LessonRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        body_markdown:
+          type: string
+          minLength: 1
+          maxLength: 20000
+        required:
+          type: boolean
+          default: true
+      required:
+      - body_markdown
+      - id
+      - title
     LoginRequest:
       type: object
       properties:
@@ -969,6 +4998,52 @@ components:
       required:
       - password
       - username
+    MaterialProgress:
+      type: object
+      properties:
+        completed_lesson_ids:
+          type: array
+          items:
+            type: string
+        required_total:
+          type: integer
+        required_completed:
+          type: integer
+        percent:
+          type: integer
+      required:
+      - completed_lesson_ids
+      - percent
+      - required_completed
+      - required_total
+    MockFaultRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        transient_failures:
+          type: integer
+          maximum: 10
+          minimum: 0
+          default: 0
+        permanent_failure:
+          type: boolean
+          default: false
+      required:
+      - expected_version
+    ModeEnum:
+      enum:
+      - generated
+      - extractive
+      - insufficient_evidence
+      - provider_unavailable
+      type: string
+      description: |-
+        * `generated` - Model-selected source sentences
+        * `extractive` - Source excerpts
+        * `insufficient_evidence` - No supported answer
+        * `provider_unavailable` - AI provider unavailable
     Notification:
       type: object
       properties:
@@ -1010,6 +5085,161 @@ components:
       - target_id
       - target_type
       - title
+    Option:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+        text:
+          type: string
+          maxLength: 2000
+      required:
+      - id
+      - text
+    OptionRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+        text:
+          type: string
+          minLength: 1
+          maxLength: 2000
+      required:
+      - id
+      - text
+    OutcomeEnum:
+      enum:
+      - accepted
+      - retry_scheduled
+      - failed
+      - lease_expired
+      type: string
+      description: |-
+        * `accepted` - Accepted by the document adapter
+        * `retry_scheduled` - Retry scheduled
+        * `failed` - Operator action required
+        * `lease_expired` - Worker claim expired
+    PaginatedAnswerList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Answer'
+    PaginatedAttemptDetailList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttemptDetail'
+    PaginatedCatalogCourseList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogCourse'
+    PaginatedCourseAdminSummaryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CourseAdminSummary'
+    PaginatedCourseVersionAuthorList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CourseVersionAuthor'
     PaginatedDepartmentList:
       type: object
       required:
@@ -1033,6 +5263,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Department'
+    PaginatedDocumentAdminList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentAdmin'
+    PaginatedDocumentReadList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentRead'
     PaginatedEmployeeList:
       type: object
       required:
@@ -1056,6 +5332,98 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Employee'
+    PaginatedEnrollmentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Enrollment'
+    PaginatedEntitySyncStateList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntitySyncState'
+    PaginatedExportList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Export'
+    PaginatedGapCaseList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GapCase'
     PaginatedLegalEntityList:
       type: object
       required:
@@ -1125,6 +5493,94 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Request'
+    PaginatedRevisionList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Revision'
+    PaginatedSourceImportBatchList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceImportBatch'
+    PatchedDocumentUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 240
+        summary:
+          type: string
+          maxLength: 4000
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        topic:
+          type: string
+          minLength: 1
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        owner:
+          type: string
+          format: uuid
+        department:
+          type: string
+          format: uuid
+          nullable: true
+        audience:
+          $ref: '#/components/schemas/AudienceEnum'
+        draft_sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/SectionRequest'
+        effective_from:
+          type: string
+          format: date
+        effective_until:
+          type: string
+          format: date
+          nullable: true
+        is_synthetic:
+          type: boolean
+        expected_version:
+          type: integer
+          minimum: 1
     PatchedRequestEditRequest:
       type: object
       properties:
@@ -1149,6 +5605,103 @@ components:
         requested_payment_date:
           type: string
           format: date
+    ProviderError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        field_errors:
+          type: object
+          additionalProperties: {}
+        request_id:
+          type: string
+          format: uuid
+          nullable: true
+        answer:
+          $ref: '#/components/schemas/Answer'
+      required:
+      - answer
+      - code
+      - field_errors
+      - message
+      - request_id
+    PublicationStateEnum:
+      enum:
+      - draft
+      - published
+      - archived
+      type: string
+      description: |-
+        * `draft` - Draft
+        * `published` - Published
+        * `archived` - Archived
+    Question:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        prompt:
+          type: string
+          maxLength: 2000
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Option'
+      required:
+      - id
+      - options
+      - prompt
+    QuestionRequest:
+      type: object
+      properties:
+        question:
+          type: string
+          minLength: 8
+          maxLength: 2000
+        language:
+          allOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          default: ru
+        client_message_id:
+          type: string
+          format: uuid
+      required:
+      - client_message_id
+      - question
+    QuizAnswer:
+      type: object
+      properties:
+        question_id:
+          type: string
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        selected_option_id:
+          type: string
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - question_id
+      - selected_option_id
+    QuizAnswerRequest:
+      type: object
+      properties:
+        question_id:
+          type: string
+          minLength: 1
+          maxLength: 80
+          pattern: ^[-a-zA-Z0-9_]+$
+        selected_option_id:
+          type: string
+          minLength: 1
+          maxLength: 40
+          pattern: ^[-a-zA-Z0-9_]+$
+      required:
+      - question_id
+      - selected_option_id
     Request:
       type: object
       properties:
@@ -1169,7 +5722,7 @@ components:
           readOnly: true
         status:
           allOf:
-          - $ref: '#/components/schemas/StatusEnum'
+          - $ref: '#/components/schemas/HRRequestStatusEnum'
           readOnly: true
         version:
           type: integer
@@ -1303,7 +5856,7 @@ components:
           readOnly: true
         status:
           allOf:
-          - $ref: '#/components/schemas/StatusEnum'
+          - $ref: '#/components/schemas/HRRequestStatusEnum'
           readOnly: true
         version:
           type: integer
@@ -1446,6 +5999,18 @@ components:
       - id
       - to_status
       - version
+    RequestPreview:
+      type: object
+      properties:
+        count:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Request'
+      required:
+      - count
+      - results
     RequestRevision:
       type: object
       properties:
@@ -1472,6 +6037,92 @@ components:
       - id
       - number
       - payload
+    Revision:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        number:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        summary:
+          type: string
+          readOnly: true
+        language:
+          type: string
+          readOnly: true
+        topic:
+          type: string
+          readOnly: true
+        owner:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        department:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        audience:
+          allOf:
+          - $ref: '#/components/schemas/AudienceEnum'
+          readOnly: true
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+          readOnly: true
+        effective_from:
+          type: string
+          format: date
+          readOnly: true
+        effective_until:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        is_synthetic:
+          type: boolean
+          readOnly: true
+        content_hash:
+          type: string
+          readOnly: true
+        published_at:
+          type: string
+          format: date-time
+          readOnly: true
+        published_by:
+          type: string
+          format: uuid
+          readOnly: true
+      required:
+      - audience
+      - content_hash
+      - department
+      - effective_from
+      - effective_until
+      - id
+      - is_synthetic
+      - language
+      - legal_entity
+      - number
+      - owner
+      - published_at
+      - published_by
+      - sections
+      - summary
+      - title
+      - topic
     RoleEnum:
       enum:
       - employee
@@ -1482,6 +6133,33 @@ components:
         * `employee` - Employee
         * `manager` - Manager
         * `hr` - HR
+    Section:
+      type: object
+      properties:
+        heading:
+          type: string
+          maxLength: 240
+        text:
+          type: string
+          maxLength: 12000
+          minLength: 20
+      required:
+      - heading
+      - text
+    SectionRequest:
+      type: object
+      properties:
+        heading:
+          type: string
+          minLength: 1
+          maxLength: 240
+        text:
+          type: string
+          minLength: 20
+          maxLength: 12000
+      required:
+      - heading
+      - text
     Session:
       type: object
       properties:
@@ -1497,24 +6175,148 @@ components:
       - csrf_token
       - employee
       - user
-    StatusEnum:
+    SourceEnum:
       enum:
-      - draft
-      - pending_manager
-      - pending_hr
-      - approved
-      - rejected
-      - returned
-      - cancelled
+      - mock_1c
       type: string
-      description: |-
-        * `draft` - Draft
-        * `pending_manager` - Pending manager
-        * `pending_hr` - Pending HR
-        * `approved` - Approved
-        * `rejected` - Rejected
-        * `returned` - Returned for changes
-        * `cancelled` - Cancelled
+      description: '* `mock_1c` - mock_1c'
+    SourceImportBatch:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity_name:
+          type: string
+          readOnly: true
+        source:
+          type: string
+          readOnly: true
+          default: mock_1c
+        source_revision:
+          type: integer
+          readOnly: true
+        captured_at:
+          type: string
+          format: date-time
+          readOnly: true
+        payload_hash:
+          type: string
+          readOnly: true
+        employee_count:
+          type: integer
+          readOnly: true
+        import_status:
+          allOf:
+          - $ref: '#/components/schemas/ImportStatusEnum'
+          readOnly: true
+        error_code:
+          type: string
+          readOnly: true
+        error_message:
+          type: string
+          readOnly: true
+        error_fields:
+          readOnly: true
+        actor:
+          type: string
+          format: uuid
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - actor
+      - captured_at
+      - created_at
+      - employee_count
+      - error_code
+      - error_fields
+      - error_message
+      - id
+      - import_status
+      - legal_entity
+      - legal_entity_name
+      - payload_hash
+      - source
+      - source_revision
+    SourceImportDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity:
+          type: string
+          format: uuid
+          readOnly: true
+        legal_entity_name:
+          type: string
+          readOnly: true
+        source:
+          type: string
+          readOnly: true
+          default: mock_1c
+        source_revision:
+          type: integer
+          readOnly: true
+        captured_at:
+          type: string
+          format: date-time
+          readOnly: true
+        payload_hash:
+          type: string
+          readOnly: true
+        employee_count:
+          type: integer
+          readOnly: true
+        import_status:
+          allOf:
+          - $ref: '#/components/schemas/ImportStatusEnum'
+          readOnly: true
+        error_code:
+          type: string
+          readOnly: true
+        error_message:
+          type: string
+          readOnly: true
+        error_fields:
+          readOnly: true
+        actor:
+          type: string
+          format: uuid
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        payload:
+          allOf:
+          - $ref: '#/components/schemas/ImportSnapshot'
+          readOnly: true
+      required:
+      - actor
+      - captured_at
+      - created_at
+      - employee_count
+      - error_code
+      - error_fields
+      - error_message
+      - id
+      - import_status
+      - legal_entity
+      - legal_entity_name
+      - payload
+      - payload_hash
+      - source
+      - source_revision
     TransitionRequest:
       type: object
       properties:
@@ -1554,6 +6356,53 @@ components:
       - last_name
       - role
       - username
+    Workbench:
+      type: object
+      properties:
+        computed_at:
+          type: string
+          format: date-time
+        preview_limit:
+          type: integer
+        employee:
+          $ref: '#/components/schemas/Employee'
+        leave:
+          $ref: '#/components/schemas/LeaveProjection'
+        learning_summary:
+          $ref: '#/components/schemas/EnrollmentSummary'
+        returned_requests:
+          $ref: '#/components/schemas/RequestPreview'
+        draft_requests:
+          $ref: '#/components/schemas/RequestPreview'
+        requests_to_review:
+          $ref: '#/components/schemas/RequestPreview'
+        waiting_request_count:
+          type: integer
+        learning_outstanding:
+          $ref: '#/components/schemas/LearningPreview'
+        unavailable_learning_count:
+          type: integer
+        open_knowledge_cases:
+          $ref: '#/components/schemas/GapPreview'
+        knowledge_case_purpose:
+          $ref: '#/components/schemas/KnowledgeCasePurposeEnum'
+        unread_notification_count:
+          type: integer
+      required:
+      - computed_at
+      - draft_requests
+      - employee
+      - knowledge_case_purpose
+      - learning_outstanding
+      - learning_summary
+      - leave
+      - open_knowledge_cases
+      - preview_limit
+      - requests_to_review
+      - returned_requests
+      - unavailable_learning_count
+      - unread_notification_count
+      - waiting_request_count
   securitySchemes:
     cookieAuth:
       type: apiKey

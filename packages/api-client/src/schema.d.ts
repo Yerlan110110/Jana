@@ -4,6 +4,311 @@
  */
 
 export interface paths {
+    "/api/v1/academy/courses/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_courses_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/courses/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_courses_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/enrollments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_enrollments_list"];
+        put?: never;
+        post: operations["academy_enrollments_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/enrollments/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_enrollments_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/enrollments/{id}/attempts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_enrollments_attempts_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/enrollments/{id}/complete-lesson/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["academy_enrollments_complete_lesson_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/enrollments/{id}/learning/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_enrollments_learning_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/enrollments/{id}/start/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["academy_enrollments_start_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/enrollments/{id}/submit-attempt/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["academy_enrollments_submit_attempt_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/enrollments/summary/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_enrollments_summary_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/manage/courses/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_manage_courses_list"];
+        put?: never;
+        post: operations["academy_manage_courses_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/manage/courses/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_manage_courses_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/manage/courses/{id}/archive/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["academy_manage_courses_archive_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/manage/courses/{id}/publish/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["academy_manage_courses_publish_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/manage/courses/{id}/restore/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["academy_manage_courses_restore_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/manage/courses/{id}/revisions/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["academy_manage_courses_revisions_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academy/manage/courses/{id}/save-draft/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["academy_manage_courses_save_draft_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assistant/answers/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["assistant_answers_list"];
+        put?: never;
+        /** @description client_message_id deduplicates the persisted answer. A new id asks again. Extractive mode does not call an LLM. Provider failures return 503 with the persisted answer in the answer field. */
+        post: operations["assistant_answers_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assistant/answers/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["assistant_answers_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/csrf/": {
         parameters: {
             query?: never;
@@ -142,6 +447,327 @@ export interface paths {
         get: operations["health_retrieve"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/exports/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["integrations_exports_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/exports/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["integrations_exports_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/exports/{id}/mock-fault/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["integrations_exports_mock_fault_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/exports/{id}/retry/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["integrations_exports_retry_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/imports/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["integrations_imports_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/imports/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["integrations_imports_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/mock-1c/imports/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["integrations_mock_1c_imports_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/sources/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["integrations_sources_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/integrations/sources/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["integrations_sources_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/admin/documents/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_admin_documents_list"];
+        put?: never;
+        post: operations["knowledge_admin_documents_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/admin/documents/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_admin_documents_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["knowledge_admin_documents_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/knowledge/admin/documents/{id}/archive/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["knowledge_admin_documents_archive_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/admin/documents/{id}/publish/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["knowledge_admin_documents_publish_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/admin/documents/{id}/revisions/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_admin_documents_revisions_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/citations/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_citations_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/documents/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Only effective published revisions visible to the active employee are returned. */
+        get: operations["knowledge_documents_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/documents/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_documents_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/gaps/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_gaps_list"];
+        put?: never;
+        post: operations["knowledge_gaps_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/gaps/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_gaps_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/gaps/{id}/resolve/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["knowledge_gaps_resolve_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -372,12 +998,333 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/workbench/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["workbench_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        AcademyVersionCommandRequest: {
+            expected_version: number;
+        };
+        Answer: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            client_message_id: string;
+            question: string;
+            language: components["schemas"]["LanguageEnum"];
+            mode: components["schemas"]["ModeEnum"];
+            answer_strategy: components["schemas"]["AnswerStrategyEnum"];
+            reason: string;
+            message: string;
+            claims: components["schemas"]["AnswerClaim"][];
+            citations: components["schemas"]["Citation"][];
+            evidence_status: components["schemas"]["EvidenceStatusEnum"];
+            provider: string;
+            model: string;
+            /** Format: uuid */
+            case_id: string | null;
+            allowed_actions: components["schemas"]["AnswerAllowedActionsEnum"][];
+            /** Format: date-time */
+            created_at: string;
+        };
+        /**
+         * @description * `ask_again` - ask_again
+         *     * `escalate_to_hr` - escalate_to_hr
+         *     * `open_hr_case` - open_hr_case
+         * @enum {string}
+         */
+        AnswerAllowedActionsEnum: "ask_again" | "escalate_to_hr" | "open_hr_case";
+        AnswerClaim: {
+            text: string;
+            supports: components["schemas"]["ClaimSupport"][];
+        };
+        /**
+         * @description * `source_bound_selection` - source_bound_selection
+         *     * `ranked_excerpts` - ranked_excerpts
+         *     * `refusal` - refusal
+         *     * `unavailable` - unavailable
+         * @enum {string}
+         */
+        AnswerStrategyEnum: "source_bound_selection" | "ranked_excerpts" | "refusal" | "unavailable";
+        AssignmentRequest: {
+            /** Format: uuid */
+            employee: string;
+            /** Format: uuid */
+            course_version: string;
+            /** @default true */
+            required: boolean;
+            /** Format: date-time */
+            due_at?: string | null;
+        };
+        AttemptCommandRequest: {
+            expected_version: number;
+            answers: components["schemas"]["QuizAnswerRequest"][];
+        };
+        AttemptDetail: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly number: number;
+            readonly correct_count: number;
+            readonly question_count: number;
+            /** Format: decimal */
+            readonly score: string;
+            readonly passing_percent: number;
+            readonly passed: boolean;
+            readonly material_completed: boolean;
+            /** Format: date-time */
+            readonly submitted_at: string;
+            readonly answers: components["schemas"]["QuizAnswer"][];
+        };
+        AttemptResult: {
+            attempt: components["schemas"]["AttemptDetail"];
+            enrollment: components["schemas"]["EnrollmentDetail"];
+        };
+        AttemptSummary: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly number: number;
+            readonly correct_count: number;
+            readonly question_count: number;
+            /** Format: decimal */
+            readonly score: string;
+            readonly passing_percent: number;
+            readonly passed: boolean;
+            readonly material_completed: boolean;
+            /** Format: date-time */
+            readonly submitted_at: string;
+        };
+        /**
+         * @description * `all` - All employees
+         *     * `employee` - Employees
+         *     * `manager` - Managers
+         *     * `hr` - HR
+         * @enum {string}
+         */
+        AudienceEnum: "all" | "employee" | "manager" | "hr";
+        AuthorQuestion: {
+            id: string;
+            prompt: string;
+            options: components["schemas"]["Option"][];
+            correct_option_id: string;
+            explanation: string;
+        };
+        AuthorQuestionRequest: {
+            id: string;
+            prompt: string;
+            options: components["schemas"]["OptionRequest"][];
+            correct_option_id: string;
+            explanation: string;
+        };
+        BalanceReversal: {
+            /** Format: uuid */
+            request_id: string;
+            reason: string;
+        };
+        BalanceReversalRequest: {
+            /** Format: uuid */
+            request_id: string;
+            reason: string;
+        };
         CSRF: {
             csrf_token: string;
+        };
+        CatalogCourse: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly slug: string;
+            readonly availability: components["schemas"]["PublicationStateEnum"];
+            readonly published_version: components["schemas"]["CourseVersionSummary"];
+        };
+        /**
+         * @description * `hr` - Кадровые действия
+         *     * `logistics` - Логистические данные
+         *     * `communication` - Общение
+         *     * `information_security` - Доступ и информация
+         *     * `team` - Руководитель и HR
+         *     * `knowledge` - Регламенты и знания
+         * @enum {string}
+         */
+        CategoryEnum: "hr" | "logistics" | "communication" | "information_security" | "team" | "knowledge";
+        Citation: {
+            /** Format: uuid */
+            chunk_id: string;
+            /** Format: uuid */
+            document_id: string;
+            /** Format: uuid */
+            revision_id: string;
+            revision_number: number;
+            title: string;
+            heading: string;
+            locator: string;
+            text: string;
+            url: string;
+            /** Format: date-time */
+            published_at: string;
+            /** Format: date */
+            effective_from: string;
+            /** Format: date */
+            effective_until: string | null;
+            language: components["schemas"]["LanguageEnum"];
+            is_synthetic: boolean;
+            is_current: boolean;
+            content_hash: string;
+        };
+        ClaimSupport: {
+            /** Format: uuid */
+            chunk_id: string;
+            quote: string;
+        };
+        /**
+         * @description * `not_started` - not_started
+         *     * `in_progress` - in_progress
+         *     * `completed` - completed
+         * @enum {string}
+         */
+        CompletionStateEnum: "not_started" | "in_progress" | "completed";
+        CourseAdmin: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly slug: string;
+            readonly title: string;
+            /** Format: uuid */
+            readonly legal_entity: string;
+            /** Format: uuid */
+            readonly owner: string;
+            readonly availability: components["schemas"]["PublicationStateEnum"];
+            readonly version: number;
+            /** Format: uuid */
+            readonly published_version: string | null;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+            readonly draft: components["schemas"]["CourseDraft"];
+        };
+        CourseAdminSummary: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly slug: string;
+            readonly title: string;
+            /** Format: uuid */
+            readonly legal_entity: string;
+            /** Format: uuid */
+            readonly owner: string;
+            readonly availability: components["schemas"]["PublicationStateEnum"];
+            readonly version: number;
+            /** Format: uuid */
+            readonly published_version: string | null;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        CourseCreateRequest: {
+            slug: string;
+            /** Format: uuid */
+            legal_entity?: string;
+            draft: components["schemas"]["CourseDraftRequest"];
+        };
+        CourseDraft: {
+            title: string;
+            /** @default  */
+            title_kk: string;
+            summary: string;
+            /** @default  */
+            summary_kk: string;
+            category: components["schemas"]["CategoryEnum"];
+            /** @default ru */
+            content_language: components["schemas"]["LanguageEnum"];
+            lessons?: components["schemas"]["Lesson"][];
+            questions?: components["schemas"]["AuthorQuestion"][];
+            /** @default 80 */
+            passing_percent: number;
+            /** @default 3 */
+            max_attempts: number | null;
+            estimated_minutes?: number | null;
+        };
+        CourseDraftRequest: {
+            title: string;
+            /** @default  */
+            title_kk: string;
+            summary: string;
+            /** @default  */
+            summary_kk: string;
+            category: components["schemas"]["CategoryEnum"];
+            /** @default ru */
+            content_language: components["schemas"]["LanguageEnum"];
+            lessons?: components["schemas"]["LessonRequest"][];
+            questions?: components["schemas"]["AuthorQuestionRequest"][];
+            /** @default 80 */
+            passing_percent: number;
+            /** @default 3 */
+            max_attempts: number | null;
+            estimated_minutes?: number | null;
+        };
+        CourseEditRequest: {
+            expected_version: number;
+            draft: components["schemas"]["CourseDraftRequest"];
+        };
+        CourseVersionAuthor: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly course: string;
+            readonly course_slug: string;
+            readonly number: number;
+            readonly title: string;
+            readonly title_kk: string;
+            readonly summary: string;
+            readonly summary_kk: string;
+            readonly category: string;
+            readonly content_language: components["schemas"]["LanguageEnum"];
+            readonly passing_percent: number;
+            readonly max_attempts: number | null;
+            readonly estimated_minutes: number | null;
+            readonly lesson_count: number;
+            readonly question_count: number;
+            /** Format: date-time */
+            readonly published_at: string;
+            readonly lessons: components["schemas"]["Lesson"][];
+            readonly questions: components["schemas"]["AuthorQuestion"][];
+            /** Format: uuid */
+            readonly published_by: string;
+        };
+        CourseVersionSummary: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly course: string;
+            readonly course_slug: string;
+            readonly number: number;
+            readonly title: string;
+            readonly title_kk: string;
+            readonly summary: string;
+            readonly summary_kk: string;
+            readonly category: string;
+            readonly content_language: components["schemas"]["LanguageEnum"];
+            readonly passing_percent: number;
+            readonly max_attempts: number | null;
+            readonly estimated_minutes: number | null;
+            readonly lesson_count: number;
+            readonly question_count: number;
+            /** Format: date-time */
+            readonly published_at: string;
         };
         /**
          * @description * `KZT` - KZT
@@ -389,6 +1336,35 @@ export interface components {
             /** @default  */
             comment: string;
         };
+        DeliveryAttempt: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly number: number;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly lease_expires_at: string;
+            readonly result: components["schemas"]["DeliveryAttemptResult"] | null;
+        };
+        DeliveryAttemptResult: {
+            readonly outcome: components["schemas"]["OutcomeEnum"];
+            readonly failure_code: string;
+            readonly error_message: string;
+            /** Format: date-time */
+            readonly next_attempt_at: string | null;
+            /** Format: uuid */
+            readonly receipt: string | null;
+            /** Format: date-time */
+            readonly created_at: string;
+        };
+        /**
+         * @description * `pending` - pending
+         *     * `processing` - processing
+         *     * `processed` - processed
+         *     * `failed` - failed
+         * @enum {string}
+         */
+        DeliveryStatusEnum: "pending" | "processing" | "processed" | "failed";
         Department: {
             /** Format: uuid */
             readonly id: string;
@@ -396,6 +1372,66 @@ export interface components {
             name: string;
             /** Format: uuid */
             legal_entity: string;
+        };
+        DocumentAdmin: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly slug: string;
+            readonly title: string;
+            readonly summary: string;
+            readonly language: components["schemas"]["LanguageEnum"];
+            readonly topic: string;
+            /** Format: uuid */
+            readonly owner: string;
+            /** Format: uuid */
+            readonly legal_entity: string | null;
+            /** Format: uuid */
+            readonly department: string | null;
+            readonly audience: components["schemas"]["AudienceEnum"];
+            readonly draft_sections: components["schemas"]["Section"][];
+            /** Format: date */
+            readonly effective_from: string;
+            /** Format: date */
+            readonly effective_until: string | null;
+            readonly is_synthetic: boolean;
+            readonly state: components["schemas"]["PublicationStateEnum"];
+            readonly version: number;
+            readonly current_revision: components["schemas"]["Revision"];
+            readonly has_unpublished_changes: boolean;
+            readonly allowed_actions: string[];
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        DocumentCreateRequest: {
+            slug: string;
+            title: string;
+            /** @default  */
+            summary: string;
+            language: components["schemas"]["LanguageEnum"];
+            topic: string;
+            /** Format: uuid */
+            owner?: string;
+            /** Format: uuid */
+            legal_entity?: string | null;
+            /** Format: uuid */
+            department?: string | null;
+            /** @default all */
+            audience: components["schemas"]["AudienceEnum"];
+            draft_sections: components["schemas"]["SectionRequest"][];
+            /** Format: date */
+            effective_from?: string;
+            /** Format: date */
+            effective_until?: string | null;
+            /** @default true */
+            is_synthetic: boolean;
+        };
+        DocumentRead: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly slug: string;
+            readonly revision: components["schemas"]["Revision"];
         };
         Employee: {
             /** Format: uuid */
@@ -415,26 +1451,376 @@ export interface components {
             readonly leave_balance: string;
             /** Format: date */
             readonly balance_as_of: string;
-            readonly locale: components["schemas"]["LocaleEnum"];
+            readonly locale: components["schemas"]["LanguageEnum"];
             readonly is_active: boolean;
             readonly source_revision: string;
             /** Format: date-time */
             readonly synced_at: string | null;
         };
+        EmployeeSnapshot: {
+            external_id: string;
+            full_name: string;
+            position: string;
+            department_code: string;
+            manager_external_id: string | null;
+            /** Format: date */
+            hired_on: string;
+            /** Format: decimal */
+            leave_balance: string;
+            /** Format: date */
+            balance_as_of: string;
+            locale: components["schemas"]["LanguageEnum"];
+            is_active: boolean;
+            incorporated_request_ids: string[];
+            balance_reversals?: components["schemas"]["BalanceReversal"][];
+        };
+        EmployeeSnapshotRequest: {
+            external_id: string;
+            full_name: string;
+            position: string;
+            department_code: string;
+            manager_external_id: string | null;
+            /** Format: date */
+            hired_on: string;
+            /** Format: decimal */
+            leave_balance: string;
+            /** Format: date */
+            balance_as_of: string;
+            locale: components["schemas"]["LanguageEnum"];
+            is_active: boolean;
+            incorporated_request_ids: string[];
+            balance_reversals?: components["schemas"]["BalanceReversalRequest"][];
+        };
+        Enrollment: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly employee: string;
+            readonly employee_name: string;
+            readonly course_version: components["schemas"]["CourseVersionSummary"];
+            /** Format: uuid */
+            readonly assigned_by: string;
+            readonly required: boolean;
+            /** Format: date-time */
+            readonly due_at: string | null;
+            /** Format: date-time */
+            readonly started_at: string | null;
+            /** Format: date-time */
+            readonly completed_at: string | null;
+            readonly version: number;
+            readonly availability: components["schemas"]["PublicationStateEnum"];
+            readonly completion_state: components["schemas"]["CompletionStateEnum"];
+            readonly overdue: boolean;
+            readonly material_progress: components["schemas"]["MaterialProgress"];
+            readonly last_attempt: components["schemas"]["AttemptSummary"] | null;
+            readonly attempt_count: number;
+            readonly remaining_attempts: number | null;
+            readonly has_failed_attempt: boolean;
+            readonly allowed_actions: string[];
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        EnrollmentDetail: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly employee: string;
+            readonly employee_name: string;
+            readonly course_version: components["schemas"]["CourseVersionSummary"];
+            /** Format: uuid */
+            readonly assigned_by: string;
+            readonly required: boolean;
+            /** Format: date-time */
+            readonly due_at: string | null;
+            /** Format: date-time */
+            readonly started_at: string | null;
+            /** Format: date-time */
+            readonly completed_at: string | null;
+            readonly version: number;
+            readonly availability: components["schemas"]["PublicationStateEnum"];
+            readonly completion_state: components["schemas"]["CompletionStateEnum"];
+            readonly overdue: boolean;
+            readonly material_progress: components["schemas"]["MaterialProgress"];
+            readonly last_attempt: components["schemas"]["AttemptSummary"] | null;
+            readonly attempt_count: number;
+            readonly remaining_attempts: number | null;
+            readonly has_failed_attempt: boolean;
+            readonly allowed_actions: string[];
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+            readonly lesson_completions: components["schemas"]["LessonCompletion"][];
+            readonly attempts: components["schemas"]["AttemptSummary"][];
+        };
+        EnrollmentSummary: {
+            scope: string;
+            /** Format: date-time */
+            computed_at: string;
+            total: number;
+            completed: number;
+            in_progress: number;
+            not_started: number;
+            overdue: number;
+            required_outstanding: number;
+            has_failed_attempt: number;
+            due_next_seven_days: number;
+            /** Format: decimal */
+            completion_percent: string | null;
+        };
+        EntitySyncState: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly legal_entity: string;
+            readonly legal_entity_name: string;
+            readonly source: string;
+            readonly last_revision: number;
+            /** Format: date-time */
+            readonly last_captured_at: string | null;
+            /** Format: uuid */
+            readonly last_accepted_batch: string | null;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        EscalationRequest: {
+            /** Format: uuid */
+            answer_id: string;
+            /** @default  */
+            details: string;
+        };
+        /**
+         * @description * `current` - current
+         *     * `superseded` - superseded
+         *     * `unavailable` - unavailable
+         *     * `not_applicable` - not_applicable
+         * @enum {string}
+         */
+        EvidenceStatusEnum: "current" | "superseded" | "unavailable" | "not_applicable";
+        Export: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly request_id: string;
+            readonly employee_name: string;
+            readonly topic: string;
+            readonly delivery_status: components["schemas"]["DeliveryStatusEnum"];
+            readonly version: number;
+            readonly attempt_count: number;
+            readonly cycle_attempt_count: number;
+            /** Format: date-time */
+            readonly available_at: string;
+            /** Format: date-time */
+            readonly lease_expires_at: string | null;
+            readonly last_error: string;
+            readonly failure_code: string;
+            /** Format: date-time */
+            readonly processed_at: string | null;
+            readonly export_receipt: components["schemas"]["ExportReceipt"] | null;
+            readonly allowed_actions: string[];
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        ExportCommandRequest: {
+            expected_version: number;
+        };
+        ExportDetail: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly request_id: string;
+            readonly employee_name: string;
+            readonly topic: string;
+            readonly delivery_status: components["schemas"]["DeliveryStatusEnum"];
+            readonly version: number;
+            readonly attempt_count: number;
+            readonly cycle_attempt_count: number;
+            /** Format: date-time */
+            readonly available_at: string;
+            /** Format: date-time */
+            readonly lease_expires_at: string | null;
+            readonly last_error: string;
+            readonly failure_code: string;
+            /** Format: date-time */
+            readonly processed_at: string | null;
+            readonly export_receipt: components["schemas"]["ExportReceipt"] | null;
+            readonly allowed_actions: string[];
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+            readonly delivery_attempts: components["schemas"]["DeliveryAttempt"][];
+        };
+        ExportReceipt: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly provider: string;
+            readonly document_id: string;
+            /** Format: uuid */
+            readonly request_revision: string;
+            readonly idempotency_key: string;
+            readonly payload_hash: string;
+            /** Format: date-time */
+            readonly accepted_at: string;
+            /** @default document_received_only */
+            readonly acceptance_meaning: string;
+        };
+        GapCase: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly employee: string;
+            /** Format: uuid */
+            readonly legal_entity: string;
+            /** Format: uuid */
+            readonly answer: string;
+            readonly question: string;
+            readonly details: string;
+            readonly status: components["schemas"]["KnowledgeGapStatusEnum"];
+            readonly version: number;
+            readonly response: string;
+            /** Format: uuid */
+            readonly resolved_by: string | null;
+            /** Format: date-time */
+            readonly resolved_at: string | null;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+            readonly allowed_actions: components["schemas"]["GapCaseAllowedActionsEnum"][];
+        };
+        /**
+         * @description * `resolve` - resolve
+         * @enum {string}
+         */
+        GapCaseAllowedActionsEnum: "resolve";
+        GapPreview: {
+            count: number;
+            results: components["schemas"]["GapCase"][];
+        };
+        GapResolutionRequest: {
+            expected_version: number;
+            response: string;
+        };
+        /**
+         * @description * `draft` - Draft
+         *     * `pending_manager` - Pending manager
+         *     * `pending_hr` - Pending HR
+         *     * `approved` - Approved
+         *     * `rejected` - Rejected
+         *     * `returned` - Returned for changes
+         *     * `cancelled` - Cancelled
+         * @enum {string}
+         */
+        HRRequestStatusEnum: "draft" | "pending_manager" | "pending_hr" | "approved" | "rejected" | "returned" | "cancelled";
         Health: {
             status: string;
         };
+        ImportAccepted: {
+            batch: components["schemas"]["SourceImportBatch"];
+            source_replayed: boolean;
+        };
+        ImportRejected: {
+            code: string;
+            message: string;
+            field_errors: {
+                [key: string]: unknown;
+            };
+            request_id: string | null;
+            /** Format: uuid */
+            integration_audit_id: string;
+        };
+        ImportSnapshot: {
+            source: components["schemas"]["SourceEnum"];
+            /** Format: uuid */
+            legal_entity_id: string;
+            /** Format: int64 */
+            source_revision: number;
+            /** Format: date-time */
+            captured_at: string;
+            employees: components["schemas"]["EmployeeSnapshot"][];
+        };
+        ImportSnapshotRequest: {
+            source: components["schemas"]["SourceEnum"];
+            /** Format: uuid */
+            legal_entity_id: string;
+            /** Format: int64 */
+            source_revision: number;
+            /** Format: date-time */
+            captured_at: string;
+            employees: components["schemas"]["EmployeeSnapshotRequest"][];
+        };
+        /**
+         * @description * `accepted` - accepted
+         *     * `rejected` - rejected
+         * @enum {string}
+         */
+        ImportStatusEnum: "accepted" | "rejected";
         /**
          * @description * `leave` - Leave
          *     * `advance` - Salary advance
          * @enum {string}
          */
         KindEnum: "leave" | "advance";
+        /**
+         * @description * `track_own` - track_own
+         *     * `hr_response` - hr_response
+         * @enum {string}
+         */
+        KnowledgeCasePurposeEnum: "track_own" | "hr_response";
+        /**
+         * @description * `open` - Open
+         *     * `resolved` - Resolved
+         * @enum {string}
+         */
+        KnowledgeGapStatusEnum: "open" | "resolved";
+        KnowledgeVersionCommandRequest: {
+            expected_version: number;
+        };
+        /**
+         * @description * `ru` - Русский
+         *     * `kk` - Қазақша
+         * @enum {string}
+         */
+        LanguageEnum: "ru" | "kk";
+        LearningContent: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly course: string;
+            readonly course_slug: string;
+            readonly number: number;
+            readonly title: string;
+            readonly title_kk: string;
+            readonly summary: string;
+            readonly summary_kk: string;
+            readonly category: string;
+            readonly content_language: components["schemas"]["LanguageEnum"];
+            readonly passing_percent: number;
+            readonly max_attempts: number | null;
+            readonly estimated_minutes: number | null;
+            readonly lesson_count: number;
+            readonly question_count: number;
+            /** Format: date-time */
+            readonly published_at: string;
+            readonly lessons: components["schemas"]["Lesson"][];
+            readonly questions: components["schemas"]["Question"][];
+        };
+        LearningPreview: {
+            count: number;
+            results: components["schemas"]["Enrollment"][];
+        };
         LeaveProjection: {
             /** Format: decimal */
             official_balance: string;
             /** Format: decimal */
             portal_reserved_days: string;
+            /** Format: decimal */
+            source_incorporated_days: string;
             /** Format: decimal */
             projected_balance: string;
             /** Format: date */
@@ -447,16 +1833,54 @@ export interface components {
             code: string;
             name: string;
         };
-        /**
-         * @description * `ru` - Русский
-         *     * `kk` - Қазақша
-         * @enum {string}
-         */
-        LocaleEnum: "ru" | "kk";
+        Lesson: {
+            id: string;
+            title: string;
+            body_markdown: string;
+            /** @default true */
+            required: boolean;
+        };
+        LessonCommandRequest: {
+            expected_version: number;
+            lesson_id: string;
+        };
+        LessonCompletion: {
+            readonly lesson_id: string;
+            /** Format: date-time */
+            readonly completed_at: string;
+        };
+        LessonRequest: {
+            id: string;
+            title: string;
+            body_markdown: string;
+            /** @default true */
+            required: boolean;
+        };
         LoginRequest: {
             username: string;
             password: string;
         };
+        MaterialProgress: {
+            completed_lesson_ids: string[];
+            required_total: number;
+            required_completed: number;
+            percent: number;
+        };
+        MockFaultRequest: {
+            expected_version: number;
+            /** @default 0 */
+            transient_failures: number;
+            /** @default false */
+            permanent_failure: boolean;
+        };
+        /**
+         * @description * `generated` - Model-selected source sentences
+         *     * `extractive` - Source excerpts
+         *     * `insufficient_evidence` - No supported answer
+         *     * `provider_unavailable` - AI provider unavailable
+         * @enum {string}
+         */
+        ModeEnum: "generated" | "extractive" | "insufficient_evidence" | "provider_unavailable";
         Notification: {
             /** Format: uuid */
             readonly id: string;
@@ -470,6 +1894,97 @@ export interface components {
             readonly read_at: string | null;
             /** Format: date-time */
             readonly created_at: string;
+        };
+        Option: {
+            id: string;
+            text: string;
+        };
+        OptionRequest: {
+            id: string;
+            text: string;
+        };
+        /**
+         * @description * `accepted` - Accepted by the document adapter
+         *     * `retry_scheduled` - Retry scheduled
+         *     * `failed` - Operator action required
+         *     * `lease_expired` - Worker claim expired
+         * @enum {string}
+         */
+        OutcomeEnum: "accepted" | "retry_scheduled" | "failed" | "lease_expired";
+        PaginatedAnswerList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Answer"][];
+        };
+        PaginatedAttemptDetailList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["AttemptDetail"][];
+        };
+        PaginatedCatalogCourseList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["CatalogCourse"][];
+        };
+        PaginatedCourseAdminSummaryList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["CourseAdminSummary"][];
+        };
+        PaginatedCourseVersionAuthorList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["CourseVersionAuthor"][];
         };
         PaginatedDepartmentList: {
             /** @example 123 */
@@ -486,6 +2001,36 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Department"][];
         };
+        PaginatedDocumentAdminList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["DocumentAdmin"][];
+        };
+        PaginatedDocumentReadList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["DocumentRead"][];
+        };
         PaginatedEmployeeList: {
             /** @example 123 */
             count: number;
@@ -500,6 +2045,66 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Employee"][];
+        };
+        PaginatedEnrollmentList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Enrollment"][];
+        };
+        PaginatedEntitySyncStateList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["EntitySyncState"][];
+        };
+        PaginatedExportList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Export"][];
+        };
+        PaginatedGapCaseList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["GapCase"][];
         };
         PaginatedLegalEntityList: {
             /** @example 123 */
@@ -546,6 +2151,54 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Request"][];
         };
+        PaginatedRevisionList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Revision"][];
+        };
+        PaginatedSourceImportBatchList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["SourceImportBatch"][];
+        };
+        PatchedDocumentUpdateRequest: {
+            title?: string;
+            summary?: string;
+            language?: components["schemas"]["LanguageEnum"];
+            topic?: string;
+            /** Format: uuid */
+            owner?: string;
+            /** Format: uuid */
+            department?: string | null;
+            audience?: components["schemas"]["AudienceEnum"];
+            draft_sections?: components["schemas"]["SectionRequest"][];
+            /** Format: date */
+            effective_from?: string;
+            /** Format: date */
+            effective_until?: string | null;
+            is_synthetic?: boolean;
+            expected_version?: number;
+        };
         PatchedRequestEditRequest: {
             expected_version?: number;
             reason?: string;
@@ -559,6 +2212,43 @@ export interface components {
             /** Format: date */
             requested_payment_date?: string;
         };
+        ProviderError: {
+            code: string;
+            message: string;
+            field_errors: {
+                [key: string]: unknown;
+            };
+            /** Format: uuid */
+            request_id: string | null;
+            answer: components["schemas"]["Answer"];
+        };
+        /**
+         * @description * `draft` - Draft
+         *     * `published` - Published
+         *     * `archived` - Archived
+         * @enum {string}
+         */
+        PublicationStateEnum: "draft" | "published" | "archived";
+        Question: {
+            id: string;
+            prompt: string;
+            options: components["schemas"]["Option"][];
+        };
+        QuestionRequest: {
+            question: string;
+            /** @default ru */
+            language: components["schemas"]["LanguageEnum"];
+            /** Format: uuid */
+            client_message_id: string;
+        };
+        QuizAnswer: {
+            question_id: string;
+            selected_option_id: string;
+        };
+        QuizAnswerRequest: {
+            question_id: string;
+            selected_option_id: string;
+        };
         Request: {
             /** Format: uuid */
             readonly id: string;
@@ -566,7 +2256,7 @@ export interface components {
             readonly employee: string;
             readonly employee_name: string;
             readonly kind: components["schemas"]["KindEnum"];
-            readonly status: components["schemas"]["StatusEnum"];
+            readonly status: components["schemas"]["HRRequestStatusEnum"];
             readonly version: number;
             readonly reason: string;
             /** Format: date */
@@ -612,7 +2302,7 @@ export interface components {
             readonly employee: string;
             readonly employee_name: string;
             readonly kind: components["schemas"]["KindEnum"];
-            readonly status: components["schemas"]["StatusEnum"];
+            readonly status: components["schemas"]["HRRequestStatusEnum"];
             readonly version: number;
             readonly reason: string;
             /** Format: date */
@@ -656,6 +2346,10 @@ export interface components {
             /** Format: date-time */
             readonly created_at: string;
         };
+        RequestPreview: {
+            count: number;
+            results: components["schemas"]["Request"][];
+        };
         RequestRevision: {
             /** Format: uuid */
             readonly id: string;
@@ -667,6 +2361,33 @@ export interface components {
             /** Format: date-time */
             readonly created_at: string;
         };
+        Revision: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly number: number;
+            readonly title: string;
+            readonly summary: string;
+            readonly language: string;
+            readonly topic: string;
+            /** Format: uuid */
+            readonly owner: string;
+            /** Format: uuid */
+            readonly legal_entity: string | null;
+            /** Format: uuid */
+            readonly department: string | null;
+            readonly audience: components["schemas"]["AudienceEnum"];
+            readonly sections: components["schemas"]["Section"][];
+            /** Format: date */
+            readonly effective_from: string;
+            /** Format: date */
+            readonly effective_until: string | null;
+            readonly is_synthetic: boolean;
+            readonly content_hash: string;
+            /** Format: date-time */
+            readonly published_at: string;
+            /** Format: uuid */
+            readonly published_by: string;
+        };
         /**
          * @description * `employee` - Employee
          *     * `manager` - Manager
@@ -674,22 +2395,69 @@ export interface components {
          * @enum {string}
          */
         RoleEnum: "employee" | "manager" | "hr";
+        Section: {
+            heading: string;
+            text: string;
+        };
+        SectionRequest: {
+            heading: string;
+            text: string;
+        };
         Session: {
             user: components["schemas"]["User"];
             employee: components["schemas"]["Employee"] | null;
             csrf_token: string;
         };
         /**
-         * @description * `draft` - Draft
-         *     * `pending_manager` - Pending manager
-         *     * `pending_hr` - Pending HR
-         *     * `approved` - Approved
-         *     * `rejected` - Rejected
-         *     * `returned` - Returned for changes
-         *     * `cancelled` - Cancelled
+         * @description * `mock_1c` - mock_1c
          * @enum {string}
          */
-        StatusEnum: "draft" | "pending_manager" | "pending_hr" | "approved" | "rejected" | "returned" | "cancelled";
+        SourceEnum: "mock_1c";
+        SourceImportBatch: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly legal_entity: string;
+            readonly legal_entity_name: string;
+            /** @default mock_1c */
+            readonly source: string;
+            readonly source_revision: number;
+            /** Format: date-time */
+            readonly captured_at: string;
+            readonly payload_hash: string;
+            readonly employee_count: number;
+            readonly import_status: components["schemas"]["ImportStatusEnum"];
+            readonly error_code: string;
+            readonly error_message: string;
+            readonly error_fields: unknown;
+            /** Format: uuid */
+            readonly actor: string;
+            /** Format: date-time */
+            readonly created_at: string;
+        };
+        SourceImportDetail: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly legal_entity: string;
+            readonly legal_entity_name: string;
+            /** @default mock_1c */
+            readonly source: string;
+            readonly source_revision: number;
+            /** Format: date-time */
+            readonly captured_at: string;
+            readonly payload_hash: string;
+            readonly employee_count: number;
+            readonly import_status: components["schemas"]["ImportStatusEnum"];
+            readonly error_code: string;
+            readonly error_message: string;
+            readonly error_fields: unknown;
+            /** Format: uuid */
+            readonly actor: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            readonly payload: components["schemas"]["ImportSnapshot"];
+        };
         TransitionRequest: {
             expected_version: number;
         };
@@ -707,6 +2475,23 @@ export interface components {
             /** Фамилия */
             readonly last_name: string;
         };
+        Workbench: {
+            /** Format: date-time */
+            computed_at: string;
+            preview_limit: number;
+            employee: components["schemas"]["Employee"];
+            leave: components["schemas"]["LeaveProjection"];
+            learning_summary: components["schemas"]["EnrollmentSummary"];
+            returned_requests: components["schemas"]["RequestPreview"];
+            draft_requests: components["schemas"]["RequestPreview"];
+            requests_to_review: components["schemas"]["RequestPreview"];
+            waiting_request_count: number;
+            learning_outstanding: components["schemas"]["LearningPreview"];
+            unavailable_learning_count: number;
+            open_knowledge_cases: components["schemas"]["GapPreview"];
+            knowledge_case_purpose: components["schemas"]["KnowledgeCasePurposeEnum"];
+            unread_notification_count: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -716,6 +2501,689 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    academy_courses_list: {
+        parameters: {
+            query?: {
+                /**
+                 * @description * `hr` - Кадровые действия
+                 *     * `logistics` - Логистические данные
+                 *     * `communication` - Общение
+                 *     * `information_security` - Доступ и информация
+                 *     * `team` - Руководитель и HR
+                 *     * `knowledge` - Регламенты и знания
+                 */
+                category?: "communication" | "hr" | "information_security" | "knowledge" | "logistics" | "team";
+                /**
+                 * @description * `ru` - Русский
+                 *     * `kk` - Қазақша
+                 */
+                language?: "kk" | "ru";
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCatalogCourseList"];
+                };
+            };
+        };
+    };
+    academy_courses_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this course. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogCourse"];
+                };
+            };
+        };
+    };
+    academy_enrollments_list: {
+        parameters: {
+            query?: {
+                /**
+                 * @description * `hr` - Кадровые действия
+                 *     * `logistics` - Логистические данные
+                 *     * `communication` - Общение
+                 *     * `information_security` - Доступ и информация
+                 *     * `team` - Руководитель и HR
+                 *     * `knowledge` - Регламенты и знания
+                 */
+                category?: "communication" | "hr" | "information_security" | "knowledge" | "logistics" | "team";
+                /**
+                 * @description * `not_started` - Not started
+                 *     * `in_progress` - In progress
+                 *     * `completed` - Completed
+                 */
+                completion_state?: "completed" | "in_progress" | "not_started";
+                course?: string;
+                due_after?: string;
+                due_before?: string;
+                employee?: string;
+                has_failed_attempt?: boolean;
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                overdue?: boolean;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                required?: boolean;
+                /** @description A search term. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedEnrollmentList"];
+                };
+            };
+        };
+    };
+    academy_enrollments_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignmentRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AssignmentRequest"];
+                "multipart/form-data": components["schemas"]["AssignmentRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnrollmentDetail"];
+                };
+            };
+        };
+    };
+    academy_enrollments_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this enrollment. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnrollmentDetail"];
+                };
+            };
+        };
+    };
+    academy_enrollments_attempts_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this enrollment. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedAttemptDetailList"];
+                };
+            };
+        };
+    };
+    academy_enrollments_complete_lesson_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this enrollment. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LessonCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["LessonCommandRequest"];
+                "multipart/form-data": components["schemas"]["LessonCommandRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnrollmentDetail"];
+                };
+            };
+        };
+    };
+    academy_enrollments_learning_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this enrollment. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningContent"];
+                };
+            };
+        };
+    };
+    academy_enrollments_start_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this enrollment. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcademyVersionCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AcademyVersionCommandRequest"];
+                "multipart/form-data": components["schemas"]["AcademyVersionCommandRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnrollmentDetail"];
+                };
+            };
+        };
+    };
+    academy_enrollments_submit_attempt_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this enrollment. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttemptCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AttemptCommandRequest"];
+                "multipart/form-data": components["schemas"]["AttemptCommandRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttemptResult"];
+                };
+            };
+        };
+    };
+    academy_enrollments_summary_retrieve: {
+        parameters: {
+            query?: {
+                /**
+                 * @description * `hr` - Кадровые действия
+                 *     * `logistics` - Логистические данные
+                 *     * `communication` - Общение
+                 *     * `information_security` - Доступ и информация
+                 *     * `team` - Руководитель и HR
+                 *     * `knowledge` - Регламенты и знания
+                 */
+                category?: "communication" | "hr" | "information_security" | "knowledge" | "logistics" | "team";
+                /**
+                 * @description * `not_started` - Not started
+                 *     * `in_progress` - In progress
+                 *     * `completed` - Completed
+                 */
+                completion_state?: "completed" | "in_progress" | "not_started";
+                course?: string;
+                due_after?: string;
+                due_before?: string;
+                employee?: string;
+                has_failed_attempt?: boolean;
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                overdue?: boolean;
+                required?: boolean;
+                /** @description A search term. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnrollmentSummary"];
+                };
+            };
+        };
+    };
+    academy_manage_courses_list: {
+        parameters: {
+            query?: {
+                /**
+                 * @description * `draft` - Draft
+                 *     * `published` - Published
+                 *     * `archived` - Archived
+                 */
+                availability?: "archived" | "draft" | "published";
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCourseAdminSummaryList"];
+                };
+            };
+        };
+    };
+    academy_manage_courses_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseCreateRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CourseCreateRequest"];
+                "multipart/form-data": components["schemas"]["CourseCreateRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAdmin"];
+                };
+            };
+        };
+    };
+    academy_manage_courses_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this course. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAdmin"];
+                };
+            };
+        };
+    };
+    academy_manage_courses_archive_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this course. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcademyVersionCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AcademyVersionCommandRequest"];
+                "multipart/form-data": components["schemas"]["AcademyVersionCommandRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAdmin"];
+                };
+            };
+        };
+    };
+    academy_manage_courses_publish_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this course. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcademyVersionCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AcademyVersionCommandRequest"];
+                "multipart/form-data": components["schemas"]["AcademyVersionCommandRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAdmin"];
+                };
+            };
+        };
+    };
+    academy_manage_courses_restore_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this course. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcademyVersionCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AcademyVersionCommandRequest"];
+                "multipart/form-data": components["schemas"]["AcademyVersionCommandRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAdmin"];
+                };
+            };
+        };
+    };
+    academy_manage_courses_revisions_list: {
+        parameters: {
+            query?: {
+                /**
+                 * @description * `draft` - Draft
+                 *     * `published` - Published
+                 *     * `archived` - Archived
+                 */
+                availability?: "archived" | "draft" | "published";
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+            };
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this course. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCourseVersionAuthorList"];
+                };
+            };
+        };
+    };
+    academy_manage_courses_save_draft_create: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Use the same key and payload to recover the same command result after a lost response. */
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this course. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseEditRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CourseEditRequest"];
+                "multipart/form-data": components["schemas"]["CourseEditRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAdmin"];
+                };
+            };
+        };
+    };
+    assistant_answers_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedAnswerList"];
+                };
+            };
+        };
+    };
+    assistant_answers_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuestionRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["QuestionRequest"];
+                "multipart/form-data": components["schemas"]["QuestionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Answer"];
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Answer"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProviderError"];
+                };
+            };
+        };
+    };
+    assistant_answers_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Answer"];
+                };
+            };
+        };
+    };
     auth_csrf_retrieve: {
         parameters: {
             query?: never;
@@ -914,6 +3382,681 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Health"];
+                };
+            };
+        };
+    };
+    integrations_exports_list: {
+        parameters: {
+            query?: {
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+                /**
+                 * @description * `pending` - Pending
+                 *     * `processing` - Processing
+                 *     * `processed` - Processed
+                 *     * `failed` - Failed
+                 */
+                status?: "failed" | "pending" | "processed" | "processing";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedExportList"];
+                };
+            };
+        };
+    };
+    integrations_exports_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this outbox message. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportDetail"];
+                };
+            };
+        };
+    };
+    integrations_exports_mock_fault_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this outbox message. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MockFaultRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["MockFaultRequest"];
+                "multipart/form-data": components["schemas"]["MockFaultRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportDetail"];
+                };
+            };
+        };
+    };
+    integrations_exports_retry_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                /** @description A UUID string identifying this outbox message. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExportCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ExportCommandRequest"];
+                "multipart/form-data": components["schemas"]["ExportCommandRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportDetail"];
+                };
+            };
+        };
+    };
+    integrations_imports_list: {
+        parameters: {
+            query?: {
+                legal_entity?: string;
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+                source_revision?: number;
+                /**
+                 * @description * `accepted` - Accepted
+                 *     * `rejected` - Rejected
+                 */
+                status?: "accepted" | "rejected";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedSourceImportBatchList"];
+                };
+            };
+        };
+    };
+    integrations_imports_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this source import batch. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceImportDetail"];
+                };
+            };
+        };
+    };
+    integrations_mock_1c_imports_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportSnapshotRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ImportSnapshotRequest"];
+                "multipart/form-data": components["schemas"]["ImportSnapshotRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportAccepted"];
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportAccepted"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportRejected"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportRejected"];
+                };
+            };
+        };
+    };
+    integrations_sources_list: {
+        parameters: {
+            query?: {
+                legal_entity?: string;
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedEntitySyncStateList"];
+                };
+            };
+        };
+    };
+    integrations_sources_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this entity sync state. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitySyncState"];
+                };
+            };
+        };
+    };
+    knowledge_admin_documents_list: {
+        parameters: {
+            query?: {
+                /**
+                 * @description * `all` - All employees
+                 *     * `employee` - Employees
+                 *     * `manager` - Managers
+                 *     * `hr` - HR
+                 */
+                audience?: "all" | "employee" | "hr" | "manager";
+                /**
+                 * @description * `ru` - Русский
+                 *     * `kk` - Қазақша
+                 */
+                language?: "kk" | "ru";
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+                /**
+                 * @description * `draft` - Draft
+                 *     * `published` - Published
+                 *     * `archived` - Archived
+                 */
+                state?: "archived" | "draft" | "published";
+                topic?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedDocumentAdminList"];
+                };
+            };
+        };
+    };
+    knowledge_admin_documents_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocumentCreateRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["DocumentCreateRequest"];
+                "multipart/form-data": components["schemas"]["DocumentCreateRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentAdmin"];
+                };
+            };
+        };
+    };
+    knowledge_admin_documents_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentAdmin"];
+                };
+            };
+        };
+    };
+    knowledge_admin_documents_partial_update: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedDocumentUpdateRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedDocumentUpdateRequest"];
+                "multipart/form-data": components["schemas"]["PatchedDocumentUpdateRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentAdmin"];
+                };
+            };
+        };
+    };
+    knowledge_admin_documents_archive_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeVersionCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["KnowledgeVersionCommandRequest"];
+                "multipart/form-data": components["schemas"]["KnowledgeVersionCommandRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentAdmin"];
+                };
+            };
+        };
+    };
+    knowledge_admin_documents_publish_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeVersionCommandRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["KnowledgeVersionCommandRequest"];
+                "multipart/form-data": components["schemas"]["KnowledgeVersionCommandRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentAdmin"];
+                };
+            };
+        };
+    };
+    knowledge_admin_documents_revisions_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path: {
+                id: string;
+                pk: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRevisionList"];
+                };
+            };
+        };
+    };
+    knowledge_citations_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Citation"];
+                };
+            };
+        };
+    };
+    knowledge_documents_list: {
+        parameters: {
+            query?: {
+                current_revision__language?: string;
+                current_revision__topic?: string;
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedDocumentReadList"];
+                };
+            };
+        };
+    };
+    knowledge_documents_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentRead"];
+                };
+            };
+        };
+    };
+    knowledge_gaps_list: {
+        parameters: {
+            query?: {
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description A search term. */
+                search?: string;
+                /**
+                 * @description * `open` - Open
+                 *     * `resolved` - Resolved
+                 */
+                status?: "open" | "resolved";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedGapCaseList"];
+                };
+            };
+        };
+    };
+    knowledge_gaps_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EscalationRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["EscalationRequest"];
+                "multipart/form-data": components["schemas"]["EscalationRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GapCase"];
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GapCase"];
+                };
+            };
+        };
+    };
+    knowledge_gaps_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GapCase"];
+                };
+            };
+        };
+    };
+    knowledge_gaps_resolve_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GapResolutionRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["GapResolutionRequest"];
+                "multipart/form-data": components["schemas"]["GapResolutionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GapCase"];
                 };
             };
         };
@@ -1363,6 +4506,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LeaveProjection"];
+                };
+            };
+        };
+    };
+    workbench_retrieve: {
+        parameters: {
+            query?: {
+                preview_limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Workbench"];
                 };
             };
         };

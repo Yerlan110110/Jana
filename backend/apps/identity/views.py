@@ -49,6 +49,9 @@ class LoginView(APIView):
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "login"
 
+    def get_authenticate_header(self, request):
+        return "Session"
+
     @extend_schema(request=LoginSerializer, responses=SessionSerializer, auth=[])
     def post(self, request):
         data = LoginSerializer(data=request.data)

@@ -2,9 +2,17 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
+from django.core.cache import cache
 from rest_framework.test import APIClient
 
 from apps.identity.models import Department, Employee, LegalEntity, User
+
+
+@pytest.fixture(autouse=True)
+def isolate_request_cache():
+    cache.clear()
+    yield
+    cache.clear()
 
 
 @pytest.fixture(autouse=True)
