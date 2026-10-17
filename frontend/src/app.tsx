@@ -336,6 +336,11 @@ function LoginPage() {
             </div>
           </details>
           <DemoNote />
+          <p>
+            <a className="text-link" href="/licenses/">
+              Исходный код и лицензии
+            </a>
+          </p>
         </div>
       </section>
     </main>
@@ -685,6 +690,7 @@ function AppShell() {
           >
             Исходный код
           </a>
+          <a href="/licenses/">Лицензии</a>
         </footer>
       </div>
     </div>

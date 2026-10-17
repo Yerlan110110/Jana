@@ -8,4 +8,6 @@ Button and Input source is from shadcn/ui under MIT. Its license is in `src/comp
 
 Inter Tight Variable and Geist Mono Variable fonts are distributed under OFL-1.1. License texts are served at `/licenses/Inter-Tight-OFL.txt` and `/licenses/Geist-Mono-OFL.txt`.
 
+Vite 8 generates the bundled dependency license texts at `/licenses/dependencies.md`. The build copies the existing local source notices without editing their content. The license index is at `/licenses/`, including the application's AGPL text, Pace notices, shadcn notices and both font licenses.
+
 Excluded Oxygen-dependent components were not shipped. The rolled-back installation receipt remains as provenance, not as evidence that its component set is included. See `docs/research/continuation-reuse.md` at the repository root for the source audit and exact pins.

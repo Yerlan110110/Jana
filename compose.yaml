@@ -4,7 +4,7 @@ x-app: &app
   build:
     context: .
     target: runtime
-  image: janamen-backend:local
+  image: ${COMPOSE_PROJECT_NAME:-janamen}-backend:local
   environment: &environment
     DATABASE_URL: postgresql://janamen:${POSTGRES_PASSWORD:?Run python scripts/dev.py prepare first}@db:5432/janamen
     DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Run python scripts/dev.py prepare first}
@@ -66,7 +66,7 @@ services:
     build:
       context: .
       target: frontend
-    image: janamen-frontend:local
+    image: ${COMPOSE_PROJECT_NAME:-janamen}-frontend:local
     ports:
       - "127.0.0.1:${FRONTEND_PORT:-8080}:80"
     depends_on:

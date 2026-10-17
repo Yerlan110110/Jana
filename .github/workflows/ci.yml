@@ -56,7 +56,9 @@ jobs:
         run: uv run --frozen python manage.py makemigrations --check --dry-run
       - name: Run PostgreSQL behavior tests
         working-directory: backend
-        run: uv run --frozen pytest -q
+        run: |
+          mkdir -p staticfiles
+          uv run --frozen pytest -q
       - name: Verify pinned skills
         run: node scripts/tooling/verify-skills.mjs
       - name: Verify local HTTP runner report safety

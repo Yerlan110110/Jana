@@ -48,6 +48,8 @@ The [operator-recovery checkpoint](docs/verification/operator-recovery.md) prove
 
 The [nginx verification correction](docs/verification/nginx-project-origin.md) binds readiness to the selected Compose project. Older local reports without recorded origins do not establish project-bound readiness. The corrected real replacement and subsequent sixteen-test browser run pass.
 
+The [packaging checkpoint](docs/verification/packaging.md) separates Docker image tags by project and serves original and generated license texts before sign-in. The forty-file served build matches. PostgreSQL passes 232 tests without the earlier static-directory warnings. Sixteen role tests and ten keyboard tests pass, with the corrected license end-scroll checked separately. Public HTTPS and independent acceptance remain open.
+
 ## Environment and retained work
 
 The coordinating checkout is `/home/yqecea/coding-projects/jana`. Compose project `janamen-demo` owns API port 8000 and web port 8080. The coordinator stopped the owned Vite process on port 5173 after switching acceptance to immutable Docker builds. `janamen-ci` owns API port 8010 and web port 8090 for clean browser acceptance, plus its separate PostgreSQL test database. Do not stop another task's services by process name.

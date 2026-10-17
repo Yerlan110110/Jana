@@ -7,7 +7,7 @@ RUN uv sync --frozen --no-dev --no-install-project
 COPY backend/ ./
 
 FROM builder AS test
-RUN uv sync --frozen --group dev
+RUN uv sync --frozen --group dev && mkdir -p /app/staticfiles
 CMD ["/app/.venv/bin/pytest", "-q"]
 
 FROM python:3.12.14-slim-trixie AS runtime
