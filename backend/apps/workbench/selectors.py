@@ -5,7 +5,12 @@ from rest_framework.exceptions import PermissionDenied
 from apps.academy.models import Course
 from apps.academy.selectors import enrollment_summary, visible_enrollments
 from apps.hr_requests.models import HRRequest
-from apps.hr_requests.selectors import leave_projection, review_requests, visible_requests
+from apps.hr_requests.selectors import (
+    WAITING_STATUSES,
+    leave_projection,
+    review_requests,
+    visible_requests,
+)
 from apps.identity.models import User
 from apps.identity.selectors import employee_for
 from apps.knowledge.models import KnowledgeGapCase
@@ -51,9 +56,7 @@ def workbench_for(user, *, preview_limit=5):
         "requests_to_review": preview(
             review_requests(user).order_by("submitted_at", "id"), preview_limit
         ),
-        "waiting_request_count": own_requests.filter(
-            status__in=[HRRequest.Status.PENDING_MANAGER, HRRequest.Status.PENDING_HR]
-        ).count(),
+        "waiting_request_count": own_requests.filter(status__in=WAITING_STATUSES).count(),
         "learning_outstanding": preview(
             available.order_by("attention_order", F("due_at").asc(nulls_last=True), "id"),
             preview_limit,

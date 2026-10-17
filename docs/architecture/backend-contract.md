@@ -67,6 +67,8 @@ Never allow generic PATCH status to bypass a command.
 
 The request list accepts `needs_my_action=true` before pagination and uses `hr_requests.selectors.review_requests`, the same canonical selector as the workbench. False and omission add no restriction. Search, other filters and ordering compose with this queue. The owning selector retains current scope, stage, assigned reviewer, active employee and self-review rules.
 
+The request list also accepts `waiting=true` for the two pending stages before pagination. It composes with existing employee scope and filters. The status group is shared with the workbench waiting count so its link opens the same population. False and omission add no restriction. Notification lists document the existing `unread=true` filter in OpenAPI; it remains restricted to the recipient.
+
 ### Request fulfillment evidence
 
 `GET /api/v1/requests/{id}/fulfillment/` uses the normal request read scope, including the owner, current direct manager and scoped HR. It is read-only and grants no integration operator capability. Approval exposes the actual request status, current submitted revision ID and submission number. Delivery and source accounting remain independent of approval.

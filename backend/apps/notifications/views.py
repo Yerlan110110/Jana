@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import OpenApiParameter, extend_schema, extend_schema_view
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -8,6 +8,17 @@ from .serializers import NotificationSerializer
 from .services import mark_read
 
 
+@extend_schema_view(
+    list=extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "unread",
+                bool,
+                description="True returns unread owned notifications. False adds no restriction.",
+            )
+        ]
+    )
+)
 class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = NotificationSerializer
     ordering_fields = ["created_at"]

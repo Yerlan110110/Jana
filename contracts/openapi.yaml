@@ -2116,6 +2116,11 @@ paths:
         description: A search term.
         schema:
           type: string
+      - in: query
+        name: unread
+        schema:
+          type: boolean
+        description: True returns unread owned notifications. False adds no restriction.
       tags:
       - notifications
       security:
@@ -2258,6 +2263,12 @@ paths:
           * `rejected` - Rejected
           * `returned` - Returned for changes
           * `cancelled` - Cancelled
+      - in: query
+        name: waiting
+        schema:
+          type: boolean
+        description: True restricts to requests awaiting manager or HR decision before
+          pagination.
       tags:
       - requests
       security:

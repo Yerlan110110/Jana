@@ -4239,6 +4239,8 @@ export interface operations {
                 page_size?: number;
                 /** @description A search term. */
                 search?: string;
+                /** @description True returns unread owned notifications. False adds no restriction. */
+                unread?: boolean;
             };
             header?: never;
             path?: never;
@@ -4356,6 +4358,8 @@ export interface operations {
                  *     * `cancelled` - Cancelled
                  */
                 status?: "approved" | "cancelled" | "draft" | "pending_hr" | "pending_manager" | "rejected" | "returned";
+                /** @description True restricts to requests awaiting manager or HR decision before pagination. */
+                waiting?: boolean;
             };
             header?: never;
             path?: never;

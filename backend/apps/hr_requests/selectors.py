@@ -9,6 +9,8 @@ from apps.integrations.selectors import EXPORT_TOPIC
 
 from .models import HRRequest, LeaveBalanceIncorporation
 
+WAITING_STATUSES = (HRRequest.Status.PENDING_MANAGER, HRRequest.Status.PENDING_HR)
+
 RESERVING_STATUSES = [
     HRRequest.Status.PENDING_MANAGER,
     HRRequest.Status.PENDING_HR,

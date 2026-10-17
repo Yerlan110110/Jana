@@ -36,6 +36,32 @@ def advance_details():
     }
 
 
+def test_waiting_list_matches_own_workbench_and_filters_before_pagination(api_client, employees):
+    employee = employees["employee"]
+    leave = create_via_api(api_client, employee).data
+    manager_stage = transition(api_client, employee, leave, "submit").data
+    advance = create_via_api(api_client, employee, advance_details()).data
+    submitted = transition(api_client, employee, advance, "submit").data
+    hr_stage = transition(api_client, employees["manager"], submitted, "approve").data
+    create_via_api(api_client, employee, advance_details())
+    foreign = create_via_api(api_client, employees["other_entity"], advance_details()).data
+    transition(api_client, employees["other_entity"], foreign, "submit")
+    api_client.force_authenticate(employee.user)
+    first = api_client.get("/api/v1/requests/", {"waiting": "true", "page_size": 1}).data
+    second = api_client.get(
+        "/api/v1/requests/", {"waiting": "true", "page_size": 1, "page": 2}
+    ).data
+    assert first["count"] == second["count"] == 2
+    assert {first["results"][0]["id"], second["results"][0]["id"]} == {
+        manager_stage["id"],
+        hr_stage["id"],
+    }
+    assert api_client.get("/api/v1/workbench/").data["waiting_request_count"] == first["count"]
+    assert api_client.get("/api/v1/requests/", {"waiting": "false"}).data["count"] == 3
+    advances = api_client.get("/api/v1/requests/", {"waiting": "true", "kind": "advance"})
+    assert [row["id"] for row in advances.data["results"]] == [hr_stage["id"]]
+
+
 def create_via_api(client, employee, values=None, key=None):
     client.force_authenticate(employee.user)
     return client.post(
