@@ -290,6 +290,7 @@ def test_operator_export_api_includes_recoverable_states_and_exact_receipt(
     path = f"/api/v1/integrations/exports/{message.pk}/"
     initial = api_client.get(path)
     assert initial.status_code == 200 and initial.data["delivery_status"] == "pending"
+    assert initial.data["mock_fault_available"] is True
     assert initial.data["allowed_actions"] == [] and initial.data["export_receipt"] is None
     fault = api_client.post(
         f"{path}mock-fault/",
@@ -325,6 +326,7 @@ def test_operator_export_api_includes_recoverable_states_and_exact_receipt(
     assert process_once()
     received = api_client.get(path)
     assert received.data["delivery_status"] == "processed"
+    assert received.data["mock_fault_available"] is False
     assert received.data["export_receipt"]["acceptance_meaning"] == "document_received_only"
     assert len(received.data["delivery_attempts"]) == 2
     assert str(request.pk) == str(received.data["request_id"])
@@ -363,7 +365,9 @@ def test_mock_controls_can_be_disabled_without_disabling_real_reads(
     settings.INTEGRATIONS_ALLOW_MOCK_FAULTS = False
     api_client.force_authenticate(operator)
     path = f"/api/v1/integrations/exports/{message.pk}/"
-    assert api_client.get(path).status_code == 200
+    read = api_client.get(path)
+    assert read.status_code == 200
+    assert read.data["mock_fault_available"] is False
     denied = api_client.post(
         f"{path}mock-fault/",
         {"expected_version": 1, "transient_failures": 1},

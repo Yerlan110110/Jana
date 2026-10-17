@@ -127,6 +127,8 @@ Outbox processing is retryable and idempotent. Retrying an export must not creat
 Expose failed synchronization state to permitted operators. Business approval and delivery state remain separate.
 Production connector credentials are supplied through environment or a secret manager.
 
+Export reads expose `mock_fault_available` only when `INTEGRATIONS_ALLOW_MOCK_FAULTS` is enabled and the message is pending or failed. This capability describes the existing mock-fault command, not permission to operate real integrations. Operator and legal-entity checks remain mandatory. Compose defaults this flag to false. The generated local demonstration template explicitly enables it. The web interface uses the returned capability rather than guessing the deployment mode.
+
 ## Workbench read model
 
 workbench_for(user) combines the caller's profile, leave projection, own learning summary, scoped request previews, knowledge cases and unread count. Each section retains its domain serializer and full count. Preview limits do not change aggregate counts. See workbench.md for ordering and scope.

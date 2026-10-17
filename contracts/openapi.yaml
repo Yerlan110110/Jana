@@ -4440,6 +4440,9 @@ components:
           items:
             type: string
           readOnly: true
+        mock_fault_available:
+          type: boolean
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4461,6 +4464,7 @@ components:
       - id
       - last_error
       - lease_expires_at
+      - mock_fault_available
       - processed_at
       - request_id
       - topic
@@ -4534,6 +4538,9 @@ components:
           items:
             type: string
           readOnly: true
+        mock_fault_available:
+          type: boolean
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -4561,6 +4568,7 @@ components:
       - id
       - last_error
       - lease_expires_at
+      - mock_fault_available
       - processed_at
       - request_id
       - topic

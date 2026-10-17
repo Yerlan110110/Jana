@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.conf import settings
 from django.utils import timezone
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
@@ -208,6 +209,7 @@ class ExportSerializer(serializers.ModelSerializer):
     )
     export_receipt = ExportReceiptSerializer(read_only=True, allow_null=True)
     allowed_actions = serializers.SerializerMethodField()
+    mock_fault_available = serializers.SerializerMethodField()
 
     class Meta:
         model = OutboxMessage
@@ -227,6 +229,7 @@ class ExportSerializer(serializers.ModelSerializer):
             "processed_at",
             "export_receipt",
             "allowed_actions",
+            "mock_fault_available",
             "created_at",
             "updated_at",
         ]
@@ -235,6 +238,12 @@ class ExportSerializer(serializers.ModelSerializer):
     @extend_schema_field(serializers.ListField(child=serializers.CharField()))
     def get_allowed_actions(self, obj):
         return export_actions(obj)
+
+    @extend_schema_field(serializers.BooleanField())
+    def get_mock_fault_available(self, obj):
+        return bool(getattr(settings, "INTEGRATIONS_ALLOW_MOCK_FAULTS", settings.DEBUG)) and (
+            obj.status in {OutboxMessage.Status.PENDING, OutboxMessage.Status.FAILED}
+        )
 
 
 class ExportDetailSerializer(ExportSerializer):

@@ -1671,6 +1671,7 @@ export interface components {
             readonly processed_at: string | null;
             readonly export_receipt: components["schemas"]["ExportReceipt"] | null;
             readonly allowed_actions: string[];
+            readonly mock_fault_available: boolean;
             /** Format: date-time */
             readonly created_at: string;
             /** Format: date-time */
@@ -1700,6 +1701,7 @@ export interface components {
             readonly processed_at: string | null;
             readonly export_receipt: components["schemas"]["ExportReceipt"] | null;
             readonly allowed_actions: string[];
+            readonly mock_fault_available: boolean;
             /** Format: date-time */
             readonly created_at: string;
             /** Format: date-time */

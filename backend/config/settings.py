@@ -6,6 +6,9 @@ from corsheaders.defaults import default_headers
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.getenv("DJANGO_DEBUG", "true").lower() == "true"
+INTEGRATIONS_ALLOW_MOCK_FAULTS = os.getenv(
+    "INTEGRATIONS_ALLOW_MOCK_FAULTS", str(DEBUG)
+).lower() == "true"
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "")
 if not SECRET_KEY:
     if not DEBUG:
