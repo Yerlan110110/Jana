@@ -17,7 +17,9 @@
   --shadow-inset: inset 0 1px 2px color-mix(in srgb, var(--ink) 8%, transparent);
   --shadow-control: 0 1px 2px color-mix(in srgb, var(--ink) 10%, transparent);
   --shadow-glass: inset 0 1px 0 color-mix(in srgb, var(--card) 35%, transparent), inset 0 -1px 0 color-mix(in srgb, var(--card) 12%, transparent), 0 1px 1px color-mix(in srgb, var(--ink) 6%, transparent), 0 8px 24px color-mix(in srgb, var(--ink) 10%, transparent);
-  --motion-fast: 140ms;
+  --motion-fast: 150ms;
+  --motion-release: 100ms;
+  --motion-press-scale: 0.96;
   --motion-standard: 160ms;
   /* OTP fake-caret blink cycle */
   --motion-caret: 1250ms;
@@ -27,8 +29,8 @@
   --motion-toast-shake: 280ms;
   /* balance shimmer sweep cycle */
   --motion-shimmer: 1500ms;
-  /* raw CSS timing-function value; DTCG array form is [0.22, 1, 0.36, 1] */
-  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* raw CSS timing-function value; DTCG array form is [0.23, 1, 0.32, 1] */
+  --motion-ease: cubic-bezier(0.23, 1, 0.32, 1);
   /* raw CSS timing-function value; DTCG array form is [0.5, 1, 0.89, 1] */
   --motion-toast-ease: cubic-bezier(0.5, 1, 0.89, 1);
   /* PANEL — dropdowns, menus, popovers, selects, tooltips; anything that opens in place */
@@ -193,7 +195,9 @@
   --shadow-control: 0 1px 2px color-mix(in srgb, var(--ink) 10%, transparent);
   --shadow-glass: inset 0 1px 0 color-mix(in srgb, var(--card) 35%, transparent), inset 0 -1px 0 color-mix(in srgb, var(--card) 12%, transparent), 0 1px 1px color-mix(in srgb, var(--ink) 6%, transparent), 0 8px 24px color-mix(in srgb, var(--ink) 10%, transparent);
 
-  --motion-fast: 140ms;
+  --motion-fast: 150ms;
+  --motion-release: 100ms;
+  --motion-press-scale: 0.96;
   --motion-standard: 160ms;
   /* OTP fake-caret blink cycle */
   --motion-caret: 1250ms;
@@ -203,8 +207,8 @@
   --motion-toast-shake: 280ms;
   /* balance shimmer sweep cycle */
   --motion-shimmer: 1500ms;
-  /* raw CSS timing-function value; DTCG array form is [0.22, 1, 0.36, 1] */
-  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* raw CSS timing-function value; DTCG array form is [0.23, 1, 0.32, 1] */
+  --motion-ease: cubic-bezier(0.23, 1, 0.32, 1);
   /* raw CSS timing-function value; DTCG array form is [0.5, 1, 0.89, 1] */
   --motion-toast-ease: cubic-bezier(0.5, 1, 0.89, 1);
   /* PANEL — dropdowns, menus, popovers, selects, tooltips; anything that opens in place */

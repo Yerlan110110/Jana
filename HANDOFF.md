@@ -36,6 +36,8 @@ The [native zoom checkpoint](docs/verification/native-zoom.md) supplies a repeat
 
 The [submitted-version checkpoint](docs/verification/request-snapshots.md) replaces raw request JSON with readable immutable facts and uses a name only for a proved reviewer identity. Both request kinds retain their saved payloads. PostgreSQL now passes 232 tests with 193 retained warnings. The refreshed normal and native matrices pass twelve and ten tests respectively. Full interface acceptance and independent release review remain open.
 
+The [button-feedback checkpoint](docs/verification/button-motion.md) repairs actual keyboard and reduced-motion movement and fading old focus rings in the shared action adapter. Its three-test browser run and selected video frames verify that scope. Whole-product keyboard and motion acceptance remain open.
+
 Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. The first source checkpoint `3709c00` is published. Both GitHub Actions jobs passed at https://github.com/Yerlan110110/Jana/actions/runs/39060785959. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
 
 ## Environment and retained work
