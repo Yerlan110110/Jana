@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
   type FormEvent,
+  type KeyboardEvent,
   type ReactNode,
 } from "react";
 import { useIsMutating, useMutation, useQuery } from "@tanstack/react-query";
@@ -372,6 +373,7 @@ function AppShell() {
   const mutations = useIsMutating();
   const logout = useMutation({ mutationFn: signOut });
   const main = useRef<HTMLElement>(null);
+  const menuTrigger = useRef<HTMLButtonElement>(null);
   const previousPath = useRef(location.pathname);
   useEffect(() => {
     if (previousPath.current !== location.pathname) {
@@ -380,6 +382,14 @@ function AppShell() {
       previousPath.current = location.pathname;
     }
   }, [location.pathname]);
+  function closeNavigation(event: KeyboardEvent<HTMLElement>) {
+    if (menuOpen && event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      setMenuOpen(false);
+      menuTrigger.current?.focus();
+    }
+  }
   function navigation(links: typeof personalLinks) {
     return links.map(({ to, label, icon: Icon, end }) => (
       <NavLink key={to} to={to} end={end} onClick={() => setMenuOpen(false)}>
@@ -473,8 +483,10 @@ function AppShell() {
             </NavLink>
             <Button
               className="mobile-menu-button"
+              ref={menuTrigger}
               variant="ghost"
               onClick={() => setMenuOpen(!menuOpen)}
+              onKeyDown={closeNavigation}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
               aria-label={menuOpen ? "Закрыть навигацию" : "Открыть навигацию"}
@@ -492,6 +504,7 @@ function AppShell() {
             id="mobile-navigation"
             className="mobile-navigation"
             aria-label="Навигация на узком экране"
+            onKeyDown={closeNavigation}
           >
             {navigation(personalLinks)}
             {user.role !== "employee" && navigation(teamLinks)}

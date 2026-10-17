@@ -42,6 +42,8 @@ The [editor-recovery checkpoint](docs/verification/request-editor-recovery.md) r
 
 Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. The first source checkpoint `3709c00` is published. Both GitHub Actions jobs passed at https://github.com/Yerlan110110/Jana/actions/runs/39060785959. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
 
+The [keyboard checkpoint](docs/verification/keyboard.md) records the repaired narrow-navigation Escape behavior, native date calibration and normal-state Tab tours on all 31 views at 1280, 320 and native 200%. The employee creates, submits and cancels an advance by keyboard. Other states, screen readers and independent acceptance remain open.
+
 ## Environment and retained work
 
 The coordinating checkout is `/home/yqecea/coding-projects/jana`. Compose project `janamen-demo` owns API port 8000 and web port 8080. The coordinator stopped the owned Vite process on port 5173 after switching acceptance to immutable Docker builds. `janamen-ci` owns API port 8010 and web port 8090 for clean browser acceptance, plus its separate PostgreSQL test database. Do not stop another task's services by process name.

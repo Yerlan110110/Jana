@@ -98,7 +98,8 @@ fieldset {
   summary,
   [role="button"],
   [tabindex]
-):focus-visible {
+):focus-visible,
+:where(input[type="date"], input[type="datetime-local"]):focus-within {
   outline: 2px solid #007a00;
   outline-offset: 3px;
 }

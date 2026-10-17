@@ -29,7 +29,7 @@ COPY package.json package-lock.json ./
 COPY packages/api-client/ ./packages/api-client/
 RUN npm ci --ignore-scripts --no-audit --no-fund
 RUN npx e2e-web install chromium --with-deps
-COPY e2e.config.ts ./
+COPY e2e*.config.ts ./
 COPY tests/ ./tests/
 CMD ["npx", "e2e", "run", "--trace", "on", "--output", ".artifacts/browser/ci"]
 

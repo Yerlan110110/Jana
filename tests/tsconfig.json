@@ -14,6 +14,7 @@
     "../e2e*.config.ts",
     "web/**/*.ts",
     "visual/**/*.ts",
+    "keyboard/**/*.ts",
     "zoom/**/*.ts"
   ]
 }

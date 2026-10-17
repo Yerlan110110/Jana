@@ -1,0 +1,78 @@
+import { test } from "@e2e-dev/web";
+import { expect } from "e2e";
+import { sessionClient } from "../web/api.js";
+import { focusedControl, tabTo } from "./focus.js";
+
+test("narrow navigation closes on Escape and restores its trigger", { session: "visual-employee" }, async ({ app, browser, screen }) => {
+  await browser.setViewport({ width: 320, height: 800 });
+  await app.open("/profile");
+  await expect(screen.getByRole("heading", "Кадровые данные")).toBeVisible();
+  await tabTo(browser, "Открыть навигацию");
+  await browser.keyboard.press("Enter");
+  const navigation = screen.getByRole("navigation", "Навигация на узком экране");
+  await expect(navigation).toBeVisible();
+  await browser.keyboard.press("Tab");
+  await expect(navigation.getByRole("link", "Главная")).toBeFocused();
+  await browser.keyboard.press("Escape");
+  await expect(navigation).toHaveCount(0);
+  expect((await focusedControl(browser))?.labelHint).toBe("Открыть навигацию");
+  await browser.keyboard.press("Enter");
+  await browser.keyboard.press("Tab");
+  await browser.keyboard.press("Enter");
+  await expect(browser).toHaveURL(/\/$/);
+  await expect(screen.getByRole("main")).toBeFocused();
+  await expect(navigation).toHaveCount(0);
+});
+
+test("employee creates submits and cancels an advance using the keyboard", { session: "visual-employee" }, async ({ app, browser, screen }) => {
+  if (!app.baseUrl) throw new Error("Synthetic app URL is missing");
+  const { client } = await sessionClient(browser, new URL(app.baseUrl).origin);
+  const marker = `Проверка клавиатуры ${Date.now()}`;
+  await browser.setViewport({ width: 320, height: 800 });
+  await app.open("/requests/new?type=advance");
+  await expect(screen.getByRole("heading", "Данные заявления")).toBeVisible();
+  await tabTo(browser, "Сумма аванса, KZT");
+  await browser.keyboard.type("5000");
+  await tabTo(browser, "Желаемая дата выплаты");
+  for (const segment of ["01", "15", "2027"]) await browser.keyboard.type(segment);
+  await expect(screen.getByLabel("Желаемая дата выплаты")).toHaveValue("2027-01-15");
+  await tabTo(browser, "Причина");
+  await browser.keyboard.type(marker);
+  await tabTo(browser, "Сохранить черновик");
+  await browser.keyboard.press("Enter");
+  await expect(browser).toHaveURL(/\/requests\/[a-f0-9-]+$/);
+  const id = new URL(await browser.url()).pathname.split("/").at(-1);
+  if (!id) throw new Error("The saved request has no identity");
+  await tabTo(browser, "Отправить на рассмотрение");
+  await browser.keyboard.press("Enter");
+  await expect(screen.getByRole("heading", "Отправить на рассмотрение")).toBeVisible();
+  await tabTo(browser, "Отправить на рассмотрение");
+  await browser.keyboard.press("Enter");
+  await expect(screen.getByRole("main")).toContainText("У руководителя");
+  const submitted = await client.GET("/api/v1/requests/{id}/", { params: { path: { id } } });
+  expect(submitted.data?.revisions[0].payload.reason).toBe(marker);
+  expect(submitted.data?.revisions[0].payload.requested_payment_date).toBe("2027-01-15");
+  expect(submitted.data?.amount).toBe("5000.00");
+  await tabTo(browser, "Отменить заявление");
+  await browser.keyboard.press("Enter");
+  await expect(screen.getByRole("heading", "Отменить заявление")).toBeVisible();
+  await tabTo(browser, "Отменить заявление");
+  await browser.keyboard.press("Enter");
+  await expect(screen.getByRole("main")).toContainText("Отменено");
+  const canceled = await client.GET("/api/v1/requests/{id}/", { params: { path: { id } } });
+  expect(canceled.data?.status).toBe("cancelled");
+});
+
+test("native calendar focus keeps the whole date field indicated", { session: "visual-employee" }, async ({ app, browser, screen }) => {
+  await browser.setViewport({ width: 320, height: 800 });
+  await app.open("/requests/new?type=advance");
+  await expect(screen.getByRole("heading", "Данные заявления")).toBeVisible();
+  await tabTo(browser, "Желаемая дата выплаты");
+  for (let index = 0; index < 3; index += 1) await browser.keyboard.press("Tab");
+  const focus = await focusedControl(browser);
+  expect(focus?.inputType).toBe("date");
+  expect(focus?.focusWithin).toBe(true);
+  expect(focus?.outline).toBe("solid");
+  expect(focus?.outlineWidth).toBeGreaterThanOrEqual(2);
+  await app.screenshot("native-calendar-focus");
+});
