@@ -7,7 +7,7 @@ S01,Вход,route-states,320,missing,unverified,,reachable states in screen/sta
 S01,Вход,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
 S01,Вход,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
 S01,Вход,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
-S02,Главная сотрудника,route-states,1280,missing,unverified,,reachable states in screen/state contract
+S02,Главная сотрудника,route-states,1280,missing,unverified,,Primary action color pairs and overflow pilot pass; remaining states unverified
 S02,Главная сотрудника,route-states,1440,missing,unverified,,reachable states in screen/state contract
 S02,Главная сотрудника,route-states,768,missing,unverified,,reachable states in screen/state contract
 S02,Главная сотрудника,route-states,390,missing,unverified,,reachable states in screen/state contract
@@ -247,19 +247,19 @@ S31,Доставка и синхронизация,route-states,320,missing,unve
 S31,Доставка и синхронизация,route-states,keyboard,missing,unverified,,reachable states in screen/state contract
 S31,Доставка и синхронизация,route-states,zoom-200,missing,unverified,,reachable states in screen/state contract
 S31,Доставка и синхронизация,route-states,reduced-motion,missing,unverified,,reachable states in screen/state contract
-J01,Leave across employee manager HR,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J02,Advance across employee manager HR,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J03,Return edit resubmit,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J04,Stale write and uncertain retry,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J05,Foreign scope and account cache isolation,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J06,Learning failure success persistence and history,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J07,Course publication archive and retained revision,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J08,Grounded answer refusal HR published policy loop,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J09,Source permission revoked after answer,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-J10,Delivery failure recovery and independent facts,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-P01,Clean Docker launch release seed health worker,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-P02,CI-equivalent source and generated contract checks,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
-P03,Public source and synthetic live demo,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
+J01,Leave across employee manager HR,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; requests
+J02,Advance across employee manager HR,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; requests
+J03,Return edit resubmit,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; requests
+J04,Stale write and uncertain retry,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; request-recovery; one browser and a real second API writer
+J05,Foreign scope and account cache isolation,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; scope and session
+J06,Learning failure success persistence and history,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; academy
+J07,Course publication archive and retained revision,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; academy
+J08,Grounded answer refusal HR published policy loop,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; knowledge-loop
+J09,Source permission revoked after answer,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,.artifacts/browser/ci/recovery-scope-20261018-2/results/; .artifacts/ci-browser-recovery-scope-20261018-2.log,14-test Docker run; knowledge-loop
+J10,Delivery failure recovery and independent facts,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,Earlier recovery proof retained; fresh integrated operator flow pending
+P01,Clean Docker launch release seed health worker,journey-or-package,Docker-Chromium-or-source-as-applicable,fresh,pass,https://github.com/Yerlan110110/Jana/actions/runs/39066151009; .artifacts/nginx-api-replacement-ci-explicit-network-20261018-1.json,Clean application steps pass; job fails separately at artifact upload
+P02,CI-equivalent source and generated contract checks,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,Local source checks pass; revised artifact upload needs next GitHub run
+P03,Public source and synthetic live demo,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,Source published; HTTPS synthetic demo pending
 P04,Defense artifacts and truthful boundaries,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
 P05,Secret and license review,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2
 P06,Independent release review,journey-or-package,Docker-Chromium-or-source-as-applicable,missing,unverified,,contract C2

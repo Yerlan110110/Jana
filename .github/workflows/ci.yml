@@ -91,7 +91,7 @@ jobs:
       - name: Check API replacement without restarting nginx
         run: python3 scripts/verification/nginx_replacement.py --project janamen-ci --output .artifacts/nginx-api-replacement.json
       - name: Run real browser role journeys
-        run: docker compose --profile test run --build --rm browser-test
+        run: docker compose --profile test run --build --rm --no-deps browser-test
       - name: Retain browser trace summaries
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -99,8 +99,7 @@ jobs:
           name: browser-trace-summaries
           path: |
             .artifacts/nginx-api-replacement.json
-            .artifacts/browser/ci/**/trace.md
-            .artifacts/browser/ci/summary.md
+            .artifacts/browser/ci/results/**/trace.md
           if-no-files-found: ignore
           retention-days: 14
       - name: Show status on failure

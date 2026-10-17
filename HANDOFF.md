@@ -26,6 +26,8 @@ The browser knowledge loop at `.artifacts/browser/knowledge-loop-20261018-1/` pa
 
 The clean CI Compose stack passed eight real browser tests. Evidence is `.artifacts/browser-container-run-ci-20261018-1.log` and `.artifacts/browser/ci/results/`. The API-replacement regression also passed without restarting nginx. See [the integrated checkpoint](docs/verification/integrated-checkpoint.md). The latest complete PostgreSQL run is `.artifacts/postgresql-browser-fixture-20261018-1.log`, with 231 passed. These checks do not complete the 31-view visual inventory or the independent release gate.
 
+The expanded Docker suite now passes 14 tests, including real lost-response recovery, stale-write field preservation, cross-team and cross-entity denial, role changes and own-request restrictions. Latest evidence is `.artifacts/ci-browser-recovery-scope-20261018-1.log`; details and retained fixture failures are in the integrated checkpoint. Latest PostgreSQL evidence is `.artifacts/ci-postgresql-explicit-network-20261018-1.log`, with 231 passed. GitHub's second container run passed application checks but failed its report glob; the narrowed upload path still needs a successful remote run.
+
 Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. The first source checkpoint `3709c00` is published. Both GitHub Actions jobs passed at https://github.com/Yerlan110110/Jana/actions/runs/39060785959. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
 
 ## Environment and retained work
@@ -36,7 +38,7 @@ The canonical project NotebookLM notebook is `dcc4a600-e447-4f8a-98cd-4716bbc99a
 
 Completed runtime and backend author worktrees were stopped and archived. Recovery refs are `refs/archive/worktrees/runtime-5c393cdd` and `refs/archive/worktrees/backend-gaps-8f16f823`. Their durable reports moved to `.artifacts/worktree-archive/`. The old runtime baseline database volume is retained without running containers. Local synthetic credentials remain ignored and protected.
 
-The completed product author ran in a T3-managed isolated worktree on `t3/requests-academy-team-journeys`. The host chose `/home/yqecea/.t3/worktrees/jana/t3-4351e3c7`. This is a recorded path exception to the preferred in-project `.worktrees/` convention because T3's delegated isolation tool binds the checkout. Do not create a second copy or move it under an active agent. Terminal cancellation and no pending children are confirmed. Its ignored evidence still needs retention before archival.
+The completed product author's T3-managed worktree was archived after terminal cancellation, a clean status check, patch-equivalence checks and a search for active runtime references. The host had chosen `/home/yqecea/.t3/worktrees/jana/t3-4351e3c7`. Recovery ref is `refs/archive/worktrees/t3-4351e3c7-36c57ddb`. All 47 evidence files moved to `.artifacts/worktree-archive/t3-4351e3c7-36c57ddb/.artifacts/` and matched the retained SHA-256 manifest. Only the coordinating checkout remains active.
 
 ## Next acceptance work
 
