@@ -1,30 +1,16 @@
-from django.db.models import Case, F, Q, Value, When
+from django.db.models import Case, F, Value, When
 from django.utils import timezone
 from rest_framework.exceptions import PermissionDenied
 
 from apps.academy.models import Course
 from apps.academy.selectors import enrollment_summary, visible_enrollments
 from apps.hr_requests.models import HRRequest
-from apps.hr_requests.selectors import leave_projection, visible_requests
+from apps.hr_requests.selectors import leave_projection, review_requests, visible_requests
 from apps.identity.models import User
 from apps.identity.selectors import employee_for
 from apps.knowledge.models import KnowledgeGapCase
 from apps.knowledge.selectors import visible_gap_cases
 from apps.notifications.models import Notification
-
-
-def review_requests(user, employee):
-    queryset = visible_requests(user).filter(employee__is_active=True).exclude(employee=employee)
-    if user.is_superuser:
-        return queryset.filter(
-            status__in=[HRRequest.Status.PENDING_MANAGER, HRRequest.Status.PENDING_HR]
-        )
-    assigned = Q(status=HRRequest.Status.PENDING_MANAGER, assigned_manager=employee)
-    if user.role == User.Role.HR:
-        return queryset.filter(assigned | Q(status=HRRequest.Status.PENDING_HR))
-    if user.role == User.Role.MANAGER:
-        return queryset.filter(assigned, employee__manager=employee)
-    return queryset.none()
 
 
 def preview(queryset, limit):
@@ -63,7 +49,7 @@ def workbench_for(user, *, preview_limit=5):
             preview_limit,
         ),
         "requests_to_review": preview(
-            review_requests(user, employee).order_by("submitted_at", "id"), preview_limit
+            review_requests(user).order_by("submitted_at", "id"), preview_limit
         ),
         "waiting_request_count": own_requests.filter(
             status__in=[HRRequest.Status.PENDING_MANAGER, HRRequest.Status.PENDING_HR]
