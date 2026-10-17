@@ -47,4 +47,6 @@ The current full Docker role suite passes 14 tests at `.artifacts/ci-browser-act
 
 The initial PostgreSQL checkpoint passed 231 tests with a teardown-session warning. The complete strict run then reproduced that failure. [Test-thread cleanup](test-thread-cleanup.md) records the fixture repair and its fresh full result, 231 passed with 192 retained warnings and no teardown error. This does not establish a production connection leak or change business commands.
 
-Verdict is REPAIR for complete interface acceptance. Normal-state automated coverage and the narrow-action repair are recorded. Full visual inspection, reachable states, keyboard, real 200% zoom across the inventory, reduced motion and independent review remain open.
+The [native zoom checkpoint](native-zoom.md) records actual 200% browser zoom and the repair of a screenshot-coordinate defect. Its selected normal-state coverage is separate from complete visual inspection.
+
+Verdict is REPAIR for complete interface acceptance. Normal-state automated coverage and the narrow-action repair are recorded. Full visual inspection, reachable states, keyboard, reduced motion and independent review remain open.

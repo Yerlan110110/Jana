@@ -2,6 +2,8 @@
 
 Use `python3 scripts/verification/web_build.py --url http://127.0.0.1:8090 --output .artifacts/web-build-<unique-run>.json` after compiling the frontend to compare every local compiled file with the running web server. The command writes a new hash record and returns 1 for any missing or different served file. It refuses a missing local index. This proves file identity, not browser behavior or a complete deployment.
 
+For native browser zoom, use the separate [zoom verification recipe](../../.agents/skills/verify-janamen/SKILL.md#native-zoom). The [calibration record](../../docs/verification/native-zoom.md) explains its evidence and screenshot limits.
+
 Use `smoke_workflows.py` against a local JanaMen demo to verify persisted workflows through the real API. The runner uses Python 3.11 or newer and the standard library. It does not import Django or use its test client.
 
 ## Run the complete check

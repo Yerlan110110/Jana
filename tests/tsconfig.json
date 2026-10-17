@@ -13,6 +13,7 @@
   "include": [
     "../e2e*.config.ts",
     "web/**/*.ts",
-    "visual/**/*.ts"
+    "visual/**/*.ts",
+    "zoom/**/*.ts"
   ]
 }

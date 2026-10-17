@@ -39,6 +39,21 @@ Flows that sign out or change identity call `signIn` from `tests/web/support.ts`
 
 The API-replacement check reserves the API's old address. Start its isolated stack with `COMPOSE_FILE=compose.yaml:compose.ci.yaml` so Docker permits that reservation. `JANAMEN_TEST_SUBNET` selects an unused private CIDR when the default conflicts with another local network. Set these variables for every command that operates on that stack. The application launch without this override keeps Docker's normal address allocation.
 
+## Native zoom
+
+After starting the explicitly selected synthetic stack, run the existing browser suite in an owned Chrome profile.
+
+```bash
+JANAMEN_WEB_URL=http://127.0.0.1:8090 python3 scripts/verification/native_zoom.py \
+  --chrome /home/yqecea/.cache/ms-playwright/chromium-1248/chrome-linux64/chrome \
+  --factor 2 --config e2e.native-zoom.config.ts \
+  --output .artifacts/browser/native-zoom-<unique-run>
+```
+
+The Chrome path is this host's installed Chrome for Testing 156.0.8078.4. Confirm the actual binary before using another host. The output directory must not exist. Inspect its `owner.json`, `report/` and `captures/`. The test exit code and stopped Chrome process are separate facts. A factor-1 run of this same inventory must fail all four 200% groups. Keep that negative control.
+
+Read `docs/verification/native-zoom.md` before interpreting screenshots. At native zoom the ordinary engine screenshot has a reproduced clipping defect. The dedicated visible-viewport capture refuses populated password fields and only attaches to the launcher-owned loopback browser. Do not use it for Secret-filled functional sessions. Open the actual native images before claiming visual coverage. The launcher stops Chrome; retain its private disposable profile until evidence review, then remove only that owned profile.
+
 ## Bug bash
 
 Use the charters in `features/`. An exploratory model is not configured. Agent-driven `e2e explore` remains unproven until an authorized model actually runs the mapped charter. Do not invent a passing bug bash. A future local bug-bash config stays ignored under `.e2e/bugbash/`. Keep one signed-in charter per session and one writer to the database. A reported defect becomes a verified bug only after its specific assertion fails with `ASSERTION_FAILED` in `tests/web/bugbash/<slug>.e2e.ts`.
@@ -51,4 +66,4 @@ Close only preview tabs and processes you own. The CLI closes its isolated brows
 
 ## Helpers
 
-No extra launcher is required. `scripts/dev.py` prepares the existing Docker environment. The installed e2e CLI drives it. `features/README.md` records which features have actually passed.
+`scripts/dev.py` prepares the existing Docker environment. The installed e2e CLI drives it. Ordinary viewport and role tests need no extra browser launcher. Native zoom uses the owned-profile launcher above. `features/README.md` records which features have actually passed.
