@@ -1,6 +1,6 @@
 # JanaMen continuation contract
 
-Current contract C2. Owner is the coordinating Codex agent. Updated 17 October 2026.
+Current contract C2. Owner is the coordinating Codex agent. Updated 18 October 2026.
 
 This file records the current delivery scope. Historical backend verification remains in `docs/verification/`. A passing source check does not establish browser or deployment acceptance.
 
@@ -40,7 +40,7 @@ Use the existing backend and session authentication. Reuse real professional mec
 
 ## Ordered implementation and ownership
 
-1. Restore the bundle and verify the original PostgreSQL baseline. This is complete locally. Remote was empty on restoration and on the latest fetch.
+1. Restore the bundle and verify the original PostgreSQL baseline. This is complete. Remote was empty on restoration. The restored history and integrated source checkpoints are now published without rewriting history.
 2. Resolve Pace deployment/source/license differences and close server gaps G1, G2 and the G3 fulfillment projection. The source changes are integrated. Independent and browser verification remain required. G3 balance breakdown and G4 reviewer reassignment are not selected. UI must not imply either capability.
 3. Freeze the shared frontend foundation. Coordinator owns router, session/cache boundary, generated types, global tokens, lockfiles, Knowledge, home, notifications and operations. A separate implementation worktree owns requests, Academy, team/profile views and its feature CSS. It first records professional-source research and reuse decisions.
 4. Integrate full journeys. Commands use generated types, server permissions, version checks and stable keys for uncertain retries. No client-only approval, payment, course completion or policy publication.
@@ -78,5 +78,5 @@ Pstack sequences verifiable commits and separates authors from review. SureForge
 | --- | --- | --- | --- | --- |
 | Research | C2 inputs, Pace audit and journeys-reuse.md | 1 | READY | Supplied brief, official event, source/license audit and first-party Frappe/Moodle mechanisms are mapped to actual forms, queue, completion and version history. Authenticated third-party LMS behavior is not claimed. |
 | Plan | C2 and coverage inventory | 1 | READY, self-review-only | Requirement traceability and an environment/dependency walk-through completed. Fresh Claude plan review could not run due to `Claude API rate limit reached. Try again later.` Independent release review remains required and is not waived. |
-| Execute | Integrated checkpoint | 0 | REPAIR | PostgreSQL 231 tests, production build, both request role journeys and account switch pass. Final integrated learning, knowledge loop, adverse-state and complete visual acceptance remain open. |
+| Execute | Integrated checkpoint | 0 | REPAIR | PostgreSQL 231 tests, Docker launch, proxy recovery and eight real browser tests pass. Both request paths, learning/history, HR publication and revocation are verified. Stale/uncertain writes, foreign-scope browser checks and complete visual acceptance remain open. |
 | Deliver | No frozen release yet | 0 | Unverified | Browser, public demo, full CI-equivalent run, independent release review and defense packaging pending. |
