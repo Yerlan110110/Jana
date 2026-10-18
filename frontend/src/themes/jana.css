@@ -120,7 +120,7 @@
   --muted-foreground: #5e5e60;
   --secondary-foreground: var(--ink);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.505 0.213 27.518);
+  --destructive-foreground: oklch(0.45 0.19 27.518);
   --success: oklch(0.596 0.145 163.225);
   --success-foreground: oklch(0.473 0.108 166.536);
   --warning: oklch(0.769 0.188 70.08);

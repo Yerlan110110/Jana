@@ -23,6 +23,7 @@ test("server validation is readable and recoverable at every required size", { s
     await screen.getByLabel("Причина", { exact: true }).fill("Проверка ошибки суммы без потери введённых данных.");
     await screen.getByRole("button", "Сохранить черновик").tap();
     await expect(screen.getByRole("alert")).toBeVisible();
+    await expect(screen.getByRole("alert")).not.toContainText('["');
     await expect(amount).toHaveAttribute("aria-invalid", "true");
     await expect(amount).toBeFocused();
     await capturePreparedPage({ app, browser, environment, directory, view: {

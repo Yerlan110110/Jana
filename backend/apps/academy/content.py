@@ -82,9 +82,11 @@ def validate_draft(draft, *, publishing=False):
     values = serializer.validated_data
     if publishing:
         if not values["lessons"] or not any(lesson["required"] for lesson in values["lessons"]):
-            raise serializers.ValidationError({"lessons": "Publish at least one required lesson."})
+            raise serializers.ValidationError(
+                {"lessons": "Добавьте хотя бы один обязательный материал."}
+            )
         if not values["questions"]:
             raise serializers.ValidationError(
-                {"questions": "Publish at least one assessment question."}
+                {"questions": "Добавьте хотя бы один вопрос для проверки знаний."}
             )
     return values

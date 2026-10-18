@@ -70,7 +70,7 @@ export function CitationPage() {
           </span>
         </div>
         <h2>{source.heading}</h2>
-        <blockquote>{source.text}</blockquote>
+        <blockquote className="prose">{source.text}</blockquote>
         <p className="muted">
           Действует с {date(source.effective_from)}
           {source.effective_until

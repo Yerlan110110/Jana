@@ -66,6 +66,7 @@ test("reduced-motion loading skeleton keeps its semantic status without animatio
     await writeFile(`${directory}/reduced-loading-${Date.now()}.json`, JSON.stringify(pending, null, 2) + "\n", { flag: "wx" });
   } finally {
     release?.();
+    await expect(screen.getByRole("status", "Загружаем данные")).toHaveCount(0);
     await browser.unroute("**/api/v1/academy/courses/?**");
   }
   await expect(screen.getByRole("status", "Загружаем данные")).toHaveCount(0);

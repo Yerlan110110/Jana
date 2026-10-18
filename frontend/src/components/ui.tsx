@@ -92,7 +92,11 @@ export function ErrorNotice({
             {Object.entries(error.fields).map(([key, value]) => (
               <li key={key}>
                 {fieldLabel(key)}:{" "}
-                {typeof value === "string" ? value : JSON.stringify(value)}
+                {typeof value === "string"
+                  ? value
+                  : Array.isArray(value) && value.every((message) => typeof message === "string")
+                    ? value.join(" ")
+                    : JSON.stringify(value)}
               </li>
             ))}
           </ul>

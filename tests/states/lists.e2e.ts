@@ -68,6 +68,7 @@ test("request-list transport error and loading retain the same filter wrapper an
       } });
     } finally {
       release?.();
+      await expect(screen.getByRole("status", "Загружаем данные")).toHaveCount(0);
       await browser.unroute(pattern);
     }
     await expect(screen.getByRole("status", "Загружаем данные")).toHaveCount(0);

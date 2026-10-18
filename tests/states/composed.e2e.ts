@@ -47,6 +47,8 @@ test("reviewer stale decision retains the required comment and refresh removes o
     expect(response.status).toBe(409);
     await expect(comment).toHaveValue(text);
     await expect(screen.getByRole("alert")).toContainText("Обновите запись");
+    await screen.getByRole("alert").getByText("Причина отказа сервера", { exact: true }).press("Enter");
+    await screen.getByRole("alert").getByText("Данные для поддержки", { exact: true }).press("Enter");
     await capturePreparedPage({ app, browser, environment, directory, view: {
       id: "S10-review-conflict", path, ready: "Следующее действие", state: "real second-window approval; stale return rejected409; required comment retained",
     } });
@@ -102,6 +104,12 @@ test("HR case form distinguishes an individual answer, published basis and stale
     ]);
     expect(conflict.status).toBe(409);
     await expect(response).toHaveValue(text);
+    if (environment.kind === "viewport" && environment.width === 320) {
+      const body = await browser.evaluate(() => document.querySelector('[role="alert"] > div')?.getBoundingClientRect().width ?? 0);
+      expect(body).toBeGreaterThanOrEqual(180);
+    }
+    await screen.getByRole("alert").getByText("Причина отказа сервера", { exact: true }).press("Enter");
+    await screen.getByRole("alert").getByText("Данные для поддержки", { exact: true }).press("Enter");
     await capturePreparedPage({ app, browser, environment, directory, view: {
       id: "S30-resolution-conflict", path, ready: "Подготовить ответ", state: "real concurrent individual resolution; selected basis and local typed response retained after409",
     } });

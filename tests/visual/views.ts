@@ -24,14 +24,22 @@ export async function viewsFor(client: Client, role: Role): Promise<View[]> {
       params: { query: { page_size: 100 } },
     }));
     if (catalog.count < 30) throw new Error("The real employee catalog must retain at least 30 courses");
-    const requests = data(await client.GET("/api/v1/requests/", {
+    const returned = required(data(await client.GET("/api/v1/requests/", {
+      params: { query: { employee: me.employee.id, status: "returned", page_size: 1 } },
+    })).results[0], "returned request");
+    const approved = required(data(await client.GET("/api/v1/requests/", {
+      params: { query: { employee: me.employee.id, status: "approved", page_size: 1 } },
+    })).results[0], "approved request");
+    let enrollmentPage = data(await client.GET("/api/v1/academy/enrollments/", {
       params: { query: { employee: me.employee.id, page_size: 100 } },
-    })).results;
-    const returned = required(requests.find((item) => item.status === "returned"), "returned request");
-    const approved = required(requests.find((item) => item.status === "approved"), "approved request");
-    const enrollments = data(await client.GET("/api/v1/academy/enrollments/", {
-      params: { query: { employee: me.employee.id, page_size: 100 } },
-    })).results;
+    }));
+    const enrollments = [...enrollmentPage.results];
+    for (let page = 2; enrollmentPage.next; page += 1) {
+      enrollmentPage = data(await client.GET("/api/v1/academy/enrollments/", {
+        params: { query: { employee: me.employee.id, page_size: 100, page } },
+      }));
+      enrollments.push(...enrollmentPage.results);
+    }
     const lesson = required(enrollments.find((item) => item.availability === "published" && item.started_at && !item.completed_at), "active course material");
     const blocked = required(enrollments.find((item) => item.availability === "published" && item.material_progress.required_completed < item.material_progress.required_total && !item.completed_at), "assessment prerequisites");
     const quiz = required(enrollments.find((item) => item.allowed_actions.includes("submit_attempt")), "available assessment");
@@ -84,7 +92,7 @@ export async function viewsFor(client: Client, role: Role): Promise<View[]> {
     ];
   }
   const courses = data(await client.GET("/api/v1/academy/manage/courses/", {
-    params: { query: { page_size: 100 } },
+    params: { query: { availability: "published", page_size: 100 } },
   })).results;
   const course = required(courses.find((item) => item.availability === "published"), "published editable course");
   return [

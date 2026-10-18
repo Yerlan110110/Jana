@@ -23,6 +23,8 @@ All three brief pages and the deck's company, values, Digital HR, scoring, and r
 
 The [official event page](https://terricon.kz/ru/hackathon) lists 16–18 October, online and offline participation, two cases, and closed registration. The [organizer announcement](https://terricon.kz/tpost/gsi7uyn7k1-v-karagande-proidet-hakaton-s-prizovim-f) gives the same dates and the Karaganda venue. The supplied deck identifies 2026. Exact submission and defense hours, this jury's membership, and the competitor count remain unverified. The user's reference to 100 people is an ambition, not a verified team count.
 
+The official event page was opened again on18 October. It places14:00 beside the date range, without identifying a submission or defense deadline. That time is not used as the final deadline.
+
 ## Score and product choices
 
 | Criterion | Weight | Demonstration and acceptance unit |

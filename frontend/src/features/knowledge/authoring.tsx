@@ -77,7 +77,7 @@ export function ManagePoliciesPage() {
                       Версия записи {document.version} ·{" "}
                       {document.has_unpublished_changes
                         ? "Есть неопубликованные изменения"
-                        : "Публикация актуальна"}
+                        : "Черновик соответствует публикации"}
                     </p>
                   </div>
                   <StatusLabel status={document.state} />

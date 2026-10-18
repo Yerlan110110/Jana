@@ -527,7 +527,7 @@ legend {
 }
 .error-notice > div {
   min-width: 0;
-  flex: 1;
+  flex: 1 1 min(15rem, calc(100% - 28px));
 }
 .error-notice details {
   margin-block-start: 8px;
