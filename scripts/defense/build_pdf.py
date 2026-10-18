@@ -14,7 +14,7 @@ from reportlab.platypus import Paragraph
 
 ROOT = Path(__file__).resolve().parents[2]
 WIDTH, HEIGHT = 1600, 1000
-INK, MUTED, ACCENT = "#12151a", "#4b5563", "#007a00"
+INK, MUTED, ACCENT = "#2b2b2b", "#646157", "#2b2b2b"
 
 
 def paragraph(canvas, text, x, top, width, size, height, *, bold=False, color=INK):
@@ -40,7 +40,7 @@ def build(args):
     canvas.setAuthor("JanaMen")
     canvas.setSubject("Synthetic HR demonstration, 18 October 2026")
     for index, slide in enumerate(slides, 1):
-        canvas.setFillColor(HexColor("#ffffff"))
+        canvas.setFillColor(HexColor("#f8f6ee"))
         canvas.rect(0, 0, WIDTH, HEIGHT, fill=1, stroke=0)
         if slide["kind"] == "cover":
             paragraph(canvas, "JanaMen", 112, 820, 1376, 108, 150, bold=True, color=ACCENT)
@@ -48,9 +48,9 @@ def build(args):
             paragraph(canvas, slide["text"], 112, 385, 1200, 32, 160)
             paragraph(canvas, "Jana Post × Terricon Valley\nDigital HR, 18 октября 2026", 112, 165, 1100, 23, 70, color=MUTED)
         elif slide["kind"] == "screen":
-            paragraph(canvas, slide["title"], 112, 967, 1376, 42, 60, bold=True)
+            paragraph(canvas, slide["title"], 112, 940, 1376, 38, 60, bold=True)
             image = ROOT / "docs/defense" / slide["image"]
-            canvas.drawImage(str(image), 160, 112, width=1280, height=800, preserveAspectRatio=True, mask="auto")
+            canvas.drawImage(str(image), 160, 140, width=1280, height=720, preserveAspectRatio=True, mask="auto")
             paragraph(canvas, slide["text"], 160, 94, 1280, 22, 64)
         elif slide["kind"] == "closing":
             paragraph(canvas, slide["title"], 112, 900, 1376, 54, 90, bold=True)
