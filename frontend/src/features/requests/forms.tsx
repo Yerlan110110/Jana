@@ -10,15 +10,20 @@ import {
   PageHeader,
 } from "@/components/ui";
 import { Input } from "@/components/upstream/input";
-import { api, unwrap, useCommand, type Model } from "@/lib/api";
+import { api, ApiError, unwrap, useCommand, type Model } from "@/lib/api";
 import { date } from "@/lib/format";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
+import { z } from "zod";
 import { RequestActions } from "./actions";
 import type { EditIntent, RequestFields, RequestRecord } from "./common";
 import { initialFields } from "./common";
 import { WriteRecovery } from "./support";
+
+type SubmittedFields = Partial<Pick<Model<"RequestCreateRequest">,
+  "start_date" | "end_date" | "amount" | "requested_payment_date" | "reason">>;
+const fieldMessage = z.union([z.string(), z.array(z.string())]);
 
 function LeaveBalance() {
   const balance = useQuery({
@@ -71,18 +76,49 @@ function RequestFieldsForm({
   values,
   setValues,
   disabled,
+  error,
+  submittedValues,
 }: {
   values: RequestFields;
   setValues: (values: RequestFields) => void;
   disabled: boolean;
+  error?: unknown;
+  submittedValues?: SubmittedFields;
 }) {
+  const prefix = useId();
+  const fields = useRef<HTMLFieldSetElement>(null);
+  const current: SubmittedFields = values;
+  function message(name: keyof SubmittedFields) {
+    if (!(error instanceof ApiError) || error.status !== 400 ||
+      current[name] !== submittedValues?.[name]) return undefined;
+    const parsed = fieldMessage.safeParse(error.fields[name]);
+    return parsed.success
+      ? typeof parsed.data === "string" ? parsed.data : parsed.data.join(" ")
+      : undefined;
+  }
+  function inputProps(name: keyof SubmittedFields) {
+    return {
+      id: `${prefix}-${name}`,
+      "aria-invalid": message(name) ? true : undefined,
+      "aria-describedby": message(name) ? `${prefix}-${name}-error` : undefined,
+    };
+  }
+  function errorText(name: keyof SubmittedFields) {
+    const text = message(name);
+    return text && <p id={`${prefix}-${name}-error`} className="field-error">{text}</p>;
+  }
+  useEffect(() => {
+    if (error instanceof ApiError && error.status === 400)
+      fields.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+  }, [error]);
   return (
-    <fieldset disabled={disabled} className="rq-fieldset form-stack">
+    <fieldset ref={fields} disabled={disabled} className="rq-fieldset form-stack">
       {values.kind === "leave" ? (
         <div className="form-grid">
-          <label className="field">
-            Первый день отпуска
+          <div className="field">
+            <label htmlFor={`${prefix}-start_date`}>Первый день отпуска</label>
             <Input
+              {...inputProps("start_date")}
               name="start_date"
               type="date"
               required
@@ -91,10 +127,12 @@ function RequestFieldsForm({
                 setValues({ ...values, start_date: e.target.value })
               }
             />
-          </label>
-          <label className="field">
-            Последний день отпуска
+            {errorText("start_date")}
+          </div>
+          <div className="field">
+            <label htmlFor={`${prefix}-end_date`}>Последний день отпуска</label>
             <Input
+              {...inputProps("end_date")}
               name="end_date"
               type="date"
               required
@@ -104,13 +142,15 @@ function RequestFieldsForm({
                 setValues({ ...values, end_date: e.target.value })
               }
             />
-          </label>
+            {errorText("end_date")}
+          </div>
         </div>
       ) : (
         <div className="form-grid">
-          <label className="field">
-            Сумма аванса, KZT
+          <div className="field">
+            <label htmlFor={`${prefix}-amount`}>Сумма аванса, KZT</label>
             <Input
+              {...inputProps("amount")}
               name="amount"
               type="number"
               inputMode="decimal"
@@ -120,10 +160,12 @@ function RequestFieldsForm({
               value={values.amount}
               onChange={(e) => setValues({ ...values, amount: e.target.value })}
             />
-          </label>
-          <label className="field">
-            Желаемая дата выплаты
+            {errorText("amount")}
+          </div>
+          <div className="field">
+            <label htmlFor={`${prefix}-requested_payment_date`}>Желаемая дата выплаты</label>
             <Input
+              {...inputProps("requested_payment_date")}
               name="requested_payment_date"
               type="date"
               required
@@ -132,19 +174,22 @@ function RequestFieldsForm({
                 setValues({ ...values, requested_payment_date: e.target.value })
               }
             />
-          </label>
+            {errorText("requested_payment_date")}
+          </div>
         </div>
       )}
-      <label className="field">
-        Причина
+      <div className="field">
+        <label htmlFor={`${prefix}-reason`}>Причина</label>
         <Textarea
+          {...inputProps("reason")}
           name="reason"
           rows={4}
           maxLength={2000}
           value={values.reason}
           onChange={(e) => setValues({ ...values, reason: e.target.value })}
         />
-      </label>
+        {errorText("reason")}
+      </div>
     </fieldset>
   );
 }
@@ -224,6 +269,8 @@ export function RequestCreatePage() {
               values={values}
               setValues={setValues}
               disabled={create.isPending}
+              error={create.error}
+              submittedValues={create.variables}
             />
             <WriteRecovery
               error={create.error}
@@ -320,6 +367,8 @@ export function RequestEditor({
               setSaved(false);
             }}
             disabled={save.isPending}
+            error={save.error}
+            submittedValues={save.variables}
           />
           <WriteRecovery
             error={save.error}

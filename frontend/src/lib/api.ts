@@ -21,6 +21,31 @@ export const queryClient = new QueryClient({
   },
 });
 
+function clearPrivateSession() {
+  csrfToken = undefined;
+  queryClient.removeQueries({
+    predicate: (query) => query.queryKey[0] !== "session",
+  });
+  queryClient.getMutationCache().clear();
+  queryClient.setQueryData(["session"], null);
+}
+
+const requestSessions = new WeakMap<Request, string | undefined>();
+api.use({
+  onRequest({ request }) {
+    requestSessions.set(request, csrfToken);
+  },
+  onResponse({ request, response }) {
+    if (
+      response.status === 401 &&
+      requestSessions.get(request) === csrfToken &&
+      queryClient.getQueryData(["session"])
+    ) {
+      clearPrivateSession();
+    }
+  },
+});
+
 const errorSchema = z.object({
   code: z.string().optional(),
   message: z.string().optional(),
@@ -103,13 +128,9 @@ export async function signIn(username: string, password: string) {
 }
 
 export async function signOut() {
+  const sessionToken = csrfToken;
   const result = await api.POST("/api/v1/auth/logout/");
-  if (!result.response.ok) throw new ApiError(result.response, result.error);
-  await queryClient.cancelQueries();
-  queryClient.removeQueries({
-    predicate: (query) => query.queryKey[0] !== "session",
-  });
-  queryClient.getMutationCache().clear();
-  csrfToken = undefined;
-  queryClient.setQueryData(["session"], null);
+  if (!result.response.ok && result.response.status !== 401)
+    throw new ApiError(result.response, result.error);
+  if (csrfToken === sessionToken) clearPrivateSession();
 }

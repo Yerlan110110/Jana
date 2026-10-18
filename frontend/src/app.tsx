@@ -210,7 +210,10 @@ export function Application() {
         />
       </main>
     );
-  if (!session.data) return <LoginPage />;
+  if (!session.data)
+    return location.pathname === "/login"
+      ? <LoginPage />
+      : <Navigate to="/login" replace />;
   if (location.pathname === "/login") return <Navigate to="/" replace />;
   return (
     <SessionProvider key={session.data.user.id} session={session.data}>

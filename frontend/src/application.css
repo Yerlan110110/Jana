@@ -454,6 +454,11 @@ legend {
   font-size: 12px;
   line-height: 1.6;
 }
+.field-error {
+  color: var(--destructive-foreground);
+  font-size: 13px;
+  line-height: 1.5;
+}
 .muted {
   color: var(--muted-foreground);
 }

@@ -11,8 +11,14 @@ import {
 import { api, unwrap, useCommand, type Model } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import {
+  Link,
+  useBeforeUnload,
+  useBlocker,
+  useNavigate,
+  useParams,
+} from "react-router";
 import { isAccessDenied, WriteRecovery } from "../../requests/support";
 import { Rules, useEnrollment } from "../common";
 
@@ -20,6 +26,7 @@ type QuizIntent = Model<"AttemptCommandRequest"> & { id: string };
 
 function useQuizSubmission() {
   const navigate = useNavigate();
+  const savedEnrollment = useRef<string | null>(null);
   const submit = useCommand(async ({ id, ...body }: QuizIntent, key) =>
     unwrap(
       await api.POST("/api/v1/academy/enrollments/{id}/submit-attempt/", {
@@ -33,13 +40,15 @@ function useQuizSubmission() {
   );
   function send(body: QuizIntent) {
     submit.mutate(body, {
-      onSuccess: (result) =>
+      onSuccess: (result) => {
+        savedEnrollment.current = body.id;
         void navigate(
           `/academy/attempts/${result.attempt.id}?enrollment=${body.id}`,
-        ),
+        );
+      },
     });
   }
-  return { submit, send };
+  return { submit, send, savedEnrollment };
 }
 
 function QuizForm({
@@ -54,77 +63,124 @@ function QuizForm({
   submission: ReturnType<typeof useQuizSubmission>;
 }) {
   const [selections, setSelections] = useState<Record<string, string>>({});
-  const { submit, send } = submission;
+  const warning = useRef<HTMLDialogElement>(null);
+  const warningId = useId();
+  const dirty = Object.keys(selections).length > 0;
+  const { submit, send, savedEnrollment } = submission;
+  const blocker = useBlocker(() => dirty && savedEnrollment.current !== enrollment.id);
+  useBeforeUnload(
+    useCallback((event) => {
+      if (dirty && savedEnrollment.current !== enrollment.id) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    }, [dirty, enrollment.id, savedEnrollment]),
+  );
+  useEffect(() => {
+    if (blocker.state === "blocked") warning.current?.showModal();
+    else warning.current?.close();
+  }, [blocker.state]);
   return (
-    <form
-      className="form-stack"
-      onSubmit={(e) => {
-        e.preventDefault();
-        send({
-          id: enrollment.id,
-          expected_version: enrollment.version,
-          answers: content.questions.map((question) => ({
-            question_id: question.id,
-            selected_option_id: selections[question.id] ?? "",
-          })),
-        });
-      }}
-    >
-      <p className="muted">
-        Ответы сохранятся после отправки всей попытки. Правильные ответы не
-        показываются. Вопросов {content.questions.length}.
-      </p>
-      {content.questions.map((question, i) => (
-        <fieldset
-          className="ac-question"
-          key={question.id}
-          disabled={submit.isPending}
-        >
-          <legend>
-            {i + 1}. {question.prompt}
-          </legend>
-          {question.options.map((option) => (
-            <label className="ac-choice" key={option.id}>
-              <input
-                type="radio"
-                name={`question-${question.id}`}
-                required
-                value={option.id}
-                checked={selections[question.id] === option.id}
-                onChange={() =>
-                  setSelections((previous) => ({
-                    ...previous,
-                    [question.id]: option.id,
-                  }))
-                }
-              />
-              <span>{option.text}</span>
-            </label>
-          ))}
-        </fieldset>
-      ))}
-      <WriteRecovery
-        error={submit.error}
-        refresh={() => {
-          refresh();
-          submit.reset();
+    <>
+      <form
+        className="form-stack"
+        onSubmit={(e) => {
+          e.preventDefault();
+          send({
+            id: enrollment.id,
+            expected_version: enrollment.version,
+            answers: content.questions.map((question) => ({
+              question_id: question.id,
+              selected_option_id: selections[question.id] ?? "",
+            })),
+          });
         }}
-        retry={
-          submit.variables
-            ? () => {
-                if (submit.variables) send(submit.variables);
-              }
-            : undefined
-        }
-      />
-      <ActionButton
-        type="submit"
-        loading={submit.isPending}
-        loadingLabel="Отправляем ответы"
       >
-        Отправить ответы и завершить попытку
-      </ActionButton>
-    </form>
+        <p className="muted">
+          Ответы сохранятся после отправки всей попытки. Правильные ответы не
+          показываются. Вопросов {content.questions.length}.
+        </p>
+        {content.questions.map((question, i) => (
+          <fieldset
+            className="ac-question"
+            key={question.id}
+            disabled={submit.isPending}
+          >
+            <legend>
+              {i + 1}. {question.prompt}
+            </legend>
+            {question.options.map((option) => (
+              <label className="ac-choice" key={option.id}>
+                <input
+                  type="radio"
+                  name={`question-${question.id}`}
+                  required
+                  value={option.id}
+                  checked={selections[question.id] === option.id}
+                  onChange={() =>
+                    setSelections((previous) => ({
+                      ...previous,
+                      [question.id]: option.id,
+                    }))
+                  }
+                />
+                <span>{option.text}</span>
+              </label>
+            ))}
+          </fieldset>
+        ))}
+        <WriteRecovery
+          error={submit.error}
+          refresh={() => {
+            refresh();
+            submit.reset();
+          }}
+          retry={
+            submit.variables
+              ? () => {
+                  if (submit.variables) send(submit.variables);
+                }
+              : undefined
+          }
+        />
+        <ActionButton
+          type="submit"
+          loading={submit.isPending}
+          loadingLabel="Отправляем ответы"
+        >
+          Отправить ответы и завершить попытку
+        </ActionButton>
+      </form>
+      <dialog
+        ref={warning}
+        className="quiz-exit-dialog"
+        aria-labelledby={`${warningId}-title`}
+        aria-describedby={`${warningId}-description`}
+        onCancel={(event) => {
+          event.preventDefault();
+          if (blocker.state === "blocked") blocker.reset();
+        }}
+      >
+        <div className="stack">
+          <h2 id={`${warningId}-title`}>
+            {submit.isPending ? "Дождитесь результата отправки" : "Уйти без отправки ответов?"}
+          </h2>
+          <p id={`${warningId}-description`}>
+            {submit.isPending
+              ? "Ответы отправляются. Дождитесь результата, чтобы проверить сохранение попытки."
+              : "Выбранные ответы ещё не сохранены. Если уйдёте, они потеряются. Попытка не будет отправлена."}
+          </p>
+          <div className="button-row">
+            <ActionButton autoFocus onClick={() => {
+              if (blocker.state === "blocked") blocker.reset();
+            }}>Остаться в тесте</ActionButton>
+            {!submit.isPending && <ActionButton variant="secondary" onClick={() => {
+              if (blocker.state === "blocked") blocker.proceed();
+            }}>Уйти без отправки</ActionButton>}
+          </div>
+        </div>
+      </dialog>
+    </>
   );
 }
 

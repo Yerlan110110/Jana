@@ -257,3 +257,18 @@
   border: 0;
   margin: 0;
 }
+.quiz-exit-dialog {
+  width: min(480px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  margin: auto;
+  padding: 24px;
+  color: var(--foreground);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+}
+.quiz-exit-dialog::backdrop {
+  background: rgb(0 0 0 / 35%);
+}
