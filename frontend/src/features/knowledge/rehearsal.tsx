@@ -5,135 +5,17 @@ import { ActionButton as Button } from "@/components/actions";
 import { Card } from "@/components/pace/card";
 import { Textarea } from "@/components/pace/textarea";
 import { ErrorNotice } from "@/components/ui";
-import { api, unwrap } from "@/lib/api";
+import { api, unwrap, type Model } from "@/lib/api";
 
-/* Temporary contract shim. The generated schema lacks the rehearsal endpoint
- * until the backend worktree's OpenAPI contract is integrated; when
- * packages/api-client/src/schema.d.ts grows this path natively, delete this
- * block or duplicate keys will fail typechecking. */
-declare module "@janamen/api-client/schema" {
-  interface paths {
-    "/api/v1/knowledge/admin/documents/{document_id}/rehearsal/": {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      get?: never;
-      put?: never;
-      post: {
-        parameters: {
-          query?: never;
-          header?: never;
-          path: { document_id: string };
-          cookie?: never;
-        };
-        requestBody: {
-          content: {
-            "application/json": {
-              expected_version: number;
-              language?: string;
-              questions?: string[];
-              gap_case_ids?: string[];
-            };
-          };
-        };
-        responses: {
-          200: {
-            headers: { [name: string]: unknown };
-            content: { "application/json": RehearsalResponse };
-          };
-        };
-      };
-      delete?: never;
-      options?: never;
-      head?: never;
-      patch?: never;
-      trace?: never;
-    };
-  }
-}
-
-interface RehearsalExcerpt {
-  origin: string;
-  chunk_id: string | null;
-  revision_id: string | null;
-  revision_number: number | null;
-  document_id: string | null;
-  title: string | null;
-  heading: string | null;
-  locator: string | null;
-  text: string | null;
-  content_hash: string | null;
-  score: number | null;
-  coverage: number | null;
-}
-
-interface RehearsalSide {
-  reason: string;
-  excerpts: RehearsalExcerpt[];
-}
-
-type RehearsalClassification = "unchanged" | "changed" | "lost" | "gained";
-
-interface RehearsalResult {
-  source: string;
-  gap_case_id: string | null;
-  question: string;
-  language: string;
-  classification: string;
-  before: RehearsalSide;
-  after: RehearsalSide;
-}
-
-interface RehearsalResponse {
-  document: {
-    id: string;
-    slug: string;
-    title: string;
-    state: string;
-    version: number;
-    has_unpublished_changes: boolean;
-  };
-  current: {
-    revision_id: string;
-    revision_number: number;
-    content_hash: string;
-    published_at: string;
-  } | null;
-  draft: {
-    content_hash: string;
-    language: string;
-    topic: string;
-    audience: string;
-    effective_from: string | null;
-    effective_until: string | null;
-    section_count: number;
-  };
-  audience_impact: {
-    eligible_current: number | null;
-    eligible_draft: number;
-    changed: number;
-  };
-  summary: {
-    total: number;
-    unchanged: number;
-    changed: number;
-    lost: number;
-    gained: number;
-  };
-  impacted_employees_count: number;
-  results: RehearsalResult[];
-  scope: string;
-  not_legal_verification: boolean;
-}
+type RehearsalExcerpt = Model<"RehearsalExcerpt">;
+type RehearsalSide = Model<"RehearsalRetrieval">;
+type RehearsalClassification = Model<"ClassificationEnum">;
 
 const classificationText: Record<RehearsalClassification, string> = {
   unchanged: "Без изменений",
   changed: "Изменится",
   lost: "Потеряет источник",
-  gained: "Получит ответ",
+  gained: "Получит источник",
 };
 
 const reasonText: Record<string, string> = {
@@ -142,12 +24,6 @@ const reasonText: Record<string, string> = {
   clarification_required: "Ответ потребует уточнения",
   unsafe_instruction: "Вопрос отклонён как небезопасный",
 };
-
-function classificationLabel(value: string) {
-  return (
-    classificationText[value as RehearsalClassification] ?? value
-  );
-}
 
 function Excerpt({ excerpt }: { excerpt: RehearsalExcerpt }) {
   return (
@@ -164,13 +40,6 @@ function Excerpt({ excerpt }: { excerpt: RehearsalExcerpt }) {
           : `редакция ${excerpt.revision_number ?? "—"}`}
       </span>
       {excerpt.text && <p>{excerpt.text}</p>}
-      {excerpt.score !== null && (
-        <p>
-          Совпадение {excerpt.score.toFixed(2)}
-          {excerpt.coverage !== null &&
-            ` · покрытие ${Math.round(excerpt.coverage * 100)}%`}
-        </p>
-      )}
     </li>
   );
 }
@@ -188,7 +57,7 @@ function Side({ label, side }: { label: string; side: RehearsalSide }) {
         </ul>
       )}
       {!side.excerpts.length && (
-        <p className="rehearsal-empty">Источник не найден.</p>
+        <p className="rehearsal-empty">{side.restricted_excerpts ? "Источник доступен сотруднику, но скрыт для вашей роли." : "Источник не найден."}</p>
       )}
     </div>
   );
@@ -210,9 +79,9 @@ export function RehearsalPanel({
     mutationFn: async () =>
       unwrap(
         await api.POST(
-          "/api/v1/knowledge/admin/documents/{document_id}/rehearsal/",
+          "/api/v1/knowledge/admin/documents/{id}/rehearsal/",
           {
-            params: { path: { document_id: documentId } },
+            params: { path: { id: documentId } },
             body: {
               expected_version: expectedVersion,
               ...(question.trim()
@@ -223,7 +92,9 @@ export function RehearsalPanel({
         ),
       ),
   });
-  const data = preview.data;
+  const data = !blocked && preview.data?.document.version === expectedVersion
+    ? preview.data
+    : undefined;
   return (
     <Card className="data-section rehearsal-panel">
       <div className="section-heading">
@@ -233,8 +104,7 @@ export function RehearsalPanel({
           </h2>
           <p>
             Сравнение выдержек источников до и после публикации сохранённого
-            черновика. Это предпросмотр поискового покрытия, а не юридическое
-            согласование — решение о публикации принимает HR.
+            черновика. Проверка показывает найденные источники. Правильность самого правила проверяет HR.
           </p>
         </div>
       </div>
@@ -276,7 +146,7 @@ export function RehearsalPanel({
         <div className="rehearsal-results">
           <div className="rehearsal-summary">
             <span className="domain-status" data-status="gained">
-              <span aria-hidden="true" /> Новых ответов: {data.summary.gained}
+              <span aria-hidden="true" /> Новых оснований: {data.summary.gained}
             </span>
             <span className="domain-status" data-status="changed">
               <span aria-hidden="true" /> Изменятся: {data.summary.changed}
@@ -293,14 +163,11 @@ export function RehearsalPanel({
             Вопросов проверено: {data.summary.total} · затронуты вопросы{" "}
             {data.impacted_employees_count} сотрудников · документ найдут: было{" "}
             {data.audience_impact.eligible_current ?? "ещё не опубликовано"} →
-            станет {data.audience_impact.eligible_draft} (
-            {data.audience_impact.changed >= 0 ? "+" : ""}
-            {data.audience_impact.changed}).
+            станет {data.audience_impact.eligible_draft}. Доступ изменится у {data.audience_impact.changed} сотрудников.
           </p>
           {!data.current && (
             <p className="rehearsal-impact">
-              Документ ещё не публиковался — любая выдержка из черновика считается
-              новым покрытием.
+              Документ ещё не публиковался. Сравнение учитывает и другие доступные регламенты.
             </p>
           )}
           {data.results.map((result, index) => (
@@ -310,7 +177,7 @@ export function RehearsalPanel({
                 <div className="rehearsal-question-meta">
                   <span className="domain-status" data-status={result.classification}>
                     <span aria-hidden="true" />
-                    {classificationLabel(result.classification)}
+                    {classificationText[result.classification]}
                   </span>
                   {result.source === "gap_case" && (
                     <small>Из вопросов без ответа</small>
