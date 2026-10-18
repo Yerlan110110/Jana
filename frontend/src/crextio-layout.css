@@ -203,7 +203,8 @@ body {
 .filter-bar input[type="checkbox"] { width: 16px; height: 16px; min-height: 0; accent-color: var(--brand); flex-shrink: 0; }
 .crextio-header-actions { gap: 6px; }
 .crextio-header-actions > :is(button,a) { min-height: 40px; }
-.crextio-header-actions > button:last-child { width: 40px; padding: 0; }
+.crextio-header-actions > button[aria-label="Выйти из кабинета"] { width: 40px; padding: 0; }
+.crextio-header-actions > button[aria-controls="mobile-navigation"] { white-space: nowrap; flex-shrink: 0; }
 .navigation-toggle-glyph { display: grid; width: 16px; height: 16px; align-content: center; gap: 4px; }
 .navigation-toggle-glyph i { display: block; width: 16px; height: 1.5px; background: currentColor; transition: transform 220ms cubic-bezier(.23,1,.32,1); }
 [aria-expanded="true"] .navigation-toggle-glyph i:first-child { transform: translateY(2.75px) rotate(45deg); }
