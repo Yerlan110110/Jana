@@ -452,9 +452,10 @@ function AppShell() {
       menuTrigger.current?.focus();
     }
   }
+  const primaryLinks = [...personalLinks.slice(0, 5), ...(user.role !== "employee" ? [teamLinks[2]] : [])];
   function navigation(links: typeof personalLinks) {
     return links.map(({ to, label, icon: Icon, end }) => (
-      <NavLink key={to} to={to} end={end} viewTransition onClick={() => setMenuOpen(false)}>
+      <NavLink key={to} to={to} end={end} data-primary-navigation={primaryLinks.some(link => link.to === to) || undefined} viewTransition onClick={() => setMenuOpen(false)}>
         <Icon size={18} aria-hidden="true" />
         <span>{label}</span>
       </NavLink>
@@ -469,8 +470,7 @@ function AppShell() {
         <header className="crextio-header">
           <Brand />
           <nav className="crextio-nav" aria-label="Основная навигация">
-            {navigation(personalLinks.slice(0, 5))}
-            {user.role !== "employee" && navigation([teamLinks[2]])}
+            {navigation(primaryLinks)}
           </nav>
           <div className="crextio-header-actions">
             <NavLink className="topbar-link" to="/notifications" aria-label="Уведомления"><Bell size={17} /></NavLink>
@@ -498,14 +498,6 @@ function AppShell() {
             {navigation(personalLinks)}
             {user.role !== "employee" && navigation(teamLinks)}
             {user.role === "hr" && navigation(hrLinks)}
-            <Button
-              variant="secondary"
-              disabled={mutations > 0}
-              loading={logout.isPending}
-              onClick={() => logout.mutate()}
-            >
-              Выйти
-            </Button>
           </nav>
         )}
         <main

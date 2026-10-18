@@ -68,6 +68,9 @@ body {
 }
 .mobile-navigation a { padding: 8px 12px; border-radius: 999px; }
 .mobile-navigation a.active { background: #2b2b2b; color: white; }
+@media (min-width: 801px) {
+  .mobile-navigation a[data-primary-navigation] { display: none; }
+}
 .filter-bar {
   border-radius: 24px 24px 0 0;
   background: rgb(249 248 244 / 86%);
