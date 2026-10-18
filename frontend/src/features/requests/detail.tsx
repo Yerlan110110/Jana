@@ -1,7 +1,6 @@
 import {
   BackLink,
   DataSection,
-  DemoNote,
   ErrorNotice,
   LoadingState,
   PageHeader,
@@ -245,7 +244,6 @@ export function RequestDetailPage() {
                 </p>
               )}
             </DataSection>
-            <DemoNote />
           </div>
         )
       )}

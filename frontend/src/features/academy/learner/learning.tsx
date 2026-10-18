@@ -2,7 +2,6 @@ import { ActionButton } from "@/components/actions";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -311,7 +310,6 @@ export function LearningPage() {
             <DataSection title="Попытки и результаты">
               <AttemptRows enrollment={record} />
             </DataSection>
-            <DemoNote />
           </div>
         )
       )}

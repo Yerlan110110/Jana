@@ -13,7 +13,7 @@ test("the Docker web entry exposes a labeled sign-in form", async ({
   await expect(screen.getByLabel("Пароль")).toBeVisible();
   await expect(screen.getByRole("button", "Войти")).toBeEnabled();
   await expect(
-    screen.getByText("Демонстрационные данные.", { exact: false }),
+    screen.getByText("Демонстрационный стенд", { exact: false }),
   ).toBeVisible();
   expect(
     await browser.evaluate(

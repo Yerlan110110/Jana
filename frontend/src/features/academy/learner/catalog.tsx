@@ -1,7 +1,6 @@
 import {
   BackLink,
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -47,7 +46,7 @@ export function CatalogPage() {
       ),
   });
   return (
-    <>
+    <div className="interior-page interior-catalog">
       <BackLink to="/academy">К моему обучению</BackLink>
       <PageHeader
         eyebrow="Jana Academy"
@@ -117,9 +116,8 @@ export function CatalogPage() {
             </>
           )
         )}
-        <DemoNote />
       </div>
-    </>
+    </div>
   );
 }
 
@@ -219,7 +217,6 @@ export function CoursePage() {
             />
           )}
         </DataSection>
-        <DemoNote />
       </div>
     </>
   );

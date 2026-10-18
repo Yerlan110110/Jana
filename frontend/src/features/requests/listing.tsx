@@ -2,7 +2,6 @@ import { ActionButton, ActionLink } from "@/components/actions";
 import { NativeSelect } from "@/components/pace/native-select";
 import {
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -75,7 +74,7 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
       />
     );
   return (
-    <>
+    <div className="interior-page interior-requests">
       <PageHeader
         eyebrow={queue ? "Рассмотрение заявлений" : "Личный кабинет"}
         title={
@@ -101,6 +100,27 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
           )
         }
       />
+      {!queue && <section className="request-launchpad" aria-label="Быстрые действия">
+        <Link to="/requests/new?type=leave" className="leave-launch">
+          <span className="interior-kicker">ВРЕМЯ ДЛЯ СЕБЯ <span>↗</span></span>
+          <h2>Планы начинаются<br />с отпуска.</h2>
+          <div className="leave-orbits" aria-hidden="true"><i /><i /><i /><span>J</span></div>
+          <span className="launch-bottom">Запланировать отпуск <span>↗</span></span>
+        </Link>
+        <div className="request-route-card">
+          <span className="interior-kicker">ПОНЯТНЫЙ МАРШРУТ</span>
+          <h2>От заявления<br />до решения.</h2>
+          <ol><li><span>01</span> Вы отправляете</li><li><span>02</span> Руководитель согласует</li><li><span>03</span> HR оформляет</li></ol>
+          <Link to="/requests/new?type=advance" className="advance-launch">Нужен зарплатный аванс? <span>↗</span></Link>
+        </div>
+        <div className="request-count-card">
+          <span className="interior-kicker">ВАШ РЕЕСТР</span>
+          <strong>{requests.data?.count ?? "—"}</strong>
+          <p>заявлений по выбранным условиям</p>
+          <div className="count-stacks" aria-hidden="true"><i /><i /><i /><i /><i /></div>
+          <span>История каждого решения сохраняется</span>
+        </div>
+      </section>}
       <div className="stack">
         <div className="filter-bar">
           <label className="field">
@@ -261,9 +281,8 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
             </DataSection>
           )
         )}
-        <DemoNote />
       </div>
-    </>
+    </div>
   );
 }
 

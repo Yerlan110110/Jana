@@ -5,7 +5,6 @@ import { NativeSelect } from "@/components/pace/native-select";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -123,7 +122,6 @@ export function IntegrationsPage() {
             </ActionLink>
           ))}
         </nav>
-        <DemoNote />
         <p className="muted">
           Используются mock 1С и mock Documentolog. Полученная квитанция
           подтверждает приём документа адаптером. Подписание, выплата и
@@ -539,7 +537,6 @@ export function ExportPage() {
             </div>
           </details>
         )}
-        <DemoNote />
       </div>
     </>
   );

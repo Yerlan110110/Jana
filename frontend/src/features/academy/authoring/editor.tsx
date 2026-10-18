@@ -2,7 +2,6 @@ import { ActionButton } from "@/components/actions";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   ErrorNotice,
   LoadingState,
   PageHeader,
@@ -394,7 +393,6 @@ function CourseEditor({
           <PublishedRevisions id={record.id} />
         </>
       )}
-      <DemoNote />
     </div>
   );
 }

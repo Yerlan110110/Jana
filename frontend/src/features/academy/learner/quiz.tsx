@@ -2,7 +2,6 @@ import { ActionButton } from "@/components/actions";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -287,7 +286,6 @@ export function QuizPage() {
                 </DataSection>
               )
             )}
-            <DemoNote />
           </div>
         )
       )}

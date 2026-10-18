@@ -8,7 +8,6 @@ import {
 import { ActionLink } from "@/components/actions";
 import { Card } from "@/components/pace/card";
 import {
-  DemoNote,
   ErrorNotice,
   LoadingState,
   PageHeader,
@@ -183,7 +182,6 @@ export function HomePage() {
           {!data.learning_outstanding.results.length && <p>Незавершённых назначений нет.</p>}
         </Card>
       </div>
-      <DemoNote />
     </>
   );
 }

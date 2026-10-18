@@ -2,7 +2,6 @@ import { ActionLink } from "@/components/actions";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -143,7 +142,6 @@ export function AttemptPage() {
           <DataSection title="Все попытки назначения">
             <AttemptRows enrollment={saved.enrollment} />
           </DataSection>
-          <DemoNote />
         </div>
       ) : (
         <EmptyState

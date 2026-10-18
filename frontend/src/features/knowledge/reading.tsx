@@ -2,7 +2,6 @@ import { ActionLink } from "@/components/actions";
 import { Card } from "@/components/pace/card";
 import {
   BackLink,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -86,7 +85,7 @@ export function CitationPage() {
             {source.content_hash}
           </code>
         </details>
-        {source.is_synthetic && <DemoNote />}
+        {source.is_synthetic && <p className="eyebrow">Учебный пример</p>}
       </Card>
     </>
   );
@@ -110,7 +109,7 @@ export function DocumentsPage() {
   const setSearch = (value: string) =>
     setParams(value ? { search: value } : {});
   return (
-    <>
+    <div className="interior-page interior-library">
       <PageHeader
         eyebrow="БАЗА ЗНАНИЙ"
         title="Правила, к которым можно вернуться"
@@ -124,6 +123,10 @@ export function DocumentsPage() {
           ) : undefined
         }
       />
+      <section className="library-editorial">
+        <div><span className="interior-kicker">ЗНАНИЯ В ОДНОМ МЕСТЕ</span><h2>Одна библиотека.<br /><em>Общее понимание.</em></h2><p>Актуальные инструкции и сохранённые редакции.<br />Чтобы каждый следующий шаг был понятен.</p></div>
+        <Link to="/policy-updates" className="library-update-card"><span className="interior-kicker">ДЕРЖИМ В КУРСЕ <span>↗</span></span><div className="revision-sheets" aria-hidden="true"><i>01</i><i>02</i></div><h3>Что изменилось?</h3><p>Раньше, теперь и один вопрос на понимание.</p></Link>
+      </section>
       <div className="filter-bar">
         <Input
           aria-label="Поиск регламентов"
@@ -193,8 +196,7 @@ export function DocumentsPage() {
           />
         </>
       )}
-      <DemoNote />
-    </>
+    </div>
   );
 }
 
@@ -218,7 +220,7 @@ export function PublishedPolicy({ revision }: { revision: Model<"Revision"> }) {
         <p>Опубликовано {date(revision.published_at)}</p>
         <code>{revision.content_hash}</code>
       </details>
-      {revision.is_synthetic && <DemoNote />}
+      {revision.is_synthetic && <p className="eyebrow">Учебный пример</p>}
     </Card>
   );
 }

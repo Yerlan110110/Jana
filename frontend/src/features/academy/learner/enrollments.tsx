@@ -1,7 +1,6 @@
 import { ActionLink } from "@/components/actions";
 import {
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -64,6 +63,7 @@ function Enrollments({
         }),
       ),
   });
+  const nextCourse = enrollments.data?.results.find(item => item.completion_state !== "completed");
   if (!enabled)
     return (
       <EmptyState
@@ -76,7 +76,7 @@ function Enrollments({
       />
     );
   return (
-    <>
+    <div className="interior-page interior-academy">
       <PageHeader
         eyebrow="Jana Academy"
         title={
@@ -104,6 +104,18 @@ function Enrollments({
           )
         }
       />
+      {!team && !history && <section className="academy-launchpad" aria-label="Ваш учебный маршрут">
+        <div className="academy-editorial">
+          <span className="interior-kicker">JANA ACADEMY / ВАШ РОСТ</span>
+          <h2>Новый навык.<br /><em>Следующий шаг.</em></h2>
+          <p>Короткие материалы. Практика на рабочих ситуациях. Результат, к которому можно вернуться.</p>
+          <Link to="/academy/catalog">Выбрать новый курс <span>↗</span></Link>
+        </div>
+        <div className="academy-next">
+          <span className="interior-kicker">ПРОДОЛЖИТЬ ОБУЧЕНИЕ <span>↗</span></span>
+          {nextCourse ? <><span className="academy-next-number">01</span><h3>{nextCourse.course_version.title}</h3><p>Материалы пройдены на {nextCourse.material_progress.percent}%</p><progress max={100} value={nextCourse.material_progress.percent} aria-label="Прогресс следующего курса" /><Link to={`/academy/enrollments/${nextCourse.id}`}>Вернуться к материалам <span>→</span></Link></> : <><span className="academy-next-number">✓</span><h3>{enrollments.isPending ? "Собираем ваш маршрут" : "Можно открыть новое"}</h3><Link to="/academy/catalog">Перейти в каталог →</Link></>}
+        </div>
+      </section>}
       <div className="stack">
         <nav className="button-row" aria-label="Разделы Academy">
           <Link className="text-link" to="/academy">
@@ -207,9 +219,8 @@ function Enrollments({
             </DataSection>
           )
         )}
-        <DemoNote />
       </div>
-    </>
+    </div>
   );
 }
 

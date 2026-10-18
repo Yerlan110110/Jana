@@ -215,14 +215,6 @@ export function BackLink({
   );
 }
 
-export function DemoNote() {
-  return (
-    <p className="demo-note">
-      Демонстрационные данные. Люди, регламенты и учебные кейсы вымышлены.
-    </p>
-  );
-}
-
 export function DataSection({
   title,
   description,

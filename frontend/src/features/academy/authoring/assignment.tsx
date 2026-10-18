@@ -2,7 +2,6 @@ import { ActionButton } from "@/components/actions";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   ErrorNotice,
   LoadingState,
   PageHeader,
@@ -364,7 +363,6 @@ export function AssignLearningPage() {
             )}
           </DataSection>
         )}
-        <DemoNote />
       </div>
     </>
   );

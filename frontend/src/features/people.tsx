@@ -5,7 +5,6 @@ import { Input } from "@/components/upstream/input";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -66,7 +65,6 @@ function EmployeeFacts({ employee }: { employee: Model<"Employee"> }) {
         Если данные неверны, обратитесь в HR. Изменения вносятся в кадровом
         источнике.
       </p>
-      <DemoNote />
     </div>
   );
 }

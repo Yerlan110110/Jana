@@ -2,7 +2,6 @@ import { ActionLink } from "@/components/actions";
 import { NativeSelect } from "@/components/pace/native-select";
 import {
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -138,7 +137,6 @@ export function ManageCoursesPage() {
             </DataSection>
           )
         )}
-        <DemoNote />
       </div>
     </>
   );

@@ -4,7 +4,6 @@ import { Textarea } from "@/components/pace/textarea";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   ErrorNotice,
   LoadingState,
   PageHeader,
@@ -297,7 +296,6 @@ export function RequestCreatePage() {
           Демонстрационный порядок рассмотрения. Руководитель, затем HR. Если
           руководитель не назначен, заявление направляется HR.
         </p>
-        <DemoNote />
       </div>
     </>
   );

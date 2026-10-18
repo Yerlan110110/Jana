@@ -4,7 +4,6 @@ import { Textarea } from "@/components/pace/textarea";
 import {
   BackLink,
   DataSection,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -64,7 +63,7 @@ export function AssistantPage() {
     navigate(`/assistant/answers/${answer.id}`);
   }
   return (
-    <>
+    <div className="interior-page interior-assistant">
       <PageHeader
         eyebrow="AI JANA"
         title="Ответ начинается с источника"
@@ -76,6 +75,14 @@ export function AssistantPage() {
           </ActionLink>
         }
       />
+      <div className="assistant-workspace">
+      <aside className="assistant-editorial">
+        <span className="interior-kicker">AI JANA / РЯДОМ В РАБОТЕ</span>
+        <div className="assistant-mark" aria-hidden="true"><Sparkles size={80} strokeWidth={1} /></div>
+        <h2>Меньше поисков.<br /><em>Больше ясности.</em></h2>
+        <p>Рабочие правила становятся понятными ответами. Каждый источник можно открыть и проверить.</p>
+        <div className="assistant-trust"><ShieldCheck size={19} /><span>Ваша роль.<br />Только ваши источники.</span></div>
+      </aside>
       <Card className="assistant-intro">
         <div className="assistant-symbol">
           <Sparkles size={28} aria-hidden="true" />
@@ -144,6 +151,7 @@ export function AssistantPage() {
           ))}
         </div>
       </Card>
+      </div>
       <div className="explanation-line">
         <ShieldCheck size={18} aria-hidden="true" />
         <p>
@@ -209,8 +217,7 @@ export function AssistantPage() {
           />
         )}
       </DataSection>
-      <DemoNote />
-    </>
+    </div>
   );
 }
 
@@ -343,7 +350,6 @@ export function AnswerPage() {
         </div>
         <ErrorNotice error={escalation.error} />
       </Card>
-      <DemoNote />
     </>
   );
 }

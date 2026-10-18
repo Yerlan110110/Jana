@@ -1,3 +1,4 @@
+import "./interior-preview.css";
 import { BrandIntro } from "./components/brand-intro";
 import {
   lazy,
@@ -39,7 +40,6 @@ import {
 import { ActionButton as Button, ActionLink } from "@/components/actions";
 import { Input } from "@/components/upstream/input";
 import {
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -391,7 +391,6 @@ function LoginPage() {
               ))}
             </div>
           </details>
-          <DemoNote />
           <p>
             <a className="text-link" href="/licenses/">
               Исходный код и лицензии

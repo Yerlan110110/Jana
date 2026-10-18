@@ -4,7 +4,6 @@ import { NativeSelect } from "@/components/pace/native-select";
 import { Textarea } from "@/components/pace/textarea";
 import {
   BackLink,
-  DemoNote,
   EmptyState,
   ErrorNotice,
   LoadingState,
@@ -721,7 +720,6 @@ function PolicyEditor({
           }
         />
       )}
-      <DemoNote />
     </>
   );
 }
