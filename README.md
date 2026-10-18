@@ -263,3 +263,5 @@ node scripts/tooling/rea.mjs --version
 
 
 Контейнерный baseline и границы доказательств: [backend baseline](docs/verification/runtime-baseline.md), [same-origin serving](docs/verification/runtime-serving.md).
+
+План развития и условия приёмки будущих интеграций: [этапы после MVP](docs/product/expansion-roadmap.md).

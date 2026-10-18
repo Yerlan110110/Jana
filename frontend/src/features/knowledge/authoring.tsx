@@ -130,11 +130,14 @@ export function PolicyEditorPage() {
       />
     );
   return (
-    <PolicyEditor
-      key={id ?? "new"}
-      document={query.data}
-      reload={async () => (await query.refetch()).data}
-    />
+    <>
+      <PolicyEditor
+        key={id ?? "new"}
+        document={query.data}
+        reload={async () => (await query.refetch()).data}
+      />
+      {id && <PolicyRevisionHistory key={id} documentId={id} version={query.data?.version ?? 0} />}
+    </>
   );
 }
 
@@ -167,6 +170,30 @@ function policyDraft(document?: Model<"DocumentAdmin">): PolicyDraft {
       ),
     effective_until: document?.effective_until ?? null,
   };
+}
+
+function PolicyRevisionHistory({ documentId, version }: { documentId: string; version: number }) {
+  const { user } = useSession();
+  const [page, setPage] = useState(1);
+  const revisions = useQuery({
+    queryKey: [user.id, "policy-revisions", documentId, version, page],
+    queryFn: async ({ signal }) => unwrap(await api.GET(
+      "/api/v1/knowledge/admin/documents/{id}/revisions/",
+      { params: { path: { id: documentId, pk: documentId }, query: { page } }, signal },
+    )),
+  });
+  return <Card className="data-section">
+    <div className="section-heading"><div><h2>История редакций</h2><p>Сохранённые опубликованные основания. Черновик не меняет эти версии.</p></div></div>
+    {revisions.isPending && <LoadingState />}
+    <ErrorNotice error={revisions.error} retry={() => void revisions.refetch()} />
+    {revisions.data?.results.map((revision) => <details key={revision.id} className="citation-item">
+      <summary>Редакция {revision.number} · {revision.title} · {date(revision.published_at)}</summary>
+      <p>{revision.summary}</p>
+      {revision.sections.map((section, index) => <section key={index}><h3>{section.heading}</h3><p>{section.text}</p></section>)}
+    </details>)}
+    {revisions.data?.count === 0 && <p>Опубликованных редакций пока нет.</p>}
+    {revisions.data && <PaginationBar count={revisions.data.count ?? 0} page={page} onPage={setPage} />}
+  </Card>;
 }
 
 function PolicyEditor({
