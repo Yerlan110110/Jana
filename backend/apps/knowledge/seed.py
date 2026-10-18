@@ -16,6 +16,7 @@ from .services import (
     escalate_answer,
     publish_document,
     resolve_gap_case,
+    update_document,
 )
 
 
@@ -42,9 +43,7 @@ def seed_knowledge():
             continue
         seen_entities.add(owner.legal_entity_id)
         for policy in dataset["documents"]:
-            if policy.get("country") and policy["country"] != entity_country(
-                owner.legal_entity
-            ):
+            if policy.get("country") and policy["country"] != entity_country(owner.legal_entity):
                 continue
             slug = f"{owner.legal_entity.code.lower()}-demo-{policy['slug']}"
             if KnowledgeDocument.objects.filter(slug=slug).exists():
@@ -87,12 +86,13 @@ def seed_knowledge():
                 user__role="employee",
             )
             .select_related("user")
-            .order_by("external_id")[:3]
+            .order_by("external_id")[:4]
         )
         questions = [
             ("Есть ли программа корпоративной ипотеки?", False),
             ("Можно ли получить семейную медицинскую страховку?", True),
             ("Предусмотрена ли компенсация дошкольного образования?", False),
+            ("Можно ли перенести часть отпуска на следующий год?", False),
         ]
         for employee, (question, resolved) in zip(staff, questions, strict=False):
             message_id = uuid5(
@@ -112,4 +112,26 @@ def seed_knowledge():
                     case.version,
                     "В демонстрационной базе такая программа не установлена. Для реального ответа требуется утвержденный регламент владельца программы.",
                 )
+    for document in created:
+        if document.slug.endswith("-demo-leave"):
+            update_document(
+                document.owner.user,
+                document.id,
+                document.version,
+                {
+                    "draft_sections": [
+                        *document.draft_sections,
+                        {
+                            "heading": "Перенос отпуска",
+                            "text": (
+                                "Синтетическое дополнение для репетиции публикации. "
+                                "С письменного согласия руководителя часть отпуска свыше "
+                                "четырнадцати календарных дней можно перенести на следующий "
+                                "год. Заявку на перенос отпуска сотрудник подает через портал "
+                                "до 1 декабря текущего года."
+                            ),
+                        },
+                    ]
+                },
+            )
     return created

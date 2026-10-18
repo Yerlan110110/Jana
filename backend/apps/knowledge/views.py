@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from apps.core.idempotency import execute
 from apps.identity.permissions import require_hr
 
-from . import selectors, services
+from . import rehearsal, selectors, services
 from .models import AssistantAnswer
 from .presentation import present_answer, present_citation, present_policy_reference
 from .serializers import (
@@ -31,6 +31,8 @@ from .serializers import (
     PolicyUpdateListSerializer,
     ProviderErrorSerializer,
     QuestionSerializer,
+    RehearsalRequestSerializer,
+    RehearsalResponseSerializer,
     RevisionSerializer,
 )
 
@@ -273,6 +275,27 @@ class ArchiveDocumentView(APIView):
                 200,
             ),
         )
+
+
+class RehearseDocumentView(APIView):
+    permission_classes = [IsAuthenticated, HRKnowledgePermission]
+
+    @extend_schema(
+        tags=["Knowledge administration"],
+        request=RehearsalRequestSerializer,
+        responses=RehearsalResponseSerializer,
+        description=(
+            "Read-only preview. Replays scoped employee or explicit questions against the "
+            "current corpus and a corpus where only this document's published chunks are "
+            "replaced by its draft chunks. Writes nothing and requires no Idempotency-Key. "
+            "A stale expected_version returns 409."
+        ),
+    )
+    def post(self, request, pk):
+        serializer = RehearsalRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        result = rehearsal.rehearse_document(request.user, pk, **serializer.validated_data)
+        return Response(RehearsalResponseSerializer(result).data)
 
 
 class AdminRevisionListView(generics.ListAPIView):

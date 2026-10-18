@@ -136,7 +136,7 @@ uv run python manage.py smoke_knowledge_http \
 ```
 
 This check creates synthetic questions and one resolved HR case. It verifies CSRF login, citations, refusal, role denial, idempotent escalation, HR response, and notifications.
-The command accepts a loopback server and prints no passwords. It does not inspect the future frontend.
+The command accepts a loopback server and prints no passwords. It does not inspect the policy rehearsal or policy-update screens.
 
 ## Reused implementations
 

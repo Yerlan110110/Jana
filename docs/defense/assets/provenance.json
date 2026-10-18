@@ -76,5 +76,18 @@
       "dpr": 1
     },
     "inspection": "Opened individually at full size by the owner before inclusion; this is one viewport region, not full-view/state acceptance."
+  },
+  {
+    "view": "Policy rehearsal comparison",
+    "path": "docs/defense/assets/policy-rehearsal.png",
+    "source": ".artifacts/verification/checkpoint-1545/rehearsal-result.png",
+    "sha256": "45616c14c4241d807ff7d7dfb81f39f193eecf4ec22e0422f96ca2300efc60cb",
+    "origin": "http://127.0.0.1:8098",
+    "viewport": {
+      "width": 1440,
+      "height": 1000,
+      "dpr": 1
+    },
+    "inspection": "Actual panel capture from synthetic Docker checkpoint. Inspected in rendered PDF. Shows changed evidence, not proof of semantic answer validity."
   }
 ]

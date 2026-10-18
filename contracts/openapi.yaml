@@ -1763,6 +1763,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/DocumentAdmin'
           description: ''
+  /api/v1/knowledge/admin/documents/{id}/rehearsal/:
+    post:
+      operationId: knowledge_admin_documents_rehearsal_create
+      description: Read-only preview. Replays scoped employee or explicit questions
+        against the current corpus and a corpus where only this document's published
+        chunks are replaced by its draft chunks. Writes nothing and requires no Idempotency-Key.
+        A stale expected_version returns 409.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Knowledge administration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RehearsalRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RehearsalRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RehearsalRequestRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RehearsalResponse'
+          description: ''
   /api/v1/knowledge/admin/documents/{id}/revisions/:
     get:
       operationId: knowledge_admin_documents_revisions_list
@@ -3229,6 +3266,18 @@ components:
       required:
       - chunk_id
       - quote
+    ClassificationEnum:
+      enum:
+      - unchanged
+      - changed
+      - lost
+      - gained
+      type: string
+      description: |-
+        * `unchanged` - unchanged
+        * `changed` - changed
+        * `lost` - lost
+        * `gained` - gained
     CompletionStateEnum:
       enum:
       - not_started
@@ -4971,7 +5020,7 @@ components:
       type: object
       properties:
         source:
-          $ref: '#/components/schemas/SourceEnum'
+          $ref: '#/components/schemas/ImportSnapshotSourceEnum'
         legal_entity_id:
           type: string
           format: uuid
@@ -4997,7 +5046,7 @@ components:
       type: object
       properties:
         source:
-          $ref: '#/components/schemas/SourceEnum'
+          $ref: '#/components/schemas/ImportSnapshotSourceEnum'
         legal_entity_id:
           type: string
           format: uuid
@@ -5019,6 +5068,11 @@ components:
       - legal_entity_id
       - source
       - source_revision
+    ImportSnapshotSourceEnum:
+      enum:
+      - mock_1c
+      type: string
+      description: '* `mock_1c` - mock_1c'
     ImportStatusEnum:
       enum:
       - accepted
@@ -5477,6 +5531,14 @@ components:
       required:
       - id
       - text
+    OriginEnum:
+      enum:
+      - published
+      - draft
+      type: string
+      description: |-
+        * `published` - published
+        * `draft` - draft
     OutcomeEnum:
       enum:
       - accepted
@@ -6321,6 +6383,274 @@ components:
       required:
       - question_id
       - selected_option_id
+    RehearsalAudienceImpact:
+      type: object
+      properties:
+        eligible_current:
+          type: integer
+          nullable: true
+        eligible_draft:
+          type: integer
+        changed:
+          type: integer
+      required:
+      - changed
+      - eligible_current
+      - eligible_draft
+    RehearsalCurrent:
+      type: object
+      properties:
+        revision_id:
+          type: string
+          format: uuid
+        revision_number:
+          type: integer
+        content_hash:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+      required:
+      - content_hash
+      - published_at
+      - revision_id
+      - revision_number
+    RehearsalDocument:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+        title:
+          type: string
+        state:
+          $ref: '#/components/schemas/RehearsalDocumentStateEnum'
+        version:
+          type: integer
+        has_unpublished_changes:
+          type: boolean
+      required:
+      - has_unpublished_changes
+      - id
+      - slug
+      - state
+      - title
+      - version
+    RehearsalDocumentStateEnum:
+      enum:
+      - draft
+      - published
+      - archived
+      type: string
+      description: |-
+        * `draft` - draft
+        * `published` - published
+        * `archived` - archived
+    RehearsalDraft:
+      type: object
+      properties:
+        content_hash:
+          type: string
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        topic:
+          type: string
+        audience:
+          $ref: '#/components/schemas/AudienceEnum'
+        effective_from:
+          type: string
+          format: date
+        effective_until:
+          type: string
+          format: date
+          nullable: true
+        section_count:
+          type: integer
+      required:
+      - audience
+      - content_hash
+      - effective_from
+      - effective_until
+      - language
+      - section_count
+      - topic
+    RehearsalExcerpt:
+      type: object
+      properties:
+        origin:
+          $ref: '#/components/schemas/OriginEnum'
+        chunk_id:
+          type: string
+          format: uuid
+          nullable: true
+        revision_id:
+          type: string
+          format: uuid
+          nullable: true
+        revision_number:
+          type: integer
+          nullable: true
+        document_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        heading:
+          type: string
+        locator:
+          type: string
+        text:
+          type: string
+        content_hash:
+          type: string
+        score:
+          type: number
+          format: double
+        coverage:
+          type: number
+          format: double
+      required:
+      - chunk_id
+      - content_hash
+      - coverage
+      - document_id
+      - heading
+      - locator
+      - origin
+      - revision_id
+      - revision_number
+      - score
+      - text
+      - title
+    RehearsalRequestRequest:
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        questions:
+          type: array
+          items:
+            type: string
+            minLength: 8
+            maxLength: 2000
+          maxItems: 10
+        gap_case_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 10
+      required:
+      - expected_version
+    RehearsalResponse:
+      type: object
+      properties:
+        document:
+          $ref: '#/components/schemas/RehearsalDocument'
+        current:
+          allOf:
+          - $ref: '#/components/schemas/RehearsalCurrent'
+          nullable: true
+        draft:
+          $ref: '#/components/schemas/RehearsalDraft'
+        audience_impact:
+          $ref: '#/components/schemas/RehearsalAudienceImpact'
+        summary:
+          $ref: '#/components/schemas/RehearsalSummary'
+        impacted_employees_count:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RehearsalResult'
+        scope:
+          $ref: '#/components/schemas/ScopeEnum'
+        not_legal_verification:
+          type: boolean
+      required:
+      - audience_impact
+      - current
+      - document
+      - draft
+      - impacted_employees_count
+      - not_legal_verification
+      - results
+      - scope
+      - summary
+    RehearsalResult:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/RehearsalResultSourceEnum'
+        gap_case_id:
+          type: string
+          format: uuid
+          nullable: true
+        question:
+          type: string
+        language:
+          $ref: '#/components/schemas/LanguageEnum'
+        classification:
+          $ref: '#/components/schemas/ClassificationEnum'
+        before:
+          $ref: '#/components/schemas/RehearsalRetrieval'
+        after:
+          $ref: '#/components/schemas/RehearsalRetrieval'
+      required:
+      - after
+      - before
+      - classification
+      - gap_case_id
+      - language
+      - question
+      - source
+    RehearsalResultSourceEnum:
+      enum:
+      - explicit
+      - gap_case
+      type: string
+      description: |-
+        * `explicit` - explicit
+        * `gap_case` - gap_case
+    RehearsalRetrieval:
+      type: object
+      properties:
+        reason:
+          type: string
+        excerpts:
+          type: array
+          items:
+            $ref: '#/components/schemas/RehearsalExcerpt'
+        restricted_excerpts:
+          type: integer
+      required:
+      - excerpts
+      - reason
+      - restricted_excerpts
+    RehearsalSummary:
+      type: object
+      properties:
+        total:
+          type: integer
+        unchanged:
+          type: integer
+        changed:
+          type: integer
+        lost:
+          type: integer
+        gained:
+          type: integer
+      required:
+      - changed
+      - gained
+      - lost
+      - total
+      - unchanged
     Request:
       type: object
       properties:
@@ -6833,6 +7163,11 @@ components:
         * `employee` - Employee
         * `manager` - Manager
         * `hr` - HR
+    ScopeEnum:
+      enum:
+      - extractive_retrieval_comparison
+      type: string
+      description: '* `extractive_retrieval_comparison` - extractive_retrieval_comparison'
     Section:
       type: object
       properties:
@@ -6908,11 +7243,6 @@ components:
         * `not_confirmed` - not_confirmed
         * `incorporated` - incorporated
         * `reversed` - reversed
-    SourceEnum:
-      enum:
-      - mock_1c
-      type: string
-      description: '* `mock_1c` - mock_1c'
     SourceImportBatch:
       type: object
       properties:

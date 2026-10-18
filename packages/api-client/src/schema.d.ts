@@ -677,6 +677,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/knowledge/admin/documents/{id}/rehearsal/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Read-only preview. Replays scoped employee or explicit questions against the current corpus and a corpus where only this document's published chunks are replaced by its draft chunks. Writes nothing and requires no Idempotency-Key. A stale expected_version returns 409. */
+        post: operations["knowledge_admin_documents_rehearsal_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/knowledge/admin/documents/{id}/revisions/": {
         parameters: {
             query?: never;
@@ -1293,6 +1310,14 @@ export interface components {
             quote: string;
         };
         /**
+         * @description * `unchanged` - unchanged
+         *     * `changed` - changed
+         *     * `lost` - lost
+         *     * `gained` - gained
+         * @enum {string}
+         */
+        ClassificationEnum: "unchanged" | "changed" | "lost" | "gained";
+        /**
          * @description * `not_started` - not_started
          *     * `in_progress` - in_progress
          *     * `completed` - completed
@@ -1880,7 +1905,7 @@ export interface components {
             integration_audit_id: string;
         };
         ImportSnapshot: {
-            source: components["schemas"]["SourceEnum"];
+            source: components["schemas"]["ImportSnapshotSourceEnum"];
             /** Format: uuid */
             legal_entity_id: string;
             /** Format: int64 */
@@ -1890,7 +1915,7 @@ export interface components {
             employees: components["schemas"]["EmployeeSnapshot"][];
         };
         ImportSnapshotRequest: {
-            source: components["schemas"]["SourceEnum"];
+            source: components["schemas"]["ImportSnapshotSourceEnum"];
             /** Format: uuid */
             legal_entity_id: string;
             /** Format: int64 */
@@ -1899,6 +1924,11 @@ export interface components {
             captured_at: string;
             employees: components["schemas"]["EmployeeSnapshotRequest"][];
         };
+        /**
+         * @description * `mock_1c` - mock_1c
+         * @enum {string}
+         */
+        ImportSnapshotSourceEnum: "mock_1c";
         /**
          * @description * `accepted` - accepted
          *     * `rejected` - rejected
@@ -2065,6 +2095,12 @@ export interface components {
             id: string;
             text: string;
         };
+        /**
+         * @description * `published` - published
+         *     * `draft` - draft
+         * @enum {string}
+         */
+        OriginEnum: "published" | "draft";
         /**
          * @description * `accepted` - Accepted by the document adapter
          *     * `retry_scheduled` - Retry scheduled
@@ -2507,6 +2543,110 @@ export interface components {
             question_id: string;
             selected_option_id: string;
         };
+        RehearsalAudienceImpact: {
+            eligible_current: number | null;
+            eligible_draft: number;
+            changed: number;
+        };
+        RehearsalCurrent: {
+            /** Format: uuid */
+            revision_id: string;
+            revision_number: number;
+            content_hash: string;
+            /** Format: date-time */
+            published_at: string;
+        };
+        RehearsalDocument: {
+            /** Format: uuid */
+            id: string;
+            slug: string;
+            title: string;
+            state: components["schemas"]["RehearsalDocumentStateEnum"];
+            version: number;
+            has_unpublished_changes: boolean;
+        };
+        /**
+         * @description * `draft` - draft
+         *     * `published` - published
+         *     * `archived` - archived
+         * @enum {string}
+         */
+        RehearsalDocumentStateEnum: "draft" | "published" | "archived";
+        RehearsalDraft: {
+            content_hash: string;
+            language: components["schemas"]["LanguageEnum"];
+            topic: string;
+            audience: components["schemas"]["AudienceEnum"];
+            /** Format: date */
+            effective_from: string;
+            /** Format: date */
+            effective_until: string | null;
+            section_count: number;
+        };
+        RehearsalExcerpt: {
+            origin: components["schemas"]["OriginEnum"];
+            /** Format: uuid */
+            chunk_id: string | null;
+            /** Format: uuid */
+            revision_id: string | null;
+            revision_number: number | null;
+            /** Format: uuid */
+            document_id: string;
+            title: string;
+            heading: string;
+            locator: string;
+            text: string;
+            content_hash: string;
+            /** Format: double */
+            score: number;
+            /** Format: double */
+            coverage: number;
+        };
+        RehearsalRequestRequest: {
+            expected_version: number;
+            language?: components["schemas"]["LanguageEnum"];
+            questions?: string[];
+            gap_case_ids?: string[];
+        };
+        RehearsalResponse: {
+            document: components["schemas"]["RehearsalDocument"];
+            current: components["schemas"]["RehearsalCurrent"] | null;
+            draft: components["schemas"]["RehearsalDraft"];
+            audience_impact: components["schemas"]["RehearsalAudienceImpact"];
+            summary: components["schemas"]["RehearsalSummary"];
+            impacted_employees_count: number;
+            results: components["schemas"]["RehearsalResult"][];
+            scope: components["schemas"]["ScopeEnum"];
+            not_legal_verification: boolean;
+        };
+        RehearsalResult: {
+            source: components["schemas"]["RehearsalResultSourceEnum"];
+            /** Format: uuid */
+            gap_case_id: string | null;
+            question: string;
+            language: components["schemas"]["LanguageEnum"];
+            classification: components["schemas"]["ClassificationEnum"];
+            before: components["schemas"]["RehearsalRetrieval"];
+            after: components["schemas"]["RehearsalRetrieval"];
+        };
+        /**
+         * @description * `explicit` - explicit
+         *     * `gap_case` - gap_case
+         * @enum {string}
+         */
+        RehearsalResultSourceEnum: "explicit" | "gap_case";
+        RehearsalRetrieval: {
+            reason: string;
+            excerpts: components["schemas"]["RehearsalExcerpt"][];
+            restricted_excerpts: number;
+        };
+        RehearsalSummary: {
+            total: number;
+            unchanged: number;
+            changed: number;
+            lost: number;
+            gained: number;
+        };
         Request: {
             /** Format: uuid */
             readonly id: string;
@@ -2682,6 +2822,11 @@ export interface components {
          * @enum {string}
          */
         RoleEnum: "employee" | "manager" | "hr";
+        /**
+         * @description * `extractive_retrieval_comparison` - extractive_retrieval_comparison
+         * @enum {string}
+         */
+        ScopeEnum: "extractive_retrieval_comparison";
         Section: {
             heading: string;
             text: string;
@@ -2711,11 +2856,6 @@ export interface components {
          * @enum {string}
          */
         SourceAccountingStateEnum: "not_applicable" | "not_confirmed" | "incorporated" | "reversed";
-        /**
-         * @description * `mock_1c` - mock_1c
-         * @enum {string}
-         */
-        SourceEnum: "mock_1c";
         SourceImportBatch: {
             /** Format: uuid */
             readonly id: string;
@@ -4187,6 +4327,33 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DocumentAdmin"];
+                };
+            };
+        };
+    };
+    knowledge_admin_documents_rehearsal_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RehearsalRequestRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["RehearsalRequestRequest"];
+                "multipart/form-data": components["schemas"]["RehearsalRequestRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RehearsalResponse"];
                 };
             };
         };
