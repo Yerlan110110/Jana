@@ -1048,6 +1048,8 @@ legend {
 }
 summary {
   cursor: pointer;
+  min-block-size: 44px;
+  padding-block: 8px;
 }
 .document-grid {
   display: grid;

@@ -31,6 +31,8 @@ test("operator disclosures distinguish queued, failed and receipted delivery and
   await authenticateSyntheticRole(browser, origin, "hr");
   const { client: hr } = await sessionClient(browser, origin);
   const directory = `${process.env.JANAMEN_CAPTURE_ROOT ?? ".artifacts/visual"}/composed-operator-${Date.now()}`;
+  await mkdir(directory, { recursive: true });
+  const disclosures = [];
   const confirmations: string[] = [];
   let accept = false;
   const unsubscribe = await browser.onDialog(async (dialog) => {
@@ -59,6 +61,7 @@ test("operator disclosures distinguish queued, failed and receipted delivery and
         expect(data(await hr.GET("/api/v1/integrations/exports/{id}/", { params: { path: { id: record.id } } })).version).toBe(record.version);
         accept = true;
         await screen.getByRole("button", "Включить демонстрационный сбой").tap();
+        await expect.poll(async () => data(await hr.GET("/api/v1/integrations/exports/{id}/", { params: { path: { id: record.id } } })).version).toBe(record.version + 1);
         compose("start", "worker");
         await expect(screen.getByRole("button", "Повторить передачу")).toBeVisible({ timeout: 30_000 });
       }
@@ -69,6 +72,7 @@ test("operator disclosures distinguish queued, failed and receipted delivery and
         expect(data(await hr.GET("/api/v1/integrations/exports/{id}/", { params: { path: { id: record.id } } })).version).toBe(before.version);
         accept = true;
         await screen.getByRole("button", "Восстановить mock-адаптер").tap();
+        await expect.poll(async () => data(await hr.GET("/api/v1/integrations/exports/{id}/", { params: { path: { id: record.id } } })).version).toBe(before.version + 1);
         await screen.getByRole("button", "Повторить передачу").tap();
         await expect(screen.getByRole("heading", "Квитанция о получении")).toBeVisible({ timeout: 30_000 });
       }
@@ -77,15 +81,45 @@ test("operator disclosures distinguish queued, failed and receipted delivery and
         await app.open(path);
         await expect(screen.getByRole("heading", "Передача документа", { exact: true })).toBeVisible();
         await expect(screen.getByRole("status", "Загружаем данные")).toHaveCount(0);
-        await screen.getByText("Демонстрация сбоя mock-адаптера", { exact: true }).press("Enter");
-        await screen.getByRole("button", "Включить демонстрационный сбой").hover();
-        expect((await browser.evaluate(auditPage)).unresolved).toEqual([]);
-        if (stage === "failed") await screen.getByText("Диагностика последнего сбоя", { exact: true }).press("Enter");
-        if (stage === "processed") await screen.getByText("Идентичность документа", { exact: true }).press("Enter");
+        for (const state of ["closed", "expanded"] as const) {
+          if (state === "expanded") {
+            if (stage === "processed") {
+              await expect(screen.getByText("Демонстрация сбоя mock-адаптера", { exact: true })).toHaveCount(0);
+              await expect(screen.getByRole("button", "Включить демонстрационный сбой")).toHaveCount(0);
+              await expect(screen.getByRole("button", "Восстановить mock-адаптер")).toHaveCount(0);
+            } else {
+              await screen.getByText("Демонстрация сбоя mock-адаптера", { exact: true }).press("Enter");
+              await screen.getByRole("button", "Включить демонстрационный сбой").hover();
+              expect((await browser.evaluate(auditPage)).unresolved).toEqual([]);
+            }
+            const label = stage === "failed" ? "Диагностика последнего сбоя" : stage === "processed" ? "Идентичность документа" : "Демонстрация сбоя mock-адаптера";
+            const summary = screen.getByText(label, { exact: true });
+            if (stage !== "pending") await summary.tap();
+            await summary.press("Space");
+            await expect(browser.locator("details[open]").getByText(label, { exact: true })).toHaveCount(0);
+            await summary.press("Enter");
+            await expect(browser.locator("details[open]").getByText(label, { exact: true })).toHaveCount(1);
+          }
+          const geometry = await browser.evaluate(() => [...document.querySelectorAll("summary")].map((element) => {
+            const rect = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return { label: element.textContent, width: rect.width, height: rect.height, open: element.parentElement?.hasAttribute("open") ?? false, focused: document.activeElement === element, focusVisible: element.matches(":focus-visible"), outlineStyle: style.outlineStyle, outlineWidth: style.outlineWidth };
+          }));
+          const audit = await browser.evaluate(auditPage);
+          disclosures.push({ stage, environment, state, geometry, audit });
+          await writeFile(`${directory}/disclosures.json`, JSON.stringify(disclosures, null, 2) + "\n");
+          expect(geometry.length).toBeGreaterThan(0);
+          for (const summary of geometry) {
+            expect(summary.width, summary.label ?? "summary").toBeGreaterThanOrEqual(24);
+            expect(summary.height, summary.label ?? "summary").toBeGreaterThanOrEqual(44);
+          }
+          if (state === "expanded") expect(geometry.some((summary) => summary.focused && summary.focusVisible && summary.outlineStyle === "solid" && summary.outlineWidth === "2px")).toBe(true);
+          expect(audit.unresolved).toEqual([]);
+        }
         const saved = data(await hr.GET("/api/v1/integrations/exports/{id}/", { params: { path: { id: record.id } } }));
         expect(saved.delivery_status).toBe(stage);
         await capturePreparedPage({ app, browser, environment, directory, view: {
-          id: `S31-export-${stage}`, path, ready: "Передача документа", state: `actual worker delivery ${stage}; mock controls and available diagnostic/receipt disclosures expanded`,
+          id: `S31-export-${stage}`, path, ready: "Передача документа", state: `actual worker delivery ${stage}; available disclosures expanded; mock mutation controls absent after receipt`,
         } });
       }
     }
