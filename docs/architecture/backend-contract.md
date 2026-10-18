@@ -112,6 +112,16 @@ The assistant never makes HR decisions or changes requests.
 Provide seed_knowledge() with substantive synthetic policies and a machine-readable evaluation set of answered, unanswered, restricted, ambiguous and injection-style questions.
 The module owns apps/knowledge and its tests. It depends on the shared identity/event APIs.
 
+### Policy update assignments
+
+`KnowledgeRevision.previous_revision` records the revision that was current immediately before publication. HR may save one practical check with exactly three distinct choices and one correct choice in `KnowledgeDocument.draft_knowledge_check`. The correct choice stays out of employee responses.
+
+When a published title, summary or section changes, publication requires the saved check. In the same transaction, the knowledge module creates one `PolicyUpdateAssignment` for each active employee account in the revision's role, legal-entity and department audience. It closes older pending assignments for the same document as `superseded`. Metadata-only changes do not create assignments. Each active assignment preserves the previous and new immutable text for comparison.
+
+The employee list and team list use `GET /api/v1/knowledge/updates/`. Employees see their own assignments. Managers see themselves and their direct reports. HR sees employees in its legal entity. Team rows expose the employee, policy title and progress only. `GET /api/v1/knowledge/updates/{id}/` and `POST /api/v1/knowledge/updates/{id}/attempt/` are restricted to the assigned employee. Attempt submissions use `Idempotency-Key`; wrong answers remain pending, and a correct answer completes the assignment. Attempts, completion, events and notifications are committed together.
+
+The API derives the section comparison from the two saved revisions. It does not rewrite policy text or generate a summary with AI. A newer text revision supersedes outstanding work; completed history stays recorded. Archiving closes pending assignments. A manager cannot submit an employee's answer, and client visibility does not grant a write permission.
+
 ### Knowledge case resolution
 
 When resolving an HR case against a policy, the existing `POST /api/v1/knowledge/gaps/{id}/resolve/` accepts optional nullable `published_revision_id` alongside `expected_version` and `response`. The case stores a protected foreign key to that immutable `KnowledgeRevision`. Omission or null retains an individual answer. A link requires an effective published revision readable by both the resolver and the case owner. An inaccessible or unknown revision returns 404 without changing the case.

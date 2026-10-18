@@ -44,6 +44,9 @@ Enrollment ссылается на конкретную версию. LessonComp
 erDiagram
     KnowledgeDocument ||--o{ KnowledgeRevision : publishes
     KnowledgeRevision ||--o{ KnowledgeChunk : divides
+    KnowledgeRevision ||--o{ PolicyUpdateAssignment : assigns
+    Employee ||--o{ PolicyUpdateAssignment : receives
+    PolicyUpdateAssignment ||--o{ PolicyUpdateAttempt : answers
     User ||--o{ AssistantAnswer : asks
     AssistantAnswer ||--o| KnowledgeGapCase : escalates
     Employee ||--o{ KnowledgeGapCase : owns
@@ -52,6 +55,8 @@ erDiagram
 Revision содержит аудиторию, язык, владельца и сроки действия опубликованного документа. Доступ фильтруется до retrieval. Ответ хранит server-owned ссылки на разрешённые фрагменты и проверенные claims. При повторном открытии доступ проверяется заново, поэтому сохранённый ответ не обходит отзыв документа.
 
 KnowledgeGapCase создаётся явным действием сотрудника. Это внутреннее обращение со своей version, состоянием и ответом HR. Его создание не отправляет email или сообщение в сторонний мессенджер. Вопрос сотрудника не становится опубликованным регламентом.
+
+PolicyUpdateAssignment связывает активного сотрудника с опубликованной редакцией. HR вручную задаёт проверочный вопрос в черновике регламента. KnowledgeRevision хранит предыдущую редакцию и правильный вариант; API ответа сотрудника возвращает только вопрос и варианты. Неудачная попытка остаётся в ожидании, успешная завершает назначение. Новый изменённый текст закрывает прежние незавершённые назначения как superseded.
 
 ## Событие, уведомление и доставка
 

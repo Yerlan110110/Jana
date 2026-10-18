@@ -4,13 +4,19 @@ Current contract C2. Owner is the coordinating Codex agent. Updated 18 October 2
 
 This file records the current delivery scope. Historical backend verification remains in `docs/verification/`. A passing source check does not establish browser or deployment acceptance.
 
+### Latest owner direction: connect policy changes to employee learning
+
+The owner selected the end-to-end policy-update flow as JanaMen's additional product idea. This current instruction supersedes the older 15:44 continuation below, which selected draft-policy rehearsal and described acknowledgement as unimplemented. HR publishes a changed policy revision with one practical question; only employees inside its audience receive assignments and notifications; employees see section-level before/after changes and answer; managers and HR see scoped completion status. Incorrect answers are retained as attempts and can be retried. A later text-changing revision or archive closes older pending assignments. Metadata-only publication does not assign training.
+
+This source contains the implementation in the knowledge module, migrations, generated OpenAPI client and React routes. Django system and migration consistency checks, OpenAPI consistency, frontend typecheck and production build passed in this session. Vite warned that the main JavaScript chunk exceeds 500 kB. No browser journey or deployed-staging acceptance is claimed here.
+
 The application now runs at **https://jmhr.vercel.app** on Vercel Services, with a dedicated Supabase PostgreSQL database and a Vercel outbox Daemon. The deployment retains the implemented Django and React application. [Cloud verification](verification/vercel.md) records current checks and observed failures. [Deployment instructions](deployment/vercel.md) identify the existing cloud resources.
 
 Complete acceptance remains **BLOCKED** by COV1, missing mandatory state/environment evidence. The [independent R3 review](verification/reviews/janamen-release-r3.md) retains its original scope and limitations. This is a synthetic demonstration, not an accepted production release. No fresh independent approval of the cloud configuration is claimed.
 
-The latest owner request on 18 October assigns the continuing agent planning and orchestration, with SWE 2 High implementation workers and Gemini 3.8 Flash for cheaper bounded work. The owner explicitly prioritizes meeting the deadline over conserving AI usage. Continue the existing differentiation plan rather than restart discovery. Keep specifications current with each behavior change. The team has two nontechnical presenters. Their latest timing is **3 minutes, 1 minute speaking and 2 minutes demonstrating**. Older five-minute material requires revision. The exact official speaking limit remains unconfirmed.
+An earlier owner request on 18 October assigned the continuing agent planning and orchestration, with SWE 2 High implementation workers and Gemini 3.8 Flash for cheaper bounded work. The owner explicitly prioritized meeting the deadline over conserving AI usage. The current user direction above supersedes that work allocation for the selected feature. The team has two nontechnical presenters. Their latest timing is **3 minutes, 1 minute speaking and 2 minutes demonstrating**. Older five-minute material requires revision. The exact official speaking limit remains unconfirmed.
 
-### Active continuation at 15:44 Asia/Almaty
+### Historical continuation snapshot at 15:44 Asia/Almaty
 
 The owner moved the completion deadline to **16:45 on 18 October 2026** and requested frequent pushes of checked changes. This is the team delivery target, not a separately verified organizer cutoff. Baseline `f0b316e` matches fetched `origin/main`.
 

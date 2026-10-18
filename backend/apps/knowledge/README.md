@@ -74,6 +74,9 @@ All routes start with `/api/v1/`. Use the session and CSRF flow described by the
 | `knowledge/documents/` | GET | Paginated effective published policies in the employee's scope. |
 | `knowledge/documents/{id}/` | GET | The current published revision, with its text and metadata. |
 | `knowledge/citations/{chunk_id}/` | GET | An authorized exact excerpt, immutable revision, locator, and content hash. |
+| `knowledge/updates/` | GET | The employee's assignments; managers see themselves and direct reports, HR sees the legal-entity scope. |
+| `knowledge/updates/{id}/` | GET | The employee's before/after changes and question. The correct option is never returned. |
+| `knowledge/updates/{id}/attempt/` | POST | Submit one answer with `Idempotency-Key`; an incorrect answer remains open for retry. |
 | `knowledge/admin/documents/` | GET, POST | Entity-scoped HR draft management. |
 | `knowledge/admin/documents/{id}/` | GET, PATCH | Read or update a draft with `expected_version`. |
 | `knowledge/admin/documents/{id}/publish/` | POST | Publish a new immutable revision with `expected_version`. |
@@ -85,7 +88,7 @@ All routes start with `/api/v1/`. Use the session and CSRF flow described by the
 | `knowledge/gaps/{id}/` | GET | The case question, details, and saved HR response. |
 | `knowledge/gaps/{id}/resolve/` | POST | Entity-scoped HR response with `expected_version`. |
 
-Every document mutation and gap mutation requires `Idempotency-Key`. A replay returns the original command result and `Idempotency-Replayed: true`.
+Every document mutation, gap mutation, and policy-update answer requires `Idempotency-Key`. A replay returns the original command result and `Idempotency-Replayed: true`.
 An idempotency key cannot be reused for another route, body, employee entity, or role.
 The next client reads the object again when it needs current state after a replay.
 
@@ -98,9 +101,10 @@ Document creation requires `slug`, `title`, `language`, `topic`, and `draft_sect
 Each section has `heading` and `text`. The API accepts at most 40 sections, 12,000 characters per section, and 120,000 text characters per document.
 Optional ownership fields remain subject to HR entity restrictions. Only a technical superuser can author a document for all legal entities.
 Draft edits do not change published title, text, audience, or dates before publication.
+For an existing published document, changing its title, summary, or section text requires a practical check with three distinct options before publication. The published revision retains its predecessor and check; assignments and notifications go only to active users matching that revision's audience, legal entity, and department. A correct answer completes the assignment; wrong answers are retained and can be retried. The manager list contains only the manager and direct reports. HR sees assignments in its entity. Archiving or publishing a later changed revision closes earlier pending assignments. A change to publication metadata alone does not create a new assignment.
 The technical Django admin offers these records for viewing. It does not bypass the business commands.
 
-## Connect the future frontend
+## Frontend integration
 
 Generate client types from the root OpenAPI schema. Do not create a second handwritten API contract.
 Use `allowed_actions` to show commands, and retain server permission checks.

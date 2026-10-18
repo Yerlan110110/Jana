@@ -33,7 +33,7 @@ The adapter boxes identify integration boundaries. Mock implementations are expl
 | identity | Users, company structure, imported employee facts, visibility rules | Django authentication |
 | hr_requests | Request aggregate, snapshots, decisions, projections | Identity scope, core events, notifications |
 | academy | Catalogue, versions, assignments, lesson progress, quiz attempts | Identity scope, core events, notifications |
-| knowledge | Published documents, chunks, answers, citations, HR cases | Identity scope, model/retrieval adapters, core events |
+| knowledge | Published documents, chunks, answers, citations, HR cases, policy update assignments | Identity scope, model/retrieval adapters, core events, notifications |
 | notifications | Per-user event messages and read state | Identity user reference, core event reference |
 | integrations | Source snapshots, export receipts, retry commands | Explicit request/profile import/export services |
 | workbench | Read projection of personal work, scoped review queues and full counts | Existing identity, requests, Academy, knowledge and notification selectors |
@@ -79,6 +79,7 @@ Do not use a network call inside the approval transaction as a substitute for du
 | HR request | Business status, optimistic version, submitted revision, export delivery status |
 | Learning | Course availability, assigned version, material completion, assessment success, due status |
 | Policy | Publication status, effective revision, audience, retrieval relevance |
+| Policy update | Assigned revision, employee, attempt count, pending/completed/superseded state |
 | Assistant response | Evidence sufficiency, provider availability, response mode, citation validity |
 | Notification | Business event identity, delivery/read state |
 
@@ -153,4 +154,3 @@ Those are useful structural precedents for JanaMen.
 JanaMen adds employee employment snapshots, leave/advance semantics, learning assignments and knowledge retrieval.
 The application domain and its permissions must be modeled explicitly rather than renamed from the accreditation workflow.
 This repository contains newly written implementation and public-source research. It does not redistribute the private MIS Pro source.
-

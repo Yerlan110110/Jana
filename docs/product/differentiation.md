@@ -5,6 +5,12 @@
 We do not know what other hackathon teams will ship. We cannot honestly claim uniqueness or guarantee a win.
 We can choose a product standard, derive it from strong examples and demonstrate that our implementation meets it.
 
+## Selected proof: one changed rule reaches the right people
+
+HR publishes a revised instruction with one practical question. JanaMen assigns it using the policy's existing audience, legal-entity and department scope. Each recipient sees the changed sections as “before / now,” answers a server-scored question and can retry after a wrong answer. Managers see team completion; HR sees their legal entity. Revisions supersede earlier pending assignments, and metadata-only edits do not create a training assignment.
+
+This flow joins the existing policy-version, learning-assignment and notification foundations. It is a concrete differentiator to demonstrate, not a claim that competing teams or commercial products lack similar features. Browser and deployed-environment proof remains open until it is run.
+
 Our proposed standard is that a person can understand what needs attention, why, who acts next and what evidence supports the result.
 This standard connects the required modules. It does not depend on a decorative AI assistant or a new slogan.
 
@@ -43,4 +49,3 @@ The browser implementation must make that agreement understandable without expos
 The detailed professional-product source matrix is [product REA](../research/product-rea.md).
 Backend reuse decisions and inspected code are in [backend REA](../research/backend-rea.md).
 The next design agent uses [design documentation](../design/) and the installed original author skills.
-
