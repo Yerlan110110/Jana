@@ -1,23 +1,14 @@
-import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 import { test } from "@e2e-dev/web";
 import { expect, type Screen } from "e2e";
 import { sessionClient } from "../web/api.js";
 import { signIn, changeRole } from "../web/support.js";
+import { compose } from "./fixture.js";
 
 async function decide(screen: Screen, label: string) {
   await screen.getByRole("button", label).first().tap();
   await expect(screen.getByRole("heading", label)).toBeVisible();
   await screen.getByRole("button", label).last().tap();
-}
-
-function compose(...args: string[]) {
-  return execFileSync("docker", ["compose", "-p", "janamen-ci", ...args], {
-    encoding: "utf8",
-    env: { ...process.env, COMPOSE_FILE: "compose.yaml:compose.ci.yaml", API_PORT: "8010", FRONTEND_PORT: "8090", LOGIN_THROTTLE_RATE: "120/min" },
-    stdio: "pipe",
-    timeout: 30_000,
-  }).trim();
 }
 
 test("operator recovers a real delivery failure without another HR decision", { timeout: 240_000 }, async ({ app, browser, screen }) => {
