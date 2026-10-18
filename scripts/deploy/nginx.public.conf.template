@@ -1,0 +1,48 @@
+server_names_hash_bucket_size 128;
+resolver 127.0.0.11 valid=5s ipv6=off;
+
+upstream janamen_api {
+    zone janamen_api 64k;
+    server api:8000 resolve;
+}
+
+server {
+    listen 80 default_server;
+    server_name _;
+    return 444;
+}
+
+server {
+    listen 80;
+    server_name ${PUBLIC_HOST};
+    root /usr/share/nginx/html;
+    index index.html;
+
+    if ($http_x_forwarded_proto != "https") {
+        return 308 https://${PUBLIC_HOST}$request_uri;
+    }
+
+    add_header Cache-Control "no-store" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "same-origin" always;
+    add_header Strict-Transport-Security "max-age=3600" always;
+
+    location ~ ^/api(?:/|$) {
+        proxy_pass http://janamen_api;
+        proxy_hide_header X-Frame-Options;
+        proxy_hide_header X-Content-Type-Options;
+        proxy_hide_header Referrer-Policy;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $http_cf_connecting_ip;
+    }
+
+    location /assets/ {
+        try_files $uri =404;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

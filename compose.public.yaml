@@ -1,0 +1,28 @@
+name: janamen-public
+
+x-public-environment: &public-environment
+  DJANGO_DEBUG: "false"
+  DJANGO_TRUST_PROXY_SSL_HEADER: "true"
+  DJANGO_ALLOWED_HOSTS: ${PUBLIC_HOST:?Set the exact tunnel hostname},localhost,127.0.0.1,api
+  CSRF_TRUSTED_ORIGINS: https://${PUBLIC_HOST:?Set the exact tunnel hostname}
+  CORS_ALLOWED_ORIGINS: https://${PUBLIC_HOST:?Set the exact tunnel hostname}
+  LOGIN_THROTTLE_RATE: 10/min
+
+services:
+  release:
+    environment:
+      <<: *public-environment
+  api:
+    environment:
+      <<: *public-environment
+  worker:
+    environment:
+      <<: *public-environment
+  frontend:
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:?Set the exact tunnel hostname}
+      NGINX_ENVSUBST_FILTER: ^PUBLIC_HOST$
+    volumes:
+      - ./scripts/deploy/nginx.public.conf.template:/etc/nginx/templates/default.conf.template:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--header=Host: ${PUBLIC_HOST:?Set the exact tunnel hostname}", "--header=X-Forwarded-Proto: https", "http://127.0.0.1/api/v1/ready/"]

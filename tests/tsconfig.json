@@ -16,6 +16,7 @@
     "visual/**/*.ts",
     "keyboard/**/*.ts",
     "operator/**/*.ts",
+    "public/**/*.ts",
     "capture/**/*.ts",
     "zoom/**/*.ts"
   ]

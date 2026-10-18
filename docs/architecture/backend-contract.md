@@ -9,6 +9,8 @@ Use a Django 5.2 LTS modular monolith and Django REST framework. PostgreSQL is t
 Django supplies authentication, sessions, CSRF, ORM, migrations, transactions and trusted operator administration. DRF supplies parsing, serialization, API permissions and pagination. Generate OpenAPI with drf-spectacular.
 The future frontend talks to /api/v1/ through the same origin in deployment. A development origin must be explicitly allowed.
 
+The synthetic public Compose profile terminates HTTPS at Cloudflare and nginx. Proxy SSL trust is opt-in through `DJANGO_TRUST_PROXY_SSL_HEADER`, false by default. Only the controlled loopback origin enables it. Nginx validates the exact hostname, redirects HTTP and supplies the trusted HTTPS header to Django. It owns HSTS and response security headers. Django sessions and CSRF cookies remain secure when DEBUG is false. Public login throttling stays at 10/min. This is a temporary demonstration profile, not a production hosting commitment.
+
 Modules live in backend/apps. They are core, identity, hr_requests, notifications, academy, knowledge, integrations and workbench. Workbench owns a read projection, not another mutable task database.
 Use backend/config for settings, root URL configuration and WSGI.
 Within a module, models.py owns persistence, services.py owns commands, selectors.py owns scoped reads, serializers.py and views.py own transport.

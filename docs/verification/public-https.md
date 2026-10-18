@@ -1,0 +1,23 @@
+# Public HTTPS checkpoint
+
+18 October 2026. The source checkpoint exposes a separate synthetic demonstration through Cloudflare Quick Tunnel. It is not an accepted production deployment or an independent release verdict.
+
+The origin is `janamen-public`, with fresh database, runtime and static volumes. The API binds `127.0.0.1:8015`, and the frontend binds `127.0.0.1:8095`. Its private environment file has mode 0600. Preparing it twice preserves existing bytes. Preparing the root environment also preserves it. A destination outside the project `.env` or `.artifacts/` is rejected before a file is written. Evidence is `.artifacts/public-demo/prepare-check.json`, `env-safety-20261018.json` and `env-boundary-negative-20261018.log`.
+
+The verified Cloudflare binary is `2026.10.1`. Its release digest and owned process are recorded under `.artifacts/tools/cloudflared-2026.10.1/` and `.artifacts/public-demo/tunnel-owner.json`. The explicit empty configuration prevents loading personal tunnel settings. The current URL is recorded in [the runtime guide](../deployment/public-demo.md).
+
+The first frontend failed to start because its long hostname exceeded nginx's current 64-byte server-name hash bucket. The retained first HTTPS probe returns 502. The template uses the [documented next power of two](https://nginx.org/en/docs/http/server_names.html#optimization), 128. The rendered configuration passes `nginx -t`. API and database are healthy, frontend is healthy, release exited 0 and worker is running.
+
+The public profile sets `DEBUG=false`, the exact hostname and HTTPS origins, proxy trust, secure cookies and the normal login limit `10/min`. `.artifacts/public-demo/config-check.json` records only selected non-secret configuration. Django's deployment check retains two warnings because nginx owns HSTS and the HTTP redirect. Its actual response supplies both. No warning is silenced.
+
+The original transport probe proves 308 for public HTTP with and without a spoofed forwarding protocol. HTTPS still returns 200 when a client sends the opposite protocol header. Local nginx returns 308 for HTTP and closes a request to an untrusted hostname. That probe also exposed duplicate API security headers. The final template lets nginx own one copy. The subsequent browser check asserts their exact single values.
+
+The two-test browser run `.artifacts/public-demo/browser-https-20261018-1.log` passes. Its actual employee form, manager decision, HR decision and employee reopen preserve request `61ac093b-9cb3-41ff-a34e-65b91d21e039`, version 4. Fresh API reads confirm approval, document receipt and accounting `not_applicable`. The cookie metadata proves `Secure`, `HttpOnly` and `SameSite=Lax` for the session. Both CSRF violations return 403, and the session still works. The retained journey JSON contains no cookie values or tokens. Secret-filled functional sessions have no claimed screenshots.
+
+The final typed test source passes the repeated two-test run at `.artifacts/public-demo/browser-https-20261018-2.log`. The first run remains retained. Both perform real new requests rather than replaying a saved success.
+
+All forty served frontend files match the locally compiled bytes at `.artifacts/public-demo/build-identity-20261018.json`. The underlying UI artifact is the packaging checkpoint's artifact. The profile changes transport and credentials, not interface content. PostgreSQL passes 232 tests at `.artifacts/public-profile-postgresql-20261018.log`.
+
+The fresh private `janamen-dns-test` stack uses its own new database at API port 8020 and frontend port 8092. Release, seed, API readiness and worker start succeed. Project-bound nginx replacement passes, followed by sixteen real role tests and ten keyboard tests. Evidence is `.artifacts/final-private-{up,nginx,role,keyboard}-20261018.log`. CI-equivalent dependency installation, contracts, frontend and browser types, build, ruff, migrations, pinned skills and report-safety checks pass in the `public-profile-*` logs. The latest preceding source checkpoint also has [green GitHub verification](https://github.com/Yerlan110110/Jana/actions/runs/39080526771).
+
+Boundary Discipline keeps proxy trust opt-in and environment selection at the CLI boundary. Fix Root Causes uses nginx's actual failure rather than changing unrelated browser behavior. Prove It Works checks the public endpoint, real role writes, cookies, rejected writes and served bytes. The main risk is temporary tunnel availability. A working local Docker origin and retained offline defense materials provide the fallback. Whole-product visual/state coverage and independent acceptance remain open.

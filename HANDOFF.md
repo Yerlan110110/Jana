@@ -2,6 +2,8 @@
 
 Current contract and acceptance state live in [docs/continuation-status.md](docs/continuation-status.md). Read it before changing code. This handoff is an entry point, not a second status ledger.
 
+The [public HTTPS checkpoint](docs/verification/public-https.md) now verifies a separate synthetic Cloudflare Quick Tunnel, secure sessions, CSRF denials and a complete three-role advance with receipt. The [runtime guide](docs/deployment/public-demo.md) records access, launch and safe shutdown. Its temporary availability and pending independent acceptance remain explicit.
+
 ## Authorization and source
 
 The owner gives the continuing agent full architecture, backend, frontend, design, verification and defense ownership. Work autonomously through 10:00 Asia/Almaty. Commit completed units frequently and push through the authorized GitHub connection. Preserve history and inspect origin before reconciling. No force-push. Use synthetic data only.

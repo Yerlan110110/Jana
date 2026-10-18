@@ -2,7 +2,9 @@ import { existsSync } from "node:fs";
 import type { E2EConfig } from "e2e";
 import { web } from "@e2e-dev/web";
 
-if (existsSync(".env")) process.loadEnvFile(".env");
+const envFile = process.env.JANAMEN_ENV_FILE ?? ".env";
+if (process.env.JANAMEN_ENV_FILE && !existsSync(envFile)) throw new Error("The selected synthetic environment file does not exist");
+if (existsSync(envFile)) process.loadEnvFile(envFile);
 
 export default {
   projectId: "janamen",

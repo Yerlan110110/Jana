@@ -9,6 +9,7 @@ x-app: &app
     DATABASE_URL: postgresql://janamen:${POSTGRES_PASSWORD:?Run python scripts/dev.py prepare first}@db:5432/janamen
     DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Run python scripts/dev.py prepare first}
     DJANGO_DEBUG: ${DJANGO_DEBUG:-true}
+    DJANGO_TRUST_PROXY_SSL_HEADER: ${DJANGO_TRUST_PROXY_SSL_HEADER:-false}
     DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1,api}
     CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:5173}
     CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost:3000,http://localhost:5173}
