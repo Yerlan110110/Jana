@@ -30,6 +30,8 @@ class DockerFixture:
         output, error, code = "", "", 0
         if arguments[:4] == ["docker", "compose", "-p", "janamen-ci"]:
             action = arguments[4:]
+            if action[:1] == ["--env-file"]:
+                action = action[2:]
             if action[:2] == ["ps", "-q"]:
                 output = self.api_id if action[2] == "api" else "frontend"
             elif action[0] == "port":
@@ -96,6 +98,18 @@ class NginxReplacementTests(unittest.TestCase):
         self.assertEqual(report["frontend_started_at_after"], report["frontend_started_at"])
         self.assertTrue(docker.api_running)
         self.assertFalse(docker.probe_running)
+
+    def test_explicit_env_file_is_used_for_all_compose_operations(self):
+        docker = DockerFixture()
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "report.json"
+            env_file = Path(directory) / "synthetic.env"
+            self.invoke(docker, output, "--env-file", str(env_file))
+            self.assertTrue(json.loads(output.read_text())["passed"])
+        compose_calls = [call for call in docker.calls if call[1] == "compose"]
+        self.assertGreater(len(compose_calls), 0)
+        for call in compose_calls:
+            self.assertEqual(call[4:6], ["--env-file", str(env_file.resolve())])
 
     def test_missing_local_image_does_not_stop_the_api(self):
         docker = DockerFixture(image_available=False)

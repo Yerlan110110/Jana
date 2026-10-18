@@ -49,6 +49,7 @@ def published_origin(compose, service, port):
 def main():
     parser = argparse.ArgumentParser(description="Replace the API in an owned synthetic Compose stack and verify nginx DNS recovery without restarting nginx.")
     parser.add_argument("--project", required=True, choices=["janamen-demo", "janamen-ci", "janamen-browser", "janamen-dns-test"])
+    parser.add_argument("--env-file", type=Path, help="Environment file passed explicitly to Docker Compose")
     parser.add_argument("--web-url", help="Optional assertion of the selected frontend's published origin")
     parser.add_argument("--api-url", help="Optional assertion of the selected API's published origin")
     parser.add_argument("--output", required=True, type=Path)
@@ -56,6 +57,8 @@ def main():
     if args.output.exists():
         parser.error("Choose a new evidence output path")
     compose = ["docker", "compose", "-p", args.project]
+    if args.env_file:
+        compose.extend(["--env-file", str(args.env_file.resolve())])
     api_id = command([*compose, "ps", "-q", "api"])
     frontend_id = command([*compose, "ps", "-q", "frontend"])
     if not api_id or not frontend_id:
@@ -70,13 +73,14 @@ def main():
         raise RuntimeError("Expected the dedicated single Compose network")
     network, state = next(iter(networks.items()))
     old_ip = state["IPAddress"]
-    front_image = command(["docker", "inspect", "-f", "{{.Image}}", frontend_id])
+    frontend_image = command(["docker", "inspect", "-f", "{{.Config.Image}}", frontend_id])
+    probe_image = command(["docker", "image", "inspect", "-f", "{{.Id}}", frontend_image])
     frontend_started = command(["docker", "inspect", "-f", "{{.State.StartedAt}}", frontend_id])
     api_ready = api_origin + "/api/v1/ready/"
     web_ready = web_origin + "/api/v1/ready/"
     wait_ready(api_ready)
     wait_ready(web_ready)
-    report = {"project": args.project, "api_origin": api_origin, "web_origin": web_origin, "old_api_ip": old_ip, "frontend_id": frontend_id, "frontend_started_at": frontend_started, "passed": False, "stage": "replace_api"}
+    report = {"project": args.project, "api_origin": api_origin, "web_origin": web_origin, "old_api_ip": old_ip, "frontend_id": frontend_id, "frontend_started_at": frontend_started, "probe_image": probe_image, "passed": False, "stage": "replace_api"}
     probe_id = None
     replaced = False
     try:
@@ -84,7 +88,7 @@ def main():
         command(["docker", "rm", api_id])
         replaced = True
         report["stage"] = "hold_old_address"
-        probe_id = command(["docker", "run", "--detach", "--rm", "--name", f"{args.project}-dns-probe-{uuid.uuid4().hex[:8]}", "--network", network, "--ip", old_ip, front_image, "/bin/sh", "-c", "sleep 120"])
+        probe_id = command(["docker", "run", "--detach", "--rm", "--name", f"{args.project}-dns-probe-{uuid.uuid4().hex[:8]}", "--network", network, "--ip", old_ip, probe_image, "/bin/sh", "-c", "sleep 120"])
         report["stage"] = "verify_replacement"
         command([*compose, "up", "-d", "--no-deps", "api"])
         replacement_id = command([*compose, "ps", "-q", "api"])
