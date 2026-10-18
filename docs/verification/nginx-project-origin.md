@@ -13,3 +13,9 @@ The real GREEN is `.artifacts/nginx-project-origin-green-20261018.json`. Readine
 Earlier local reports without recorded origins are insufficient evidence of project-bound readiness. Their address and frontend-identity observations remain, but their local readiness claims are withdrawn pending this corrected check. The GitHub workflow uses ports 8000 and 8080 for its own `janamen-ci` stack, so its matching-origin runs remain applicable. Keep the original local failure and reports rather than rewriting them.
 
 Fix Root Causes changed the script's target selection. Model the Domain derives readiness from the same selected Compose project that owns the mutation. Prove It Works adds a wrong-origin rejection and an actual post-replacement browser run. The material risk is checking one stack while replacing another. Both negative and positive controls target that exact mismatch. This is DNS recovery evidence, not a zero-downtime deployment guarantee.
+
+## Resolve the probe image before replacement
+
+The address-reservation probe resolves the selected frontend container's configured local image through Docker before stopping the API. The container-reported image ID was unavailable to a new Docker run in the retained failure. The cause of that image-store history remains unknown. The probe only reserves an address; frontend identity and start time remain separate invariants.
+
+Use `--env-file <path>` when the selected synthetic configuration lives outside the current checkout. Every Compose operation receives the same explicit file. The runner never prints its contents. Missing local images and wrong origins fail before API mutation. Reservation failures retain the failed report and recover the API. Seven runner/report-safety tests cover these boundaries. The fresh actual replacement and its image identities are recorded in [release-repair.md](release-repair.md).
