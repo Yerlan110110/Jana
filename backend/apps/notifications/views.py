@@ -27,7 +27,7 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
             return Notification.objects.none()
-        queryset = Notification.objects.filter(recipient=self.request.user)
+        queryset = Notification.objects.filter(recipient=self.request.user).select_related("event")
         if self.request.query_params.get("unread") == "true":
             queryset = queryset.filter(read_at__isnull=True)
         return queryset

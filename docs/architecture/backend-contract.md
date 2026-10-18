@@ -43,6 +43,7 @@ core.events.emit(event_type, aggregate_type, aggregate_id, payload, actor=None) 
 core.models.OutboxMessage references an event and stores topic, status, attempt_count, available_at, last_error and processed_at. Its id or event id is the receiver's deduplication key.
 notifications.services.notify(recipient, kind, title, body, target_type, target_id, event=None) creates a per-user message. recipient is a User instance.
 Notification data includes read_at. Marking it read never changes a business object's state. Read operations only affect the owner.
+Notification responses include nullable read-only `request_status`. For a `request_status` message pointing to the same HR-request aggregate as its event, this is the canonical status recorded in that immutable event. It is not the request's current status. Other kinds, missing events or an unknown status return null. The original body remains unchanged. The frontend uses the generated enum and its existing status dictionary to localize the event state, without parsing stored English prose. Lists join the owned notification's event; raw event payloads are not exposed.
 Use unique event/recipient delivery keys where an event exists. Store no external secrets in event payloads.
 
 ## Request model and commands

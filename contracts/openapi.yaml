@@ -5199,6 +5199,12 @@ components:
         body:
           type: string
           readOnly: true
+        request_status:
+          nullable: true
+          readOnly: true
+          oneOf:
+          - $ref: '#/components/schemas/HRRequestStatusEnum'
+          - $ref: '#/components/schemas/NullEnum'
         target_type:
           type: string
           readOnly: true
@@ -5221,9 +5227,13 @@ components:
       - id
       - kind
       - read_at
+      - request_status
       - target_id
       - target_type
       - title
+    NullEnum:
+      enum:
+      - null
     Option:
       type: object
       properties:

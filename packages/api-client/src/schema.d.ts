@@ -1951,6 +1951,7 @@ export interface components {
             readonly kind: string;
             readonly title: string;
             readonly body: string;
+            readonly request_status: (components["schemas"]["HRRequestStatusEnum"] | components["schemas"]["NullEnum"]) | null;
             readonly target_type: string;
             /** Format: uuid */
             readonly target_id: string;
@@ -1959,6 +1960,8 @@ export interface components {
             /** Format: date-time */
             readonly created_at: string;
         };
+        /** @enum {unknown} */
+        NullEnum: null;
         Option: {
             id: string;
             text: string;

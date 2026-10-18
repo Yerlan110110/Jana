@@ -12,7 +12,7 @@ import {
 } from "@/components/ui";
 import { api, unwrap, useCommand } from "@/lib/api";
 import { useSession } from "@/lib/session";
-import { date } from "@/lib/format";
+import { date, statusText } from "@/lib/format";
 
 function targetRoute(type: string, id: string) {
   switch (type) {
@@ -108,7 +108,11 @@ export function NotificationsPage() {
                           <span className="unread-label">Новое</span>
                         )}
                       </div>
-                      <p>{item.body}</p>
+                      <p>
+                        {item.request_status
+                          ? `Заявка: ${statusText(item.request_status)}`
+                          : item.body}
+                      </p>
                       <small>{date(item.created_at)}</small>
                       {route && (
                         <Link className="text-link" to={route}>
@@ -126,7 +130,7 @@ export function NotificationsPage() {
                         onClick={() => read.mutate(item.id)}
                         iconStart={<Check size={15} aria-hidden="true" />}
                       >
-                        Прочитано
+                        Отметить прочитанным
                       </Button>
                     )}
                   </article>
