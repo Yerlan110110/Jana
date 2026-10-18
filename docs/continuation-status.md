@@ -4,7 +4,9 @@ Current contract C2. Owner is the coordinating Codex agent. Updated 18 October 2
 
 This file records the current delivery scope. Historical backend verification remains in `docs/verification/`. A passing source check does not establish browser or deployment acceptance.
 
-The application checkpoint is `228e15c`. Final independent round R3 confirms the repaired behaviors and matching public package. Complete acceptance remains **BLOCKED** by COV1, missing mandatory state/environment evidence. The [public review record](verification/reviews/janamen-release-r3.md) preserves the scope and limitations. The public HTTPS application is the repaired synthetic review draft. It is not an accepted production release. The [team brief](defense/team-brief.md) explains the product and jury answers in Russian.
+The application checkpoint is `228e15c`. Final independent round R3 confirms the repaired behaviors and matching public package. Complete acceptance remains **BLOCKED** by COV1, missing mandatory state/environment evidence. The [public review record](verification/reviews/janamen-release-r3.md) preserves the scope and limitations. The public HTTPS application is the repaired synthetic review draft. It is not an accepted production release. The [visual team brief](defense/team-map.html) explains the task, product and five-minute presentation for two nontechnical participants. The [extended brief](defense/team-brief.md) holds technical explanations.
+
+After the overnight deadline the owner separately authorized the visual brief and a portable GitHub transfer for a cloud agent. The next requested work is design refinement. [CLOUD_DESIGN_HANDOFF.md](../CLOUD_DESIGN_HANDOFF.md) is the current entry. This transfer preserves the implemented application, original briefs and review boundaries. Its checks are recorded in [cloud-design-transfer.md](verification/cloud-design-transfer.md). It does not reopen R4 or close COV1.
 
 ## Outcome and authority
 
