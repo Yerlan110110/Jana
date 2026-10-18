@@ -47,7 +47,7 @@ class DockerFixture:
                 output = json.dumps({"janamen-ci_default": {"IPAddress": ip}})
             else:
                 output = {
-                    "{{.Image}}": "sha256:container-config",
+                    "{{.Image}}": "sha256:unavailable-container-image",
                     "{{.Config.Image}}": "janamen-ci-frontend:local",
                     "{{.State.StartedAt}}": "2026-10-18T02:27:25Z",
                 }[template]
@@ -83,7 +83,7 @@ class NginxReplacementTests(unittest.TestCase):
                 patch.object(runner, "wait_ready"), redirect_stdout(io.StringIO()):
             runner.main()
 
-    def test_container_config_digest_is_not_used_as_probe_image(self):
+    def test_unavailable_container_image_id_is_not_used_as_probe_image(self):
         docker = DockerFixture()
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "report.json"
