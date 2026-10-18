@@ -154,3 +154,62 @@ test("assignment shows the selected pair and preserves one enrollment after dupl
   expect(remaining.count).toBe(1);
   expect(remaining.results[0]?.id).toBe(enrollment.id);
 });
+
+test("assignment refresh requires the current publication and preserves the other choices", { session: "visual-hr", timeout: 240_000 }, async ({ app, browser, screen }) => {
+  if (!app.baseUrl) throw new Error("Select the synthetic fixture");
+  const { client } = await sessionClient(browser, new URL(app.baseUrl).origin);
+  await browser.addInitScript({ path: "node_modules/axe-core/axe.min.js" });
+  const first = await publishedCourse(client);
+  await app.open("/hr/assignments");
+  await screen.getByLabel("Поиск сотрудника").fill("Дана Нұрланқызы");
+  const person = screen.getByRole("radio", /Дана Нұрланқызы/);
+  await person.check();
+  await screen.getByLabel("Поиск курса").fill(first.title);
+  await screen.getByRole("radio", new RegExp(first.title)).check();
+  const due = "2027-01-18T10:00";
+  await screen.getByLabel(/^Срок · необязательно/).fill(due);
+  await screen.getByRole("checkbox", "Обязательное обучение").uncheck();
+  const draft = data(await client.POST("/api/v1/academy/manage/courses/{id}/save-draft/", {
+    params: { path: { id: first.id }, header: { "Idempotency-Key": crypto.randomUUID() } },
+    body: { expected_version: first.version, draft: { ...first.draft, title: `${first.title} · редакция 2` } },
+  }));
+  const second = data(await client.POST("/api/v1/academy/manage/courses/{id}/publish/", {
+    params: { path: { id: first.id }, header: { "Idempotency-Key": crypto.randomUUID() } },
+    body: { expected_version: draft.version },
+  }));
+  const [conflict] = await Promise.all([
+    browser.waitForResponse("**/api/v1/academy/enrollments/"),
+    screen.getByRole("button", "Назначить обучение", { exact: true }).tap(),
+  ]);
+  expect(conflict.status).toBe(409);
+  expect(await conflict.text()).toContain("newer course revision");
+  await screen.getByRole("button", "Обновить запись", { exact: true }).tap();
+  const current = screen.getByRole("radio", new RegExp(second.title));
+  await expect(current).toBeVisible();
+  await expect(current).not.toBeChecked();
+  await expect(screen.getByRole("button", "Назначить обучение", { exact: true })).toBeDisabled();
+  await expect(person).toBeChecked();
+  await expect(screen.getByLabel(/^Срок · необязательно/)).toHaveValue(due);
+  await expect(screen.getByRole("checkbox", "Обязательное обучение")).not.toBeChecked();
+  await current.focus();
+  await current.press("Space");
+  await expect(current).toBeChecked();
+  const directory = `${process.env.JANAMEN_CAPTURE_ROOT ?? ".artifacts/visual"}/assignment-refresh-${Date.now()}`;
+  for (const environment of cases) {
+    if (environment.kind === "viewport") await browser.setViewport({ width: environment.width, height: 800 });
+    await capturePreparedPage({ app, browser, environment, directory, view: {
+      id: "S28-refreshed-publication", path: "/hr/assignments", ready: "3. Проверьте назначение", state: "explicit refresh cleared the stale publication; HR selected v2 by keyboard, retaining person, optional status and due date",
+    } });
+  }
+  const [saved] = await Promise.all([
+    browser.waitForResponse("**/api/v1/academy/enrollments/"),
+    screen.getByRole("button", "Назначить обучение", { exact: true }).tap(),
+  ]);
+  expect(saved.status).toBe(201);
+  await expect(screen.getByRole("link", "Открыть назначение", { exact: true })).toBeVisible();
+  const assigned = data(await client.GET("/api/v1/academy/enrollments/", { params: { query: { course: first.id } } }));
+  expect(assigned.count).toBe(1);
+  expect(assigned.results[0]?.course_version).toBe(second.published_version);
+  expect(assigned.results[0]?.required).toBe(false);
+  expect(assigned.results[0]?.due_at).toBe("2027-01-18T05:00:00Z");
+});
