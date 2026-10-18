@@ -8,11 +8,23 @@ The application now runs at **https://jmhr.vercel.app** on Vercel Services, with
 
 Complete acceptance remains **BLOCKED** by COV1, missing mandatory state/environment evidence. The [independent R3 review](verification/reviews/janamen-release-r3.md) retains its original scope and limitations. This is a synthetic demonstration, not an accepted production release. No fresh independent approval of the cloud configuration is claimed.
 
-The latest owner request is cloud deployment and a portable handoff for design refinement and stronger differentiation. [CLOUD_DESIGN_HANDOFF.md](../CLOUD_DESIGN_HANDOFF.md) is the current entry. The team has two nontechnical presenters. Their latest timing is **3 minutes, 1 minute speaking and 2 minutes demonstrating**. Older five-minute material requires revision. The exact official speaking limit remains unconfirmed.
+The latest owner request on 18 October assigns the continuing agent planning and orchestration, with SWE 2 High implementation workers and Gemini 3.8 Flash for cheaper bounded work. The owner explicitly prioritizes meeting the deadline over conserving AI usage. Continue the existing differentiation plan rather than restart discovery. Keep specifications current with each behavior change. The team has two nontechnical presenters. Their latest timing is **3 minutes, 1 minute speaking and 2 minutes demonstrating**. Older five-minute material requires revision. The exact official speaking limit remains unconfirmed.
+
+### Active continuation at 15:44 Asia/Almaty
+
+The owner moved the completion deadline to **16:45 on 18 October 2026** and requested frequent pushes of checked changes. This is the team delivery target, not a separately verified organizer cutoff. Baseline `f0b316e` matches fetched `origin/main`.
+
+Two isolated SWE 2 High workers are implementing the next checkpoint. The frontend worker owns `frontend/` and applies the supplied Crextio reference to the existing working journeys. The backend worker owns knowledge rehearsal APIs and tests, generated contracts outside `frontend/`, and `docs/product/policy-rehearsal.md`. The coordinator owns integration, deployment checks, submission packaging and this status. Neither worker reviews its own change as independent approval.
+
+The selected additional implementation is a read-only rehearsal of a draft policy against bounded employee questions before publication. It compares source excerpts from the current corpus and the proposed revision, with existing permissions and version checks. A changed answer is not proof that the draft is legally correct. The previous acknowledgement/readiness proposal remains an unimplemented candidate. The owner rejected presenting country routing or ordinary notification-and-quiz workflows as sufficient differentiation.
+
+The owner's supplied archive contains ten Crextio HTML screen sections, design tokens and reusable blueprints. It is unpacked at `.artifacts/design-import/crextio-rea-reverse-engineered/`. Its pixel parity and runtime have not yet been verified by this coordinator. Importing its source does not establish application acceptance.
+
+Preserve both request types, all 30 base courses, and the three-role request journey. Source, browser and cloud evidence remain distinct. Existing COV1 and R3 limitations remain open. The submission requirements and packaging check are recorded in [submission checklist](product/submission-checklist.md).
 
 ## Outcome and authority
 
-Deliver a working Digital HR product that maximizes first-place readiness through the published scoring criteria. The jury's decision is external. The user authorizes autonomous implementation until 10:00 Asia/Almaty, meaningful frequent commits, regular push to `Yerlan110110/Jana`, a public synthetic demo, and defense materials. Preserve all restored history and inspect new remote commits before publication. No force-push, paid infrastructure, private MIS Pro material, real personnel data, or real external HR writes.
+Deliver a working Digital HR product that maximizes first-place readiness through the published scoring criteria. The jury's decision is external. The user authorizes autonomous implementation until 16:45 Asia/Almaty, meaningful frequent commits, regular push to `Yerlan110110/Jana`, a public synthetic demo, and defense materials. Preserve all restored history and inspect new remote commits before publication. No force-push, paid infrastructure, private MIS Pro material, real personnel data, or real external HR writes.
 
 SureForge tier is Standard. This is substantive multi-step work in an isolated synthetic environment with reversible code changes. Public delivery still requires privacy, license, actual launch, and independent review checks. There are four gates with at most three rounds each. Required missing checks remain open.
 

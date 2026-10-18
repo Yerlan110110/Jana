@@ -13,7 +13,7 @@ See [backend contract](backend-contract.md) for exact module interfaces.
 
 ```mermaid
 flowchart TB
-    User["Employee, manager, HR"] --> Web["Future web frontend"]
+    User["Employee, manager, HR"] --> Web["React web frontend"]
     Web --> API["Django REST API"]
     API --> DB["PostgreSQL"]
     API --> Files["Protected content"]
@@ -23,7 +23,7 @@ flowchart TB
     Outbox --> Export["Documentolog adapter"]
 ```
 
-The web frontend is a separate delivery. Protected document access goes through an authorization check.
+The React web frontend is implemented in `frontend/` and consumes the generated API contract. Protected document access goes through an authorization check.
 The adapter boxes identify integration boundaries. Mock implementations are explicit and do not assert a connection to a real company system.
 
 ## Module ownership

@@ -11,9 +11,7 @@ A small demo-only dataset is not the target.
 
 ## Source precedence
 
-The organizer's supplied Digital HR Platform JanaMen PDF is the original brief.
-The user also supplied a longer organizer-report transcript. Its added details include request filters, an explicit quiz, RAG, synthetic data and a prohibition on AI personnel decisions.
-The full second PDF and its revision date were not available. This specification adopts the stronger compatible requirements and records decisions rather than inventing an official revision.
+Both supplied organizer PDFs are available in `docs/briefs/digital-hr.pdf` and `docs/briefs/hackathon-2026.pdf`. Their Digital HR sections define the baseline. The second PDF also contains the separate Jana Address track. Do not transfer that track's rules to Digital HR. No organizer revision date is inferred.
 The public event page confirms the two alternative tracks: https://terricon.kz/ru/hackathon.
 Jana Address offline inference, throughput and mandatory Docker rules do not automatically apply to Digital HR.
 
