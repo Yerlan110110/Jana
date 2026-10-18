@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/upstream/input";
 import { api, unwrap, useCommand, type Model } from "@/lib/api";
 import { date } from "@/lib/format";
+import { RehearsalPanel } from "@/features/knowledge/rehearsal";
 import { useSession } from "@/lib/session";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, FileText, Plus } from "lucide-react";
@@ -566,6 +567,20 @@ function PolicyEditor({
           </div>
         )}
       </Card>
+      {document && (
+        <RehearsalPanel
+          documentId={document.id}
+          expectedVersion={baseVersion}
+          blocked={dirty || stale}
+          blockReason={
+            dirty
+              ? "Сохраните черновик. Проверка работает только с сохранённой версией."
+              : stale
+                ? "Черновик изменился на сервере. Загрузите текущую версию перед проверкой."
+                : null
+          }
+        />
+      )}
       <DemoNote />
     </>
   );

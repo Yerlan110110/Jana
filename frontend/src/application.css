@@ -1639,3 +1639,125 @@ summary {
 .login-tracks svg {
   color: var(--graphite);
 }
+
+/* Rehearsal panel — before/after comparison inside the same bento surface. */
+.rehearsal-panel .section-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.rehearsal-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.rehearsal-impact {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-block-start: 12px;
+}
+.rehearsal-results {
+  margin-block-start: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rehearsal-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-block-end: 12px;
+}
+.rehearsal-question > p {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  min-width: 200px;
+}
+.rehearsal-question-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.rehearsal-question-meta small {
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+.rehearsal-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.rehearsal-side {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--paper-line);
+  border-radius: 16px;
+  padding: 14px 16px;
+  min-width: 0;
+}
+.rehearsal-side h4 {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  font-weight: 500;
+  margin-block-end: 8px;
+}
+.rehearsal-reason {
+  font-size: 12px;
+  color: #4a4636;
+}
+.rehearsal-empty {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-block-start: 8px;
+}
+.rehearsal-side ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+.excerpt-item {
+  padding: 10px 0;
+  border-block-start: 1px dotted color-mix(in srgb, var(--ink) 18%, transparent);
+  font-size: 12px;
+}
+.excerpt-item h5 {
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+.excerpt-item p {
+  color: var(--muted-foreground);
+  margin-block-start: 5px;
+}
+.excerpt-origin {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: #efead9;
+  color: #5c584a;
+}
+.excerpt-origin.draft {
+  background: var(--sun);
+  color: var(--graphite);
+}
+.domain-status[data-status="gained"] {
+  color: #3e6b25;
+  background: #e4f0d6;
+}
+.domain-status[data-status="changed"] {
+  color: #7a5410;
+  background: #f8ecd0;
+}
+.domain-status[data-status="lost"] {
+  color: #842b20;
+  background: #fbefeb;
+}
+@media (max-width: 680px) {
+  .rehearsal-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
