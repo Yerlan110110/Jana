@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@fontsource-variable/urbanist";
 
 @import "../styles/pace.css";
 @import "./themes/jana.css";
