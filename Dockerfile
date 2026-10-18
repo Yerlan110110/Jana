@@ -46,4 +46,7 @@ RUN npm --prefix frontend run build
 FROM nginx:1.28.2-alpine AS frontend
 COPY scripts/deploy/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=frontend-build /app/frontend/dist /usr/share/nginx/html
+COPY docs/defense/JanaMen-defense.pdf docs/defense/index.html /usr/share/nginx/html/defense/
+COPY docs/defense/assets/DejaVuSans-license.txt docs/defense/assets/advance-rehearsal.mp4 /usr/share/nginx/html/defense/
+COPY docs/defense/assets/advance-poster.png /usr/share/nginx/html/defense/
 EXPOSE 80

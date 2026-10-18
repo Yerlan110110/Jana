@@ -1,0 +1,63 @@
+{
+  "slides": [
+    {
+      "kind": "cover",
+      "title": "Кадровые заявления\nи обучение сотрудников",
+      "text": "Сотрудник видит следующий шаг, ответственного и подтверждённый результат.",
+      "sources": ["../product/specification.md", "../product/differentiation-strategy.md"]
+    },
+    {
+      "kind": "screen",
+      "title": "Следующее действие сотрудника",
+      "image": "assets/workbench.png",
+      "text": "Возвращённая заявка остаётся текущим делом. Сотрудник открывает замечание и исправляет данные новой подачей.",
+      "sources": ["../../tests/web/requests.e2e.ts", "../verification/request-snapshots.md"]
+    },
+    {
+      "kind": "screen",
+      "title": "Очередь руководителя",
+      "image": "assets/manager-queue.png",
+      "text": "Сервер выбирает заявления, по которым этот руководитель вправе принять решение сейчас. HR получает следующий этап.",
+      "sources": ["../architecture/differentiation-gap-map.md", "../architecture/backend-contract.md", "../../tests/web/scope.e2e.ts"]
+    },
+    {
+      "kind": "screen",
+      "title": "Согласование и получение документа",
+      "image": "assets/request-receipt.png",
+      "text": "Сотрудник видит решение HR и квитанцию. Демонстрационные адаптеры 1C и Documentolog подтверждают получение документа.",
+      "sources": ["../verification/public-https.md", "../verification/operator-recovery.md"]
+    },
+    {
+      "kind": "screen",
+      "title": "30 курсов в Jana Academy",
+      "image": "assets/academy.png",
+      "text": "Материалы, условия теста и история попыток связаны с версией курса. Сотрудник продолжает сохранённое обучение.",
+      "sources": ["../../tests/web/academy.e2e.ts", "../product/demo-data-contract.md"]
+    },
+    {
+      "kind": "screen",
+      "title": "Ответ по доступному регламенту",
+      "image": "assets/answer.png",
+      "text": "Поиск возвращает выдержки из опубликованного материала. Сотрудник открывает основание. Текущий режим работает без генерации ИИ.",
+      "sources": ["../../tests/web/knowledge.e2e.ts", "../verification/public-https.md"]
+    },
+    {
+      "kind": "screen",
+      "title": "Когда основания ещё нет",
+      "image": "assets/hr-cases.png",
+      "text": "Сотрудник создаёт обращение. HR публикует основание и связывает с ним ответ. Новый вопрос уже использует публикацию.",
+      "sources": ["../../tests/web/knowledge-loop.e2e.ts", "../architecture/backend-contract.md"]
+    },
+    {
+      "kind": "closing",
+      "title": "Проверки и следующий пилот",
+      "paragraphs": [
+        "232 теста backend на PostgreSQL. Отдельный Docker-стенд прошёл 16 сценариев браузера и 10 проверок клавиатуры.",
+        "Публичный HTTPS-стенд прошёл согласование аванса и проверку нового основания HR. Исходники и Docker-запуск доступны в репозитории.",
+        "На пилоте измерим время до завершения заявления и долю вопросов, для которых сотруднику хватило опубликованного основания."
+      ],
+      "demo_url": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+      "sources": ["../verification/public-https.md", "../continuation-status.md"]
+    }
+  ]
+}

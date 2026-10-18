@@ -1,0 +1,133 @@
+{
+  "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+  "source_checkpoint": "c655c66a2ffbfc96b1d63453a7caa311b76f8f31",
+  "roles": [
+    "employee.demo",
+    "manager.demo",
+    "hr.demo"
+  ],
+  "prepared_views": {
+    "S22": {
+      "role": "employee",
+      "path": "/knowledge/citations/7084f29a-4a87-4de1-908f-0c2378d37075",
+      "state_at_capture": "freshly accessible published source"
+    },
+    "S08": {
+      "role": "employee",
+      "path": "/requests/86a51910-bed9-5919-9239-24fdb66c866b",
+      "state_at_capture": "returned own request with correction form and history"
+    },
+    "S16": {
+      "role": "employee",
+      "path": "/academy/enrollments/915b826c-9447-4fff-b2ae-957525762b60",
+      "state_at_capture": "active lesson and outline"
+    },
+    "S02": {
+      "role": "employee",
+      "path": "/",
+      "state_at_capture": "loaded workbench with returned requests"
+    },
+    "S31": {
+      "role": "hr",
+      "path": "/hr/integrations",
+      "state_at_capture": "operator delivery and source lists"
+    },
+    "S07": {
+      "role": "employee",
+      "path": "/requests/93082eee-39be-4f85-8cc2-6a47be9f5a9c",
+      "state_at_capture": "approved own request with fulfillment projection"
+    },
+    "S30": {
+      "role": "hr",
+      "path": "/knowledge/cases",
+      "state_at_capture": "open scoped HR knowledge cases"
+    },
+    "S23": {
+      "role": "employee",
+      "path": "/assistant/answers/09afc6c7-b523-4dee-9fb8-3ecdd458811f",
+      "state_at_capture": "real refusal with explicit escalation action"
+    },
+    "S29": {
+      "role": "hr",
+      "path": "/hr/policies",
+      "state_at_capture": "policy revisions and publication states"
+    },
+    "S09": {
+      "role": "manager",
+      "path": "/team/requests",
+      "state_at_capture": "server-filtered manager queue"
+    },
+    "S21": {
+      "role": "employee",
+      "path": "/assistant/answers/62769fea-14b5-4b14-af91-c2071f0bb694",
+      "state_at_capture": "real extractive answer and citations"
+    },
+    "S14": {
+      "role": "employee",
+      "path": "/academy/catalog",
+      "state_at_capture": "published course catalog"
+    }
+  },
+  "recorded_advance": {
+    "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+    "requestId": "ea1b701f-00be-4134-9a73-cd9c49c705a7",
+    "stages": [
+      {
+        "role": "employee",
+        "at": "2026-10-18T00:19:02.049Z",
+        "screenshot": "screenshots/001-employee-submitted.png"
+      },
+      {
+        "role": "manager",
+        "at": "2026-10-18T00:19:03.906Z",
+        "screenshot": "screenshots/002-manager-approved.png"
+      },
+      {
+        "role": "hr",
+        "at": "2026-10-18T00:19:05.480Z",
+        "screenshot": "screenshots/003-hr-approved.png"
+      },
+      {
+        "role": "employee",
+        "at": "2026-10-18T00:19:06.754Z",
+        "screenshot": "screenshots/004-employee-receipt.png"
+      }
+    ],
+    "fulfillment": {
+      "request_id": "ea1b701f-00be-4134-9a73-cd9c49c705a7",
+      "approval": {
+        "status": "approved",
+        "submitted_revision_id": "cdf98751-854f-4523-917a-24a068d2361e",
+        "submission_number": 1
+      },
+      "delivery": {
+        "state": "accepted",
+        "accepted_at": "2026-10-18T05:19:06.357717+05:00"
+      },
+      "source_accounting": {
+        "state": "not_applicable",
+        "source_revision": null,
+        "confirmed_at": null,
+        "balance_as_of": null
+      }
+    },
+    "authentication": "API-authenticated synthetic roles; no password-field fill; each role reopens the application"
+  },
+  "video": {
+    "raw_sha256": "5de84101361f2090fbe68f584a265320bcb12bd5bae20e2bed80dc98bca668a8",
+    "output_sha256": "7c97b8cb3fd2bd70383110471be9771a297d00621c670d60f2396714673bbb02",
+    "output": "assets/advance-rehearsal.mp4",
+    "playback_slowdown": 1,
+    "raw_duration_seconds": 8.84,
+    "audio": false,
+    "authentication": "Existing API role fixture; no password-field fill; commands through real UI.",
+    "output_duration_seconds": 8.84,
+    "draft_rejected": "Sixfold slowdown amplified loading and identity-navigation gaps; retain draft only in private artifacts.",
+    "poster": {
+      "path": "assets/advance-poster.png",
+      "sha256": "7bd64334f022c85de1f02b143732c7a1cc06b9ee70ede4e9fab05738f4ad3240",
+      "source": ".artifacts/browser/public-rehearsal-20261018-1/results/rehearsal-record-one-real-public-advance-d9c766b593a56649/attempt-1/screenshots/004-employee-receipt.png"
+    }
+  },
+  "scope": "The recorded advance is complete. Prepared returned request and Academy views are separate mutable fixtures. Full 7:30 spoken presentation has not been timed."
+}

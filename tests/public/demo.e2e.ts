@@ -1,4 +1,5 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { test } from "@e2e-dev/web";
 import { expect, type Screen } from "e2e";
 import { sessionClient } from "../web/api.js";
@@ -19,7 +20,7 @@ async function decide(screen: Screen, label: string) {
   await screen.getByRole("button", label).last().tap();
 }
 
-test("public origin enforces HTTPS and ignores a spoofed forwarding protocol", async ({ app }) => {
+test("public origin enforces HTTPS and serves the reviewed defense artifacts", async ({ app, screen, browser }) => {
   const origin = selectedOrigin(app.baseUrl);
   for (const headers of [new Headers(), new Headers({ "X-Forwarded-Proto": "https" })]) {
     const response = await fetch(origin.replace("https:", "http:") + "/login", { redirect: "manual", headers });
@@ -33,6 +34,32 @@ test("public origin enforces HTTPS and ignores a spoofed forwarding protocol", a
   expect(response.headers.get("x-content-type-options")).toBe("nosniff");
   expect(response.headers.get("referrer-policy")).toBe("same-origin");
   expect(response.headers.get("cache-control")).toBe("no-store");
+  const pdf = await fetch(`${origin}/defense/JanaMen-defense.pdf`);
+  expect(pdf.status).toBe(200);
+  expect(pdf.headers.get("content-type")).toBe("application/pdf");
+  const served = new Uint8Array(await pdf.arrayBuffer());
+  const expected = await readFile("docs/defense/JanaMen-defense.pdf");
+  expect(createHash("sha256").update(served).digest("hex")).toBe(createHash("sha256").update(expected).digest("hex"));
+  const video = await fetch(`${origin}/defense/advance-rehearsal.mp4`);
+  expect(video.status).toBe(200);
+  expect(video.headers.get("content-type")).toBe("video/mp4");
+  expect(createHash("sha256").update(new Uint8Array(await video.arrayBuffer())).digest("hex")).toBe(createHash("sha256").update(await readFile("docs/defense/assets/advance-rehearsal.mp4")).digest("hex"));
+  for (const width of [1280, 320]) {
+    await browser.setViewport({ width, height: 800 });
+    await app.open("/defense/");
+    await expect(screen.getByRole("heading", "Материалы защиты", { exact: true })).toBeVisible();
+    await expect(screen.getByRole("link", "Открыть PDF для защиты")).toBeVisible();
+    const geometry = await browser.evaluate(() => ({ width: innerWidth, content: document.documentElement.scrollWidth, autoplay: document.querySelector("video")?.autoplay ?? null }));
+    expect(geometry).toEqual({ width, content: width, autoplay: false });
+    for (let tab = 0; tab < 3; tab += 1) await browser.keyboard.press("Tab");
+    expect(await browser.evaluate(() => document.activeElement?.tagName ?? null)).toBe("VIDEO");
+    await browser.keyboard.press("Space");
+    await expect.poll(() => browser.evaluate(() => document.querySelector("video")?.paused ?? null)).toBe(false);
+    await expect.poll(() => browser.evaluate(() => document.querySelector("video")?.currentTime ?? 0)).toBeGreaterThan(0);
+    await browser.keyboard.press("Space");
+    await expect.poll(() => browser.evaluate(() => document.querySelector("video")?.paused ?? null)).toBe(true);
+    await app.screenshot(`public-defense-${width}`);
+  }
 });
 
 test("public employee manager and HR finish an advance with secure session and CSRF denial", { timeout: 240_000 }, async ({ app, screen, browser }) => {

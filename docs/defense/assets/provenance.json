@@ -1,0 +1,80 @@
+[
+  {
+    "view": "S02",
+    "path": "docs/defense/assets/workbench.png",
+    "source": ".artifacts/browser/public-defense-screens-20261018-1/results/screens-employee-actual-public-screens-83834657853cb9b3/attempt-1/screenshots/001-S02-public-defense.png",
+    "sha256": "ac04bef314933662f83bdbedb8ff44c324f3aa7212f913f1c3bda0d48b9b6a7e",
+    "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "inspection": "Opened individually at full size by the owner before inclusion; this is one viewport region, not full-view/state acceptance."
+  },
+  {
+    "view": "S09",
+    "path": "docs/defense/assets/manager-queue.png",
+    "source": ".artifacts/browser/public-defense-screens-20261018-1/results/screens-manager-actual-public-screens-0a1dc1075164fb73/attempt-1/screenshots/001-S09-public-defense.png",
+    "sha256": "de4d9b592ecad918163378fb8911b517ad231e501f52717dc7c393d11debf7d2",
+    "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "inspection": "Opened individually at full size by the owner before inclusion; this is one viewport region, not full-view/state acceptance."
+  },
+  {
+    "view": "S07",
+    "path": "docs/defense/assets/request-receipt.png",
+    "source": ".artifacts/browser/public-defense-screens-20261018-1/results/screens-employee-actual-public-screens-83834657853cb9b3/attempt-1/screenshots/002-S07-public-defense.png",
+    "sha256": "d5da6541acc730f66025e9df3fbc5f64a00e93e0b833524abdbceeff8aad243f",
+    "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "inspection": "Opened individually at full size by the owner before inclusion; this is one viewport region, not full-view/state acceptance."
+  },
+  {
+    "view": "S14",
+    "path": "docs/defense/assets/academy.png",
+    "source": ".artifacts/browser/public-defense-screens-20261018-1/results/screens-employee-actual-public-screens-83834657853cb9b3/attempt-1/screenshots/004-S14-public-defense.png",
+    "sha256": "f703d5d721177ba2806ccd74681b5b177702b4549f32d8027e247b815468b6d0",
+    "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "inspection": "Opened individually at full size by the owner before inclusion; this is one viewport region, not full-view/state acceptance."
+  },
+  {
+    "view": "S21",
+    "path": "docs/defense/assets/answer.png",
+    "source": ".artifacts/browser/public-defense-screens-20261018-1/results/screens-employee-actual-public-screens-83834657853cb9b3/attempt-1/screenshots/006-S21-public-defense.png",
+    "sha256": "5346b5c4295790edd556e61afb3746a414c07fce529a6e1b9b57cbca9f580a41",
+    "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "inspection": "Opened individually at full size by the owner before inclusion; this is one viewport region, not full-view/state acceptance."
+  },
+  {
+    "view": "S30",
+    "path": "docs/defense/assets/hr-cases.png",
+    "source": ".artifacts/browser/public-defense-screens-20261018-1/results/screens-hr-actual-public-screens-for-63e8814521a4ec4a/attempt-1/screenshots/002-S30-public-defense.png",
+    "sha256": "2faf2598f91b9780d82f4b213fc0aa73a08370ecfe8da30e9f98e414e41c55b9",
+    "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "inspection": "Opened individually at full size by the owner before inclusion; this is one viewport region, not full-view/state acceptance."
+  }
+]

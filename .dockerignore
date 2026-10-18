@@ -18,4 +18,9 @@
 **/staticfiles
 **/media
 docs
+!docs/defense/JanaMen-defense.pdf
+!docs/defense/index.html
+!docs/defense/assets/DejaVuSans-license.txt
+!docs/defense/assets/advance-rehearsal.mp4
+!docs/defense/assets/advance-poster.png
 **/dist

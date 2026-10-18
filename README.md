@@ -11,6 +11,7 @@
 | Нужно | Открыть |
 | --- | --- |
 | Открыть публичный HTTPS-стенд | [Доступ, запуск и остановка](docs/deployment/public-demo.md) |
+| Открыть материалы защиты | [Офлайн PDF и исходники](docs/defense/README.md) |
 | Понять ТЗ простыми словами | [Краткое объяснение](docs/product/brief-in-russian.md) |
 | Продолжить работу | [Handoff следующему агенту](HANDOFF.md), [готовый промпт Codex](CODEX_START.md) |
 | Узнать требования | [Спецификация](docs/product/specification.md), [решения владельца](docs/product/project-rules.md) |

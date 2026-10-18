@@ -1,69 +1,41 @@
-# JanaMen continuation handoff
+# Продолжить JanaMen
 
-Current contract and acceptance state live in [docs/continuation-status.md](docs/continuation-status.md). Read it before changing code. This handoff is an entry point, not a second status ledger.
+Текущий контракт и незакрытые проверки находятся в [docs/continuation-status.md](docs/continuation-status.md). Это единственный текущий статус. Прежний подробный handoff сохранён в [архиве](docs/archive/HANDOFF-before-defense-20261018.md).
 
-The [public HTTPS checkpoint](docs/verification/public-https.md) now verifies a separate synthetic Cloudflare Quick Tunnel, secure sessions, CSRF denials and a complete three-role advance with receipt. The [runtime guide](docs/deployment/public-demo.md) records access, launch and safe shutdown. Its temporary availability and pending independent acceptance remain explicit.
+## Полномочия и проект
 
-## Authorization and source
+Владелец разрешил автономно работать до 10:00 Asia/Almaty, часто делать содержательные коммиты и регулярно публиковать завершённые части в `Yerlan110110/Jana`. Разрешены синтетический публичный стенд и материалы защиты. История восстановлена из исходной поставки. Не создавать starter, не переписывать чужую историю, не использовать реальные кадровые данные или частный MIS Pro.
 
-The owner gives the continuing agent full architecture, backend, frontend, design, verification and defense ownership. Work autonomously through 10:00 Asia/Almaty. Commit completed units frequently and push through the authorized GitHub connection. Preserve history and inspect origin before reconciling. No force-push. Use synthetic data only.
+Каноническая папка `/home/yqecea/coding-projects/jana`. Перед изменениями подтвердить Git top-level, fetch и расхождение с origin. GitHub push работает через репозиторное использование `gh auth git-credential`, без смены глобальной учётной записи. Проект добавлен в `PROJECTS.md` и проверен его штатным checker.
 
-The initial remote was empty. The attached bundle restored main with 22 original commits, branches and tags. See [restoration evidence](docs/verification/restoration.md). The original handoff is retained in [the archive](docs/archive/HANDOFF-initial-20261017.md).
+## Реализованный продукт
 
-## Source changes integrated
+Django, DRF, PostgreSQL и generated OpenAPI обслуживают React-интерфейс. Подключены оба кадровых процесса, очередь текущих решений, неизменяемые подачи, возврат, конфликт версий и безопасный повтор после обрыва. Сотрудник, руководитель и HR имеют разные серверные области доступа. Кадровые факты остаются доступными для чтения.
 
-The current request queue filters `needs_my_action=true` before pagination using the same selector as workbench. HR case resolution can refer to an immutable published policy revision, with fresh access checks. The scoped request fulfillment endpoint separates approval, document receipt and source accounting. The proposed balance breakdown and reviewer reassignment are not implemented. Generated OpenAPI and API client include the selected changes.
+Academy содержит 30 базовых содержательных курсов. Материал, попытки и результаты связаны с версией назначения. HR публикует, назначает и архивирует содержимое. Обращение HR может ссылаться на отдельно опубликованную редакцию регламента. Новая публикация участвует в следующем поиске. После архива сервер снова ограничивает доступ.
 
-The web application now uses the generated API, Django sessions and CSRF. A licensed Pace subset and official MIT shadcn controls provide the primitives. Navigation uses native links, commands use buttons. [Reuse decisions](docs/research/continuation-reuse.md) record source pins, the rejected Oxygen closure and source notices. Frontend source is offered under AGPL-3.0-only with upstream notices preserved.
+Согласование, доставка и учёт кадровым источником отражаются отдельно. Оператор восстанавливает неудачную передачу без повторного решения HR. Квитанция означает получение документа. 1C и Documentolog являются mock-адаптерами. Текущий помощник возвращает выдержки без генерации ИИ. Реальный провайдер модели, выплаты и юридические подписи не проверены.
 
-Home, login, notifications, source-bound answers, citations, HR cases and policy authoring are connected. Requests, Academy, people and the integration operator are now connected in the coordinating source. Do not treat the first web checkpoint as a finished product. The initial 31-view contract remains the acceptance inventory.
+Основы интерфейса переиспользованы из проверенного лицензированного подмножества Pace и поддерживаемых Base UI и shadcn компонентов. [Решение о переиспользовании](docs/research/continuation-reuse.md) фиксирует версии, расхождение демо и исходников, исключённую Oxygen-зависимость и лицензии. Исходный frontend доступен по AGPL-3.0-only, исходные уведомления сохранены.
 
-## Checks and current limits
+## Открыть результат
 
-The coordinator reran the current PostgreSQL suite in Docker with 231 passed, no failed or skipped tests. Latest raw output is `.artifacts/postgresql-operator-capability-full.log`. This extends the restored 191-test baseline. Warnings remain recorded.
+[Публичный стенд](docs/deployment/public-demo.md) использует отдельный Compose project `janamen-public`, API 8015 и frontend 8095. Пароли находятся только в `.artifacts/public-demo/.env`. Туннель временный. Его процесс и способ остановки записаны в `.artifacts/public-demo/tunnel-owner.json`. Не останавливать процессы по общему имени.
 
-The first Docker web doctor and employee question-to-citation test pass. Reports are under `.artifacts/browser/doctor-20261017-1/` and `knowledge-20261017-1/`. These checks cover their named paths, not all roles or visual states. The integrated Academy run at `.artifacts/browser/academy-integrated-20261018-5/` passed real HR authoring/publication/assignment, prerequisite enforcement, a failed then successful attempt, and both results after archive. Its earlier failing runs are retained. The integrated Docker role run at `.artifacts/browser/integrated-roles-20261018-1/` passed both request journeys, advance return/resubmission, logout and account switch. The preceding failing logout evidence is retained at `.artifacts/browser/logout-red-20261017-1/`. The project verification recipe is [.agents/skills/verify-janamen/SKILL.md](.agents/skills/verify-janamen/SKILL.md). Agent-driven exploratory testing is not configured and is not a claimed pass.
+[Материалы защиты](docs/defense/README.md) содержат просмотренный восьмистраничный PDF, исходники и запись настоящего аванса через три роли. `/defense/` на стенде предоставляет файлы без входа. Полный голосовой показ за 7:30 ещё не измерен. Нативный коннектор презентаций дважды вернул неопределённый результат с тем же ключом. Сохранённый native deck не заявлен.
 
-The browser knowledge loop at `.artifacts/browser/knowledge-loop-20261018-1/` passed initial refusal, HR publication, linked resolution, employee source inspection, a new supported answer, then archive and denial of source/citation content. Source and provider behavior remain separate.
+Закрытый `janamen-dns-test` использует API 8020 и frontend 8092, отдельные тома и subnet `172.29.2.0/24`. Он предназначен для финальной проверки и независимого ревью. `janamen-ci` на 8010/8090 и ранний `janamen-demo` на 8000/8080 остаются отдельными. Не смешивать их readiness и не сбрасывать базы. Старый `janamen-ci` имеет много завершённых проверочных отпусков.
 
-The clean CI Compose stack passed eight real browser tests. Evidence is `.artifacts/browser-container-run-ci-20261018-1.log` and `.artifacts/browser/ci/results/`. The API-replacement regression also passed without restarting nginx. See [the integrated checkpoint](docs/verification/integrated-checkpoint.md). The latest complete PostgreSQL run is `.artifacts/postgresql-browser-fixture-20261018-1.log`, with 231 passed. These checks do not complete the 31-view visual inventory or the independent release gate.
+## Проверки и границы
 
-The expanded Docker suite now passes 14 tests, including real lost-response recovery, stale-write field preservation, cross-team and cross-entity denial, role changes and own-request restrictions. Latest evidence is `.artifacts/ci-browser-recovery-scope-20261018-2.log`; details and retained fixture failures are in the integrated checkpoint. Latest PostgreSQL evidence is `.artifacts/ci-postgresql-explicit-network-20261018-1.log`, with 231 passed. Both GitHub jobs, including safe report upload, pass on `c048590` at https://github.com/Yerlan110110/Jana/actions/runs/39067652005.
+Свежие PostgreSQL, Docker, браузерные роли, клавиатура, публичный HTTPS, cookies, CSRF и соответствие сборки описаны в [публичном checkpoint](docs/verification/public-https.md) и [проверке материалов](docs/verification/defense.md). Инструкция воспроизведения находится в [.agents/skills/verify-janamen/SKILL.md](.agents/skills/verify-janamen/SKILL.md).
 
-The [entry-view interface pilot](docs/verification/interface-pilot.md) records repaired input and caption contrast, six inspected viewport regions and the raw axe monogram finding. It is a scoped check. Complete visual, keyboard and zoom acceptance remain open.
+[Калибровка захвата](docs/verification/capture-calibration.md) отличает повторённые обычные снимки от дефекта native-200% capture. Старые raw PNG с обрезкой не являются просмотренным интерфейсом. Нормальная и native матрицы доступны, но не все их изображения и состояния уже просмотрены. CSV остаётся открытым там, где приёмка не закончена. Автоматический PASS не заменяет визуальный просмотр.
 
-The [interface inventory checkpoint](docs/verification/interface-inventory.md) records repaired direct-entry styles and clipped action text. The new full visual run passes eleven tests across all 31 normal views at five widths, with 155 cell records and 585 saved segments. These are not all inspected images or complete state acceptance. The narrow assessment action fits after a real failing reproduction, and all five narrow lesson segments were inspected with measured 18.2942:1 text contrast. The current Docker role suite still passes 14 tests. [Test-thread cleanup](docs/verification/test-thread-cleanup.md) repairs the reproduced teardown warning. The fresh strict PostgreSQL run passes 231 with 192 retained warnings and no teardown error.
+[Secret audit](docs/verification/security.md) сохраняет исходные шесть находок сканера и их основания. Один исторический digest имеет документированное происхождение без сохранённого preimage. Перед итоговой приёмкой повторить скан на замороженном commit. Независимый reviewer не должен писать код, который он проверяет.
 
-The [native zoom checkpoint](docs/verification/native-zoom.md) supplies a repeatable owned-profile 200% check and a 100% negative control. Native screenshot calibration found and repaired a coordinate mismatch in the ordinary capture path. Keep the failed images as verification evidence rather than counting them as inspected interface content. Full visual and state acceptance remain open.
+## Исследования и сохранённая работа
 
-The [submitted-version checkpoint](docs/verification/request-snapshots.md) replaces raw request JSON with readable immutable facts and uses a name only for a proved reviewer identity. Both request kinds retain their saved payloads. PostgreSQL now passes 232 tests with 193 retained warnings. The refreshed normal and native matrices pass twelve and ten tests respectively. Full interface acceptance and independent release review remain open.
+NotebookLM проекта `dcc4a600-e447-4f8a-98cd-4716bbc99ab9` содержит официальные PDF и первичные источники. [Синтез](docs/research/notebook-synthesis.md) и [механизмы HR и LMS](docs/research/journeys-reuse.md) уже подготовлены. Не создавать новый notebook вместо существующего.
 
-The [button-feedback checkpoint](docs/verification/button-motion.md) repairs actual keyboard and reduced-motion movement and fading old focus rings in the shared action adapter. Its three-test browser run and selected video frames verify that scope. Whole-product keyboard and motion acceptance remain open.
-
-The [editor-recovery checkpoint](docs/verification/request-editor-recovery.md) repairs submission remaining blocked after a successful normalized save. Its real lost-update-response sequence also proves that replay preserves newer typing. Probe requests retain history and the successful probe is cancelled by its owner.
-
-Fresh Claude plan review failed with `Claude API rate limit reached. Try again later.` It performed no inspection. The first source checkpoint `3709c00` is published. Both GitHub Actions jobs passed at https://github.com/Yerlan110110/Jana/actions/runs/39060785959. Independent release review remains required. Browser checks, Docker checks, provider checks and real external integrations remain separate claims. Assistant mode is extractive. 1C and Documentolog are mocks. No payment or legal signature is proved.
-
-The [keyboard checkpoint](docs/verification/keyboard.md) records the repaired narrow-navigation Escape behavior, native date calibration and normal-state Tab tours on all 31 views at 1280, 320 and native 200%. The employee creates, submits and cancels an advance by keyboard. Other states, screen readers and independent acceptance remain open.
-
-The [operator-recovery checkpoint](docs/verification/operator-recovery.md) proves a fresh three-role advance, real failed and accepted delivery attempts, separate operator restore/retry commands and the employee receipt. The human decision version and history remain unchanged. The same owned worker is restored. Public deployment and independent review remain open.
-
-The [nginx verification correction](docs/verification/nginx-project-origin.md) binds readiness to the selected Compose project. Older local reports without recorded origins do not establish project-bound readiness. The corrected real replacement and subsequent sixteen-test browser run pass.
-
-The [packaging checkpoint](docs/verification/packaging.md) separates Docker image tags by project and serves original and generated license texts before sign-in. The forty-file served build matches. PostgreSQL passes 232 tests without the earlier static-directory warnings. Sixteen role tests and ten keyboard tests pass, with the corrected license end-scroll checked separately. Public HTTPS and independent acceptance remain open.
-
-The [capture calibration](docs/verification/capture-calibration.md) distinguishes repeated ordinary images from the separate native-zoom clipping defect. A two-test diagnostic records the methods and proves refusal of populated password fields. [The secret-scan checkpoint](docs/verification/security.md) retains six raw scanner findings, five verified artifact hashes and one documented generated digest with no retained preimage. Independent and final-candidate security acceptance remain open.
-
-## Environment and retained work
-
-The coordinating checkout is `/home/yqecea/coding-projects/jana`. Compose project `janamen-demo` owns API port 8000 and web port 8080. The coordinator stopped the owned Vite process on port 5173 after switching acceptance to immutable Docker builds. `janamen-ci` owns API port 8010 and web port 8090 for clean browser acceptance, plus its separate PostgreSQL test database. Do not stop another task's services by process name.
-
-The canonical project NotebookLM notebook is `dcc4a600-e447-4f8a-98cd-4716bbc99ab9`, titled `JanaMen | Digital HR | Jana Post × Terricon Valley 2026`. It contains the two official PDFs and five primary product or organizer pages. Source ingestion alone is not a completed synthesis. Keep this notebook rather than creating another one.
-
-Completed runtime and backend author worktrees were stopped and archived. Recovery refs are `refs/archive/worktrees/runtime-5c393cdd` and `refs/archive/worktrees/backend-gaps-8f16f823`. Their durable reports moved to `.artifacts/worktree-archive/`. The old runtime baseline database volume is retained without running containers. Local synthetic credentials remain ignored and protected.
-
-The completed product author's T3-managed worktree was archived after terminal cancellation, a clean status check, patch-equivalence checks and a search for active runtime references. The host had chosen `/home/yqecea/.t3/worktrees/jana/t3-4351e3c7`. Recovery ref is `refs/archive/worktrees/t3-4351e3c7-36c57ddb`. All 47 evidence files moved to `.artifacts/worktree-archive/t3-4351e3c7-36c57ddb/.artifacts/` and matched the retained SHA-256 manifest. Only the coordinating checkout remains active.
-
-## Next acceptance work
-
-Complete the C2 coverage ledger, integrate and inspect the author modules, prove both request role journeys and learning/history states, exercise HR publication and source revocation, and test delivery recovery. Run CI-equivalent checks on a frozen candidate. Publish finished green source units, then the permitted synthetic live demo and defense materials. Keep unresolved findings and unavailable checks visible. The first-place objective remains active until the authorized delivery is complete, with the jury decision outside the product's control.
+Все авторские worktrees завершены и архивированы с recovery refs. Отчёты находятся в `.artifacts/worktree-archive/`. В основной работе остаётся координирующий checkout. До принятой поставки требуется завершить визуальную и state-матрицу, независимое ревью и повторно проверить изменённые части. Публикация зелёного checkpoint не означает принятую production-поставку.
