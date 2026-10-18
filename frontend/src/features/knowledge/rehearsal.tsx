@@ -78,6 +78,9 @@ export function RehearsalPanel({
   blockReason: string | null;
 }) {
   const [question, setQuestion] = useState("");
+  const [resultFilter, setResultFilter] = useState<"all" | "risk" | "missing">("all");
+  const questions = question.split("\n").map(item => item.trim()).filter(Boolean);
+  const invalidQuestions = questions.length > 10 || questions.some(item => item.length < 8 || item.length > 2000);
   const preview = useMutation({
     mutationFn: async () =>
       unwrap(
@@ -88,7 +91,7 @@ export function RehearsalPanel({
             body: {
               expected_version: expectedVersion,
               ...(question.trim()
-                ? { questions: [question.trim()] }
+                ? { questions }
                 : {}),
             },
           },
@@ -98,6 +101,7 @@ export function RehearsalPanel({
   const data = !blocked && preview.data?.document.version === expectedVersion
     ? preview.data
     : undefined;
+  const missingSources = data?.results.filter(result => result.after.excerpts.length + result.after.restricted_excerpts === 0).length ?? 0;
   return (
     <Card className="data-section rehearsal-panel">
       <div className="section-heading">
@@ -113,22 +117,23 @@ export function RehearsalPanel({
       </div>
       <div className="field">
         <label htmlFor="rehearsal-question">
-          Свой вопрос для проверки (необязательно)
+          Проверочные вопросы (по одному на строку)
         </label>
         <Textarea
           id="rehearsal-question"
-          rows={2}
-          maxLength={2000}
+          rows={4}
+          maxLength={20009}
           value={question}
-          onChange={(event) => setQuestion(event.target.value)}
+          onChange={(event) => { setQuestion(event.target.value); preview.reset(); }}
           placeholder="Например: можно ли перенести часть отпуска на следующий год?"
         />
         <p className="field-help">
-          Ваш вопрос проверяется с правами HR. Для проверки с правами сотрудника
+          До 10 вопросов, от 8 до 2000 символов каждый. Свои вопросы проверяются с правами HR. Для проверки с правами сотрудника
           оставьте поле пустым: используются его сохранённые вопросы без ответа.
           Если таких вопросов нет, введите свой вопрос.
         </p>
       </div>
+      {invalidQuestions && <p className="field-error" role="alert">Введите не больше 10 вопросов. Каждый вопрос должен содержать от 8 до 2000 символов.</p>}
       {blocked && blockReason && (
         <p className="field-error" role="status">
           {blockReason}
@@ -137,7 +142,7 @@ export function RehearsalPanel({
       <div className="action-row">
         <Button
           variant="secondary"
-          disabled={blocked}
+          disabled={blocked || invalidQuestions}
           loading={preview.isPending}
           loadingLabel="Сравниваем ответы"
           onClick={() => preview.mutate()}
@@ -148,6 +153,21 @@ export function RehearsalPanel({
       <ErrorNotice error={preview.error} />
       {data && (
         <div className="rehearsal-results">
+          <section className="hr-risk-verdict" aria-label="Итог проверки источников">
+            <span className="interior-kicker">RAG / ПРОВЕРКА ПЕРЕД ПУБЛИКАЦИЕЙ</span>
+            <h3>{data.summary.lost > 0 ? "Есть ответы, которые потеряют источник" : data.summary.total === 0 ? "Нет вопросов для оценки ответов" : missingSources > 0 ? "В проверке остались вопросы без источника" : "Потерь источников в этой проверке нет"}</h3>
+            <p>{data.summary.lost > 0 ? "Проверьте текст и аудиторию черновика. Ниже видно, какое основание исчезнет у конкретного вопроса." : "Это проверка найденных выдержек, а не гарантия правильности ответов. Перед публикацией проверьте изменившиеся источники и аудиторию."}</p>
+            <div className="button-row"><Button variant="secondary" aria-pressed={resultFilter === "all"} onClick={() => setResultFilter("all")}>Все вопросы · {data.summary.total}</Button><Button variant="secondary" aria-pressed={resultFilter === "risk"} onClick={() => setResultFilter("risk")}>Изменения и потери · {data.summary.changed + data.summary.lost}</Button><Button variant="secondary" aria-pressed={resultFilter === "missing"} onClick={() => setResultFilter("missing")}>Без источника после · {missingSources}</Button></div>
+          </section>
+          <section className="rag-matrix" aria-label="Матрица источников">
+            <h3>Проверка каждого вопроса</h3>
+            <p>Наличие источника не доказывает правильность ответа. Отсутствие новых потерь не означает, что все вопросы покрыты.</p>
+            {data.results.map((result, index) => <a className="rag-matrix-row" href={`#rehearsal-result-${index}`} key={index} onClick={() => setResultFilter("all")}>
+              <span><b>{String(index + 1).padStart(2, "0")}</b> {result.question}</span>
+              <span data-found={result.before.excerpts.length + result.before.restricted_excerpts > 0}>Сейчас · {result.before.excerpts.length + result.before.restricted_excerpts > 0 ? "источник есть" : "нет источника"}</span>
+              <span data-found={result.after.excerpts.length + result.after.restricted_excerpts > 0}>После · {result.after.excerpts.length + result.after.restricted_excerpts > 0 ? "источник есть" : "нет источника"}</span>
+            </a>)}
+          </section>
           <div className="rehearsal-summary">
             <span className="domain-status" data-status="gained">
               <span aria-hidden="true" /> Новых оснований: {data.summary.gained}
@@ -174,8 +194,10 @@ export function RehearsalPanel({
               Документ ещё не публиковался. Сравнение учитывает и другие доступные регламенты.
             </p>
           )}
+          {resultFilter === "risk" && data.summary.changed + data.summary.lost === 0 && <p role="status">Изменившихся и потерянных источников в этой проверке нет.</p>}
+          {resultFilter === "missing" && missingSources === 0 && <p role="status">Для всех вопросов найден источник после изменения.</p>}
           {data.results.map((result, index) => (
-            <div className="rehearsal-result" key={index}>
+            <div className="rehearsal-result" id={`rehearsal-result-${index}`} hidden={resultFilter === "risk" ? result.classification !== "lost" && result.classification !== "changed" : resultFilter === "missing" && result.after.excerpts.length + result.after.restricted_excerpts > 0} key={index}>
               <div className="rehearsal-question">
                 <p>{result.question}</p>
                 <div className="rehearsal-question-meta">

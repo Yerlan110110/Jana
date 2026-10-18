@@ -49,6 +49,10 @@ export function ManagePoliciesPage() {
           </ActionLink>
         }
       />
+      <section className="hr-studio-hero" aria-label="Управление знаниями">
+        <div><span className="interior-kicker">AI JANA / КАЧЕСТВО ЗНАНИЙ</span><h2>Изменить правило.<br /><em>Сохранить ответы.</em></h2><p>Откройте регламент и запустите репетицию публикации. Проверьте до 10 вопросов сразу и увидьте, какие источники изменятся.</p></div>
+        <div className="hr-studio-score"><span>Замкнутый цикл знаний</span><h3>Вопрос → источник<br />→ проверка → публикация</h3><p>Начните с обращений, на которые помощник не нашёл основание.</p><Link to="/knowledge/cases">Разобрать обращения к HR ↗</Link></div>
+      </section>
       <Card className="records-panel">
         {query.isPending ? (
           <LoadingState />

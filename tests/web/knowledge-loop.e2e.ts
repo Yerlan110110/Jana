@@ -34,8 +34,8 @@ test(
     await screen.getByRole("button", "Сохранить черновик").tap();
     await expect(browser).toHaveURL(/\/hr\/policies\/[a-f0-9-]+$/);
     const policyPath = new URL(await browser.url()).pathname;
-    await expect(screen.getByText(/Ваш вопрос проверяется с правами HR/)).toBeVisible();
-    await screen.getByLabel("Свой вопрос для проверки (необязательно)").fill(question);
+    await expect(screen.getByText(/Свои вопросы проверяются с правами HR/)).toBeVisible();
+    await screen.getByLabel("Проверочные вопросы (по одному на строку)").fill(question);
     await screen.getByRole("button", "Сравнить ответы").tap();
     await expect(screen.getByText("Новых оснований: 1", { exact: true })).toBeVisible();
     await screen.getByRole("button", "Опубликовать сохранённую версию").tap();
@@ -90,7 +90,7 @@ test(
     await expect(screen.getByRole("button", "Сравнить ответы")).toBeDisabled();
     await screen.getByRole("button", "Сохранить черновик").tap();
     await expect(screen.getByRole("button", "Сравнить ответы")).toBeEnabled();
-    await screen.getByLabel("Свой вопрос для проверки (необязательно)").fill(question);
+    await screen.getByLabel("Проверочные вопросы (по одному на строку)").fill(question);
     await screen.getByRole("button", "Сравнить ответы").tap();
     await expect(screen.getByText("Изменятся: 1", { exact: true })).toBeVisible();
     await screen.getByLabel("Название", { exact: true }).fill(`График работы ${Date.now()}`);

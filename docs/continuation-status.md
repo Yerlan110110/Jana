@@ -39,3 +39,23 @@ V3 опубликован из коммита `1a183b7`. Production deployment `
 Настоящие 1С, Documentolog, ЭЦП и выплаты не подключены. Импорт кадровых фактов доступен через операторский API, без формы импорта. Календарь и некоторые списки используют элементы браузера. Полный пиксельный паритет, идеальная плавность и превосходство над другими командами не доказаны. Время речи не измерено.
 
 План развития: docs/product/expansion-roadmap.md. Все будущие возможности обозначены как план. После отправки владельцем любые изменения кода, сайта и материалов запрещены.
+
+## Local HR Academy and RAG extension, 18 October
+
+Not pushed or deployed publicly. The pitch script is unchanged. Local preview is http://127.0.0.1:8098/hr/courses and /hr/policies, using the existing synthetic janamen-checkpoint stack.
+
+Academy now uses the existing scoped enrollment summary for completion, overdue assignments, failed attempts and not-started assignments. Cards open the corresponding team filters. Counts include all accessible assignments, not only the current page. Failed attempts may belong to completed courses.
+
+The publication rehearsal accepts up to ten newline-separated questions and exposes changed/lost-source filtering with an explicit verdict. Editing questions clears prior results. Existing source retrieval, role checks and publication semantics are unchanged; this is not a new semantic retrieval engine or legal correctness check.
+
+Verified locally: frontend typecheck and build, git diff --check, HR summary with 196 assignments, failed-attempt drilldown with 52 assignments, two-question rehearsal against the synthetic advance policy, empty risk filter, short-question validation and result invalidation. RAG and Academy layouts had no horizontal overflow at 375px. Independent source/contract review by codex/gpt-6.1-sol passed. The full role regression suite was not repeated for this local extension.
+
+The built assets were copied into the existing local frontend container for same-origin browser acceptance. Rebuilding that container replaces this temporary preview. Public V3 remains unchanged. The Vite port 5173 still has a pre-existing sign-in origin failure; use local 8098 for this preview.
+
+The local extension also includes six Academy category summaries with category-plus-problem drilldowns. RAG now shows a question-by-question before/after evidence matrix and a filter for questions with no source after the change, including unchanged gaps. Restricted excerpts count as available evidence without exposing their content. Browser checks confirmed a two-question run with one uncovered question, missing-source filtering, and matrix navigation revealing a previously hidden result. Both extended screens fit a 375px viewport without horizontal overflow. These additions remain local and do not change the pitch script.
+
+## HR extension release preparation
+
+Owner authorized publication after local acceptance. The separate presenter note is docs/defense/hr-academy-rag-notes.md; docs/product/jury-demo-script.md is unchanged. Release checks passed: 255 PostgreSQL tests, 22 initial browser journeys plus the corrected publication journey, 10 keyboard checks, API replacement, contracts, TypeScript, frontend build, ruff, migration drift, and seven verification-runner tests. The initial publication test failed on the obsolete field label; the updated selector passed the entire journey.
+
+A reported first-card alignment defect was reproduced on /team/learning: the first card had 0px top padding while peers had 22px. The old flat-list first-child reset now excludes Academy card layouts.

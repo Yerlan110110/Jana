@@ -16,7 +16,7 @@
   border-block-end: 1px solid var(--border);
 }
 .rq-row:first-child,
-.ac-row:first-child,
+.ac-row:first-child:not(.interior-academy .ac-row),
 .people-row:first-child {
   padding-block-start: 0;
 }
