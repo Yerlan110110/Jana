@@ -54,15 +54,15 @@
   {
     "view": "S21",
     "path": "docs/defense/assets/answer.png",
-    "source": ".artifacts/browser/public-defense-screens-20261018-1/results/screens-employee-actual-public-screens-83834657853cb9b3/attempt-1/screenshots/006-S21-public-defense.png",
-    "sha256": "5346b5c4295790edd556e61afb3746a414c07fce529a6e1b9b57cbca9f580a41",
+    "source": ".artifacts/browser/repair-public-screens-20261018/results/screens-employee-actual-public-screens-83834657853cb9b3/attempt-1/screenshots/006-S21-public-defense.png",
+    "sha256": "b35c64dc8b2a160ab64d3ed41c2e812ad9643908ad286d67acb1f5cc9f5f64e0",
     "origin": "https://sandwich-benjamin-mai-limited.trycloudflare.com",
     "viewport": {
       "width": 1280,
       "height": 800,
       "dpr": 1
     },
-    "inspection": "Opened individually at full size by the owner before inclusion; this is one viewport region, not full-view/state acceptance."
+    "inspection": "Opened individually at full size by the owner on repaired 241f170 public build; source links now precede answer text. One viewport region, not full-view/state acceptance."
   },
   {
     "view": "S30",
