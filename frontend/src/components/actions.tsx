@@ -32,6 +32,7 @@ export function ActionLink({
       className={cn(
         buttonVariants({ variant, size }),
         "action-button",
+        variant === "destructive" && "text-destructive-foreground",
         className,
       )}
       {...props}
@@ -51,13 +52,19 @@ export function ActionButton({
   disabled,
   iconStart,
   iconEnd,
+  variant,
   children,
   className = "",
   ...props
 }: ActionButtonProps) {
   return (
     <Button
-      className={`action-button ${className}`}
+      className={cn(
+        "action-button",
+        variant === "destructive" && "text-destructive-foreground",
+        className,
+      )}
+      variant={variant}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
       {...props}

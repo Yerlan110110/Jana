@@ -26,3 +26,11 @@ A temporary all-owned normal inventory was also exercised. It passes fourteen te
 These matrices bind to the forty-file application artifact at `.artifacts/packaging-build-identity-20261018.json`. They verify their recorded loaded states, geometry and audit assertions. Selected legal and native images were inspected. Full visual and reachable-state acceptance remains open.
 
 Fix Root Causes and Prove It Works changed the observation before changing the application. The calibration retains the failed hypothesis and limits. Boundary Discipline restricts raw capture to its owned loopback browser and rejects populated password fields. This is protocol calibration and complete-source inspection, not a claimed REA run.
+
+## Two incomplete repair images
+
+The owner found a white strip in the S24 ordinary320 segment at offset1400 and an undrawn header in the first S08 native200 segment. Both original images remain excluded as complete rendering evidence. The repeat diagnostic is `e2e.regions.config.ts`, run through the same owned launcher at factors1 and2. Its two outputs are `.artifacts/browser/repair-capture-regions-factor1-20261018-1/` and `repair-capture-regions-factor2-20261018-1/`.
+
+Each run compares an immediate capture with a capture after two animation frames. Each also compares the ordinary engine path with the owned visible-viewport path. At320, both immediate paths are byte-identical and both painted paths are byte-identical. All four owned images were opened at full size. The missing notifications region and native header are present in both phases. Header geometry reports visible, opacity1 and the expected64CSS-pixel height.
+
+The old incomplete image remains a real capture failure. The cause did not reproduce in the fresh owned profiles. This result supports replacing those two observations with the new bounded region evidence. It does not establish a compositor root cause, justify an application delay or certify every earlier image. No rendering or capture implementation changed for this diagnostic.
