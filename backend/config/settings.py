@@ -71,6 +71,12 @@ DATABASES = {
         conn_max_age=60,
     )
 }
+if os.getenv("DJANGO_DB_TRANSACTION_POOL", "false").lower() == "true":
+    if DATABASES["default"]["ENGINE"] != "django.db.backends.postgresql":
+        raise ValueError("DJANGO_DB_TRANSACTION_POOL requires PostgreSQL")
+    DATABASES["default"]["CONN_MAX_AGE"] = 0
+    DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
+    DATABASES["default"].setdefault("OPTIONS", {})["prepare_threshold"] = None
 AUTH_USER_MODEL = "identity.User"
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},

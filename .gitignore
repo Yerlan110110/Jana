@@ -19,6 +19,8 @@ runtime/
 .DS_Store
 .artifacts/
 .worktrees/
+.vercel/
+/cookies*.txt
 frontend/dist/
 .e2e/
 frontend/.pace/backups/

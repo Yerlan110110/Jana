@@ -1,0 +1,53 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "web": {
+      "root": ".",
+      "framework": "vite",
+      "installCommand": "npm ci --ignore-scripts --no-audit --no-fund && npm --prefix frontend ci --ignore-scripts --no-audit --no-fund",
+      "buildCommand": "npm run build && mkdir -p frontend/dist/defense && cp docs/defense/JanaMen-defense.pdf docs/defense/index.html docs/defense/team-map.html docs/defense/assets/advance-rehearsal.mp4 docs/defense/assets/advance-poster.png docs/defense/assets/DejaVuSans-license.txt frontend/dist/defense/",
+      "outputDirectory": "frontend/dist",
+      "rewrites": [
+        { "source": "/((?!assets/|licenses/|defense/).*)", "destination": "/index.html" }
+      ]
+    },
+    "api": {
+      "root": "backend",
+      "framework": "django",
+      "entrypoint": "config.wsgi:application",
+      "functions": {
+        "config/wsgi.py": { "regions": ["fra1"], "maxDuration": 60 }
+      }
+    }
+  },
+  "daemons": {
+    "outbox": {
+      "root": ".",
+      "entrypoint": "Dockerfile.worker",
+      "instances": { "fra1": 1 }
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "api" } },
+    { "source": "/admin/(.*)", "destination": { "service": "api" } },
+    { "source": "/static/(.*)", "destination": { "service": "api" } },
+    { "source": "/(.*)", "destination": { "service": "web" } }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "same-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=3600" }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}

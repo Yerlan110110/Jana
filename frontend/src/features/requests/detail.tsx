@@ -40,6 +40,11 @@ export function RequestDetailPage() {
           signal,
         }),
       ),
+    refetchInterval: (query) =>
+      query.state.status !== "error" &&
+      query.state.data?.delivery.state === "queued"
+        ? 5000
+        : false,
   });
   async function refresh() {
     const result = await request.refetch();

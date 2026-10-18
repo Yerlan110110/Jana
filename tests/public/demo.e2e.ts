@@ -8,8 +8,10 @@ import { signIn, changeRole } from "../web/support.js";
 function selectedOrigin(baseUrl: string | undefined) {
   if (!baseUrl) throw new Error("Public synthetic demo URL is required");
   const url = new URL(baseUrl);
-  if (process.env.JANAMEN_PUBLIC_PROJECT !== "janamen-public" || url.protocol !== "https:" || url.hostname !== process.env.PUBLIC_HOST || !url.hostname.endsWith(".trycloudflare.com")) {
-    throw new Error("This mutating check only targets the explicitly selected synthetic Quick Tunnel demo");
+  const tunnel = process.env.JANAMEN_PUBLIC_PROJECT === "janamen-public" && url.hostname.endsWith(".trycloudflare.com");
+  const vercel = process.env.JANAMEN_PUBLIC_PROJECT === "jmhr" && url.origin === "https://jmhr.vercel.app";
+  if (url.protocol !== "https:" || url.hostname !== process.env.PUBLIC_HOST || !(tunnel || vercel)) {
+    throw new Error("Select the authorized synthetic Quick Tunnel or the exact jmhr Vercel project");
   }
   return url.origin;
 }
