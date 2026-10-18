@@ -6,10 +6,12 @@ import { ApiError } from "@/lib/api";
 export function WriteRecovery({
   error,
   refresh,
+  refreshDescription,
   retry,
 }: {
   error: unknown;
   refresh?: () => void;
+  refreshDescription?: ReactNode;
   retry?: () => void;
 }) {
   if (!error) return null;
@@ -18,10 +20,14 @@ export function WriteRecovery({
     <div className="stack">
       <ErrorNotice error={error} />
       <p className="muted">
-        Поля сохранены в этой форме.{" "}
-        {refresh
-          ? "Обновление записи не заменяет введённые значения. Проверьте актуальную версию перед повторным действием."
-          : "Проверьте поля и повторите сохранение. При неизвестном результате повторите те же данные."}
+        {refreshDescription ?? (
+          <>
+            Поля сохранены в этой форме.{" "}
+            {refresh
+              ? "Обновление записи не заменяет введённые значения. Проверьте актуальную версию перед повторным действием."
+              : "Проверьте поля и повторите сохранение. При неизвестном результате повторите те же данные."}
+          </>
+        )}
       </p>
       <div className="button-row">
         {refresh && (

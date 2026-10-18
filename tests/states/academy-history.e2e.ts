@@ -181,6 +181,7 @@ test("assignment refresh requires the current publication and preserves the othe
     browser.waitForResponse("**/api/v1/academy/enrollments/"),
     screen.getByRole("button", "Назначить обучение", { exact: true }).tap(),
   ]);
+  if (!second.published_version) throw new Error("The new publication is missing");
   expect(conflict.status).toBe(409);
   expect(await conflict.text()).toContain("newer course revision");
   await screen.getByRole("button", "Обновить запись", { exact: true }).tap();
@@ -191,10 +192,16 @@ test("assignment refresh requires the current publication and preserves the othe
   await expect(person).toBeChecked();
   await expect(screen.getByLabel(/^Срок · необязательно/)).toHaveValue(due);
   await expect(screen.getByRole("checkbox", "Обязательное обучение")).not.toBeChecked();
+  const directory = `${process.env.JANAMEN_CAPTURE_ROOT ?? ".artifacts/visual"}/assignment-refresh-${Date.now()}`;
+  for (const environment of cases) {
+    if (environment.kind === "viewport") await browser.setViewport({ width: environment.width, height: 800 });
+    await capturePreparedPage({ app, browser, environment, directory, view: {
+      id: "S28-selection-cleared", path: "/hr/assignments", ready: "3. Проверьте назначение", state: "refreshed v2 is unselected; submission disabled; selected employee, optional status and due date preserved",
+    } });
+  }
   await current.focus();
   await current.press("Space");
   await expect(current).toBeChecked();
-  const directory = `${process.env.JANAMEN_CAPTURE_ROOT ?? ".artifacts/visual"}/assignment-refresh-${Date.now()}`;
   for (const environment of cases) {
     if (environment.kind === "viewport") await browser.setViewport({ width: environment.width, height: 800 });
     await capturePreparedPage({ app, browser, environment, directory, view: {
@@ -209,7 +216,28 @@ test("assignment refresh requires the current publication and preserves the othe
   await expect(screen.getByRole("link", "Открыть назначение", { exact: true })).toBeVisible();
   const assigned = data(await client.GET("/api/v1/academy/enrollments/", { params: { query: { course: first.id } } }));
   expect(assigned.count).toBe(1);
-  expect(assigned.results[0]?.course_version).toBe(second.published_version);
+  expect(assigned.results[0]?.course_version.id).toBe(second.published_version);
   expect(assigned.results[0]?.required).toBe(false);
-  expect(assigned.results[0]?.due_at).toBe("2027-01-18T05:00:00Z");
+  const enrollment = assigned.results[0];
+  if (!enrollment?.due_at) throw new Error("The saved due date is missing");
+  expect(Date.parse(enrollment.due_at)).toBe(Date.parse("2027-01-18T05:00:00Z"));
+  data(await client.POST("/api/v1/academy/manage/courses/{id}/archive/", {
+    params: { path: { id: first.id }, header: { "Idempotency-Key": crypto.randomUUID() } },
+    body: { expected_version: second.version },
+  }));
+  const [unavailable] = await Promise.all([
+    browser.waitForResponse("**/api/v1/academy/enrollments/"),
+    screen.getByRole("button", "Назначить обучение", { exact: true }).tap(),
+  ]);
+  expect(unavailable.status).toBe(409);
+  expect(await unavailable.text()).toContain("course is unavailable");
+  await screen.getByRole("button", "Обновить запись", { exact: true }).tap();
+  await expect(screen.getByText("Нет курсов. Измените поиск или опубликуйте курс.", { exact: true })).toBeVisible();
+  await expect(screen.getByRole("button", "Назначить обучение", { exact: true })).toBeDisabled();
+  await expect(person).toBeChecked();
+  await expect(screen.getByLabel(/^Срок · необязательно/)).toHaveValue(due);
+  await expect(screen.getByRole("checkbox", "Обязательное обучение")).not.toBeChecked();
+  const remaining = data(await client.GET("/api/v1/academy/enrollments/", { params: { query: { course: first.id } } }));
+  expect(remaining.count).toBe(1);
+  expect(remaining.results[0]?.id).toBe(enrollment.id);
 });

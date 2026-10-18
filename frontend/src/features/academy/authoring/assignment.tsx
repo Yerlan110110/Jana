@@ -197,7 +197,9 @@ export function AssignLearningPage() {
                           <input
                             type="radio"
                             name="assignment-course"
-                            checked={course?.id === item.id}
+                            checked={
+                              course?.published_version.id === item.published_version.id
+                            }
                             onChange={() => {
                               setCourse(item);
                               setCreated(null);
@@ -284,7 +286,9 @@ export function AssignLearningPage() {
             </label>
             <WriteRecovery
               error={assign.error}
+              refreshDescription="Сотрудник, обязательность и срок сохранятся. После обновления выберите действующую публикацию курса и проверьте назначение."
               refresh={() => {
+                setCourse(null);
                 void Promise.all([
                   people.refetch(),
                   courses.refetch(),
