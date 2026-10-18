@@ -14,7 +14,7 @@ import { api, unwrap, useCommand } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { date, statusText } from "@/lib/format";
 
-function targetRoute(type: string, id: string) {
+function targetRoute(type: string, id: string, kind: string) {
   switch (type) {
     case "hr_request":
       return `/requests/${id}`;
@@ -22,6 +22,10 @@ function targetRoute(type: string, id: string) {
       return `/academy/enrollments/${id}`;
     case "knowledge_gap":
       return `/knowledge/cases/${id}`;
+    case "policy_update":
+      return kind === "policy_update_assigned"
+        ? `/policy-updates/${id}`
+        : "/policy-updates";
     default:
       return null;
   }
@@ -91,7 +95,7 @@ export function NotificationsPage() {
           <>
             <div className="notification-list">
               {query.data.results.map((item) => {
-                const route = targetRoute(item.target_type, item.target_id);
+                const route = targetRoute(item.target_type, item.target_id, item.kind);
                 return (
                   <article
                     className="notification-row"

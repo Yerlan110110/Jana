@@ -806,6 +806,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/knowledge/updates/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_updates_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/updates/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["knowledge_updates_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/knowledge/updates/{id}/attempt/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["knowledge_updates_attempt_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/legal-entities/": {
         parameters: {
             query?: never;
@@ -1471,6 +1519,7 @@ export interface components {
             readonly department: string | null;
             readonly audience: components["schemas"]["AudienceEnum"];
             readonly draft_sections: components["schemas"]["Section"][];
+            readonly draft_knowledge_check: components["schemas"]["KnowledgeCheck"] | null;
             /** Format: date */
             readonly effective_from: string;
             /** Format: date */
@@ -1502,6 +1551,7 @@ export interface components {
             /** @default all */
             audience: components["schemas"]["AudienceEnum"];
             draft_sections: components["schemas"]["SectionRequest"][];
+            draft_knowledge_check?: components["schemas"]["KnowledgeCheckRequest"] | null;
             /** Format: date */
             effective_from?: string;
             /** Format: date */
@@ -1867,6 +1917,20 @@ export interface components {
          * @enum {string}
          */
         KnowledgeCasePurposeEnum: "track_own" | "hr_response";
+        KnowledgeCheck: {
+            question: string;
+            options: string[];
+            correct_option: number;
+            /** @default  */
+            explanation: string;
+        };
+        KnowledgeCheckRequest: {
+            question: string;
+            options: string[];
+            correct_option: number;
+            /** @default  */
+            explanation: string;
+        };
         /**
          * @description * `open` - Open
          *     * `resolved` - Resolved
@@ -2234,6 +2298,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Notification"][];
         };
+        PaginatedPolicyUpdateListList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["PolicyUpdateList"][];
+        };
         PaginatedRequestList: {
             /** @example 123 */
             count: number;
@@ -2290,6 +2369,7 @@ export interface components {
             department?: string | null;
             audience?: components["schemas"]["AudienceEnum"];
             draft_sections?: components["schemas"]["SectionRequest"][];
+            draft_knowledge_check?: components["schemas"]["KnowledgeCheckRequest"] | null;
             /** Format: date */
             effective_from?: string;
             /** Format: date */
@@ -2310,6 +2390,11 @@ export interface components {
             /** Format: date */
             requested_payment_date?: string;
         };
+        PolicyChange: {
+            heading: string;
+            before: string | null;
+            after: string | null;
+        };
         PolicyReference: {
             /** Format: uuid */
             revision_id: string;
@@ -2324,6 +2409,67 @@ export interface components {
          * @enum {string}
          */
         PolicyReferenceStateEnum: "current" | "superseded" | "unavailable";
+        PolicyUpdateAnswerRequest: {
+            option_index: number;
+        };
+        PolicyUpdateAttemptResult: {
+            is_correct: boolean;
+            completed: boolean;
+            attempt_count: number;
+            /** Format: date-time */
+            completed_at: string | null;
+            explanation: string;
+        };
+        PolicyUpdateDetail: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly title: string;
+            readonly revision_number: number;
+            readonly previous_revision_number: number | null;
+            /** Format: date-time */
+            readonly published_at: string;
+            /** Format: date */
+            readonly effective_from: string;
+            readonly is_synthetic: boolean;
+            readonly status: components["schemas"]["PolicyUpdateStatusEnum"];
+            readonly attempt_count: number;
+            /** Format: date-time */
+            readonly completed_at: string | null;
+            /** Format: date-time */
+            readonly superseded_at: string | null;
+            readonly changes: components["schemas"]["PolicyChange"][];
+            readonly question: string | null;
+            readonly options: string[];
+            readonly explanation: string;
+        };
+        PolicyUpdateList: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly employee_id: string;
+            readonly employee_name: string;
+            /** Format: uuid */
+            readonly document_id: string;
+            readonly title: string;
+            readonly revision_number: number;
+            readonly previous_revision_number: number | null;
+            /** Format: date-time */
+            readonly published_at: string;
+            readonly status: components["schemas"]["PolicyUpdateStatusEnum"];
+            readonly attempt_count: number;
+            /** Format: date-time */
+            readonly completed_at: string | null;
+            /** Format: date-time */
+            readonly superseded_at: string | null;
+            readonly is_mine: boolean;
+        };
+        /**
+         * @description * `pending` - Pending
+         *     * `completed` - Completed
+         *     * `superseded` - Superseded
+         * @enum {string}
+         */
+        PolicyUpdateStatusEnum: "pending" | "completed" | "superseded";
         ProviderError: {
             code: string;
             message: string;
@@ -2523,6 +2669,7 @@ export interface components {
             readonly effective_until: string | null;
             readonly is_synthetic: boolean;
             readonly content_hash: string;
+            readonly previous_revision_number: number | null;
             /** Format: date-time */
             readonly published_at: string;
             /** Format: uuid */
@@ -4278,6 +4425,80 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["GapCase"];
+                };
+            };
+        };
+    };
+    knowledge_updates_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedPolicyUpdateListList"];
+                };
+            };
+        };
+    };
+    knowledge_updates_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PolicyUpdateDetail"];
+                };
+            };
+        };
+    };
+    knowledge_updates_attempt_create: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PolicyUpdateAnswerRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PolicyUpdateAnswerRequest"];
+                "multipart/form-data": components["schemas"]["PolicyUpdateAnswerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PolicyUpdateAttemptResult"];
                 };
             };
         };

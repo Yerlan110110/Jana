@@ -33,6 +33,7 @@ class KnowledgeDocument(TimestampedModel):
     )
     audience = models.CharField(max_length=16, choices=Audience, default=Audience.ALL)
     draft_sections = models.JSONField(default=list)
+    draft_knowledge_check = models.JSONField(null=True, blank=True)
     effective_from = models.DateField(default=timezone.localdate)
     effective_until = models.DateField(null=True, blank=True)
     is_synthetic = models.BooleanField(default=True)
@@ -87,6 +88,10 @@ class KnowledgeRevision(AppendOnlyModel):
     effective_until = models.DateField(null=True)
     is_synthetic = models.BooleanField()
     content_hash = models.CharField(max_length=64)
+    previous_revision = models.ForeignKey(
+        "self", on_delete=models.PROTECT, null=True, blank=True, related_name="next_revisions"
+    )
+    knowledge_check = models.JSONField(null=True, blank=True)
     published_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     published_at = models.DateTimeField(default=timezone.now)
 
@@ -127,6 +132,63 @@ class KnowledgeChunk(AppendOnlyModel):
     @property
     def locator(self):
         return f"§ {self.section_number}. {self.heading}"
+
+
+class PolicyUpdateAssignment(TimestampedModel):
+    class Status(models.TextChoices):
+        PENDING = "pending", "Pending"
+        COMPLETED = "completed", "Completed"
+        SUPERSEDED = "superseded", "Superseded"
+
+    revision = models.ForeignKey(
+        KnowledgeRevision, on_delete=models.PROTECT, related_name="update_assignments"
+    )
+    employee = models.ForeignKey(
+        "identity.Employee", on_delete=models.PROTECT, related_name="policy_update_assignments"
+    )
+    status = models.CharField(max_length=16, choices=Status, default=Status.PENDING)
+    attempt_count = models.PositiveSmallIntegerField(default=0)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    superseded_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-created_at", "id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["revision", "employee"], name="knowledge_update_employee_unique"
+            ),
+            models.CheckConstraint(
+                condition=(
+                    models.Q(status="pending", completed_at__isnull=True, superseded_at__isnull=True)
+                    | models.Q(status="completed", completed_at__isnull=False, superseded_at__isnull=True)
+                    | models.Q(status="superseded", completed_at__isnull=True, superseded_at__isnull=False)
+                ),
+                name="knowledge_update_status_timestamps",
+            ),
+        ]
+        indexes = [models.Index(fields=["employee", "status", "created_at"])]
+
+
+class PolicyUpdateAttempt(AppendOnlyModel):
+    assignment = models.ForeignKey(
+        PolicyUpdateAssignment, on_delete=models.PROTECT, related_name="attempts"
+    )
+    idempotency_key = models.CharField(max_length=128)
+    selected_option = models.PositiveSmallIntegerField()
+    is_correct = models.BooleanField()
+
+    class Meta:
+        ordering = ["created_at", "id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["assignment", "idempotency_key"],
+                name="knowledge_update_attempt_idempotency",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(selected_option__gte=0, selected_option__lte=2),
+                name="knowledge_update_option_bounds",
+            ),
+        ]
 
 
 class AssistantAnswer(AppendOnlyModel):

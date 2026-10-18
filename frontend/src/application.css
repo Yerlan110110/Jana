@@ -1588,3 +1588,208 @@ summary {
   width: 17px;
   height: 17px;
 }
+
+.policy-update-list,
+.policy-change-list {
+  display: grid;
+  gap: 10px;
+}
+.policy-update-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+  background: var(--card);
+}
+.policy-update-row[href]:hover {
+  border-color: color-mix(in srgb, var(--primary) 50%, var(--border));
+  background: var(--muted);
+}
+.policy-update-row .record-main {
+  min-width: 0;
+  flex: 1;
+}
+.policy-update-row .record-main h2 {
+  margin: 0;
+  font-size: 15px;
+}
+.policy-update-row .record-main p {
+  margin: 4px 0 0;
+}
+.policy-update-row .record-main small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted-foreground);
+}
+.policy-update-status {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 11px;
+  line-height: 1.35;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+.policy-update-status--pending {
+  background: color-mix(in srgb, var(--warning) 16%, var(--card));
+  color: var(--warning-foreground);
+}
+.policy-update-status--completed {
+  background: color-mix(in srgb, var(--success) 14%, var(--card));
+  color: var(--success-foreground);
+}
+.policy-update-status--superseded {
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+.policy-change-list {
+  margin-top: 14px;
+}
+.policy-change-card {
+  padding: 18px;
+}
+.policy-change-card h3,
+.policy-check-card h2 {
+  margin-top: 0;
+}
+.policy-change-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.policy-change-columns > div {
+  min-width: 0;
+  border-radius: 9px;
+  padding: 14px;
+  background: var(--muted);
+}
+.policy-change-columns > div + div {
+  background: color-mix(in srgb, var(--success) 11%, var(--card));
+}
+.policy-change-columns p:last-child {
+  margin-bottom: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+.policy-update-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+}
+.policy-update-notice h2,
+.policy-update-notice p {
+  margin: 0;
+}
+.policy-update-notice p {
+  margin-top: 5px;
+}
+.policy-check-card {
+  margin-top: 24px;
+  padding: 22px;
+}
+.policy-check-card h2 {
+  max-width: 780px;
+  font-size: clamp(20px, 3vw, 26px);
+  line-height: 1.25;
+}
+.policy-answer-options {
+  display: grid;
+  gap: 9px;
+  border: 0;
+  padding: 0;
+  margin: 18px 0;
+}
+.policy-answer-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.policy-answer-option:has(input:checked) {
+  border-color: color-mix(in srgb, var(--primary) 62%, var(--border));
+  background: color-mix(in srgb, var(--success) 10%, var(--card));
+}
+.policy-answer-option input {
+  margin-top: 3px;
+  accent-color: var(--primary);
+}
+.policy-answer-option:focus-within {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.policy-answer-option span {
+  line-height: 1.5;
+}
+.policy-answer-retry {
+  margin: 0 0 14px;
+  color: var(--warning-foreground);
+}
+.policy-answer-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 14px;
+  background: color-mix(in srgb, var(--success) 14%, var(--card));
+  color: var(--success-foreground);
+}
+.policy-answer-success p {
+  margin: 5px 0 0;
+  color: var(--foreground);
+}
+.policy-option-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.policy-option-editor > label:first-child {
+  grid-column: 1 / -1;
+}
+.policy-option-editor .checkbox-label {
+  min-height: 40px;
+  font-size: 12px;
+}
+.policy-option-editor input[type="radio"] {
+  accent-color: var(--primary);
+}
+@media (max-width: 640px) {
+  .policy-update-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 13px;
+  }
+  .policy-update-row .record-main {
+    flex-basis: calc(100% - 45px);
+  }
+  .policy-update-status {
+    margin-left: 42px;
+  }
+  .policy-change-columns {
+    grid-template-columns: 1fr;
+  }
+  .policy-check-card,
+  .policy-change-card {
+    padding: 16px;
+  }
+  .policy-option-editor {
+    grid-template-columns: 1fr;
+  }
+  .policy-option-editor > label:first-child {
+    grid-column: auto;
+  }
+}

@@ -10,6 +10,17 @@ urlpatterns = [
         name="knowledge-document",
     ),
     path("knowledge/citations/<uuid:pk>/", views.CitationView.as_view(), name="knowledge-citation"),
+    path("knowledge/updates/", views.PolicyUpdateListView.as_view(), name="knowledge-updates"),
+    path(
+        "knowledge/updates/<uuid:pk>/",
+        views.PolicyUpdateDetailView.as_view(),
+        name="knowledge-update",
+    ),
+    path(
+        "knowledge/updates/<uuid:pk>/attempt/",
+        views.PolicyUpdateAttemptView.as_view(),
+        name="knowledge-update-attempt",
+    ),
     path(
         "knowledge/admin/documents/",
         views.AdminDocumentListView.as_view(),

@@ -143,6 +143,7 @@ SPECTACULAR_SETTINGS = {
         "RoleEnum": "apps.identity.models.User.Role",
         "DemoAccountEnum": "apps.identity.serializers.DEMO_ACCOUNT_CHOICES",
         "KnowledgeGapStatusEnum": "apps.knowledge.models.KnowledgeGapCase.Status",
+        "PolicyUpdateStatusEnum": "apps.knowledge.models.PolicyUpdateAssignment.Status",
         "HRRequestStatusEnum": "apps.hr_requests.models.HRRequest.Status",
         "PublicationStateEnum": [
             ("draft", "Draft"),

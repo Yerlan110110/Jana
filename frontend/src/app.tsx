@@ -87,6 +87,12 @@ const CasePage = lazy(() =>
 const CaseSourcePage = lazy(() =>
   import("@/features/knowledge").then((m) => ({ default: m.CaseSourcePage })),
 );
+const PolicyUpdatesPage = lazy(() =>
+  import("@/features/knowledge").then((m) => ({ default: m.PolicyUpdatesPage })),
+);
+const PolicyUpdatePage = lazy(() =>
+  import("@/features/knowledge").then((m) => ({ default: m.PolicyUpdatePage })),
+);
 const ManagePoliciesPage = lazy(() =>
   import("@/features/knowledge").then((m) => ({
     default: m.ManagePoliciesPage,
@@ -406,6 +412,7 @@ const personalLinks = [
   { to: "/academy", label: "Jana Academy", icon: GraduationCap },
   { to: "/assistant", label: "AI Jana", icon: Sparkles },
   { to: "/knowledge", label: "Регламенты", icon: BookOpen, end: true },
+  { to: "/policy-updates", label: "Изменения правил", icon: FileCheck2 },
   { to: "/knowledge/cases", label: "Обращения к HR", icon: CircleHelp },
 ];
 const teamLinks = [
@@ -590,6 +597,8 @@ function AppShell() {
               <Route path="/assistant" element={<AssistantPage />} />
               <Route path="/assistant/answers/:id" element={<AnswerPage />} />
               <Route path="/knowledge" element={<DocumentsPage />} />
+              <Route path="/policy-updates" element={<PolicyUpdatesPage />} />
+              <Route path="/policy-updates/:id" element={<PolicyUpdatePage />} />
               <Route
                 path="/knowledge/documents/:id"
                 element={<DocumentPage />}

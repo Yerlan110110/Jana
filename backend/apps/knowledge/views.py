@@ -25,6 +25,10 @@ from .serializers import (
     GapResolutionSerializer,
     KnowledgeVersionCommandSerializer,
     PolicyReferenceSerializer,
+    PolicyUpdateAnswerSerializer,
+    PolicyUpdateAttemptResultSerializer,
+    PolicyUpdateDetailSerializer,
+    PolicyUpdateListSerializer,
     ProviderErrorSerializer,
     QuestionSerializer,
     RevisionSerializer,
@@ -100,6 +104,51 @@ class CitationView(APIView):
     def get(self, request, pk):
         chunk = get_object_or_404(selectors.accessible_chunks(request.user), pk=pk)
         return Response(CitationSerializer(present_citation(chunk)).data)
+
+
+class PolicyUpdateListView(generics.ListAPIView):
+    serializer_class = PolicyUpdateListSerializer
+    filter_backends = []
+
+    def get_queryset(self):
+        return selectors.visible_policy_updates(self.request.user)
+
+
+class PolicyUpdateDetailView(APIView):
+    @extend_schema(tags=["Policy updates"], responses=PolicyUpdateDetailSerializer)
+    def get(self, request, pk):
+        assignment = selectors.own_policy_update(request.user, pk)
+        if assignment is None:
+            raise NotFound()
+        return Response(PolicyUpdateDetailSerializer(assignment).data)
+
+
+class PolicyUpdateAttemptView(APIView):
+    @extend_schema(
+        tags=["Policy updates"],
+        request=PolicyUpdateAnswerSerializer,
+        responses=PolicyUpdateAttemptResultSerializer,
+        parameters=COMMAND_PARAMETERS,
+    )
+    def post(self, request, pk):
+        serializer = PolicyUpdateAnswerSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        assignment = selectors.own_policy_update(request.user, pk)
+        if assignment is None:
+            raise NotFound()
+        return _idempotent(
+            request,
+            f"knowledge.policy_update_answer:{pk}",
+            lambda: (
+                services.submit_policy_update_answer(
+                    request.user,
+                    pk,
+                    serializer.validated_data["option_index"],
+                    request.headers.get("Idempotency-Key", ""),
+                ),
+                200,
+            ),
+        )
 
 
 @extend_schema_view(

@@ -2058,6 +2058,92 @@ paths:
               schema:
                 $ref: '#/components/schemas/GapCase'
           description: ''
+  /api/v1/knowledge/updates/:
+    get:
+      operationId: knowledge_updates_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - knowledge
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPolicyUpdateListList'
+          description: ''
+  /api/v1/knowledge/updates/{id}/:
+    get:
+      operationId: knowledge_updates_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Policy updates
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyUpdateDetail'
+          description: ''
+  /api/v1/knowledge/updates/{id}/attempt/:
+    post:
+      operationId: knowledge_updates_attempt_create
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Policy updates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyUpdateAnswerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PolicyUpdateAnswerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PolicyUpdateAnswerRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyUpdateAttemptResult'
+          description: ''
   /api/v1/legal-entities/:
     get:
       operationId: legal_entities_list
@@ -3775,6 +3861,11 @@ components:
           items:
             $ref: '#/components/schemas/Section'
           readOnly: true
+        draft_knowledge_check:
+          allOf:
+          - $ref: '#/components/schemas/KnowledgeCheck'
+          readOnly: true
+          nullable: true
         effective_from:
           type: string
           format: date
@@ -3820,6 +3911,7 @@ components:
       - created_at
       - current_revision
       - department
+      - draft_knowledge_check
       - draft_sections
       - effective_from
       - effective_until
@@ -3878,6 +3970,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SectionRequest'
+        draft_knowledge_check:
+          allOf:
+          - $ref: '#/components/schemas/KnowledgeCheckRequest'
+          nullable: true
         effective_from:
           type: string
           format: date
@@ -4947,6 +5043,60 @@ components:
       description: |-
         * `track_own` - track_own
         * `hr_response` - hr_response
+    KnowledgeCheck:
+      type: object
+      properties:
+        question:
+          type: string
+          maxLength: 600
+          minLength: 8
+        options:
+          type: array
+          items:
+            type: string
+            maxLength: 300
+            minLength: 1
+          maxItems: 3
+          minItems: 3
+        correct_option:
+          type: integer
+          maximum: 2
+          minimum: 0
+        explanation:
+          type: string
+          default: ''
+          maxLength: 1200
+      required:
+      - correct_option
+      - options
+      - question
+    KnowledgeCheckRequest:
+      type: object
+      properties:
+        question:
+          type: string
+          minLength: 8
+          maxLength: 600
+        options:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 300
+          maxItems: 3
+          minItems: 3
+        correct_option:
+          type: integer
+          maximum: 2
+          minimum: 0
+        explanation:
+          type: string
+          default: ''
+          maxLength: 1200
+      required:
+      - correct_option
+      - options
+      - question
     KnowledgeGapStatusEnum:
       enum:
       - open
@@ -5684,6 +5834,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Notification'
+    PaginatedPolicyUpdateListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyUpdateList'
     PaginatedRequestList:
       type: object
       required:
@@ -5783,6 +5956,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SectionRequest'
+        draft_knowledge_check:
+          allOf:
+          - $ref: '#/components/schemas/KnowledgeCheckRequest'
+          nullable: true
         effective_from:
           type: string
           format: date
@@ -5819,6 +5996,21 @@ components:
         requested_payment_date:
           type: string
           format: date
+    PolicyChange:
+      type: object
+      properties:
+        heading:
+          type: string
+        before:
+          type: string
+          nullable: true
+        after:
+          type: string
+          nullable: true
+      required:
+      - after
+      - before
+      - heading
     PolicyReference:
       type: object
       properties:
@@ -5848,6 +6040,190 @@ components:
         * `current` - current
         * `superseded` - superseded
         * `unavailable` - unavailable
+    PolicyUpdateAnswerRequest:
+      type: object
+      properties:
+        option_index:
+          type: integer
+          maximum: 2
+          minimum: 0
+      required:
+      - option_index
+    PolicyUpdateAttemptResult:
+      type: object
+      properties:
+        is_correct:
+          type: boolean
+        completed:
+          type: boolean
+        attempt_count:
+          type: integer
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+        explanation:
+          type: string
+      required:
+      - attempt_count
+      - completed
+      - completed_at
+      - explanation
+      - is_correct
+    PolicyUpdateDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        revision_number:
+          type: integer
+          readOnly: true
+        previous_revision_number:
+          type: integer
+          readOnly: true
+          nullable: true
+        published_at:
+          type: string
+          format: date-time
+          readOnly: true
+        effective_from:
+          type: string
+          format: date
+          readOnly: true
+        is_synthetic:
+          type: boolean
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/PolicyUpdateStatusEnum'
+          readOnly: true
+        attempt_count:
+          type: integer
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        superseded_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyChange'
+          readOnly: true
+        question:
+          type: string
+          nullable: true
+          readOnly: true
+        options:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        explanation:
+          type: string
+          readOnly: true
+      required:
+      - attempt_count
+      - changes
+      - completed_at
+      - effective_from
+      - explanation
+      - id
+      - is_synthetic
+      - options
+      - previous_revision_number
+      - published_at
+      - question
+      - revision_number
+      - status
+      - superseded_at
+      - title
+    PolicyUpdateList:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        employee_id:
+          type: string
+          format: uuid
+          readOnly: true
+        employee_name:
+          type: string
+          readOnly: true
+        document_id:
+          type: string
+          format: uuid
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        revision_number:
+          type: integer
+          readOnly: true
+        previous_revision_number:
+          type: integer
+          readOnly: true
+          nullable: true
+        published_at:
+          type: string
+          format: date-time
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/PolicyUpdateStatusEnum'
+          readOnly: true
+        attempt_count:
+          type: integer
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        superseded_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        is_mine:
+          type: boolean
+          readOnly: true
+      required:
+      - attempt_count
+      - completed_at
+      - document_id
+      - employee_id
+      - employee_name
+      - id
+      - is_mine
+      - previous_revision_number
+      - published_at
+      - revision_number
+      - status
+      - superseded_at
+      - title
+    PolicyUpdateStatusEnum:
+      enum:
+      - pending
+      - completed
+      - superseded
+      type: string
+      description: |-
+        * `pending` - Pending
+        * `completed` - Completed
+        * `superseded` - Superseded
     ProviderError:
       type: object
       properties:
@@ -6416,6 +6792,10 @@ components:
         content_hash:
           type: string
           readOnly: true
+        previous_revision_number:
+          type: integer
+          readOnly: true
+          nullable: true
         published_at:
           type: string
           format: date-time
@@ -6436,6 +6816,7 @@ components:
       - legal_entity
       - number
       - owner
+      - previous_revision_number
       - published_at
       - published_by
       - sections

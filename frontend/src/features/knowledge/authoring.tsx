@@ -145,6 +145,7 @@ type PolicyDraft = Pick<
   | "audience"
   | "language"
   | "draft_sections"
+  | "draft_knowledge_check"
   | "effective_from"
   | "effective_until"
 >;
@@ -157,6 +158,7 @@ function policyDraft(document?: Model<"DocumentAdmin">): PolicyDraft {
     audience: document?.audience ?? "all",
     language: document?.language ?? "ru",
     draft_sections: document?.draft_sections ?? [{ heading: "", text: "" }],
+    draft_knowledge_check: document?.draft_knowledge_check ?? null,
     effective_from:
       document?.effective_from ??
       new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Almaty" }).format(
@@ -191,6 +193,18 @@ function PolicyEditor({
       ...current,
       draft: { ...current.draft, [key]: value },
     }));
+  }
+  type KnowledgeCheckDraft = NonNullable<PolicyDraft["draft_knowledge_check"]>;
+  function updateKnowledgeCheck(
+    change: Partial<KnowledgeCheckDraft>,
+  ) {
+    const current: KnowledgeCheckDraft = draft.draft_knowledge_check ?? {
+      question: "",
+      options: ["", "", ""],
+      correct_option: 0,
+      explanation: "",
+    };
+    update("draft_knowledge_check", { ...current, ...change });
   }
   function acceptSaved(record: Model<"DocumentAdmin">) {
     const next = policyDraft(record);
@@ -272,6 +286,7 @@ function PolicyEditor({
     { value: "learning", label: "Обучение" },
     { value: "operations", label: "Рабочий порядок" },
   ];
+  const knowledgeCheck = draft.draft_knowledge_check;
   return (
     <>
       <BackLink to="/hr/policies">К регламентам</BackLink>
@@ -468,6 +483,102 @@ function PolicyEditor({
                 />
               </fieldset>
             ))}
+            {document?.current_revision && (
+              <fieldset className="policy-section-editor">
+                <legend>Практический вопрос для новой редакции</legend>
+                <p className="field-help">
+                  После изменения текста правило будет назначено сотрудникам
+                  вашей аудитории. Добавьте ситуацию, три варианта ответа и
+                  отметьте правильный. Ответ сотрудника проверит сервер.
+                </p>
+                {knowledgeCheck ? (
+                  <>
+                    <label htmlFor="policy-check-question">Ситуация и вопрос</label>
+                    <Textarea
+                      id="policy-check-question"
+                      required
+                      minLength={8}
+                      maxLength={600}
+                      rows={3}
+                      value={knowledgeCheck.question}
+                      onChange={(event) =>
+                        updateKnowledgeCheck({ question: event.target.value })
+                      }
+                      placeholder="Например: клиент просит принять возврат без чека. Что нужно сделать по новому правилу?"
+                    />
+                    {knowledgeCheck.options.map((option, index) => (
+                      <div className="policy-option-editor" key={index}>
+                        <label htmlFor={`policy-check-option-${index}`}>
+                          Вариант {index + 1}
+                        </label>
+                        <Input
+                          id={`policy-check-option-${index}`}
+                          required
+                          minLength={1}
+                          maxLength={300}
+                          value={option}
+                          onChange={(event) => {
+                            const options = [
+                              ...knowledgeCheck.options,
+                            ];
+                            options[index] = event.target.value;
+                            updateKnowledgeCheck({ options });
+                          }}
+                        />
+                        <label className="checkbox-label">
+                          <input
+                            type="radio"
+                            name="policy-check-correct-option"
+                            checked={
+                              knowledgeCheck.correct_option === index
+                            }
+                            onChange={() =>
+                              updateKnowledgeCheck({ correct_option: index })
+                            }
+                          />
+                          Правильный ответ
+                        </label>
+                      </div>
+                    ))}
+                    <label htmlFor="policy-check-explanation">
+                      Пояснение после правильного ответа
+                    </label>
+                    <Textarea
+                      id="policy-check-explanation"
+                      maxLength={1200}
+                      rows={2}
+                      value={knowledgeCheck.explanation}
+                      onChange={(event) =>
+                        updateKnowledgeCheck({ explanation: event.target.value })
+                      }
+                    />
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={() => update("draft_knowledge_check", null)}
+                    >
+                      Удалить вопрос
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() =>
+                      updateKnowledgeCheck({
+                        question: "",
+                        options: ["", "", ""],
+                        correct_option: 0,
+                        explanation: "",
+                      })
+                    }
+                    iconStart={<Plus size={15} aria-hidden="true" />}
+                  >
+                    Добавить практический вопрос
+                  </Button>
+                )}
+              </fieldset>
+            )}
             <Button
               variant="secondary"
               disabled={draft.draft_sections.length >= 40}

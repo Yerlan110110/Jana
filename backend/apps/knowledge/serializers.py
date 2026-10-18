@@ -13,6 +13,7 @@ from .models import (
     KnowledgeDocument,
     KnowledgeGapCase,
     KnowledgeRevision,
+    PolicyUpdateAssignment,
 )
 from .presentation import present_policy_reference
 from .services import draft_hash
@@ -23,6 +24,23 @@ LANGUAGE_CHOICES = [("ru", "Русский"), ("kk", "Қазақша")]
 class SectionSerializer(StrictSerializer):
     heading = serializers.CharField(max_length=240)
     text = serializers.CharField(min_length=20, max_length=12000, trim_whitespace=True)
+
+
+class KnowledgeCheckSerializer(StrictSerializer):
+    question = serializers.CharField(min_length=8, max_length=600, trim_whitespace=True)
+    options = serializers.ListField(
+        child=serializers.CharField(min_length=1, max_length=300, trim_whitespace=True),
+        min_length=3,
+        max_length=3,
+    )
+    correct_option = serializers.IntegerField(min_value=0, max_value=2)
+    explanation = serializers.CharField(max_length=1200, allow_blank=True, required=False, default="")
+
+    def validate_options(self, value):
+        normalized = [option.strip() for option in value]
+        if len({option.casefold() for option in normalized}) != len(normalized):
+            raise serializers.ValidationError("Each answer choice must be different.")
+        return normalized
 
 
 class DocumentCreateSerializer(StrictSerializer):
@@ -40,6 +58,7 @@ class DocumentCreateSerializer(StrictSerializer):
     )
     audience = serializers.ChoiceField(choices=Audience.choices, default=Audience.ALL)
     draft_sections = SectionSerializer(many=True, max_length=40)
+    draft_knowledge_check = KnowledgeCheckSerializer(allow_null=True, required=False)
     effective_from = serializers.DateField(required=False)
     effective_until = serializers.DateField(allow_null=True, required=False)
     is_synthetic = serializers.BooleanField(default=True)
@@ -85,6 +104,9 @@ class KnowledgeVersionCommandSerializer(StrictSerializer):
 
 class RevisionSerializer(serializers.ModelSerializer):
     sections = SectionSerializer(many=True, read_only=True)
+    previous_revision_number = serializers.IntegerField(
+        source="previous_revision.number", read_only=True, allow_null=True
+    )
 
     class Meta:
         model = KnowledgeRevision
@@ -104,6 +126,7 @@ class RevisionSerializer(serializers.ModelSerializer):
             "effective_until",
             "is_synthetic",
             "content_hash",
+            "previous_revision_number",
             "published_at",
             "published_by",
         ]
@@ -113,6 +136,7 @@ class RevisionSerializer(serializers.ModelSerializer):
 class DocumentAdminSerializer(serializers.ModelSerializer):
     current_revision = RevisionSerializer(read_only=True)
     draft_sections = SectionSerializer(many=True, read_only=True)
+    draft_knowledge_check = KnowledgeCheckSerializer(read_only=True, allow_null=True)
     has_unpublished_changes = serializers.SerializerMethodField()
     allowed_actions = serializers.SerializerMethodField()
 
@@ -130,6 +154,7 @@ class DocumentAdminSerializer(serializers.ModelSerializer):
             "department",
             "audience",
             "draft_sections",
+            "draft_knowledge_check",
             "effective_from",
             "effective_until",
             "is_synthetic",
@@ -300,3 +325,126 @@ class GapCaseSerializer(serializers.ModelSerializer):
         return (
             ["resolve"] if obj.status == "open" and (user.role == "hr" or user.is_superuser) else []
         )
+
+
+class PolicyUpdateListSerializer(serializers.ModelSerializer):
+    employee_name = serializers.CharField(source="employee.full_name", read_only=True)
+    employee_id = serializers.UUIDField(source="employee.id", read_only=True)
+    document_id = serializers.UUIDField(source="revision.document_id", read_only=True)
+    title = serializers.CharField(source="revision.title", read_only=True)
+    revision_number = serializers.IntegerField(source="revision.number", read_only=True)
+    previous_revision_number = serializers.IntegerField(
+        source="revision.previous_revision.number", read_only=True, allow_null=True
+    )
+    published_at = serializers.DateTimeField(source="revision.published_at", read_only=True)
+    is_mine = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PolicyUpdateAssignment
+        fields = [
+            "id",
+            "employee_id",
+            "employee_name",
+            "document_id",
+            "title",
+            "revision_number",
+            "previous_revision_number",
+            "published_at",
+            "status",
+            "attempt_count",
+            "completed_at",
+            "superseded_at",
+            "is_mine",
+        ]
+        read_only_fields = fields
+
+    @extend_schema_field(serializers.BooleanField())
+    def get_is_mine(self, assignment):
+        request = self.context.get("request")
+        return bool(request and assignment.employee.user_id == request.user.id)
+
+
+class PolicyChangeSerializer(serializers.Serializer):
+    heading = serializers.CharField()
+    before = serializers.CharField(allow_null=True)
+    after = serializers.CharField(allow_null=True)
+
+
+class PolicyUpdateDetailSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(source="revision.title", read_only=True)
+    revision_number = serializers.IntegerField(source="revision.number", read_only=True)
+    previous_revision_number = serializers.IntegerField(
+        source="revision.previous_revision.number", read_only=True, allow_null=True
+    )
+    published_at = serializers.DateTimeField(source="revision.published_at", read_only=True)
+    effective_from = serializers.DateField(source="revision.effective_from", read_only=True)
+    is_synthetic = serializers.BooleanField(source="revision.is_synthetic", read_only=True)
+    changes = serializers.SerializerMethodField()
+    question = serializers.SerializerMethodField()
+    options = serializers.SerializerMethodField()
+    explanation = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PolicyUpdateAssignment
+        fields = [
+            "id",
+            "title",
+            "revision_number",
+            "previous_revision_number",
+            "published_at",
+            "effective_from",
+            "is_synthetic",
+            "status",
+            "attempt_count",
+            "completed_at",
+            "superseded_at",
+            "changes",
+            "question",
+            "options",
+            "explanation",
+        ]
+        read_only_fields = fields
+
+    def _active_revision(self, assignment):
+        if assignment.status == PolicyUpdateAssignment.Status.SUPERSEDED:
+            return None
+        return assignment.revision
+
+    @extend_schema_field(PolicyChangeSerializer(many=True))
+    def get_changes(self, assignment):
+        revision = self._active_revision(assignment)
+        if revision is None or revision.previous_revision is None:
+            return []
+        from .changes import policy_changes
+
+        return policy_changes(revision.previous_revision, revision)
+
+    @extend_schema_field(serializers.CharField(allow_null=True))
+    def get_question(self, assignment):
+        revision = self._active_revision(assignment)
+        check = revision.knowledge_check if revision else None
+        return check.get("question") if check else None
+
+    @extend_schema_field(serializers.ListField(child=serializers.CharField()))
+    def get_options(self, assignment):
+        revision = self._active_revision(assignment)
+        check = revision.knowledge_check if revision else None
+        return check.get("options", []) if check else []
+
+    @extend_schema_field(serializers.CharField(allow_blank=True))
+    def get_explanation(self, assignment):
+        revision = self._active_revision(assignment)
+        check = revision.knowledge_check if revision else None
+        return check.get("explanation", "") if check else ""
+
+
+class PolicyUpdateAnswerSerializer(StrictSerializer):
+    option_index = serializers.IntegerField(min_value=0, max_value=2)
+
+
+class PolicyUpdateAttemptResultSerializer(serializers.Serializer):
+    is_correct = serializers.BooleanField()
+    completed = serializers.BooleanField()
+    attempt_count = serializers.IntegerField()
+    completed_at = serializers.DateTimeField(allow_null=True)
+    explanation = serializers.CharField(allow_blank=True)

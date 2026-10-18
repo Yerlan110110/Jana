@@ -12,12 +12,15 @@ from apps.identity.models import Employee, User
 from apps.identity.permissions import require_hr
 from apps.notifications.services import notify
 
+from .changes import policy_text_changed
 from .models import (
     AssistantAnswer,
     KnowledgeChunk,
     KnowledgeDocument,
     KnowledgeGapCase,
     KnowledgeRevision,
+    PolicyUpdateAssignment,
+    PolicyUpdateAttempt,
 )
 from .provider import GenerationConfig, ProviderUnavailable, generate_claims
 from .retrieval import retrieve
@@ -54,6 +57,7 @@ def _snapshot(document):
         "department_id": document.department_id,
         "audience": document.audience,
         "sections": document.draft_sections,
+        "knowledge_check": document.draft_knowledge_check,
         "effective_from": document.effective_from,
         "effective_until": document.effective_until,
         "is_synthetic": document.is_synthetic,
@@ -148,6 +152,106 @@ def _chunks(revision):
             start = end
 
 
+def _validate_knowledge_check(value):
+    if not isinstance(value, dict):
+        raise ValidationError({"draft_knowledge_check": "Add a question and three answer choices."})
+    question = value.get("question")
+    options = value.get("options")
+    correct_option = value.get("correct_option")
+    if not isinstance(question, str) or not 8 <= len(question.strip()) <= 600:
+        raise ValidationError({"draft_knowledge_check": "Write a question between 8 and 600 characters."})
+    if (
+        not isinstance(options, list)
+        or len(options) != 3
+        or any(not isinstance(option, str) or not option.strip() or len(option) > 300 for option in options)
+    ):
+        raise ValidationError({"draft_knowledge_check": "Provide exactly three answer choices."})
+    if type(correct_option) is not int or not 0 <= correct_option < len(options):
+        raise ValidationError({"draft_knowledge_check": "Choose the correct answer."})
+    explanation = value.get("explanation", "")
+    if not isinstance(explanation, str) or len(explanation) > 1200:
+        raise ValidationError({"draft_knowledge_check": "Keep the explanation below 1,200 characters."})
+    return {
+        "question": question.strip(),
+        "options": [option.strip() for option in options],
+        "correct_option": correct_option,
+        "explanation": explanation.strip(),
+    }
+
+
+def _update_recipients(revision):
+    roles = {
+        "all": User.Role.values,
+        "employee": [User.Role.EMPLOYEE],
+        "manager": [User.Role.MANAGER],
+        "hr": [User.Role.HR],
+    }[revision.audience]
+    recipients = Employee.objects.filter(
+        is_active=True, user__is_active=True, user__role__in=roles
+    )
+    if revision.legal_entity_id:
+        recipients = recipients.filter(legal_entity_id=revision.legal_entity_id)
+    if revision.department_id:
+        recipients = recipients.filter(department_id=revision.department_id)
+    return recipients.select_related("user", "manager__user")
+
+
+def _assign_policy_update(revision, user):
+    if revision.previous_revision is None or not policy_text_changed(
+        revision.previous_revision, revision
+    ):
+        return 0
+
+    PolicyUpdateAssignment.objects.filter(
+        revision__document_id=revision.document_id,
+        status=PolicyUpdateAssignment.Status.PENDING,
+    ).update(status=PolicyUpdateAssignment.Status.SUPERSEDED, superseded_at=timezone.now())
+
+    assignments = [
+        PolicyUpdateAssignment(revision=revision, employee=employee)
+        for employee in _update_recipients(revision)
+    ]
+    PolicyUpdateAssignment.objects.bulk_create(assignments)
+    event = emit(
+        "knowledge.policy_update_assigned",
+        "knowledge_revision",
+        revision.id,
+        {"assignment_count": len(assignments), "revision_number": revision.number},
+        user,
+    )
+    for assignment in assignments:
+        notify(
+            assignment.employee.user,
+            "policy_update_assigned",
+            "Изменилось правило",
+            f"Ознакомьтесь с редакцией {revision.number}: {revision.title}.",
+            "policy_update",
+            assignment.id,
+            event,
+        )
+    manager_ids = {
+        assignment.employee.manager.user_id
+        for assignment in assignments
+        if assignment.employee.manager_id
+        and assignment.employee.manager.user_id
+        and assignment.employee.manager.user_id != assignment.employee.user_id
+        and assignment.employee.manager.user.is_active
+        and assignment.employee.manager.user.role == User.Role.MANAGER
+    }
+    managers = User.objects.filter(pk__in=manager_ids).order_by("id")
+    for manager in managers:
+        notify(
+            manager,
+            "policy_update_team_assigned",
+            "Новое правило для команды",
+            f"Проверьте ознакомление команды с редакцией {revision.number}: {revision.title}.",
+            "policy_update",
+            revision.id,
+            event,
+        )
+    return len(assignments)
+
+
 @transaction.atomic
 def publish_document(user, document_id, expected_version):
     document = _locked_document(user, document_id)
@@ -164,13 +268,21 @@ def publish_document(user, document_id, expected_version):
             "This draft is already published. Edit the draft before publishing another revision."
         )
     number = (document.revisions.aggregate(last=Max("number"))["last"] or 0) + 1
-    revision = KnowledgeRevision.objects.create(
-        document=document,
-        number=number,
-        published_by=user,
-        content_hash=content_hash,
+    previous_revision = document.current_revision
+    revision_values = {
+        "document": document,
+        "number": number,
+        "published_by": user,
+        "content_hash": content_hash,
+        "previous_revision": previous_revision,
         **_snapshot(document),
-    )
+    }
+    candidate = KnowledgeRevision(**revision_values)
+    if previous_revision and policy_text_changed(previous_revision, candidate):
+        revision_values["knowledge_check"] = _validate_knowledge_check(
+            document.draft_knowledge_check
+        )
+    revision = KnowledgeRevision.objects.create(**revision_values)
     KnowledgeChunk.objects.bulk_create(list(_chunks(revision)))
     document.current_revision = revision
     document.state = KnowledgeDocument.State.PUBLISHED
@@ -183,6 +295,7 @@ def publish_document(user, document_id, expected_version):
         {"revision_id": str(revision.id), "number": revision.number, "content_hash": content_hash},
         user,
     )
+    _assign_policy_update(revision, user)
     return document
 
 
@@ -195,6 +308,10 @@ def archive_document(user, document_id, expected_version):
     document.state = KnowledgeDocument.State.ARCHIVED
     document.version += 1
     document.save(update_fields=["state", "version", "updated_at"])
+    PolicyUpdateAssignment.objects.filter(
+        revision__document=document,
+        status=PolicyUpdateAssignment.Status.PENDING,
+    ).update(status=PolicyUpdateAssignment.Status.SUPERSEDED, superseded_at=timezone.now())
     emit(
         "knowledge.document_archived",
         "knowledge_document",
@@ -203,6 +320,79 @@ def archive_document(user, document_id, expected_version):
         user,
     )
     return document
+
+
+@transaction.atomic
+def submit_policy_update_answer(user, assignment_id, option_index, idempotency_key):
+    employee = require_active_actor(user)
+    if employee is None:
+        raise NotFound()
+    assignment = (
+        PolicyUpdateAssignment.objects.select_for_update(of=("self",))
+        .select_related("revision__document", "employee__manager__user")
+        .filter(pk=assignment_id, employee=employee)
+        .first()
+    )
+    if assignment is None:
+        raise NotFound()
+    if assignment.status != PolicyUpdateAssignment.Status.PENDING:
+        raise Conflict("This policy update is no longer waiting for your answer.")
+    revision = assignment.revision
+    if revision.document.state != KnowledgeDocument.State.PUBLISHED:
+        raise Conflict("This policy is no longer published. The assignment has been closed.")
+    check = revision.knowledge_check
+    if not isinstance(check, dict) or not 0 <= option_index < len(check.get("options", [])):
+        raise Conflict("This policy check is no longer available.")
+
+    is_correct = option_index == check["correct_option"]
+    attempt = PolicyUpdateAttempt.objects.create(
+        assignment=assignment,
+        idempotency_key=idempotency_key,
+        selected_option=option_index,
+        is_correct=is_correct,
+    )
+    assignment.attempt_count += 1
+    now = timezone.now()
+    if is_correct:
+        assignment.status = PolicyUpdateAssignment.Status.COMPLETED
+        assignment.completed_at = now
+    assignment.save(
+        update_fields=["attempt_count", "status", "completed_at", "updated_at"]
+    )
+    event = emit(
+        "knowledge.policy_update_answered",
+        "knowledge_policy_update",
+        assignment.id,
+        {
+            "attempt_id": str(attempt.id),
+            "attempt_count": assignment.attempt_count,
+            "completed": is_correct,
+        },
+        user,
+    )
+    if is_correct and assignment.employee.manager_id:
+        manager = assignment.employee.manager
+        if (
+            manager.user_id
+            and manager.user.is_active
+            and manager.user.role == User.Role.MANAGER
+        ):
+            notify(
+                manager.user,
+                "policy_update_completed",
+                "Сотрудник ознакомился с правилом",
+                f"{assignment.employee.full_name} ответил на вопрос по редакции {revision.number}.",
+                "policy_update",
+                assignment.id,
+                event,
+            )
+    return {
+        "is_correct": is_correct,
+        "completed": is_correct,
+        "attempt_count": assignment.attempt_count,
+        "completed_at": assignment.completed_at,
+        "explanation": check.get("explanation", "") if is_correct else "",
+    }
 
 
 def _check_same_message(answer, question, language):

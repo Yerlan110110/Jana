@@ -11,6 +11,7 @@ from .models import (
     KnowledgeDocument,
     KnowledgeGapCase,
     KnowledgeRevision,
+    PolicyUpdateAssignment,
 )
 
 
@@ -121,3 +122,43 @@ def visible_gap_cases(user):
     if user.role == User.Role.HR:
         return cases.filter(legal_entity_id=employee.legal_entity_id)
     return cases.filter(employee=employee)
+
+
+def visible_policy_updates(user):
+    require_active_actor(user)
+    from apps.identity.selectors import visible_employees
+
+    return (
+        PolicyUpdateAssignment.objects.filter(employee__in=visible_employees(user))
+        .select_related("revision__document", "revision__previous_revision", "employee__user")
+        .order_by("-revision__published_at", "employee__full_name", "id")
+    )
+
+
+def own_policy_update(user, assignment_id):
+    employee = require_active_actor(user)
+    if employee is None:
+        raise PermissionDenied("An active employee profile is required.")
+    assignment = (
+        PolicyUpdateAssignment.objects.select_related(
+            "revision__document", "revision__previous_revision", "employee__manager__user"
+        )
+        .filter(pk=assignment_id, employee=employee)
+        .first()
+    )
+    if assignment is None:
+        return None
+    if assignment.status == PolicyUpdateAssignment.Status.SUPERSEDED:
+        return assignment
+    revision = assignment.revision
+    accessible = (
+        accessible_documents(user)
+        .filter(pk=revision.document_id)
+        .exists()
+        and KnowledgeRevision.objects.filter(pk=revision.pk)
+        .filter(scope_filter(user), effective_filter())
+        .exists()
+    )
+    if not accessible:
+        return None
+    return assignment
