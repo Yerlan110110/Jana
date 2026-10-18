@@ -34,6 +34,9 @@ test(
     await screen.getByRole("button", "Сохранить черновик").tap();
     await expect(browser).toHaveURL(/\/hr\/policies\/[a-f0-9-]+$/);
     const policyPath = new URL(await browser.url()).pathname;
+    await screen.getByLabel("Свой вопрос для проверки (необязательно)").fill(question);
+    await screen.getByRole("button", "Сравнить ответы").tap();
+    await expect(screen.getByText("Новых оснований: 1", { exact: true })).toBeVisible();
     await screen.getByRole("button", "Опубликовать сохранённую версию").tap();
     await expect(screen.getByText(/^Текущая редакция 1/)).toBeVisible();
     await app.open(casePath);
@@ -81,6 +84,24 @@ test(
 
     await changeRole(app, screen, "hr");
     await app.open(policyPath);
+    await screen.getByLabel("Заголовок раздела").fill("Демонстрационный график работы");
+    await screen.getByLabel("Текст правила").fill("Демонстрационный график работы отделения согласует руководитель. Рабочая смена начинается по утверждённому расписанию.");
+    await expect(screen.getByRole("button", "Сравнить ответы")).toBeDisabled();
+    await screen.getByRole("button", "Сохранить черновик").tap();
+    await expect(screen.getByRole("button", "Сравнить ответы")).toBeEnabled();
+    await screen.getByLabel("Свой вопрос для проверки (необязательно)").fill(question);
+    await screen.getByRole("button", "Сравнить ответы").tap();
+    await expect(screen.getByText("Изменятся: 1", { exact: true })).toBeVisible();
+    await screen.getByLabel("Название", { exact: true }).fill(`График работы ${Date.now()}`);
+    await expect(screen.getByText("Изменятся: 1", { exact: true })).toHaveCount(0);
+    await screen.getByRole("button", "Сохранить черновик").tap();
+    await expect(screen.getByRole("button", "Сравнить ответы")).toBeEnabled();
+    await screen.getByRole("button", "Сравнить ответы").tap();
+    await expect(screen.getByText("Потеряют источник: 1", { exact: true })).toBeVisible();
+    await screen.getByLabel("Текст правила").fill(rule);
+    await expect(screen.getByText("Потеряют источник: 1", { exact: true })).toHaveCount(0);
+    await app.open(policyPath);
+    await expect(screen.getByText(/^Текущая редакция 1/)).toBeVisible();
     await browser.onDialog("accept");
     await screen.getByRole("button", "Убрать в архив").tap();
     await expect(screen.getByText("В архиве", { exact: true })).toBeVisible();

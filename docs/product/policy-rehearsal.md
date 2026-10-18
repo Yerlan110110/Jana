@@ -22,7 +22,7 @@ Two options were compared:
 
 ## Endpoint
 
-`POST /api/v1/knowledge/admin/documents/{document_id}/rehearsal/`
+`POST /api/v1/knowledge/admin/documents/{id}/rehearsal/`
 
 Session-authenticated HR in the document's legal entity only. Employees,
 managers and HR of another entity get 403 or 404 under the same rules as other
@@ -207,3 +207,20 @@ that document demonstrates a `gained` classification end to end. The
   preview bounds what retrieval could supply, not what a configured LLM would
   say.
 - `audience_impact` counts eligibility, not notification or readership.
+
+## Observed integration behavior
+
+The frontend uses generated OpenAPI types and suppresses an old result while
+its draft has unsaved changes or its saved version differs from the result.
+An explicit question runs in HR scope. Its employee-impact count can therefore
+be zero even when the source changes; only evaluated gap cases contribute
+employee counts.
+
+The matching corpus includes document titles and section headings as well as
+body text. Removing an answer paragraph while retaining a matching title can
+produce `changed`, not `lost`. The side-by-side excerpts expose that change;
+this is not a semantic guarantee that the remaining passage answers the
+question. The pitch must describe source comparison, not automatic detection
+of every incorrect or missing answer. This behavior was observed in the
+Docker browser run on 18 October; the first assertion expecting `lost` failed
+and is retained in `.artifacts/browser/checkpoint-1557/rehearsal/`.
