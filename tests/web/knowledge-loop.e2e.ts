@@ -6,10 +6,10 @@ test(
   "HR publishes a new basis and employee verifies it until access is revoked",
   { timeout: 240_000 },
   async ({ app, screen, browser }) => {
-    const question = "Что нужно для возмещения ночного такси после смены?";
-    const title = `Ночное такси после смены ${Date.now()}`;
+    const question = "Как оформить провоз складного велосипеда?";
+    const title = `Провоз складного велосипеда после смены ${Date.now()}`;
     const rule =
-      "Демонстрационное правило JanaMen. Для возмещения ночного такси после смены сотрудник передаёт HR чек поездки и подтверждение руководителя смены. HR проверяет документы перед оформлением возмещения.";
+      "Демонстрационное правило JanaMen. Для возмещения провоза складного велосипеда после смены сотрудник передаёт HR чек поездки и подтверждение руководителя смены. HR проверяет документы перед оформлением возмещения.";
     await signIn(app, screen, "employee");
     await app.open("/assistant");
     await screen.getByLabel("Ваш вопрос").fill(question);
@@ -26,10 +26,10 @@ test(
     await screen.getByLabel("Название", { exact: true }).fill(title);
     await screen
       .getByLabel("Краткое описание")
-      .fill("Синтетический порядок возмещения ночного такси после смены.");
+      .fill("Синтетический порядок возмещения провоза складного велосипеда после смены.");
     await screen
       .getByLabel("Заголовок раздела")
-      .fill("Документы для возмещения ночного такси");
+      .fill("Документы для возмещения провоза складного велосипеда");
     await screen.getByLabel("Текст правила").fill(rule);
     await screen.getByRole("button", "Сохранить черновик").tap();
     await expect(browser).toHaveURL(/\/hr\/policies\/[a-f0-9-]+$/);

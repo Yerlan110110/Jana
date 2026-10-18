@@ -32,6 +32,8 @@ async function inspect({ app, browser, screen, views }: { app: App; browser: Bro
 }
 
 test("S01 sign-in keyboard cycle", async ({ app, browser, screen }) => {
+  await app.open("/login");
+  await screen.getByRole("button", "Пропустить", { exact: true }).tap();
   await inspect({ app, browser, screen, views: [{ id: "S01", path: "/login", ready: "Войдите в JanaMen", state: "empty sign-in form" }] });
 });
 

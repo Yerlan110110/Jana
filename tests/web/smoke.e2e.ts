@@ -7,6 +7,7 @@ test("the Docker web entry exposes a labeled sign-in form", async ({
   browser,
 }) => {
   await app.open("/login");
+  await screen.getByRole("button", "Пропустить", { exact: true }).tap();
   await expect(screen.getByRole("heading", "Войдите в JanaMen")).toBeVisible();
   await expect(screen.getByLabel("Имя пользователя")).toBeVisible();
   await expect(screen.getByLabel("Пароль")).toBeVisible();

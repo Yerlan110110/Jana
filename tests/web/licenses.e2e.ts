@@ -7,6 +7,7 @@ test("source and bundled license texts are reachable before sign-in", async ({ a
   for (const width of [1280, 320]) {
     await browser.setViewport({ width, height: 800 });
     await app.open("/login");
+    if (width === 1280) await screen.getByRole("button", "Пропустить", { exact: true }).tap();
     await expect(screen.getByRole("heading", "Войдите в JanaMen")).toBeVisible();
     await screen.getByRole("link", "Исходный код и лицензии", { exact: true }).tap();
     await expect(screen.getByRole("heading", "Исходный код и лицензии", { exact: true })).toBeVisible();
