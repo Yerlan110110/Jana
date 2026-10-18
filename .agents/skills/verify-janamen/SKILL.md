@@ -7,7 +7,7 @@ description: Run JanaMen's real Docker web application through employee, manager
 
 ## Read first
 
-Run `npx e2e guide setup`, `npx e2e guide writing-tests`, and `npx e2e guide running` for the installed engine's current contract. The project uses `e2e.config.ts` and `tests/web/**/*.e2e.ts`. Read `features/README.md`, `docs/continuation-status.md` and the changed feature's charter. Read `docs/design/state-and-data-contracts.md` for visible states. The native e2e skill is available at `/home/yqecea/.codex/skills/e2e/SKILL.md` on this host. The CLI guides are the portable alternative.
+Run `npx e2e guide setup`, `npx e2e guide writing-tests`, and `npx e2e guide running` for the installed engine's current contract. The project uses `e2e.config.ts` and `tests/web/**/*.e2e.ts`. Read `docs/product/specification.md`, `docs/continuation-status.md` and the changed feature's existing browser tests. Read `docs/design/state-and-data-contracts.md` for visible states. The native e2e skill is available at `/home/yqecea/.codex/skills/e2e/SKILL.md` on this host. The CLI guides are the portable alternative.
 
 ## Launch
 
@@ -60,7 +60,7 @@ Read `docs/verification/capture-calibration.md` when a screenshot looks empty or
 
 ## Bug bash
 
-Use the charters in `features/`. An exploratory model is not configured. Agent-driven `e2e explore` remains unproven until an authorized model actually runs the mapped charter. Do not invent a passing bug bash. A future local bug-bash config stays ignored under `.e2e/bugbash/`. Keep one signed-in charter per session and one writer to the database. A reported defect becomes a verified bug only after its specific assertion fails with `ASSERTION_FAILED` in `tests/web/bugbash/<slug>.e2e.ts`.
+Derive a bounded charter from `docs/product/specification.md` and the owning state contract. No `features/` charter directory exists. An exploratory model is not configured. Agent-driven `e2e explore` remains unproven until an authorized model actually runs the mapped charter. Do not invent a passing bug bash. A future local bug-bash config stays ignored under `.e2e/bugbash/`. Keep one signed-in charter per session and one writer to the database. A reported defect becomes a verified bug only after its specific assertion fails with `ASSERTION_FAILED` in `tests/web/bugbash/<slug>.e2e.ts`.
 
 Manual T3 adversarial inspection may proceed without a model. Record its scope separately. The app cannot perform real 1C imports, real Documentolog delivery, real payments, legal signatures, automated HR decisions or unrestricted generative answers.
 
@@ -70,4 +70,4 @@ Close only preview tabs and processes you own. The CLI closes its isolated brows
 
 ## Helpers
 
-`scripts/dev.py` prepares the existing Docker environment. The installed e2e CLI drives it. Ordinary viewport and role tests need no extra browser launcher. Native zoom uses the owned-profile launcher above. `features/README.md` records which features have actually passed.
+`scripts/dev.py` prepares the existing Docker environment. The installed e2e CLI drives it. Ordinary viewport and role tests need no extra browser launcher. Native zoom uses the owned-profile launcher above. `docs/continuation-status.md` links the current results and remaining coverage.

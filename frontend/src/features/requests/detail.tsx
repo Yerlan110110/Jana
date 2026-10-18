@@ -47,6 +47,9 @@ export function RequestDetailPage() {
     return result.data;
   }
   const record = request.data;
+  const returnFeedback = record?.status === "returned"
+    ? record.history.filter((event) => event.action === "returned" && event.comment).at(-1)
+    : undefined;
   const reviewer =
     record?.assigned_manager === employee?.id
       ? employee?.full_name
@@ -102,6 +105,14 @@ export function RequestDetailPage() {
                 ]}
               />
             </DataSection>
+            {returnFeedback && (
+              <DataSection
+                title="Причина возврата"
+                description={`${returnFeedback.actor_name} · ${timestamp(returnFeedback.created_at)}`}
+              >
+                <p>{returnFeedback.comment}</p>
+              </DataSection>
+            )}
             {record.allowed_actions.includes("update_draft") && (
               <RequestEditor
                 key={record.id}

@@ -1,0 +1,33 @@
+# Release review and repair evidence
+
+This is a repair record. The current gate decision stays in [C2](../continuation-status.md). Independent round 1 evaluated `2fc8177d261b0e709bd3e852c84ed9eed0b32c35` and returned REPAIR. Its archive SHA-256 is `95cdb5a52715548daf5f9502c02c3aa3be21fffd9f8bf6e30ea268d7a8264bb6`.
+
+The independent reviewer did not author product changes. This was a fresh context on the same model, with an instructional read-only boundary. The runtime could not enforce a whole-session read-only sandbox. The report and raw checks are retained in `.artifacts/reviews/release-r1/`. Reusing that non-author reviewer for the next frozen candidate does not create model diversity.
+
+## Findings and owner disposition
+
+| Finding | Investigation and repair | Evidence and remaining condition |
+| --- | --- | --- |
+| F1, expired session | Confirmed. The shared API boundary clears private cached data on a current authenticated session's 401. Logout also converges when the server is already signed out. A late response from a previous session cannot clear the next account. Permission 403 remains a resource error. | `46e78ef` records the failing reproduction, `1d11eb7` implements the repair. Six browser regressions pass in `recovery-green-20261018-3.log`. The final parent-owned assessment mutation also passes the full failed/pass Academy journey in `recovery-completion-green-20261018-1.log`. Independent recheck remains required. |
+| F2, unsent assessment choices | Confirmed. Existing React Router navigation blocking and the native dialog warn before leaving. Cancelling keeps the chosen answers. A native unload warning covers reload. Successful server submission navigates to the persisted result. | The same reproduction and repair commits apply. Link, history, reload, cancel and confirmed exit were exercised. The mutation stays in the page parent so an enrollment refresh cannot remove its success handler. Independent recheck remains required. |
+| F3, field error association | Confirmed. The shared create/edit fields associate the actual server 400 with the unchanged submitted value, retain input and focus the first invalid field. Editing that value clears the stale association. | The real 13-digit amount fails before repair and passes afterward. The prepared-state suite exercises this at five widths and native 200%. Full assistive-technology speech output is not claimed. |
+| F4, receipt attribution | Confirmed. The editable defense caption now attributes document receipt to mock Documentolog and keeps source accounting separate. | PDF regeneration, final page inspection and served-byte verification are still required after the updated answer screenshot. The previously published PDF remains the R1 artifact until that refresh. |
+| F5, English request stages in notifications | Confirmed. `27dd96c` adds the read-only event-time `request_status` projection and generated enum. The interface uses its existing Russian status dictionary. Stored notification bodies remain unchanged. | Three PostgreSQL notification tests pass after a three-test behavior RED. Browser checks show the old manager stage beside the later HR stage. Marking the old message read keeps the request's status and version. Independent recheck remains required. |
+| W1, unread action labelled as a past state | Confirmed, non-material. The action now says `Отметить прочитанным`. | Included in `27dd96c`; narrow and native rendering are captured by the prepared-state suite. Individual visual inspection is recorded separately. |
+| ST1, mutable README test count | Confirmed, non-material. The README now points to C2 and verification records. | The diff removes the competing current snapshot. No historical run count was rewritten. |
+
+Owner logs named above are under `.artifacts/visual-review/`, except the independent report. Failed runs are retained. Driver mistakes are not product failures: the initial history test waited for navigation that was deliberately blocked, and a later setup crossed full-document history. Corrected tests use actual same-document history and observe the native unload event.
+
+## Visible decision context
+
+The returned-request reason now precedes the correction form. Answer freshness and source links precede the long extracted answer text. The saved history, full claims and access checks remain available. These changes address observed reading order, not an invented server capability.
+
+The prepared-state suite reuses the existing audit, geometry and segmented capture function. It adds no second browser framework. Normal tests assert exact widths of 1280, 1440, 768, 390 and 320 pixels. The owned native launcher asserts real DPR 2, outer/inner width, root zoom 1 and visual scale 1. A capture is not a visual pass until its full-size images have been opened and recorded.
+
+The first modal keyboard assertion expected Shift+Tab to wrap directly to the last button. Its retained diagnostic instead records `BODY`, `documentFocused: false`. Focus had moved to browser chrome. The next Tab returns to the modal's first button, both buttons are keyboard reachable, Escape restores the trigger and the selection remains. This follows the native behavior described in the [WHATWG discussion of modal focus](https://github.com/whatwg/html/issues/8339). The test now checks that actual boundary. No custom focus trap was added to override browser controls.
+
+## Skills and choices
+
+Pstack's verifiable units produced separate reproduction, session/form repair and notification commits. SureForge keeps R1 failures and incomplete coverage visible until a frozen recheck. Fstack routed to the original Emil and Jakub instructions. Jakub's forms rules changed field association and first-error focus. His layout rules moved the explanation before the work it governs. His writing rules changed the unread action to a verb. Emil's high-frequency interaction rule kept the warning immediate, with no decorative animation.
+
+Model the Domain changed notification localization to an immutable event status rather than parsing English prose or displaying the request's later status. Type System Discipline keeps that status in generated OpenAPI types. Boundary Discipline keeps session recovery at the existing transport boundary. Architect compared preserving choices locally with warning before discard; the selected warning reuses the platform and existing router. The ten-delegate session cap prevents another design panel. The owner comparison is sequential and is not called independent review. Ordinary source inspection here is not a new REA run.

@@ -261,9 +261,6 @@ export function AnswerPage() {
         </div>
         <div className="prose">
           <p>{record.message}</p>
-          {record.claims.map((claim, index) => (
-            <p key={index}>{claim.text}</p>
-          ))}
         </div>
         {record.evidence_status === "superseded" && (
           <p className="standing-note">
@@ -296,6 +293,14 @@ export function AnswerPage() {
                 </div>
                 <ArrowRight size={17} aria-hidden="true" />
               </Link>
+            ))}
+          </div>
+        )}
+        {record.claims.length > 0 && (
+          <div className="prose">
+            <h2>Текст ответа</h2>
+            {record.claims.map((claim, index) => (
+              <p key={index}>{claim.text}</p>
             ))}
           </div>
         )}
