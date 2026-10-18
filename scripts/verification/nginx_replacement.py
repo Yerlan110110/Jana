@@ -48,7 +48,7 @@ def published_origin(compose, service, port):
 
 def main():
     parser = argparse.ArgumentParser(description="Replace the API in an owned synthetic Compose stack and verify nginx DNS recovery without restarting nginx.")
-    parser.add_argument("--project", required=True, choices=["janamen-demo", "janamen-ci", "janamen-browser", "janamen-dns-test", "janamen-vercel-check"])
+    parser.add_argument("--project", required=True, choices=["janamen-demo", "janamen-ci", "janamen-browser", "janamen-dns-test", "janamen-vercel-check", "janamen-checkpoint"])
     parser.add_argument("--env-file", type=Path, help="Environment file passed explicitly to Docker Compose")
     parser.add_argument("--web-url", help="Optional assertion of the selected frontend's published origin")
     parser.add_argument("--api-url", help="Optional assertion of the selected API's published origin")

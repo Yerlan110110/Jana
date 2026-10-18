@@ -10,6 +10,19 @@
 
 Облачному агенту для дизайна и развития отличий начните с [CLOUD_DESIGN_HANDOFF.md](CLOUD_DESIGN_HANDOFF.md). Команде для защиты откройте [визуальную памятку](docs/defense/team-map.html).
 
+## Проверить решение по ТЗ
+
+| Требование | Реализация | Поведенческая проверка |
+| --- | --- | --- |
+| Сотрудник видит свой профиль | `backend/apps/identity/`, `frontend/src/app.tsx` | `tests/web/scope.e2e.ts` |
+| Заявка проходит между ролями | `backend/apps/hr_requests/` | `tests/web/requests.e2e.ts` |
+| Чужие команды недоступны | `backend/apps/identity/selectors.py` | `tests/web/scope.e2e.ts` |
+| Курс сохраняет прогресс | `backend/apps/academy/` | `tests/web/academy.e2e.ts` |
+| Ответ содержит доступный источник | `backend/apps/knowledge/` | `tests/web/knowledge.e2e.ts` |
+| Неизвестный вопрос доходит до HR | `backend/apps/knowledge/services.py` | `tests/web/knowledge-loop.e2e.ts` |
+
+Тесты описывают воспроизводимые проверки. Их наличие не заменяет результат запуска. Актуальные результаты и открытые ограничения находятся в [статусе](docs/continuation-status.md). [Комплект сдачи](docs/product/submission-checklist.md) связывает требования организаторов с материалами команды.
+
 ## С чего начать
 
 | Нужно | Открыть |
