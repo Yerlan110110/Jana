@@ -72,6 +72,11 @@ def contains_unsafe_instruction(text):
 
 def retrieve(user, question, language="ru", limit=4):
     candidates = list(accessible_chunks(user, current_only=True, language=language))
+    return rank_chunks(candidates, question, language, limit)
+
+
+def rank_chunks(candidates, question, language="ru", limit=4):
+    candidates = list(candidates)
     if contains_unsafe_instruction(question):
         return RetrievalResult((), "unsafe_instruction")
     query = set(tokenize(question, language))

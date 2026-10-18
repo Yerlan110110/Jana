@@ -35,6 +35,11 @@ urlpatterns = [
         views.AdminRevisionListView.as_view(),
         name="knowledge-revisions",
     ),
+    path(
+        "knowledge/admin/documents/<uuid:pk>/rehearsal/",
+        views.RehearseDocumentView.as_view(),
+        name="knowledge-rehearsal",
+    ),
     path("assistant/answers/", views.AnswerListCreateView.as_view(), name="knowledge-answers"),
     path("assistant/answers/<uuid:pk>/", views.AnswerDetailView.as_view(), name="knowledge-answer"),
     path("knowledge/gaps/", views.GapCaseListView.as_view(), name="knowledge-gaps"),

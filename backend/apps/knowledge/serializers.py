@@ -258,6 +258,118 @@ class PolicyReferenceSerializer(serializers.Serializer):
     url = serializers.CharField()
 
 
+class RehearsalRequestSerializer(StrictSerializer):
+    expected_version = serializers.IntegerField(min_value=1)
+    language = serializers.ChoiceField(choices=LANGUAGE_CHOICES, required=False)
+    questions = serializers.ListField(
+        child=serializers.CharField(min_length=8, max_length=2000),
+        required=False,
+        default=list,
+        max_length=10,
+    )
+    gap_case_ids = serializers.ListField(
+        child=serializers.UUIDField(), required=False, default=list, max_length=10
+    )
+
+    def validate_questions(self, value):
+        normalized = []
+        for question in value:
+            if any(
+                unicodedata.category(char) in {"Cc", "Cf"} and char not in "\n\t"
+                for char in question
+            ):
+                raise serializers.ValidationError(
+                    "Use plain text without hidden control characters."
+                )
+            normalized.append(unicodedata.normalize("NFKC", question))
+        return normalized
+
+    def validate(self, attrs):
+        if len(attrs["questions"]) + len(attrs["gap_case_ids"]) > 10:
+            raise serializers.ValidationError(
+                {"questions": ["A rehearsal compares at most 10 questions."]}
+            )
+        return attrs
+
+
+class RehearsalExcerptSerializer(serializers.Serializer):
+    origin = serializers.ChoiceField(choices=["published", "draft"])
+    chunk_id = serializers.UUIDField(allow_null=True)
+    revision_id = serializers.UUIDField(allow_null=True)
+    revision_number = serializers.IntegerField(allow_null=True)
+    document_id = serializers.UUIDField()
+    title = serializers.CharField()
+    heading = serializers.CharField()
+    locator = serializers.CharField()
+    text = serializers.CharField()
+    content_hash = serializers.CharField()
+    score = serializers.FloatField()
+    coverage = serializers.FloatField()
+
+
+class RehearsalRetrievalSerializer(serializers.Serializer):
+    reason = serializers.CharField()
+    excerpts = RehearsalExcerptSerializer(many=True)
+    restricted_excerpts = serializers.IntegerField()
+
+
+class RehearsalResultSerializer(serializers.Serializer):
+    source = serializers.ChoiceField(choices=["explicit", "gap_case"])
+    gap_case_id = serializers.UUIDField(allow_null=True)
+    question = serializers.CharField()
+    language = serializers.ChoiceField(choices=LANGUAGE_CHOICES)
+    classification = serializers.ChoiceField(choices=["unchanged", "changed", "lost", "gained"])
+    before = RehearsalRetrievalSerializer()
+    after = RehearsalRetrievalSerializer()
+
+
+class RehearsalResponseSerializer(serializers.Serializer):
+    class RehearsalDocumentSerializer(serializers.Serializer):
+        id = serializers.UUIDField()
+        slug = serializers.CharField()
+        title = serializers.CharField()
+        state = serializers.ChoiceField(choices=["draft", "published", "archived"])
+        version = serializers.IntegerField()
+        has_unpublished_changes = serializers.BooleanField()
+
+    class RehearsalCurrentSerializer(serializers.Serializer):
+        revision_id = serializers.UUIDField()
+        revision_number = serializers.IntegerField()
+        content_hash = serializers.CharField()
+        published_at = serializers.DateTimeField()
+
+    class RehearsalDraftSerializer(serializers.Serializer):
+        content_hash = serializers.CharField()
+        language = serializers.ChoiceField(choices=LANGUAGE_CHOICES)
+        topic = serializers.CharField()
+        audience = serializers.ChoiceField(choices=Audience.choices)
+        effective_from = serializers.DateField()
+        effective_until = serializers.DateField(allow_null=True)
+        section_count = serializers.IntegerField()
+
+    class RehearsalAudienceImpactSerializer(serializers.Serializer):
+        eligible_current = serializers.IntegerField(allow_null=True)
+        eligible_draft = serializers.IntegerField()
+        changed = serializers.IntegerField()
+
+    class RehearsalSummarySerializer(serializers.Serializer):
+        total = serializers.IntegerField()
+        unchanged = serializers.IntegerField()
+        changed = serializers.IntegerField()
+        lost = serializers.IntegerField()
+        gained = serializers.IntegerField()
+
+    document = RehearsalDocumentSerializer()
+    current = RehearsalCurrentSerializer(allow_null=True)
+    draft = RehearsalDraftSerializer()
+    audience_impact = RehearsalAudienceImpactSerializer()
+    summary = RehearsalSummarySerializer()
+    impacted_employees_count = serializers.IntegerField()
+    results = RehearsalResultSerializer(many=True)
+    scope = serializers.ChoiceField(choices=["extractive_retrieval_comparison"])
+    not_legal_verification = serializers.BooleanField()
+
+
 class GapCaseSerializer(serializers.ModelSerializer):
     resolution_kind = serializers.SerializerMethodField()
     policy_reference = serializers.SerializerMethodField()
