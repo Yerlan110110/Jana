@@ -19,6 +19,10 @@ from .services import (
 )
 
 
+def entity_country(legal_entity):
+    return legal_entity.code.removeprefix("SYN-").split("-")[0]
+
+
 @transaction.atomic
 def seed_knowledge():
     dataset = json.loads((Path(__file__).parent / "data" / "policies.json").read_text())
@@ -38,6 +42,10 @@ def seed_knowledge():
             continue
         seen_entities.add(owner.legal_entity_id)
         for policy in dataset["documents"]:
+            if policy.get("country") and policy["country"] != entity_country(
+                owner.legal_entity
+            ):
+                continue
             slug = f"{owner.legal_entity.code.lower()}-demo-{policy['slug']}"
             if KnowledgeDocument.objects.filter(slug=slug).exists():
                 continue

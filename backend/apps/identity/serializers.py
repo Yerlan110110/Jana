@@ -58,6 +58,19 @@ class LoginSerializer(StrictSerializer):
     password = serializers.CharField(write_only=True, trim_whitespace=False, max_length=256)
 
 
+DEMO_ACCOUNT_CHOICES = ["employee", "manager", "hr", "employee_kg", "employee_uz"]
+
+
+class DemoLoginSerializer(StrictSerializer):
+    account = serializers.ChoiceField(choices=DEMO_ACCOUNT_CHOICES)
+
+
+class DemoAccountsSerializer(serializers.Serializer):
+    accounts = serializers.ListField(
+        child=serializers.ChoiceField(choices=DEMO_ACCOUNT_CHOICES)
+    )
+
+
 class SessionSerializer(serializers.Serializer):
     user = UserSerializer()
     employee = EmployeeSerializer(allow_null=True)

@@ -106,6 +106,8 @@ def seed_identity(password=None):
         [
             ("SYN-KZ-A", "Демо JanaMen — Астана (синтетическое юрлицо)"),
             ("SYN-KZ-B", "Демо JanaMen — Алматы (синтетическое юрлицо)"),
+            ("SYN-KG", "Демо JanaMen — Бишкек, Кыргызстан (синтетическое юрлицо)"),
+            ("SYN-UZ", "Демо JanaMen — Ташкент, Узбекистан (синтетическое юрлицо)"),
         ]
     ):
         entity, _ = LegalEntity.objects.get_or_create(
@@ -131,6 +133,12 @@ def seed_identity(password=None):
                     "Мария Ким",
                     "Дамир Ибраев",
                     "Алина Омарова",
+                    "Эльмира Токтогулова",
+                    "Бексултан Айдаров",
+                    "Назгуль Исакова",
+                    "Сардор Рахимов",
+                    "Мадина Юлдашева",
+                    "Жасур Кадыров",
                 ][entity_index * 3 + dept_index - 1]
             )
             managers[dept_code] = person(
@@ -146,9 +154,16 @@ def seed_identity(password=None):
                 if entity_index == 0
                 else f"hr.{entity_index + 1}.{hr_index + 1}.demo"
             )
-            name = ["Алия Серікқызы", "Елена Иванова", "Айсұлу Төлегенова", "Руслан Жұмабеков"][
-                entity_index * 2 + hr_index
-            ]
+            name = [
+                "Алия Серікқызы",
+                "Елена Иванова",
+                "Айсұлу Төлегенова",
+                "Руслан Жұмабеков",
+                "Чынар Алиева",
+                "Дастан Омуралиев",
+                "Гулнора Азимова",
+                "Тимур Юсупов",
+            ][entity_index * 2 + hr_index]
             person(
                 username,
                 name,
@@ -168,6 +183,10 @@ def seed_identity(password=None):
                     username, name = "otherteam.demo", "Тимур Есенов"
                 elif entity_index == 1 and dept_code == "warehouse" and staff_index == 0:
                     username, name = "foreign.demo", "Мадина Омарова"
+                elif entity_index == 2 and dept_code == "warehouse" and staff_index == 0:
+                    username, name = "employee.kg.demo", "Айбек Осмонов"
+                elif entity_index == 3 and dept_code == "warehouse" and staff_index == 0:
+                    username, name = "employee.uz.demo", "Дилноза Каримова"
                 elif new:
                     username, name = "new.demo", "Роман И."
                 person(

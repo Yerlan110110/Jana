@@ -9,6 +9,7 @@ DEBUG = os.getenv("DJANGO_DEBUG", "true").lower() == "true"
 INTEGRATIONS_ALLOW_MOCK_FAULTS = os.getenv(
     "INTEGRATIONS_ALLOW_MOCK_FAULTS", str(DEBUG)
 ).lower() == "true"
+JANAMEN_DEMO_LOGIN = os.getenv("JANAMEN_DEMO_LOGIN", "false").lower() == "true"
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "")
 if not SECRET_KEY:
     if not DEBUG:
@@ -139,6 +140,8 @@ SPECTACULAR_SETTINGS = {
     "COMPONENT_SPLIT_REQUEST": True,
     "ENUM_NAME_OVERRIDES": {
         "LanguageEnum": [("ru", "Русский"), ("kk", "Қазақша")],
+        "RoleEnum": "apps.identity.models.User.Role",
+        "DemoAccountEnum": "apps.identity.serializers.DEMO_ACCOUNT_CHOICES",
         "KnowledgeGapStatusEnum": "apps.knowledge.models.KnowledgeGapCase.Status",
         "HRRequestStatusEnum": "apps.hr_requests.models.HRRequest.Status",
         "PublicationStateEnum": [

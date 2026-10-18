@@ -127,6 +127,29 @@ export async function signIn(username: string, password: string) {
   return session;
 }
 
+export type DemoAccount = Model<"DemoAccountEnum">;
+
+export async function readDemoAccounts(signal?: AbortSignal) {
+  const result = await api.GET("/api/v1/auth/demo-login/", { signal });
+  if (result.response.status === 404) return null;
+  return unwrap(result).accounts;
+}
+
+export async function signInDemo(account: DemoAccount) {
+  await queryClient.cancelQueries();
+  queryClient.removeQueries({
+    predicate: (query) => query.queryKey[0] !== "session",
+  });
+  queryClient.getMutationCache().clear();
+  csrfToken = unwrap(await api.GET("/api/v1/auth/csrf/")).csrf_token;
+  const session = unwrap(
+    await api.POST("/api/v1/auth/demo-login/", { body: { account } }),
+  );
+  csrfToken = session.csrf_token;
+  queryClient.setQueryData(["session"], session);
+  return session;
+}
+
 export async function signOut() {
   const sessionToken = csrfToken;
   const result = await api.POST("/api/v1/auth/logout/");

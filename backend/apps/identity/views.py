@@ -1,20 +1,23 @@
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.middleware.csrf import get_token
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from drf_spectacular.utils import extend_schema
 from rest_framework import status, viewsets
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, NotFound
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
 from .filters import EmployeeFilter
-from .models import Department, LegalEntity
+from .models import Department, LegalEntity, User
 from .selectors import employee_for, visible_employees
 from .serializers import (
     CSRFSerializer,
+    DemoAccountsSerializer,
+    DemoLoginSerializer,
     DepartmentSerializer,
     EmployeeSerializer,
     LegalEntitySerializer,
@@ -61,6 +64,54 @@ class LoginView(APIView):
             raise AuthenticationFailed("Invalid credentials.")
         if not user.is_superuser and employee_for(user) is None:
             raise AuthenticationFailed("Employee account is inactive or not provisioned.")
+        login(request, user)
+        return Response(session_data(request))
+
+
+DEMO_LOGIN_USERNAMES = {
+    "employee": "employee.demo",
+    "manager": "manager.demo",
+    "hr": "hr.demo",
+    "employee_kg": "employee.kg.demo",
+    "employee_uz": "employee.uz.demo",
+}
+
+
+@method_decorator(csrf_protect, name="dispatch")
+class DemoLoginView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "login"
+
+    def get_authenticate_header(self, request):
+        return "Session"
+
+    def get_throttles(self):
+        if self.request.method == "GET":
+            return []
+        return super().get_throttles()
+
+    @staticmethod
+    def enabled_or_404():
+        if not settings.JANAMEN_DEMO_LOGIN:
+            raise NotFound()
+
+    @extend_schema(responses=DemoAccountsSerializer, auth=[])
+    def get(self, request):
+        self.enabled_or_404()
+        return Response({"accounts": list(DEMO_LOGIN_USERNAMES)})
+
+    @extend_schema(request=DemoLoginSerializer, responses=SessionSerializer, auth=[])
+    def post(self, request):
+        self.enabled_or_404()
+        data = DemoLoginSerializer(data=request.data)
+        data.is_valid(raise_exception=True)
+        user = User.objects.filter(
+            username=DEMO_LOGIN_USERNAMES[data.validated_data["account"]], is_active=True
+        ).first()
+        if user is None:
+            raise NotFound()
         login(request, user)
         return Response(session_data(request))
 

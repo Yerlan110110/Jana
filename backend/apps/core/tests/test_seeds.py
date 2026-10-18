@@ -22,12 +22,12 @@ PASSWORD = "Synthetic-fixture-password-82!"
 
 def test_seed_populates_distinct_teams_roles_and_empty_new_employee():
     employees = seed_identity(PASSWORD)
-    assert len(employees) == 58
-    assert LegalEntity.objects.count() == 2
-    assert Department.objects.count() == 6
-    assert User.objects.filter(role="employee").count() == 48
-    assert User.objects.filter(role="manager").count() == 6
-    assert User.objects.filter(role="hr").count() == 4
+    assert len(employees) == 116
+    assert LegalEntity.objects.count() == 4
+    assert Department.objects.count() == 12
+    assert User.objects.filter(role="employee").count() == 96
+    assert User.objects.filter(role="manager").count() == 12
+    assert User.objects.filter(role="hr").count() == 8
     dana = Employee.objects.get(user__username="employee.demo")
     assert dana.full_name == "Дана Нұрланқызы Әбдірахманова"
     assert dana.manager.user.username == "manager.demo"
@@ -39,7 +39,7 @@ def test_seed_populates_distinct_teams_roles_and_empty_new_employee():
 def test_request_seed_covers_all_states_and_preserves_user_changes():
     employees = seed_identity(PASSWORD)
     created = seed_requests(employees)
-    assert len(created) == HRRequest.objects.count() == 126
+    assert len(created) == HRRequest.objects.count() == 242
     dana = Employee.objects.get(user__username="employee.demo")
     for kind in HRRequest.Kind.values:
         assert set(
@@ -86,7 +86,7 @@ def test_identity_seed_preserves_imported_facts_and_existing_passwords():
     assert dana.position == "Изменено интеграцией"
     assert dana.source_revision == "synthetic-source-revision-2"
     assert dana.user.check_password(PASSWORD)
-    assert Employee.objects.count() == 58
+    assert Employee.objects.count() == 116
 
 
 def test_seed_cli_uses_env_and_private_credentials_file_preserves_password_on_rerun(
@@ -105,8 +105,8 @@ def test_seed_cli_uses_env_and_private_credentials_file_preserves_password_on_re
     )
     first = json.loads(path.read_text())
     assert first["synthetic"] is True
-    assert len(first["accounts"]) == 58
-    assert first["modules"]["hr_requests"] == 126
+    assert len(first["accounts"]) == 116
+    assert first["modules"]["hr_requests"] == 242
     assert all(account["password"] == PASSWORD for account in first["accounts"])
     assert stat.S_IMODE(path.stat().st_mode) == 0o600
     assert PASSWORD not in output.getvalue()
@@ -120,7 +120,7 @@ def test_seed_cli_uses_env_and_private_credentials_file_preserves_password_on_re
     )
     second = json.loads(path.read_text())
     assert all(account["password"] == PASSWORD for account in second["accounts"])
-    assert HRRequest.objects.count() == 126
+    assert HRRequest.objects.count() == 242
     assert second["modules"]["hr_requests"] == 0
 
 
@@ -171,10 +171,10 @@ def test_complete_seed_serializes_module_manifests_and_preserves_combined_record
     assert academy["lesson_count"] == 60
     assert academy["question_count"] == 90
     assert datetime.fromisoformat(academy["demo_employee"]["computed_at"]).tzinfo is not None
-    assert Employee.objects.count() == 58
-    assert HRRequest.objects.count() == 126
+    assert Employee.objects.count() == 116
+    assert HRRequest.objects.count() == 242
     assert KnowledgeDocument.objects.count() > 20
-    assert SourceImportBatch.objects.filter(status="accepted").count() == 2
+    assert SourceImportBatch.objects.filter(status="accepted").count() == 4
     models = [
         Employee,
         HRRequest,

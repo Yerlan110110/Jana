@@ -46,7 +46,15 @@ import {
   ErrorNotice,
   LoadingState,
 } from "@/components/ui";
-import { ApiError, readSession, signIn, signOut } from "@/lib/api";
+import {
+  ApiError,
+  readDemoAccounts,
+  readSession,
+  signIn,
+  signInDemo,
+  signOut,
+  type DemoAccount,
+} from "@/lib/api";
 import { SessionProvider, useSession } from "@/lib/session";
 import { roleText } from "@/lib/format";
 import { NotificationsPage } from "@/features/notifications";
@@ -230,6 +238,16 @@ function LoginPage() {
     mutationFn: () => signIn(username.trim(), password),
     onSuccess: () => navigate("/", { replace: true }),
   });
+  const demoAccounts = useQuery({
+    queryKey: ["demo-login-accounts"],
+    queryFn: ({ signal }) => readDemoAccounts(signal),
+    staleTime: Infinity,
+    retry: false,
+  });
+  const demoLogin = useMutation({
+    mutationFn: (account: DemoAccount) => signInDemo(account),
+    onSuccess: () => navigate("/", { replace: true }),
+  });
   function submit(event: FormEvent) {
     event.preventDefault();
     login.mutate();
@@ -316,6 +334,38 @@ function LoginPage() {
               Войти
             </Button>
           </form>
+          {demoAccounts.data && (
+            <div className="form-stack">
+              {(
+                [
+                  { account: "employee", label: "Сотрудник · Астана" },
+                  { account: "manager", label: "Руководитель" },
+                  { account: "hr", label: "HR" },
+                  { account: "employee_kg", label: "Сотрудник · Бишкек" },
+                  { account: "employee_uz", label: "Сотрудник · Ташкент" },
+                ] as const
+              )
+                .filter((item) => demoAccounts.data?.includes(item.account))
+                .map((item) => (
+                  <Button
+                    key={item.account}
+                    variant="secondary"
+                    loading={
+                      demoLogin.isPending &&
+                      demoLogin.variables === item.account
+                    }
+                    onClick={() => demoLogin.mutate(item.account)}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+              {demoLogin.isError && (
+                <p className="login-error" role="alert">
+                  Не удалось войти. Повторите попытку.
+                </p>
+              )}
+            </div>
+          )}
           <details className="demo-accounts">
             <summary>Демонстрационные роли</summary>
             <p>

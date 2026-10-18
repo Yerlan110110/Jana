@@ -10,7 +10,7 @@ pytestmark = pytest.mark.django_db
 
 def test_seed_is_populated_idempotent_and_preserves_hr_edits(employees):
     created = seed_knowledge()
-    assert len(created) == 18
+    assert len(created) == 20
     assert KnowledgeDocument.objects.filter(state="archived").count() == 1
     assert KnowledgeDocument.objects.filter(state="draft").count() == 1
     assert KnowledgeDocument.objects.filter(language="kk").count() == 2
@@ -26,7 +26,7 @@ def test_seed_is_populated_idempotent_and_preserves_hr_edits(employees):
     assert seed_knowledge() == []
     document.refresh_from_db()
     assert document.summary == "HR сохранил собственную правку черновика."
-    assert KnowledgeDocument.objects.count() == 18
+    assert KnowledgeDocument.objects.count() == 20
 
 
 def test_machine_readable_knowledge_regression_cases(employees):

@@ -325,6 +325,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/demo-login/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["auth_demo_login_retrieve"];
+        put?: never;
+        post: operations["auth_demo_login_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/login/": {
         parameters: {
             query?: never;
@@ -1416,6 +1432,21 @@ export interface components {
          * @enum {string}
          */
         DeliveryStatusEnum: "pending" | "processing" | "processed" | "failed";
+        /**
+         * @description * `employee` - employee
+         *     * `manager` - manager
+         *     * `hr` - hr
+         *     * `employee_kg` - employee_kg
+         *     * `employee_uz` - employee_uz
+         * @enum {string}
+         */
+        DemoAccountEnum: "employee" | "manager" | "hr" | "employee_kg" | "employee_uz";
+        DemoAccounts: {
+            accounts: components["schemas"]["DemoAccountEnum"][];
+        };
+        DemoLoginRequest: {
+            account: components["schemas"]["DemoAccountEnum"];
+        };
         Department: {
             /** Format: uuid */
             readonly id: string;
@@ -3324,6 +3355,50 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CSRF"];
+                };
+            };
+        };
+    };
+    auth_demo_login_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DemoAccounts"];
+                };
+            };
+        };
+    };
+    auth_demo_login_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DemoLoginRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["DemoLoginRequest"];
+                "multipart/form-data": components["schemas"]["DemoLoginRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Session"];
                 };
             };
         };

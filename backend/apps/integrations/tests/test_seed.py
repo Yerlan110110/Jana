@@ -18,18 +18,18 @@ pytestmark = pytest.mark.django_db
 
 def test_demo_bootstrap_grants_only_synthetic_hr_and_preserves_revocation():
     employees = seed_identity(password="Synthetic-integration-password-82!")
-    assert len(seed_integrations(employees)) == 2
-    assert EntitySyncState.objects.count() == 2
-    assert DemoOperatorGrant.objects.count() == 4
-    assert SourceImportBatch.objects.filter(status="accepted").count() == 2
-    assert SourceImportBatch.objects.filter(status="rejected").count() == 2
+    assert len(seed_integrations(employees)) == 4
+    assert EntitySyncState.objects.count() == 4
+    assert DemoOperatorGrant.objects.count() == 8
+    assert SourceImportBatch.objects.filter(status="accepted").count() == 4
+    assert SourceImportBatch.objects.filter(status="rejected").count() == 4
     for user in User.objects.all():
         assert user.has_perm("integrations.operate_integrations") == (user.role == "hr")
     hr = User.objects.get(username="hr.demo")
     hr.user_permissions.clear()
     assert seed_integrations(employees) == []
     assert not User.objects.get(pk=hr.pk).has_perm("integrations.operate_integrations")
-    assert SourceImportBatch.objects.count() == 4
+    assert SourceImportBatch.objects.count() == 8
 
 
 def test_seed_command_includes_integration_setup(tmp_path, monkeypatch):
@@ -44,7 +44,7 @@ def test_seed_command_includes_integration_setup(tmp_path, monkeypatch):
         credentials_file=str(tmp_path / "credentials.json"),
         stdout=output,
     )
-    assert EntitySyncState.objects.count() == 2
+    assert EntitySyncState.objects.count() == 4
     assert User.objects.get(username="hr.demo").has_perm("integrations.operate_integrations")
     assert "integration-password" not in output.getvalue()
 
@@ -73,4 +73,4 @@ def test_delivery_demo_faults_preserve_operator_changes_on_rerun(tmp_path, monke
     )
     fault.refresh_from_db()
     assert fault.permanent_failure is False
-    assert SourceImportBatch.objects.count() == 4
+    assert SourceImportBatch.objects.count() == 8
