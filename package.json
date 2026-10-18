@@ -13,7 +13,6 @@
     "contracts:generate": "node scripts/contracts/generate.mjs",
     "contracts:check": "node scripts/contracts/generate.mjs --check",
     "typecheck": "tsc --noEmit -p packages/api-client/tsconfig.json && npm --prefix frontend run typecheck",
-    "skills:verify": "node scripts/tooling/verify-skills.mjs",
     "dev": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
     "test:e2e": "e2e run",

@@ -28,3 +28,16 @@ frontend/.pace/backups/
 !frontend/public/media/
 !frontend/public/media/janamen-intro.mp4
 !frontend/public/media/janamen-intro-poster.jpg
+
+# Local contributor tooling and handoffs
+/AGENTS.md
+/.agents
+/.codex
+/CODEX_START.md
+/HANDOFF.md
+/CLOUD_DESIGN_HANDOFF.md
+/docs/tooling
+/scripts/tooling
+/docs/archive/CODEX_START-before-cloud-design-20261018.md
+/docs/archive/HANDOFF-before-defense-20261018.md
+/docs/archive/HANDOFF-initial-20261017.md

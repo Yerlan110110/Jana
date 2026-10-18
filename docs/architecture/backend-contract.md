@@ -166,7 +166,7 @@ Prove own-request approval denial, stale updates, repeat submissions, rollback, 
 Prove enrollment ownership, hidden answer keys, server scoring, completed history after course archival and version stability.
 Prove policy access before retrieval, valid citation resolution, unknown-answer refusal and generation failure handling.
 Use PostgreSQL to verify row-lock/concurrency semantics. Record unavailable tool gates without claiming a pass.
-All acceptance evidence belongs in docs/verification and HANDOFF.md.
+All acceptance evidence belongs in docs/verification and docs/continuation-status.md.
 
 ## Vercel PostgreSQL deployment
 

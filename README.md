@@ -45,7 +45,6 @@
 | Открыть публичный HTTPS-стенд | [Vercel, база и обновление](docs/deployment/vercel.md) |
 | Открыть материалы защиты | [Офлайн PDF и исходники](docs/defense/README.md) |
 | Понять ТЗ простыми словами | [Краткое объяснение](docs/product/brief-in-russian.md) |
-| Продолжить работу | [Handoff следующему агенту](HANDOFF.md), [готовый промпт Codex](CODEX_START.md) |
 | Узнать требования | [Спецификация](docs/product/specification.md), [решения владельца](docs/product/project-rules.md) |
 | Разобраться в backend | [Архитектура](docs/architecture/system.md), [контракт модулей](docs/architecture/backend-contract.md) |
 | Выбрать готовые компоненты | [Сравнение архитектур](docs/architecture/reuse-decision.md), [frontend architecture](docs/architecture/frontend.md) |
@@ -54,7 +53,6 @@
 | Подготовить сильное отличие | [Стратегия](docs/product/differentiation-strategy.md), [3:00 демо](docs/product/jury-demo-script.md), [карта API gaps](docs/architecture/differentiation-gap-map.md) |
 | Выбрать дизайн-систему | [REA Pace/Jana, версии, tokens и reuse](docs/research/pace-jana-design-system.md) |
 | Проверить готовность | [Фактические результаты](docs/verification/final.md), [матрица проверок](docs/verification/acceptance-plan.md) |
-| Подключить Codex skills | [Codex setup](docs/tooling/codex-setup.md), [инвентарь](docs/tooling/skill-inventory.md) |
 
 ## Backend и данные
 
@@ -229,7 +227,7 @@ uv run --env-file ../.env --frozen python manage.py makemigrations --check --dry
 uv run --env-file ../.env --frozen pytest -q
 ```
 
-Тестовой роли PostgreSQL нужно право создавать тестовую БД. Используйте отдельное окружение с синтетическими данными. CI также проверяет skills, контракт и контейнеры. Файл workflow сам по себе не доказывает успешный CI.
+Тестовой роли PostgreSQL нужно право создавать тестовую БД. Используйте отдельное окружение с синтетическими данными. CI также проверяет контракт и контейнеры. Файл workflow сам по себе не доказывает успешный CI.
 
 Сквозная проверка запущенного API и worker:
 
@@ -243,25 +241,12 @@ python3 scripts/verification/smoke_workflows.py \
 
 Runner создаёт отдельные синтетические записи и сохраняет их как доказательства. Повторный запуск использует новые идентификаторы. [Покрытые сценарии и ограничения](scripts/verification/README.md).
 
-## Pstack, Fstack и REA для Codex
-
-Закреплены 94 skills: Pstack Codex port, оригинальные наборы Emil Kowalski и Jakub Krehel, REA и проектный Fstack router. Pstack port — community-адаптация. Fstack здесь — имя проектного маршрутизатора, не отдельный официальный пакет этих авторов.
-
-```bash
-node scripts/tooling/verify-skills.mjs
-npm ci --prefix scripts/tooling/rea-runtime --ignore-scripts --no-audit --no-fund
-node scripts/tooling/rea.mjs --version
-```
-
-Откройте Codex из корня доверенного проекта и выполните discovery из [codex-setup.md](docs/tooling/codex-setup.md). CLI и standalone MCP проверялись отдельно; их успех не означает подключение к уже открытой сессии другого клиента.
-Правила обязательны в [AGENTS.md](AGENTS.md). Применения отражены в [skill-use.md](docs/tooling/skill-use.md) и дизайн-спецификации.
-
 ## Исследование и источники
 
 Продуктовые решения опираются на официальные материалы Personio, LearnUpon, TalentLMS, 360Learning, HiBob и исходники доступных альтернатив. [Реестр REA](docs/design/evidence/README.md) различает ограниченный capture статьи и исследование авторизованной LMS.
 Частный код MIS Pro не переносился. Сходство разобрано на уровне ролей, процесса, неизменяемых версий и истории.
 
-Лицензии сторонних skills сохранены в [tooling/licenses](docs/tooling/licenses/). Платные материалы, полные статьи, чужие курсы и закрытые assets в продукт не скопированы.
+Платные материалы, полные статьи, чужие курсы и закрытые assets в продукт не скопированы.
 
 
 Контейнерный baseline и границы доказательств: [backend baseline](docs/verification/runtime-baseline.md), [same-origin serving](docs/verification/runtime-serving.md).

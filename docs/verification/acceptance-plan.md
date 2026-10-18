@@ -32,7 +32,7 @@ A generated Docker file, CI workflow or model adapter is not itself a passed run
 Review changes separately from their author.
 Inspect concrete permission paths, state commands, database constraints and failure handling.
 A reviewer records all demonstrated findings, not only the first.
-Fix high-impact findings, rerun the affected behavior and retain remaining limits in HANDOFF.md.
+Fix high-impact findings, rerun the affected behavior and retain remaining limits in docs/continuation-status.md.
 
 ## Frontend checks for the next agent
 

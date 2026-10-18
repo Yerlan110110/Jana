@@ -59,8 +59,6 @@ jobs:
         run: |
           mkdir -p staticfiles
           uv run --frozen pytest -q
-      - name: Verify pinned skills
-        run: node scripts/tooling/verify-skills.mjs
       - name: Verify local HTTP runner report safety
         run: python3 -m unittest discover -s scripts/verification/tests -v
       - name: Install contract tools
