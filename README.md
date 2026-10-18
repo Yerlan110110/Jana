@@ -6,13 +6,15 @@
 
 Репозиторий содержит Django API, React-интерфейс, PostgreSQL, Docker-запуск и синтетические данные. В интерфейсе подключены заявки, Academy, регламенты, обращения к HR и передача документов. Текущие проверки и оставшиеся этапы приёмки указаны в [статусе продолжения](docs/continuation-status.md).
 
-Облачному агенту для правок дизайна начните с [CLOUD_DESIGN_HANDOFF.md](CLOUD_DESIGN_HANDOFF.md). Команде для защиты откройте [визуальную памятку](docs/defense/team-map.html).
+**Открыть продукт: https://jmhr.vercel.app**.
+
+Облачному агенту для дизайна и развития отличий начните с [CLOUD_DESIGN_HANDOFF.md](CLOUD_DESIGN_HANDOFF.md). Команде для защиты откройте [визуальную памятку](docs/defense/team-map.html).
 
 ## С чего начать
 
 | Нужно | Открыть |
 | --- | --- |
-| Открыть публичный HTTPS-стенд | [Доступ, запуск и остановка](docs/deployment/public-demo.md) |
+| Открыть публичный HTTPS-стенд | [Vercel, база и обновление](docs/deployment/vercel.md) |
 | Открыть материалы защиты | [Офлайн PDF и исходники](docs/defense/README.md) |
 | Понять ТЗ простыми словами | [Краткое объяснение](docs/product/brief-in-russian.md) |
 | Продолжить работу | [Handoff следующему агенту](HANDOFF.md), [готовый промпт Codex](CODEX_START.md) |
@@ -21,7 +23,7 @@
 | Выбрать готовые компоненты | [Сравнение архитектур](docs/architecture/reuse-decision.md), [frontend architecture](docs/architecture/frontend.md) |
 | Спроектировать интерфейс | [Дизайн-brief](docs/design/README.md), [31 представление](docs/design/screen-inventory.md), [состояния](docs/design/state-and-data-contracts.md) |
 | Изучить аналоги и компанию | [Продуктовое исследование](docs/research/product-rea.md), [backend research](docs/research/backend-rea.md), [Jana Post](docs/research/janapost-context.md) |
-| Подготовить сильное отличие | [Стратегия](docs/product/differentiation-strategy.md), [5:00 демо](docs/product/jury-demo-script.md), [карта API gaps](docs/architecture/differentiation-gap-map.md) |
+| Подготовить сильное отличие | [Стратегия](docs/product/differentiation-strategy.md), [3:00 демо](docs/product/jury-demo-script.md), [карта API gaps](docs/architecture/differentiation-gap-map.md) |
 | Выбрать дизайн-систему | [REA Pace/Jana, версии, tokens и reuse](docs/research/pace-jana-design-system.md) |
 | Проверить готовность | [Фактические результаты](docs/verification/final.md), [матрица проверок](docs/verification/acceptance-plan.md) |
 | Подключить Codex skills | [Codex setup](docs/tooling/codex-setup.md), [инвентарь](docs/tooling/skill-inventory.md) |

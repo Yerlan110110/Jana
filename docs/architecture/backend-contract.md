@@ -157,3 +157,9 @@ Prove enrollment ownership, hidden answer keys, server scoring, completed histor
 Prove policy access before retrieval, valid citation resolution, unknown-answer refusal and generation failure handling.
 Use PostgreSQL to verify row-lock/concurrency semantics. Record unavailable tool gates without claiming a pass.
 All acceptance evidence belongs in docs/verification and HANDOFF.md.
+
+## Vercel PostgreSQL deployment
+
+The optional `DJANGO_DB_TRANSACTION_POOL=true` profile requires PostgreSQL. It sets `CONN_MAX_AGE=0`, disables server-side cursors and passes psycopg `prepare_threshold=None`. The deployed database uses the Supabase transaction pool on port 6543 with TLS. This avoids exhausting the small session pool with persistent function connections. The ordinary Docker profile remains unchanged. Database credentials belong in private deployment environment variables. See `docs/deployment/vercel.md`.
+
+The Vercel outbox Daemon runs the existing transactional worker. It does not replace business commands or run seed at startup. The request detail polls the generated fulfillment projection every five seconds only while delivery is queued. Polling stops on a terminal delivery state or an error. A failed read retains the existing explicit retry action. Receipt remains separate from approval and source accounting.

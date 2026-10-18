@@ -4,9 +4,11 @@ Current contract C2. Owner is the coordinating Codex agent. Updated 18 October 2
 
 This file records the current delivery scope. Historical backend verification remains in `docs/verification/`. A passing source check does not establish browser or deployment acceptance.
 
-The application checkpoint is `228e15c`. Final independent round R3 confirms the repaired behaviors and matching public package. Complete acceptance remains **BLOCKED** by COV1, missing mandatory state/environment evidence. The [public review record](verification/reviews/janamen-release-r3.md) preserves the scope and limitations. The public HTTPS application is the repaired synthetic review draft. It is not an accepted production release. The [visual team brief](defense/team-map.html) explains the task, product and five-minute presentation for two nontechnical participants. The [extended brief](defense/team-brief.md) holds technical explanations.
+The application now runs at **https://jmhr.vercel.app** on Vercel Services, with a dedicated Supabase PostgreSQL database and a Vercel outbox Daemon. The deployment retains the implemented Django and React application. [Cloud verification](verification/vercel.md) records current checks and observed failures. [Deployment instructions](deployment/vercel.md) identify the existing cloud resources.
 
-After the overnight deadline the owner separately authorized the visual brief and a portable GitHub transfer for a cloud agent. The next requested work is design refinement. [CLOUD_DESIGN_HANDOFF.md](../CLOUD_DESIGN_HANDOFF.md) is the current entry. This transfer preserves the implemented application, original briefs and review boundaries. Its checks are recorded in [cloud-design-transfer.md](verification/cloud-design-transfer.md). It does not reopen R4 or close COV1.
+Complete acceptance remains **BLOCKED** by COV1, missing mandatory state/environment evidence. The [independent R3 review](verification/reviews/janamen-release-r3.md) retains its original scope and limitations. This is a synthetic demonstration, not an accepted production release. No fresh independent approval of the cloud configuration is claimed.
+
+The latest owner request is cloud deployment and a portable handoff for design refinement and stronger differentiation. [CLOUD_DESIGN_HANDOFF.md](../CLOUD_DESIGN_HANDOFF.md) is the current entry. The team has two nontechnical presenters. Their latest timing is **3 minutes, 1 minute speaking and 2 minutes demonstrating**. Older five-minute material requires revision. The exact official speaking limit remains unconfirmed.
 
 ## Outcome and authority
 
