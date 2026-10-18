@@ -1,3 +1,4 @@
+import { BrandIntro } from "./components/brand-intro";
 import {
   lazy,
   Suspense,
@@ -23,20 +24,17 @@ import {
   Bell,
   BookOpen,
   BriefcaseBusiness,
-  ChevronRight,
   CircleHelp,
   FileCheck2,
   FileText,
   GraduationCap,
   House,
   LogOut,
-  Menu,
   PanelTop,
   ShieldCheck,
   Sparkles,
   UserRound,
   Users,
-  X,
 } from "lucide-react";
 import { ActionButton as Button, ActionLink } from "@/components/actions";
 import { Input } from "@/components/upstream/input";
@@ -56,7 +54,6 @@ import {
   type DemoAccount,
 } from "@/lib/api";
 import { SessionProvider, useSession } from "@/lib/session";
-import { roleText } from "@/lib/format";
 import { NotificationsPage } from "@/features/notifications";
 
 const HomePage = lazy(() =>
@@ -226,7 +223,7 @@ export function Application() {
     );
   if (!session.data)
     return location.pathname === "/login"
-      ? <LoginPage />
+      ? <BrandIntro><LoginPage /></BrandIntro>
       : <Navigate to="/login" replace />;
   if (location.pathname === "/login") return <Navigate to="/" replace />;
   return (
@@ -432,7 +429,7 @@ const hrLinks = [
 ];
 
 function AppShell() {
-  const { user, employee } = useSession();
+  const { user } = useSession();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const mutations = useIsMutating();
@@ -442,8 +439,8 @@ function AppShell() {
   const previousPath = useRef(location.pathname);
   useEffect(() => {
     if (previousPath.current !== location.pathname) {
-      main.current?.focus();
-      window.scrollTo({ top: 0 });
+      main.current?.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
       previousPath.current = location.pathname;
     }
   }, [location.pathname]);
@@ -457,7 +454,7 @@ function AppShell() {
   }
   function navigation(links: typeof personalLinks) {
     return links.map(({ to, label, icon: Icon, end }) => (
-      <NavLink key={to} to={to} end={end} onClick={() => setMenuOpen(false)}>
+      <NavLink key={to} to={to} end={end} viewTransition onClick={() => setMenuOpen(false)}>
         <Icon size={18} aria-hidden="true" />
         <span>{label}</span>
       </NavLink>
@@ -468,102 +465,29 @@ function AppShell() {
       <a className="skip-link" href="#main-content">
         Перейти к содержимому
       </a>
-      <aside className="app-sidebar">
-        <div className="sidebar-brand">
-          <Brand />
-          <span className="product-tag">РАБОТА В ОДНОМ МЕСТЕ</span>
-        </div>
-        <nav className="sidebar-navigation" aria-label="Основная навигация">
-          <p className="nav-group-label">Мой кабинет</p>
-          {navigation(personalLinks)}
-          {user.role !== "employee" && (
-            <>
-              <p className="nav-group-label">
-                {user.role === "hr" ? "Работа HR" : "Моя команда"}
-              </p>
-              {navigation(teamLinks)}
-            </>
-          )}
-          {user.role === "hr" && (
-            <>
-              <p className="nav-group-label">Управление</p>
-              {navigation(hrLinks)}
-            </>
-          )}
-        </nav>
-        <div className="sidebar-bottom">
-          <div className="sidebar-note">
-            <ShieldCheck size={18} aria-hidden="true" />
-            <p>
-              Вы видите данные
-              <br />в своей области доступа.
-            </p>
-          </div>
-          <NavLink className="sidebar-profile" to="/profile">
-            <span className="avatar">
-              {(employee?.full_name ?? user.username).slice(0, 1)}
-            </span>
-            <span>
-              <strong>{employee?.full_name ?? user.username}</strong>
-              <small>{roleText(user.role)}</small>
-            </span>
-            <ChevronRight size={15} aria-hidden="true" />
-          </NavLink>
-          <Button
-            variant="ghost"
-            disabled={mutations > 0}
-            loading={logout.isPending}
-            onClick={() => logout.mutate()}
-            iconStart={<LogOut size={16} aria-hidden="true" />}
-          >
-            Выйти из кабинета
-          </Button>
-          <ErrorNotice error={logout.error} />
-        </div>
-      </aside>
       <div className="app-main">
-        <header className="app-topbar">
-          <div className="mobile-brand">
-            <Brand />
-          </div>
-          <div className="topbar-context">
-            <span className="context-dot" />
-            {employee?.legal_entity.name ?? "JanaMen"}
-          </div>
-          <div className="topbar-actions">
-            <span className="environment-label">Демо</span>
-            <NavLink
-              className="topbar-link"
-              to="/notifications"
-              aria-label="Уведомления"
-            >
-              <Bell size={19} aria-hidden="true" />
-            </NavLink>
-            <NavLink
-              className="topbar-link"
-              to="/profile"
-              aria-label="Мой профиль"
-            >
-              <UserRound size={19} aria-hidden="true" />
-            </NavLink>
-            <Button
-              className="mobile-menu-button"
-              ref={menuTrigger}
-              variant="ghost"
-              onClick={() => setMenuOpen(!menuOpen)}
-              onKeyDown={closeNavigation}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-navigation"
-              aria-label={menuOpen ? "Закрыть навигацию" : "Открыть навигацию"}
-            >
-              {menuOpen ? (
-                <X aria-hidden="true" />
-              ) : (
-                <Menu aria-hidden="true" />
-              )}
+        <header className="crextio-header">
+          <Brand />
+          <nav className="crextio-nav" aria-label="Основная навигация">
+            {navigation(personalLinks.slice(0, 5))}
+            {user.role !== "employee" && navigation([teamLinks[2]])}
+          </nav>
+          <div className="crextio-header-actions">
+            <NavLink className="topbar-link" to="/notifications" aria-label="Уведомления"><Bell size={17} /></NavLink>
+            <NavLink className="topbar-link" to="/profile" aria-label="Мой профиль"><UserRound size={17} /></NavLink>
+            <Button variant="ghost" disabled={mutations > 0} loading={logout.isPending}
+              aria-label="Выйти из кабинета" onClick={() => logout.mutate()}>
+              <LogOut size={16} aria-hidden="true" />
+            </Button>
+            <Button ref={menuTrigger} variant="secondary"
+              onClick={() => setMenuOpen(!menuOpen)} onKeyDown={closeNavigation}
+              aria-expanded={menuOpen} aria-controls="mobile-navigation"
+              aria-label={menuOpen ? "Закрыть навигацию" : "Открыть навигацию"}>
+              <span className="navigation-toggle-glyph" aria-hidden="true"><i /><i /></span> Меню
             </Button>
           </div>
         </header>
+        <ErrorNotice error={logout.error} />
         {menuOpen && (
           <nav
             id="mobile-navigation"

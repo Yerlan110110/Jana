@@ -124,18 +124,23 @@ export function AssistantPage() {
         <ErrorNotice error={ask.error} />
         <div className="suggested-questions">
           {[
-            "Как подать заявление на отпуск?",
-            "Что делать, если заявку вернули?",
-            "Как пройти назначенный курс?",
-          ].map((text) => (
-            <Button
-              key={text}
-              variant="secondary"
-              size="sm"
-              onClick={() => setQuestion(text)}
+            { label: "Планирую отпуск", question: "Как подать заявление на отпуск?", detail: "Заявка, согласование и сроки", number: "01" },
+            { label: "Заявку вернули", question: "Что делать, если заявку вернули?", detail: "Что исправить и куда отправить", number: "02" },
+            { label: "Начинаю обучение", question: "Как пройти назначенный курс?", detail: "Материалы, практика и результат", number: "03" },
+          ].map((example) => (
+            <button
+              key={example.number}
+              type="button"
+              className="question-example"
+              onClick={() => {
+                setQuestion(example.question);
+                document.getElementById("question")?.focus();
+              }}
             >
-              {text}
-            </Button>
+              <span>{example.number}<ArrowRight size={16} aria-hidden="true" /></span>
+              <strong>{example.label}</strong>
+              <small>{example.detail}</small>
+            </button>
           ))}
         </div>
       </Card>

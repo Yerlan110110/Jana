@@ -682,9 +682,11 @@ function PolicyEditor({
         <RehearsalPanel
           documentId={document.id}
           expectedVersion={baseVersion}
-          blocked={dirty || stale}
+          blocked={dirty || stale || document.state === "archived"}
           blockReason={
-            dirty
+            document.state === "archived"
+              ? "Архивный регламент недоступен для поиска. Выберите действующий документ."
+              : dirty
               ? "Сохраните черновик. Проверка работает только с сохранённой версией."
               : stale
                 ? "Черновик изменился на сервере. Загрузите текущую версию перед проверкой."

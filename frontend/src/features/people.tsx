@@ -172,6 +172,9 @@ export function TeamPage() {
             <DataSection title="Доступные сотрудники">
               {team.data.results.length ? (
                 <div className="people-list">
+                  <div className="crextio-people-head" aria-hidden="true">
+                    <span>Сотрудник</span><span>Должность</span><span>Подразделение</span><span>Статус</span>
+                  </div>
                   {team.data.results.map((person) => (
                     <div className="people-row" key={person.id}>
                       <div>
@@ -180,11 +183,11 @@ export function TeamPage() {
                             {person.full_name}
                           </Link>
                         </h3>
-                        <p>{person.position}</p>
-                        <p className="muted">
-                          {person.department.name} · {person.legal_entity.name}
-                        </p>
+                        <small>{person.external_id}</small>
                       </div>
+                      <p>{person.position}</p>
+                      <p>{person.department.name}<small>{person.legal_entity.name}</small></p>
+                      <span className="crextio-person-status">{person.is_active ? "Работает" : "Неактивен"}</span>
                     </div>
                   ))}
                 </div>

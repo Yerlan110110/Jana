@@ -1,0 +1,66 @@
+.brand-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #171717;
+  color: #fff;
+}
+
+.brand-intro video {
+  display: block;
+  width: 100%;
+  height: 100dvh;
+  object-fit: contain;
+}
+
+.brand-intro-controls {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 24px max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  background: linear-gradient(transparent, rgb(0 0 0 / 80%));
+}
+
+.brand-intro-controls > span {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.brand-intro-controls > div {
+  display: flex;
+  gap: 8px;
+}
+
+.brand-intro-controls button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 999px;
+  background: #242424;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.brand-intro-controls button:focus-visible {
+  outline: 3px solid #c9efc4;
+  outline-offset: 4px;
+}
+
+@media (max-width: 480px) {
+  .brand-intro-controls {
+    padding: 16px;
+  }
+  .brand-intro-controls > span {
+    display: none;
+  }
+  .brand-intro-controls > div {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

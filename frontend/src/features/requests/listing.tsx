@@ -168,6 +168,7 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
             >
               {requests.data.results.length ? (
                 <div className="rq-list">
+                  <div className="crextio-request-head" aria-hidden="true"><span>Заявление</span><span>Период / сумма</span><span>Этап</span></div>
                   {requests.data.results.map((record) => (
                     <article key={record.id} className="rq-row">
                       <div>
@@ -182,9 +183,6 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
                             {queue ? ` · ${record.employee_name}` : ""}
                           </Link>
                         </h3>
-                        <p>
-                          <RequestSummary record={record} />
-                        </p>
                         <div className="rq-meta">
                           <span>Создано {date(record.created_at)}</span>
                           <span>Версия {record.version}</span>
@@ -197,6 +195,7 @@ function RequestsList({ queue = false }: { queue?: boolean }) {
                           </span>
                         </div>
                       </div>
+                      <p className="crextio-request-summary"><RequestSummary record={record} /></p>
                       <StatusLabel status={record.status} />
                     </article>
                   ))}

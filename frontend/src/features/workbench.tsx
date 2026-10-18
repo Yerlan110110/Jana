@@ -2,27 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import {
   ArrowRight,
-  Bell,
-  CalendarDays,
   ChevronRight,
   FileText,
-  GraduationCap,
-  Sparkles,
 } from "lucide-react";
 import { ActionLink } from "@/components/actions";
 import { Card } from "@/components/pace/card";
 import {
-  DataSection,
   DemoNote,
-  EmptyState,
   ErrorNotice,
   LoadingState,
   PageHeader,
-  StatusLabel,
 } from "@/components/ui";
 import { api, unwrap } from "@/lib/api";
 import { useSession } from "@/lib/session";
-import { date, money } from "@/lib/format";
+import { date } from "@/lib/format";
 
 export function HomePage() {
   const { user, employee } = useSession();
@@ -112,251 +105,83 @@ export function HomePage() {
           </ActionLink>
         }
       />
-      <Card className="next-step-card">
-        <div className="next-step-copy">
-          <p className="eyebrow">СЛЕДУЮЩИЙ ШАГ</p>
-          <h2>{next.title}</h2>
-          <p>{next.text}</p>
-          <ActionLink iconEnd={<ArrowRight aria-hidden="true" />} to={next.to}>
-            {next.action}
-          </ActionLink>
+      <div className="crextio-metrics">
+        <div className="crextio-strip">
+          <Link to="/requests?waiting=true"><span>Заявки</span><strong>{data.waiting_request_count} в работе</strong></Link>
+          <Link to="/academy"><span>Обучение</span><strong>{data.learning_summary.completed} завершено</strong></Link>
+          <Link to="/knowledge/cases"><span>Обращения</span><strong>{data.open_knowledge_cases.count} открыто</strong></Link>
         </div>
-        <div className="next-step-symbol" aria-hidden="true">
-          <span />
-          <ArrowRight size={52} strokeWidth={1.2} />
+        <div className="crextio-counters">
+          <Link to="/academy"><strong>{data.learning_summary.total}</strong><span>Назначено курсов</span></Link>
+          <Link to="/requests?waiting=true"><strong>{data.waiting_request_count}</strong><span>Ждут решения</span></Link>
+          <Link to="/notifications?unread=true"><strong>{data.unread_notification_count}</strong><span>Новые события</span></Link>
         </div>
-      </Card>
-      <div className="home-status-grid">
-        <Link className="home-stat" to="/requests?waiting=true">
-          <FileText size={20} aria-hidden="true" />
-          <div>
-            <span>Ждут решения</span>
-            <strong>{data.waiting_request_count}</strong>
-            <small>Ваши отправленные заявки</small>
-          </div>
-          <ArrowRight size={17} aria-hidden="true" />
-        </Link>
-        <Link className="home-stat" to="/academy">
-          <GraduationCap size={21} aria-hidden="true" />
-          <div>
-            <span>Обучение</span>
-            <strong>
-              {data.learning_summary.completed}
-              <em> / {data.learning_summary.total}</em>
-            </strong>
-            <small>Завершено из назначенного вам</small>
-          </div>
-          <ArrowRight size={17} aria-hidden="true" />
-        </Link>
-        <Link className="home-stat" to="/notifications?unread=true">
-          <Bell size={20} aria-hidden="true" />
-          <div>
-            <span>Новые события</span>
-            <strong>{data.unread_notification_count}</strong>
-            <small>Непрочитанные уведомления</small>
-          </div>
-          <ArrowRight size={17} aria-hidden="true" />
-        </Link>
       </div>
-      <div className="home-columns">
-        <div className="stack">
-          {data.returned_requests.count > 0 && (
-            <DataSection
-              title="Нужно исправить"
-              description="Причина возврата сохранена в истории"
-              action={
-                <Link className="text-link" to="/requests?status=returned">
-                  Все заявки ({data.returned_requests.count})
-                  <ArrowRight size={14} aria-hidden="true" />
-                </Link>
-              }
-            >
-              {data.returned_requests.results.map((request) => (
-                <Link
-                  className="record-row"
-                  key={request.id}
-                  to={`/requests/${request.id}`}
-                >
-                  <span className="record-icon">
-                    <FileText size={19} aria-hidden="true" />
-                  </span>
-                  <div className="record-main">
-                    <h3>
-                      {request.kind === "leave"
-                        ? "Заявление на отпуск"
-                        : `Зарплатный аванс ${money(request.amount ?? "0")}`}
-                    </h3>
-                    <p>
-                      {request.kind === "leave"
-                        ? `${date(request.start_date)} – ${date(request.end_date)}`
-                        : date(request.requested_payment_date)}
-                    </p>
-                  </div>
-                  <StatusLabel status={request.status} />
-                  <ChevronRight size={17} aria-hidden="true" />
-                </Link>
-              ))}
-            </DataSection>
-          )}
-          <DataSection
-            title="Моё обучение"
-            description={
-              data.learning_summary.required_outstanding
-                ? `Незавершённых обязательных назначений: ${data.learning_summary.required_outstanding}`
-                : "Ближайшие незавершённые назначения"
-            }
-            action={
-              <Link className="text-link" to="/academy">
-                Всё обучение
-                <ArrowRight size={14} aria-hidden="true" />
+      <div className="crextio-bento">
+        <section className="crextio-day-card" aria-label="Маршрут рабочего дня">
+          <span className="crextio-day-kicker">ВАШ РАБОЧИЙ МАРШРУТ</span>
+          <h2>Всё начинается<br />с одного шага.</h2>
+          <div className="crextio-day-route" aria-hidden="true"><i /><span /><i /><span /><i /></div>
+          <Link to="/requests/new"><span>01</span> Подать заявку <ArrowRight size={16} /></Link>
+          <Link to="/assistant"><span>02</span> Найти ответ <ArrowRight size={16} /></Link>
+          <Link to="/academy"><span>03</span> Продолжить обучение <ArrowRight size={16} /></Link>
+          <p>{employee?.full_name ?? user.first_name}</p>
+        </section>
+        <Card className="crextio-progress-card">
+          <div className="crextio-card-title"><h2>Прогресс</h2><Link to="/academy" aria-label="Открыть моё обучение">↗</Link></div>
+          <p className="crextio-large">{data.learning_summary.completed}<small> / {data.learning_summary.total}</small></p>
+          <p className="muted">Завершено курсов</p>
+          <div className="crextio-course-bars">
+            {data.learning_outstanding.results.slice(0, 7).map((item, index) => (
+              <Link key={item.id} to={`/academy/enrollments/${item.id}`} title={item.course_version.title}>
+                <span className="crextio-bar-track"><span style={{height: `${item.material_progress.percent}%`}} /></span>
+                <small>{index + 1}</small>
               </Link>
-            }
-          >
-            {data.learning_outstanding.results.length ? (
-              data.learning_outstanding.results.map((enrollment) => (
-                <Link
-                  className="record-row"
-                  key={enrollment.id}
-                  to={`/academy/enrollments/${enrollment.id}`}
-                >
-                  <span className="record-icon learning">
-                    <GraduationCap size={21} aria-hidden="true" />
-                  </span>
-                  <div className="record-main">
-                    <h3>{enrollment.course_version.title}</h3>
-                    <p>
-                      {enrollment.required ? "Обязательный" : "Назначенный"}
-                      {enrollment.due_at
-                        ? ` · До ${date(enrollment.due_at)}`
-                        : ""}
-                    </p>
-                    <div className="mini-progress">
-                      <progress
-                        max={100}
-                        value={enrollment.material_progress.percent}
-                        aria-label={`Материалы курса пройдены на ${enrollment.material_progress.percent}%`}
-                      />
-                      <span>{enrollment.material_progress.percent}%</span>
-                    </div>
-                  </div>
-                  <ChevronRight size={17} aria-hidden="true" />
-                </Link>
-              ))
-            ) : (
-              <EmptyState
-                title="Нет незавершённых назначений"
-                description="Завершённые результаты сохранены в истории обучения."
-                action={
-                  <Link className="text-link" to="/academy/history">
-                    История обучения
-                  </Link>
-                }
-              />
-            )}
-          </DataSection>
-          {data.requests_to_review.count > 0 && (
-            <DataSection
-              title="На вашем согласовании"
-              description="Только заявки, по которым вам доступно решение"
-              action={
-                <Link className="text-link" to="/team/requests">
-                  Очередь ({data.requests_to_review.count})
-                  <ArrowRight size={14} aria-hidden="true" />
-                </Link>
-              }
-            >
-              {data.requests_to_review.results.map((request) => (
-                <Link
-                  className="record-row"
-                  key={request.id}
-                  to={`/requests/${request.id}`}
-                >
-                  <div className="record-main">
-                    <h3>{request.employee_name}</h3>
-                    <p>
-                      {request.kind === "leave"
-                        ? "Заявление на отпуск"
-                        : "Зарплатный аванс"}{" "}
-                      · {date(request.submitted_at)}
-                    </p>
-                  </div>
-                  <StatusLabel status={request.status} />
-                  <ChevronRight size={16} aria-hidden="true" />
-                </Link>
-              ))}
-            </DataSection>
-          )}
-        </div>
-        <div className="stack">
-          <Card className="balance-card">
-            <div className="section-heading">
-              <h2>Ваш отпуск</h2>
-              <CalendarDays size={20} aria-hidden="true" />
-            </div>
-            <p className="balance-number">
-              {data.leave.official_balance}
-              <span> дней</span>
-            </p>
-            <p className="muted">
-              Официальный остаток на {date(data.leave.balance_as_of)}
-            </p>
-            <dl className="balance-detail">
-              <div>
-                <dt>В резерве портала</dt>
-                <dd>{data.leave.portal_reserved_days} дн.</dd>
-              </div>
-              <div>
-                <dt>Прогноз доступного</dt>
-                <dd>{data.leave.projected_balance} дн.</dd>
-              </div>
-            </dl>
-            <p className="field-help">
-              Прогноз учитывает заявки отдельно. Одобрение не изменяет
-              официальный остаток в кадровом источнике.
-            </p>
-            <ActionLink variant="secondary" to="/requests/new?type=leave">
-              Запланировать отпуск
-            </ActionLink>
+            ))}
+            {!data.learning_outstanding.results.length && <p>Все назначения завершены</p>}
+          </div>
+        </Card>
+        <Card className="crextio-gauge-card">
+          <div className="crextio-card-title"><h2>Ваш отпуск</h2><Link to="/requests/new?type=leave" aria-label="Запланировать отпуск">↗</Link></div>
+          <div className="crextio-gauge">
+            <svg viewBox="0 0 180 180" aria-hidden="true">
+              <circle cx="90" cy="90" r="72" fill="none" stroke="#e5e3da" strokeWidth="15" strokeDasharray="2 5" />
+              <circle cx="90" cy="90" r="72" fill="none" stroke="var(--brand)" strokeWidth="15" strokeDasharray={`${Math.max(0, Math.min(1, Number(data.leave.projected_balance) / Math.max(1, Number(data.leave.official_balance)))) * 452} 452`} transform="rotate(-90 90 90)" />
+            </svg>
+            <div><strong>{data.leave.projected_balance}</strong><span>дней по прогнозу</span></div>
+          </div>
+          <p className="muted">Официально {data.leave.official_balance} дн.</p>
+        </Card>
+        <div className="crextio-task-column">
+          <Card className="crextio-onboarding">
+            <div className="crextio-card-title"><h2>Моё обучение</h2><strong>{data.learning_summary.total ? Math.round(data.learning_summary.completed / data.learning_summary.total * 100) : 0}%</strong></div>
+            <progress max={Math.max(1, data.learning_summary.total)} value={data.learning_summary.completed} aria-label="Завершённые курсы" />
+            <p>{data.learning_summary.required_outstanding} обязательных осталось</p>
           </Card>
-          <Card className="home-help-card">
-            <div className="assistant-symbol">
-              <Sparkles size={22} aria-hidden="true" />
-            </div>
-            <h2>Есть рабочий вопрос?</h2>
-            <p>
-              Найдите ответ в регламенте. Если основания нет, передайте вопрос
-              HR.
-            </p>
-            <Link className="text-link" to="/assistant">
-              Спросить Jana
-              <ArrowRight size={15} aria-hidden="true" />
+          <div className="crextio-task-stack">
+            <p>Следующий шаг</p><h2>{next.title}</h2><p>{next.text}</p>
+            <ActionLink to={next.to} iconEnd={<ArrowRight size={16} />}>{next.action}</ActionLink>
+            <Link to="/requests/new">Подать заявку <ArrowRight size={15} /></Link>
+            <Link to="/assistant">Найти рабочее правило <ArrowRight size={15} /></Link>
+            <Link to="/academy/catalog">Каталог обучения <ArrowRight size={15} /></Link>
+          </div>
+        </div>
+        <Card className="crextio-details-card">
+          <h2>Рабочее место</h2>
+          <Link to="/profile">Кадровые данные <ChevronRight size={16}/></Link>
+          <Link to="/requests">Мои заявки <ChevronRight size={16}/></Link>
+          <Link to="/knowledge">Регламенты <ChevronRight size={16}/></Link>
+          <Link to="/academy/history">История обучения <ChevronRight size={16}/></Link>
+        </Card>
+        <Card className="crextio-schedule-card">
+          <div className="crextio-card-title"><h2>Ближайшее обучение</h2><Link to="/academy">Все →</Link></div>
+          {data.learning_outstanding.results.slice(0, 3).map((item) => (
+            <Link key={item.id} to={`/academy/enrollments/${item.id}`}>
+              <time>{item.due_at ? date(item.due_at) : "Без срока"}</time><span>{item.course_version.title}</span><ArrowRight size={16}/>
             </Link>
-          </Card>
-          {data.open_knowledge_cases.count > 0 && (
-            <DataSection
-              title={user.role === "hr" ? "Вопросы к HR" : "Мои обращения"}
-              action={
-                <Link className="text-link" to="/knowledge/cases">
-                  Все обращения ({data.open_knowledge_cases.count})
-                </Link>
-              }
-            >
-              {data.open_knowledge_cases.results.slice(0, 3).map((record) => (
-                <Link
-                  className="compact-case"
-                  key={record.id}
-                  to={`/knowledge/cases/${record.id}`}
-                >
-                  <p>{record.question}</p>
-                  <span>
-                    Ждёт ответа
-                    <ArrowRight size={14} aria-hidden="true" />
-                  </span>
-                </Link>
-              ))}
-            </DataSection>
-          )}
-        </div>
+          ))}
+          {!data.learning_outstanding.results.length && <p>Незавершённых назначений нет.</p>}
+        </Card>
       </div>
       <DemoNote />
     </>

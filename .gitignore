@@ -24,3 +24,7 @@ runtime/
 frontend/dist/
 .e2e/
 frontend/.pace/backups/
+
+!frontend/public/media/
+!frontend/public/media/janamen-intro.mp4
+!frontend/public/media/janamen-intro-poster.jpg

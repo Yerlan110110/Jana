@@ -65,3 +65,17 @@ def local_generation(monkeypatch):
     monkeypatch.setenv("KNOWLEDGE_GENERATION_PROVIDER", "extractive")
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     monkeypatch.delenv("OPENAI_MODEL", raising=False)
+
+
+@pytest.fixture
+def knowledge_check_payload():
+    return {
+        "question": "Как проверить действующий порядок работы?",
+        "options": [
+            "Открыть опубликованную редакцию",
+            "Использовать старую копию",
+            "Угадать правило",
+        ],
+        "correct_option": 0,
+        "explanation": "Действует опубликованная редакция регламента.",
+    }

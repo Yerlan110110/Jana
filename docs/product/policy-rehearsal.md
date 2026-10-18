@@ -58,6 +58,11 @@ admin document actions. CSRF applies as to any unsafe request. No
 - The combined total is bounded at 10 questions. A larger set returns 400.
 - If no questions resolve at all, the endpoint returns 400.
 
+The interface explicitly labels manual questions as HR-scoped. It shows a
+restriction notice even when some excerpts remain visible. Archived documents
+cannot start a rehearsal from the editor. An empty question population asks the
+author to enter a question; it does not imply a successful zero-question check.
+
 Errors: 400 validation, 403 wrong role, 404 unknown or out-of-scope document or
 gap case, 409 stale `expected_version`.
 

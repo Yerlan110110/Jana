@@ -1,7 +1,8 @@
 [data-pace-theme="jana"] {
   --ink: #1d1d1d;
   /* Crextio (Nixtio HR dashboard) surface tokens — evidence v2 */
-  --sun: #f7d660;
+  --brand: #008c00;
+  --sun: #c9efc4;
   --graphite: #2b2b2b;
   --graphite-deep: #232323;
   --paper: rgba(252, 251, 248, 0.92);
@@ -98,24 +99,23 @@
   --layer-2: var(--background);
   --layer-3: var(--card);
   --layer: var(--layer-0);
-  --primary: #2b2b2b;
-  --primary-deep: #1d1d1d;
+  --primary: #007a00;
+  --primary-deep: #006b00;
   --primary-foreground: #ffffff;
   /* --primary doubles as a fill for white text, so it can never be the
    * primary-colored TEXT color on its own tint in dark mode; primary-text
    * derives the readable word color instead. */
   --primary-text: color-mix(in srgb, var(--primary) 72%, var(--primary-deep));
-  --ring: #2b2b2b;
+  --ring: #007a00;
   --chart-1: #2b2b2b;
   /* chart strokes used by the ported analytics widgets */
   --chart-line-primary: var(--chart-1);
   --chart-line-secondary: color-mix(in srgb, var(--ink) 45%, transparent);
   /* Crextio board: layered warm radial glows over a paper base */
   --background:
-    radial-gradient(circle at 86% 18%, rgba(251, 235, 165, 0.92) 0%, rgba(248, 236, 184, 0.55) 34%, rgba(244, 241, 226, 0) 66%),
-    radial-gradient(circle at 94% 78%, rgba(248, 229, 152, 0.8) 0%, rgba(246, 237, 198, 0.38) 40%, rgba(244, 241, 226, 0) 70%),
-    radial-gradient(circle at 12% 12%, rgba(226, 227, 230, 0.96) 0%, rgba(233, 234, 235, 0.6) 38%, rgba(244, 242, 232, 0) 70%),
-    linear-gradient(135deg, #e5e6e8 0%, #efeee6 44%, #f7f2d7 76%, #f9ebb7 100%);
+    radial-gradient(circle at 88% 25%, #d0edce 0%, transparent 66%),
+    radial-gradient(circle at 8% 10%, #e3e7e5 0%, transparent 65%),
+    linear-gradient(135deg, #e7ece9, #f1f6ee 58%, #d9efcf);
   --card: var(--paper);
   --popover: rgba(252, 251, 248, 0.97);
   --foreground: var(--ink);
@@ -148,22 +148,21 @@
 
 .dark [data-pace-theme="jana"],
 [data-pace-theme="jana"].dark {
-  color-scheme: dark;
+  color-scheme: light;
   --ink: #1d1d1d;
-  --primary: #2b2b2b;
-  --primary-deep: #1d1d1d;
+  --primary: #007a00;
+  --primary-deep: #006b00;
   --primary-foreground: #ffffff;
   --primary-text: color-mix(in srgb, var(--primary) 60%, var(--foreground));
-  --ring: #2b2b2b;
+  --ring: #007a00;
   --chart-1: #2b2b2b;
   /* chart strokes used by the ported analytics widgets */
   --chart-line-primary: var(--chart-1);
   --chart-line-secondary: color-mix(in srgb, var(--ink) 45%, transparent);
   --background:
-    radial-gradient(circle at 86% 18%, rgba(251, 235, 165, 0.92) 0%, rgba(248, 236, 184, 0.55) 34%, rgba(244, 241, 226, 0) 66%),
-    radial-gradient(circle at 94% 78%, rgba(248, 229, 152, 0.8) 0%, rgba(246, 237, 198, 0.38) 40%, rgba(244, 241, 226, 0) 70%),
-    radial-gradient(circle at 12% 12%, rgba(226, 227, 230, 0.96) 0%, rgba(233, 234, 235, 0.6) 38%, rgba(244, 242, 232, 0) 70%),
-    linear-gradient(135deg, #e5e6e8 0%, #efeee6 44%, #f7f2d7 76%, #f9ebb7 100%);
+    radial-gradient(circle at 88% 25%, #d0edce 0%, transparent 66%),
+    radial-gradient(circle at 8% 10%, #e3e7e5 0%, transparent 65%),
+    linear-gradient(135deg, #e7ece9, #f1f6ee 58%, #d9efcf);
   --card: var(--paper);
   --popover: rgba(252, 251, 248, 0.97);
   --foreground: var(--ink);

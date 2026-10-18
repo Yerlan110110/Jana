@@ -53,7 +53,9 @@ def test_only_current_effective_published_documents_are_visible(api_client, empl
     ] == [str(current.id)]
 
 
-def test_draft_changes_do_not_change_published_text_or_scope(api_client, employees, make_policy):
+def test_draft_changes_do_not_change_published_text_or_scope(
+    api_client, employees, make_policy, knowledge_check_payload
+):
     document = make_policy()
     old_revision = document.current_revision
     old_chunk = old_revision.chunks.first()
@@ -64,6 +66,7 @@ def test_draft_changes_do_not_change_published_text_or_scope(api_client, employe
         {
             "title": "Черновик закрытого регламента",
             "audience": "hr",
+            "draft_knowledge_check": knowledge_check_payload,
             "draft_sections": [
                 {
                     "heading": "Закрытый текст",
@@ -99,7 +102,7 @@ def test_revisions_and_chunks_are_immutable(make_policy):
 
 
 def test_widened_publication_does_not_expose_old_restricted_revision(
-    api_client, employees, make_policy
+    api_client, employees, make_policy, knowledge_check_payload
 ):
     document = make_policy(
         audience="hr",
@@ -112,6 +115,7 @@ def test_widened_publication_does_not_expose_old_restricted_revision(
         document.version,
         {
             "audience": "all",
+            "draft_knowledge_check": knowledge_check_payload,
             "draft_sections": [
                 {
                     "heading": "Общая информация",

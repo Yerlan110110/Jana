@@ -28,10 +28,10 @@ const reasonText: Record<string, string> = {
 function Excerpt({ excerpt }: { excerpt: RehearsalExcerpt }) {
   return (
     <li className="excerpt-item">
-      <h5>
+      <h4>
         {excerpt.title ?? "Источник"}
         {excerpt.locator ? ` · ${excerpt.locator}` : ""}
-      </h5>
+      </h4>
       <span
         className={`excerpt-origin${excerpt.origin === "draft" ? " draft" : ""}`}
       >
@@ -47,7 +47,7 @@ function Excerpt({ excerpt }: { excerpt: RehearsalExcerpt }) {
 function Side({ label, side }: { label: string; side: RehearsalSide }) {
   return (
     <div className="rehearsal-side">
-      <h4>{label}</h4>
+      <h3>{label}</h3>
       <p className="rehearsal-reason">{reasonText[side.reason] ?? side.reason}</p>
       {side.excerpts.length > 0 && (
         <ul>
@@ -56,8 +56,11 @@ function Side({ label, side }: { label: string; side: RehearsalSide }) {
           ))}
         </ul>
       )}
-      {!side.excerpts.length && (
-        <p className="rehearsal-empty">{side.restricted_excerpts ? "Источник доступен сотруднику, но скрыт для вашей роли." : "Источник не найден."}</p>
+      {side.restricted_excerpts > 0 && (
+        <p className="rehearsal-empty">Часть источников доступна сотруднику, но скрыта для вашей роли.</p>
+      )}
+      {!side.excerpts.length && !side.restricted_excerpts && (
+        <p className="rehearsal-empty">Источник не найден.</p>
       )}
     </div>
   );
@@ -121,8 +124,9 @@ export function RehearsalPanel({
           placeholder="Например: можно ли перенести часть отпуска на следующий год?"
         />
         <p className="field-help">
-          Если поле пустое, проверяются свежие вопросы сотрудников, оставшиеся
-          без ответа.
+          Ваш вопрос проверяется с правами HR. Для проверки с правами сотрудника
+          оставьте поле пустым: используются его сохранённые вопросы без ответа.
+          Если таких вопросов нет, введите свой вопрос.
         </p>
       </div>
       {blocked && blockReason && (
@@ -154,7 +158,7 @@ export function RehearsalPanel({
             <span className="domain-status" data-status="lost">
               <span aria-hidden="true" /> Потеряют источник: {data.summary.lost}
             </span>
-            <span className="domain-status">
+            <span className="domain-status" data-status="unchanged">
               <span aria-hidden="true" /> Без изменений:{" "}
               {data.summary.unchanged}
             </span>

@@ -24,3 +24,6 @@ docs
 !docs/defense/assets/advance-rehearsal.mp4
 !docs/defense/assets/advance-poster.png
 **/dist
+
+!frontend/public/media
+!frontend/public/media/**

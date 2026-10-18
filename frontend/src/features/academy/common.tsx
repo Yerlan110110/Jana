@@ -59,7 +59,7 @@ export function LearningFilters({
   catalogue?: boolean;
 }) {
   return (
-    <div className="filter-bar">
+    <div className="filter-bar learning-filter-bar">
       <label className="field">
         Поиск
         <Input

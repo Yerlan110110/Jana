@@ -379,7 +379,7 @@ def test_reference_and_command_replay_recheck_current_access(
 
 
 def test_new_publication_preserves_link_and_replay_reads_superseded_state(
-    api_client, employees, unsupported_answer, make_policy
+    api_client, employees, unsupported_answer, make_policy, knowledge_check_payload
 ):
     from apps.knowledge.services import publish_document, update_document
 
@@ -388,7 +388,10 @@ def test_new_publication_preserves_link_and_replay_reads_superseded_state(
     old_id = policy.current_revision_id
     assert resolve_with_policy(api_client, employees["hr"], case, old_id).status_code == 200
     policy = update_document(
-        employees["hr"].user, policy.pk, policy.version, {"title": "Новая версия"}
+        employees["hr"].user,
+        policy.pk,
+        policy.version,
+        {"title": "Новая версия", "draft_knowledge_check": knowledge_check_payload},
     )
     publish_document(employees["hr"].user, policy.pk, policy.version)
     replay = resolve_with_policy(api_client, employees["hr"], case, old_id)

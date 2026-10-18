@@ -34,6 +34,7 @@ test(
     await screen.getByRole("button", "Сохранить черновик").tap();
     await expect(browser).toHaveURL(/\/hr\/policies\/[a-f0-9-]+$/);
     const policyPath = new URL(await browser.url()).pathname;
+    await expect(screen.getByText(/Ваш вопрос проверяется с правами HR/)).toBeVisible();
     await screen.getByLabel("Свой вопрос для проверки (необязательно)").fill(question);
     await screen.getByRole("button", "Сравнить ответы").tap();
     await expect(screen.getByText("Новых оснований: 1", { exact: true })).toBeVisible();
@@ -105,6 +106,8 @@ test(
     await browser.onDialog("accept");
     await screen.getByRole("button", "Убрать в архив").tap();
     await expect(screen.getByText("В архиве", { exact: true })).toBeVisible();
+    await expect(screen.getByRole("button", "Сравнить ответы")).toBeDisabled();
+    await expect(screen.getByText(/Архивный регламент недоступен для поиска/)).toBeVisible();
     await changeRole(app, screen, "employee");
     await app.open(`${casePath}/source`);
     await expect(

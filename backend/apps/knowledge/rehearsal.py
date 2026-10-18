@@ -194,7 +194,7 @@ def rehearse_document(
         items.append(("gap_case", case, case.employee.user, case.question, case.answer.language))
     if not items:
         raise ValidationError(
-            {"questions": ["Provide explicit questions or pick scoped employee questions."]}
+            {"questions": ["Нет сохранённых вопросов сотрудников. Введите свой вопрос для проверки."]}
         )
     if len(items) > MAX_QUESTIONS:
         raise ValidationError(

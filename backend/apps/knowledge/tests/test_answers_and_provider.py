@@ -169,7 +169,7 @@ def test_archiving_source_withdraws_saved_answer_and_replayed_answer(
 
 
 def test_old_accessible_revision_is_labeled_superseded(
-    api_client, employees, make_policy, question_payload
+    api_client, employees, make_policy, question_payload, knowledge_check_payload
 ):
     document = make_policy()
     api_client.force_authenticate(employees["employee"].user)
@@ -178,7 +178,10 @@ def test_old_accessible_revision_is_labeled_superseded(
         employees["hr"].user,
         document.id,
         document.version,
-        {"summary": "Обновленное синтетическое описание регламента."},
+        {
+            "summary": "Обновленное синтетическое описание регламента.",
+            "draft_knowledge_check": knowledge_check_payload,
+        },
     )
     publish_document(employees["hr"].user, document.id, document.version)
     history = api_client.get(f"/api/v1/assistant/answers/{answer['id']}/").data
